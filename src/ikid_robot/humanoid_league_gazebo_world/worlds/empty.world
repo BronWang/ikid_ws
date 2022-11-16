@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<sdf version="1.4">
+    <world name="default">
+
+        <scene>
+            <shadows>1</shadows>
+        </scene>
+
+        <include>
+            <uri>model://sun</uri>
+        </include>
+
+        <include>
+            <uri>model://asphalt_plane</uri>
+        </include>
+
+
+        <!--<physics type="bullet">
+            <max_step_size>0.0001</max_step_size>
+            <bullet>
+            </bullet>
+        </physics>-->
+
+
+        <physics type="ode">
+            <max_step_size>0.0003</max_step_size>
+            <ode>
+                <solver>
+                    <type>quick</type>
+                    <iters>200</iters>
+                    <sor>1.0</sor>
+                </solver>
+            </ode>
+        </physics>
+
+        <!--<physics type="simbody">
+          <simbody>
+          </simbody>
+        </physics>-->
+
+        <!--<max_step_size>0.001</max_step_size>
+        <accuracy>0.01</accuracy>-->
+
+    </world>
+</sdf>

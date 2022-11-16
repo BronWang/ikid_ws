@@ -1,0 +1,128 @@
+controller_joint_names: ['', 'left_arm_front_swing', 'left_arm_side_swing', 'left_arm_elbow_front_swing', 'right_arm_front_swing', 'right_arm_side_swing', 'right_arm_elbow_front_swing', 'left_hip_side_swing', 'left_hip_front_swing', 'left_hip_rotation', 'left_knee_front_swing', 'left_ankle_front_swing', 'left_ankle_side_swing', 'right_hip_side_swing', 'right_hip_front_swing', 'right_hip_rotation', 'right_knee_front_swing', 'right_ankle_front_swing', 'right_ankle_side_swing', 'neck_rotation', 'neck_front_swing', ]
+
+ikid_robot:
+  # Publish all joint states -----------------------------------
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50
+  
+  # Position Controllers ---------------------------------------
+  left_arm_front_swing_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: left_arm_front_swing
+    pid: {
+    p: 100.0, i: 0.01, d: 10.0}
+
+  left_arm_side_swing_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: left_arm_side_swing
+    pid: {
+    p: 100.0, i: 0.01, d: 10.0}
+
+  left_arm_elbow_front_swing_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: left_arm_elbow_front_swing
+    pid: {
+    p: 100.0, i: 0.01, d: 10.0}
+
+  right_arm_front_swing_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: right_arm_front_swing
+    pid: {
+    p: 100.0, i: 0.01, d: 10.0}
+
+  right_arm_side_swing_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: right_arm_side_swing
+    pid: {
+    p: 100.0, i: 0.01, d: 10.0}
+
+  right_arm_elbow_front_swing_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: right_arm_elbow_front_swing
+    pid: {
+    p: 100.0, i: 0.01, d: 10.0}
+
+  left_hip_side_swing_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: left_hip_side_swing
+    pid: {
+    p: 100.0, i: 0.01, d: 10.0}
+
+  left_hip_front_swing_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: left_hip_front_swing
+    pid: {
+    p: 100.0, i: 0.01, d: 10.0}
+
+  left_hip_rotation_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: left_hip_rotation
+    pid: {
+    p: 100.0, i: 0.01, d: 10.0}
+
+  left_knee_front_swing_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: left_knee_front_swing
+    pid: {
+    p: 100.0, i: 0.01, d: 10.0}
+
+  left_ankle_front_swing_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: left_ankle_front_swing
+    pid: {
+    p: 100.0, i: 0.01, d: 10.0}
+
+  left_ankle_side_swing_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: left_ankle_side_swing
+    pid: {
+    p: 100.0, i: 0.01, d: 10.0}
+  
+  right_hip_side_swing_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: right_hip_side_swing
+    pid: {
+    p: 100.0, i: 0.01, d: 10.0}
+
+  right_hip_front_swing_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: right_hip_front_swing
+    pid: {
+    p: 100.0, i: 0.01, d: 10.0}
+
+  right_hip_rotation_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: right_hip_rotation
+    pid: {
+    p: 100.0, i: 0.01, d: 10.0}
+
+  right_knee_front_swing_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: right_knee_front_swing
+    pid: {
+    p: 100.0, i: 0.01, d: 10.0}
+
+  right_ankle_front_swing_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: right_ankle_front_swing
+    pid: {
+    p: 100.0, i: 0.01, d: 10.0}
+
+  right_ankle_side_swing_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: right_ankle_side_swing
+    pid: {
+    p: 100.0, i: 0.01, d: 10.0}
+
+  neck_rotation_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: neck_rotation
+    pid: {
+    p: 100.0, i: 0.01, d: 10.0}
+
+  neck_front_swing_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: neck_front_swing
+    pid: {
+    p: 100.0, i: 0.01, d: 10.0}

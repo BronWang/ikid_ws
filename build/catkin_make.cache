@@ -1,0 +1,2 @@
+ikid_robot:ros_socket
+-DCATKIN_DEVEL_PREFIX=/home/wp/ikid_ws/devel -DCMAKE_INSTALL_PREFIX=/home/wp/ikid_ws/install -G Unix Makefiles

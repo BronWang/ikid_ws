@@ -1,0 +1,6 @@
+The models in this package are taken from the nimbro_op_gazebo package which is under BSD license.
+The original source code can be found here:
+https://github.com/AIS-Bonn/humanoid_op_ros
+
+The world file can be used in the Gazebo simulator.
+If the model files are not found, copy them into ~/.gazebo/models/

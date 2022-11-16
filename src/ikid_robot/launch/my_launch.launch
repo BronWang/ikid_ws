@@ -1,0 +1,63 @@
+<launch>
+
+  <param name="/use_sim_time" value="true" />
+  <arg name="paused" default="true"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+
+  <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
+  <include
+    file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find ikid_robot)/worlds/ikid_robot_env.world"/>
+    <arg name="debug" value="$(arg debug)" />
+    <arg name="gui" value="$(arg gui)" />
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="headless" value="$(arg headless)"/>
+  </include>
+  
+  <!-- We do not have a robot connected, so publish fake joint states -->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
+    
+  
+    <param name="robot_description" command="$(find xacro)/xacro  $(find ikid_robot)/gazebo_control/ikid_robot.urdf.xacro" />
+    
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model ikid_robot -param robot_description"/>
+    
+    <rosparam file="$(find ikid_robot)/config/joint_names_ikid_robot.yaml" command="load"/>
+    <!-- load the controllers -->
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" ns="ikid_robot"
+    output="screen" args="joint_state_controller 
+                          left_arm_front_swing_position_controller 
+                          left_arm_side_swing_position_controller 
+                          left_arm_elbow_front_swing_position_controller 
+                          right_arm_front_swing_position_controller 
+                          right_arm_side_swing_position_controller 
+                          right_arm_elbow_front_swing_position_controller 
+                          left_hip_side_swing_position_controller 
+                          left_hip_front_swing_position_controller 
+                          left_hip_rotation_position_controller 
+                          left_knee_front_swing_position_controller 
+                          left_ankle_front_swing_position_controller 
+                          left_ankle_side_swing_position_controller 
+                          right_hip_side_swing_position_controller 
+                          right_hip_front_swing_position_controller 
+                          right_hip_rotation_position_controller 
+                          right_knee_front_swing_position_controller 
+                          right_ankle_front_swing_position_controller 
+                          right_ankle_side_swing_position_controller 
+                          neck_rotation_position_controller 
+                          neck_front_swing_position_controller"/>
+    <!-- convert joint states to TF transforms for rviz, etc -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+      <remap from="/joint_states" to="/ikid_robot/joint_states" />
+    </node>
+    <node
+    name="rviz"
+    pkg="rviz"
+    type="rviz"
+    args="-d $(find ikid_robot)/urdf.rviz" />
+
+</launch>

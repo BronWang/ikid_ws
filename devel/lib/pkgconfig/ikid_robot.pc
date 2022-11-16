@@ -1,0 +1,8 @@
+prefix=/home/wp/ikid_ws/devel
+
+Name: ikid_robot
+Description: Description of ikid_robot
+Version: 1.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

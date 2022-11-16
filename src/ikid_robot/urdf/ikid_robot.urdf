@@ -1,0 +1,1207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="ikid_robot">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="-0.0049139 0.00020164 0.42538"
+        rpy="0 0 0" />
+      <mass
+        value="1.4497" />
+      <inertia
+        ixx="0.0014761"
+        ixy="1.1059E-06"
+        ixz="-1.1333E-05"
+        iyy="0.0007507"
+        iyz="-1.5608E-07"
+        izz="0.0013609" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.5 0.5 0.5 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="left_arm_front_swing_Link">
+    <inertial>
+      <origin
+        xyz="0.00023019 0.031788 0.00074659"
+        rpy="0 0 0" />
+      <mass
+        value="0.013441" />
+      <inertia
+        ixx="3.381E-06"
+        ixy="1.127E-19"
+        ixz="-7.1015E-20"
+        iyy="5.8777E-06"
+        iyz="1.7696E-21"
+        izz="6.6845E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/left_arm_front_swing_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.5 0.5 0.5 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/left_arm_front_swing_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_arm_front_swing"
+    type="revolute">
+    <origin
+      xyz="0.023943 0.06306 0.47489"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="left_arm_front_swing_Link" />
+    <axis
+      xyz="0 -1 0" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="100"
+      velocity="1" />
+  </joint>
+  <link
+    name="left_arm_side_swing_Link">
+    <inertial>
+      <origin
+        xyz="8.2471E-05 0.00022065 -0.055139"
+        rpy="0 0 0" />
+      <mass
+        value="0.17186" />
+      <inertia
+        ixx="4.8966E-05"
+        ixy="-1.2039E-10"
+        ixz="6.8181E-07"
+        iyy="4.6821E-05"
+        iyz="6.8181E-07"
+        izz="2.9633E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/left_arm_side_swing_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.5 0.5 0.5 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/left_arm_side_swing_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_arm_side_swing"
+    type="revolute">
+    <origin
+      xyz="-0.00086981 0.0493 0.00074659"
+      rpy="0 0 0" />
+    <parent
+      link="left_arm_front_swing_Link" />
+    <child
+      link="left_arm_side_swing_Link" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="100"
+      velocity="1" />
+  </joint>
+  <link
+    name="left_arm_elbow_front_swing_Link">
+    <inertial>
+      <origin
+        xyz="-0.013265 0.0079524 -0.061069"
+        rpy="0 0 0" />
+      <mass
+        value="0.033574" />
+      <inertia
+        ixx="5.4533E-05"
+        ixy="-2.4668E-08"
+        ixz="-1.2632E-06"
+        iyy="5.1238E-05"
+        iyz="6.4462E-06"
+        izz="9.8799E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/left_arm_elbow_front_swing_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.5 0.5 0.5 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/left_arm_elbow_front_swing_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_arm_elbow_front_swing"
+    type="revolute">
+    <origin
+      xyz="0 0.0001 -0.1091"
+      rpy="0 0 0" />
+    <parent
+      link="left_arm_side_swing_Link" />
+    <child
+      link="left_arm_elbow_front_swing_Link" />
+    <axis
+      xyz="0 -1 0" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="100"
+      velocity="1" />
+  </joint>
+  <link
+    name="right_arm_front_swing_Link">
+    <inertial>
+      <origin
+        xyz="0.00023019 -0.032088 0.00074659"
+        rpy="0 0 0" />
+      <mass
+        value="0.013441" />
+      <inertia
+        ixx="3.381E-06"
+        ixy="-5.2071E-20"
+        ixz="-7.1477E-20"
+        iyy="5.8777E-06"
+        iyz="-2.7864E-21"
+        izz="6.6845E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/right_arm_front_swing_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.5 0.5 0.5 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/right_arm_front_swing_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_arm_front_swing"
+    type="revolute">
+    <origin
+      xyz="0.023943 -0.06304 0.47489"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="right_arm_front_swing_Link" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="100"
+      velocity="1" />
+  </joint>
+  <link
+    name="right_arm_side_swing_Link">
+    <inertial>
+      <origin
+        xyz="8.2472E-05 -0.00022065 -0.055139"
+        rpy="0 0 0" />
+      <mass
+        value="0.17186" />
+      <inertia
+        ixx="4.8966E-05"
+        ixy="1.1897E-10"
+        ixz="6.8181E-07"
+        iyy="4.6821E-05"
+        iyz="-6.8181E-07"
+        izz="2.9633E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/right_arm_side_swing_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.5 0.5 0.5 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/right_arm_side_swing_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_arm_side_swing"
+    type="revolute">
+    <origin
+      xyz="-0.00086981 -0.0496 0.00074659"
+      rpy="0 0 0" />
+    <parent
+      link="right_arm_front_swing_Link" />
+    <child
+      link="right_arm_side_swing_Link" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="100"
+      velocity="1" />
+  </joint>
+  <link
+    name="right_arm_elbow_front_swing_Link">
+    <inertial>
+      <origin
+        xyz="-0.013265 -0.0079524 -0.061069"
+        rpy="0 0 0" />
+      <mass
+        value="0.033574" />
+      <inertia
+        ixx="5.4533E-05"
+        ixy="2.4668E-08"
+        ixz="-1.2632E-06"
+        iyy="5.1238E-05"
+        iyz="-6.4462E-06"
+        izz="9.8799E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/right_arm_elbow_front_swing_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.5 0.5 0.5 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/right_arm_elbow_front_swing_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_arm_elbow_front_swing"
+    type="revolute">
+    <origin
+      xyz="0 -0.0001 -0.1091"
+      rpy="0 0 0" />
+    <parent
+      link="right_arm_side_swing_Link" />
+    <child
+      link="right_arm_elbow_front_swing_Link" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="100"
+      velocity="1" />
+  </joint>
+  <link
+    name="left_hip_side_swing_Link">
+    <inertial>
+      <origin
+        xyz="-0.022135 0.00024677 -0.014884"
+        rpy="0 0 0" />
+      <mass
+        value="0.29812" />
+      <inertia
+        ixx="0.00011266"
+        ixy="-5.195E-09"
+        ixz="1.7239E-06"
+        iyy="0.00011815"
+        iyz="-1.5301E-06"
+        izz="7.1821E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/left_hip_side_swing_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.5 0.5 0.5 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/left_hip_side_swing_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_hip_side_swing"
+    type="revolute">
+    <origin
+      xyz="0.0082185 0.05226 0.3215"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="left_hip_side_swing_Link" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="100"
+      velocity="1" />
+  </joint>
+  <link
+    name="left_hip_front_swing_Link">
+    <inertial>
+      <origin
+        xyz="0.011562 -0.00018218 -0.091435"
+        rpy="0 0 0" />
+      <mass
+        value="0.18056" />
+      <inertia
+        ixx="7.4649E-05"
+        ixy="-9.8475E-11"
+        ixz="3.5001E-06"
+        iyy="0.0001017"
+        iyz="1.8648E-09"
+        izz="4.8772E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/left_hip_front_swing_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.5 0.5 0.5 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/left_hip_front_swing_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_hip_front_swing"
+    type="revolute">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="left_hip_side_swing_Link" />
+    <child
+      link="left_hip_front_swing_Link" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="100"
+      velocity="1" />
+  </joint>
+  <link
+    name="left_hip_rotation_Link">
+    <inertial>
+      <origin
+        xyz="0.014813 -3.7865E-05 -0.036419"
+        rpy="0 0 0" />
+      <mass
+        value="0.18036" />
+      <inertia
+        ixx="4.8932E-05"
+        ixy="1.5331E-06"
+        ixz="3.2002E-07"
+        iyy="0.00010177"
+        iyz="7.7563E-13"
+        izz="0.00010614" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/left_hip_rotation_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.5 0.5 0.5 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/left_hip_rotation_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_hip_rotation"
+    type="revolute">
+    <origin
+      xyz="0.00022454 9.9999E-05 -0.1093"
+      rpy="0 0 0" />
+    <parent
+      link="left_hip_front_swing_Link" />
+    <child
+      link="left_hip_rotation_Link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="100"
+      velocity="1" />
+  </joint>
+  <link
+    name="left_knee_front_swing_Link">
+    <inertial>
+      <origin
+        xyz="3.525E-15 0.00037693 -0.055362"
+        rpy="0 0 0" />
+      <mass
+        value="0.052413" />
+      <inertia
+        ixx="8.1823E-05"
+        ixy="-3.6309E-23"
+        ixz="1.0752E-18"
+        iyy="8.85E-05"
+        iyz="-2.8667E-09"
+        izz="6.7561E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/left_knee_front_swing_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.5 0.5 0.5 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/left_knee_front_swing_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_knee_front_swing"
+    type="revolute">
+    <origin
+      xyz="0 0 -0.0467"
+      rpy="0 0 0" />
+    <parent
+      link="left_hip_rotation_Link" />
+    <child
+      link="left_knee_front_swing_Link" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="100"
+      velocity="1" />
+  </joint>
+  <link
+    name="left_ankle_front_swing_link">
+    <inertial>
+      <origin
+        xyz="-0.027146 -2.2367E-05 0.016487"
+        rpy="0 0 0" />
+      <mass
+        value="0.31725" />
+      <inertia
+        ixx="0.00012291"
+        ixy="1.1096E-08"
+        ixz="1.4979E-06"
+        iyy="0.00012287"
+        iyz="1.5389E-06"
+        izz="8.1031E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/left_ankle_front_swing_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.5 0.5 0.5 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/left_ankle_front_swing_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_ankle_front_swing"
+    type="revolute">
+    <origin
+      xyz="0 0 -0.12"
+      rpy="0 0 0" />
+    <parent
+      link="left_knee_front_swing_Link" />
+    <child
+      link="left_ankle_front_swing_link" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="100"
+      velocity="1" />
+  </joint>
+  <link
+    name="left_ankle_side_swing_link">
+    <inertial>
+      <origin
+        xyz="0.051938 0.0051363 -0.030595"
+        rpy="0 0 0" />
+      <mass
+        value="0.072019" />
+      <inertia
+        ixx="4.1437E-05"
+        ixy="-2.5099E-06"
+        ixz="-5.8321E-07"
+        iyy="9.0142E-05"
+        iyz="1.8546E-07"
+        izz="0.00012055" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/left_ankle_side_swing_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.5 0.5 0.5 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/left_ankle_side_swing_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_ankle_side_swing"
+    type="revolute">
+    <origin
+      xyz="-0.0543 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="left_ankle_front_swing_link" />
+    <child
+      link="left_ankle_side_swing_link" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="100"
+      velocity="1" />
+  </joint>
+  <link
+    name="right_hip_side_swing_Link">
+    <inertial>
+      <origin
+        xyz="-0.022582 7.7703E-05 -0.015011"
+        rpy="0 0 0" />
+      <mass
+        value="0.29664" />
+      <inertia
+        ixx="0.00011228"
+        ixy="4.0876E-09"
+        ixz="1.8595E-06"
+        iyy="0.00011823"
+        iyz="1.536E-06"
+        izz="7.1716E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/right_hip_side_swing_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.5 0.5 0.5 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/right_hip_side_swing_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_hip_side_swing"
+    type="revolute">
+    <origin
+      xyz="0.008443 -0.05274 0.3216"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="right_hip_side_swing_Link" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="100"
+      velocity="1" />
+  </joint>
+  <link
+    name="right_hip_front_swing_Link">
+    <inertial>
+      <origin
+        xyz="0.011521 2.9657E-05 -0.093025"
+        rpy="0 0 0" />
+      <mass
+        value="0.17768" />
+      <inertia
+        ixx="7.4462E-05"
+        ixy="1.0313E-10"
+        ixz="3.5001E-06"
+        iyy="0.00010133"
+        iyz="-1.8664E-09"
+        izz="4.8585E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/right_hip_front_swing_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.5 0.5 0.5 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/right_hip_front_swing_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_hip_front_swing"
+    type="revolute">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="right_hip_side_swing_Link" />
+    <child
+      link="right_hip_front_swing_Link" />
+    <axis
+      xyz="0 -1 0" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="100"
+      velocity="1" />
+  </joint>
+  <link
+    name="right_hip_rotation_Link">
+    <inertial>
+      <origin
+        xyz="0.015054 -0.00032066 -0.036252"
+        rpy="0 0 0" />
+      <mass
+        value="0.17747" />
+      <inertia
+        ixx="4.8745E-05"
+        ixy="-1.5331E-06"
+        ixz="3.2002E-07"
+        iyy="0.0001014"
+        iyz="7.7563E-13"
+        izz="0.00010595" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/right_hip_rotation_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.5 0.5 0.5 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/right_hip_rotation_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_hip_rotation"
+    type="revolute">
+    <origin
+      xyz="0 0.0001 -0.1094"
+      rpy="0 0 0" />
+    <parent
+      link="right_hip_front_swing_Link" />
+    <child
+      link="right_hip_rotation_Link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="100"
+      velocity="1" />
+  </joint>
+  <link
+    name="right_knee_front_swing_link">
+    <inertial>
+      <origin
+        xyz="1.9984E-15 0.0007954 -0.052476"
+        rpy="0 0 0" />
+      <mass
+        value="0.055296" />
+      <inertia
+        ixx="8.201E-05"
+        ixy="4.7159E-20"
+        ixz="-3.0169E-20"
+        iyy="8.8869E-05"
+        iyz="2.8667E-09"
+        izz="6.943E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/right_knee_front_swing_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.5 0.5 0.5 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/right_knee_front_swing_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_knee_front_swing"
+    type="revolute">
+    <origin
+      xyz="0 0 -0.0467"
+      rpy="0 0 0" />
+    <parent
+      link="right_hip_rotation_Link" />
+    <child
+      link="right_knee_front_swing_link" />
+    <axis
+      xyz="0 -1 0" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="100"
+      velocity="1" />
+  </joint>
+  <link
+    name="right_ankle_front_swing_link">
+    <inertial>
+      <origin
+        xyz="-0.027146 2.2372E-05 0.016487"
+        rpy="0 0 0" />
+      <mass
+        value="0.31725" />
+      <inertia
+        ixx="0.00012291"
+        ixy="-1.1101E-08"
+        ixz="1.4979E-06"
+        iyy="0.00012287"
+        iyz="-1.5389E-06"
+        izz="8.1031E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/right_ankle_front_swing_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.5 0.5 0.5 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/right_ankle_front_swing_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_ankle_front_swing"
+    type="revolute">
+    <origin
+      xyz="0 0 -0.12"
+      rpy="0 0 0" />
+    <parent
+      link="right_knee_front_swing_link" />
+    <child
+      link="right_ankle_front_swing_link" />
+    <axis
+      xyz="0 -1 0" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="100"
+      velocity="1" />
+  </joint>
+  <link
+    name="right_ankle_side_swing_link">
+    <inertial>
+      <origin
+        xyz="0.051938 -0.0051363 -0.030595"
+        rpy="0 0 0" />
+      <mass
+        value="0.072019" />
+      <inertia
+        ixx="4.1437E-05"
+        ixy="2.5099E-06"
+        ixz="-5.8321E-07"
+        iyy="9.0142E-05"
+        iyz="-1.8546E-07"
+        izz="0.00012055" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/right_ankle_side_swing_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.5 0.5 0.5 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/right_ankle_side_swing_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_ankle_side_swing"
+    type="revolute">
+    <origin
+      xyz="-0.0543 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="right_ankle_front_swing_link" />
+    <child
+      link="right_ankle_side_swing_link" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="100"
+      velocity="1" />
+  </joint>
+  <link
+    name="neck_rotation_Link">
+    <inertial>
+      <origin
+        xyz="-0.011959 -0.00032428 0.039298"
+        rpy="0 0 0" />
+      <mass
+        value="0.079118" />
+      <inertia
+        ixx="1.3775E-05"
+        ixy="6.8424E-07"
+        ixz="2.4311E-09"
+        iyy="1.8463E-05"
+        iyz="5.9485E-11"
+        izz="2.2185E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/neck_rotation_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.5 0.5 0.5 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/neck_rotation_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="neck_rotation"
+    type="revolute">
+    <origin
+      xyz="0.023943 1E-05 0.47859"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="neck_rotation_Link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="100"
+      velocity="1" />
+  </joint>
+  <link
+    name="neck_front_swing_Link">
+    <inertial>
+      <origin
+        xyz="-0.024276 0.00099999 0.053934"
+        rpy="0 0 0" />
+      <mass
+        value="0.25423" />
+      <inertia
+        ixx="0.00029115"
+        ixy="1.0021E-10"
+        ixz="1.3919E-05"
+        iyy="0.00025896"
+        iyz="-7.4912E-11"
+        izz="0.00019858" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/neck_front_swing_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.5 0.5 0.5 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ikid_robot/meshes/neck_front_swing_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="neck_front_swing"
+    type="revolute">
+    <origin
+      xyz="-0.001 -0.0005 0.0393"
+      rpy="0 0 0" />
+    <parent
+      link="neck_rotation_Link" />
+    <child
+      link="neck_front_swing_Link" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="100"
+      velocity="1" />
+  </joint>
+</robot>
