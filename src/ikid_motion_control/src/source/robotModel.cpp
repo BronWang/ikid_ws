@@ -4,6 +4,7 @@
 #include <string.h>
 #include <stdio.h>
 
+
 robotLink robotModel[26];   // 机器人整体模型数组
 static double eye[3][3] = { {1,0,0},{0,1,0},{0,0,1} };
 
@@ -699,7 +700,9 @@ void robotModelInit(robotLink* robotModel)
 void robotStart()
 {
 	robotModelInit(robotModel);
+#if WRITETXT
 	clearTxt();
+#endif
 	robotModel[MAIN_BODY].p[0] = 0;
 	robotModel[MAIN_BODY].p[1] = 0;
 	robotModel[MAIN_BODY].p[2] = 0.3;
@@ -2741,7 +2744,9 @@ void dFootSupportPhase(double theta_mainbody, double theta_left, double theta_ri
 		robotModel[LEFT_ANKLE_SIDE_SWING].p[1] = solid_left_foot[1] - temp[1];
 		robotModel[LEFT_ANKLE_SIDE_SWING].p[2] = solid_left_foot[2] - temp[2];
 		inverseKinmatics_leftFoot(0, 0, theta_left);
+		#if WRITETXT
 		writeTxt();
+		#endif
 	}
 }
 
