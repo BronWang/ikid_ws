@@ -1,0 +1,38 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/wp/ikid_ws/src/ikid_motion_control/include/ikid_motion_control/matlab_inv.h
+ikid_motion_control/rtwtypes.h
+/home/wp/ikid_ws/src/ikid_motion_control/include/ikid_motion_control/ikid_motion_control/rtwtypes.h
+stddef.h
+-
+stdlib.h
+-
+
+/home/wp/ikid_ws/src/ikid_motion_control/include/ikid_motion_control/rtwtypes.h
+ikid_motion_control/tmwtypes.h
+/home/wp/ikid_ws/src/ikid_motion_control/include/ikid_motion_control/ikid_motion_control/tmwtypes.h
+
+/home/wp/ikid_ws/src/ikid_motion_control/include/ikid_motion_control/tmwtypes.h
+mwstdint.h
+/home/wp/ikid_ws/src/ikid_motion_control/include/ikid_motion_control/mwstdint.h
+limits.h
+-
+stdbool.h
+-
+float.h
+-
+stddef.h
+-
+
+/home/wp/ikid_ws/src/ikid_motion_control/src/source/matlab_inv.c
+ikid_motion_control/matlab_inv.h
+/home/wp/ikid_ws/src/ikid_motion_control/src/source/ikid_motion_control/matlab_inv.h
+math.h
+-
+

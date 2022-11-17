@@ -5,5 +5,6 @@
 # This file includes the relevant testing commands required for 
 # testing this directory and lists subdirectories to be tested as well.
 subdirs("gtest")
+subdirs("ikid_motion_control")
 subdirs("ros_socket")
 subdirs("ikid_robot")

@@ -1,0 +1,8 @@
+prefix=/home/wp/ikid_ws/install
+
+Name: ikid_motion_control
+Description: Description of ikid_motion_control
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
