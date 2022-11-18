@@ -4,6 +4,8 @@
 #include <string.h>
 #include <stdio.h>
 
+#include "std_msgs/Float64.h"
+
 
 robotLink robotModel[26];   // 机器人整体模型数组
 static double eye[3][3] = { {1,0,0},{0,1,0},{0,0,1} };
@@ -19,11 +21,11 @@ double sy = 0.0528 * 2;
 double hy = 0.1125*2;
 double hx = sx;
 // 行走时腰部的高度
-double	c_h = 0.3;
+double	c_h = 0.35;
 // 初始手部离地面高度
 double	hand_h = c_h-0.1;
 // 脚步抬高
-double fh = 0.05;
+double fh = 0.08;
 // 帧间隔时间
 double frame_T = 0.02;
 double T_cell = step_basic_frame * frame_T;
@@ -69,7 +71,7 @@ double basic_right_foot_angle[step_basic_frame][3] =
 // 设计ZMP预观控制器控制器所需要的参数，结果由matlab使用里卡提方程求解计算
 double Q = 1;
 double R = 1e-6;
-double zc = c_h;
+double zc = c_h-0.059;
 double dt = frame_T;
 double gravity = 9.8;
 double state_space_A[3][3] = { {1, dt, dt * dt / 2},
@@ -81,20 +83,117 @@ double state_space_Com[2][3] = {0};
 double sum_e[2] = { 0 };
 const int N_preview = 2 * step_basic_frame + 2 * ds_frame;
 // 计算结果
-double ks = 509.270683139212;
-double kx[3] = { 9901.19795970318,	2023.99459263373,	56.6120346271035 };
+double ks = 513.065437881280;
+double kx[3] = { 9851.88969316012,	1990.28012970936,	56.0842014734676 };
 double zmp_weight_f[2 * N_preview] = {
-	- 667.714646977504, - 786.196342686028, - 817.907469422699, - 781.373266261508, - 709.573090048174, - 628.350099533318, 
-	- 551.900303351159, - 485.399832740281, - 429.038650260766, - 381.101682308915, - 339.661194810992, - 303.223257369275, 
-	- 270.805393500508, - 241.799723354576, - 215.812183616704, - 192.548493248281, - 171.753755856202, - 153.189375234005, 
-	- 136.629074276295, - 121.861533914600, - 108.693379646419, - 96.9504456233559, - 86.4773283501663, - 77.1359073254730, 
-	- 68.8034821621016, - 61.3709325913295, - 54.7410800813827, - 48.8272873423575, - 43.5522676666375, - 38.8470602170006, 
-	- 34.6501333742970, - 30.9065897292540, - 27.5674559555676, - 24.5890468486326, - 21.9323958939230, - 19.5627460505250, 
-	- 17.4490949758736, - 15.5637892411450, - 13.8821624281784, - 12.3822124068436, - 11.0443135396040, - 9.85096000768734, 
-	- 8.78653687233856, - 7.83711586203139, - 6.99027321022830, - 6.23492716192785, - 5.56119302619990, - 4.96025388131022, 
-	- 4.42424524308183, - 3.94615218909936, - 3.51971759381751, - 3.13936027470157, - 2.80010197903805, - 2.49750225663259, 
-	- 2.22760036672922, - 1.98686345946763, - 1.77214035424074, - 1.58062031049487, - 1.40979625179083, - 1.25743196216925
+	-669.044492627062,	-787.219987623670,	-820.144778041021,	-784.735591163344,	-713.111266237544,	
+	-631.117856575249,	-553.379682040566,	-485.524281248355,	-428.025315098025,	-379.266272082517,	
+	-337.295676245997,	-300.545489048873,	-267.957472348649,	-238.867737752140,	-212.848618509385,	
+	-189.588765921199,	-168.825449681171,	-150.316025369870,	-133.830999469237,	-119.155605186269,	
+	-106.092748641192,	-94.4645867982977,	-84.1123848089720,	-74.8952033384214,	-66.6880693827485,	
+	-59.3800871927426,	-52.8727176087803,	-47.0782941373585,	-41.9187621527260,	-37.3246001683038,	
+	-33.2338826922904,	-29.5914543325218,	-26.3481951029935,	-23.4603640796227,	-20.8890125989995,	
+	-18.5994601113972,	-16.5608266214973,	-14.7456160653243,	-13.1293453213723,	-11.6902139505115,	
+	-10.4088102036766,	-9.26784929409089,	-8.25194036951309,	-7.34737902091173,	-6.54196252077760,	
+	-5.82482529842180,	-5.18629243584815,	-4.61774921151216,	-4.11152493522781,	-3.66078950946079,	
+	-3.25946132324272,	-2.90212523735726,	-2.58395955530568,	-2.30067099561974,	-2.04843678892821,	
+	-1.82385311922127,	-1.62388921427297,	-1.44584646632633,	-1.28732203194441,	-1.14617642030094
 };
+
+// 定义机器人舵机信息发布句柄
+ros::Publisher pub_left_ankle_front_swing;  
+ros::Publisher pub_left_ankle_side_swing;  
+ros::Publisher pub_left_arm_elbow_front_swing;  
+ros::Publisher pub_left_arm_front_swing;  
+ros::Publisher pub_left_arm_side_swing;  
+ros::Publisher pub_left_hip_front_swing;  
+ros::Publisher pub_left_hip_rotation;  
+ros::Publisher pub_left_hip_side_swing;  
+ros::Publisher pub_left_knee_front_swing;  
+ros::Publisher pub_neck_front_swing;  
+ros::Publisher pub_neck_rotation;  
+ros::Publisher pub_right_ankle_side_swing;  
+ros::Publisher pub_right_ankle_front_swing;  
+ros::Publisher pub_right_arm_elbow_front_swing;  
+ros::Publisher pub_right_arm_front_swing;  
+ros::Publisher pub_right_arm_side_swing;  
+ros::Publisher pub_right_hip_front_swing;  
+ros::Publisher pub_right_hip_rotation;  
+ros::Publisher pub_right_hip_side_swing;  
+ros::Publisher pub_right_knee_front_swing;
+
+
+void ikidRobotDynaPosPubInit(ros::NodeHandle& n_){
+	//Topic you want to publish
+    pub_left_ankle_front_swing = n_.advertise<std_msgs::Float64>("/ikid_robot/left_ankle_front_swing_position_controller/command", 100);  
+    pub_left_ankle_side_swing = n_.advertise<std_msgs::Float64>("/ikid_robot/left_ankle_side_swing_position_controller/command", 100);  
+    pub_left_arm_elbow_front_swing = n_.advertise<std_msgs::Float64>("/ikid_robot/left_arm_elbow_front_swing_position_controller/command", 100);  
+    pub_left_arm_front_swing = n_.advertise<std_msgs::Float64>("/ikid_robot/left_arm_front_swing_position_controller/command", 100);  
+    pub_left_arm_side_swing = n_.advertise<std_msgs::Float64>("/ikid_robot/left_arm_side_swing_position_controller/command", 100);  
+    pub_left_hip_front_swing = n_.advertise<std_msgs::Float64>("/ikid_robot/left_hip_front_swing_position_controller/command", 100);  
+    pub_left_hip_rotation = n_.advertise<std_msgs::Float64>("/ikid_robot/left_hip_rotation_position_controller/command", 100);  
+    pub_left_hip_side_swing = n_.advertise<std_msgs::Float64>("/ikid_robot/left_hip_side_swing_position_controller/command", 100);  
+    pub_left_knee_front_swing= n_.advertise<std_msgs::Float64>("/ikid_robot/left_knee_front_swing_position_controller/command", 100);  
+    pub_neck_front_swing = n_.advertise<std_msgs::Float64>("/ikid_robot/neck_front_swing_position_controller/command", 100);  
+    pub_neck_rotation = n_.advertise<std_msgs::Float64>("/ikid_robot/neck_rotation_position_controller/command", 100);  
+    pub_right_ankle_front_swing = n_.advertise<std_msgs::Float64>("/ikid_robot/right_ankle_front_swing_position_controller/command", 100);  
+    pub_right_ankle_side_swing = n_.advertise<std_msgs::Float64>("/ikid_robot/right_ankle_side_swing_position_controller/command", 100);  
+    pub_right_arm_elbow_front_swing = n_.advertise<std_msgs::Float64>("/ikid_robot/right_arm_elbow_front_swing_position_controller/command", 100);  
+    pub_right_arm_front_swing = n_.advertise<std_msgs::Float64>("/ikid_robot/right_arm_front_swing_position_controller/command", 100);  
+    pub_right_arm_side_swing = n_.advertise<std_msgs::Float64>("/ikid_robot/right_arm_side_swing_position_controller/command", 100);  
+    pub_right_hip_front_swing = n_.advertise<std_msgs::Float64>("/ikid_robot/right_hip_front_swing_position_controller/command", 100);  
+    pub_right_hip_rotation = n_.advertise<std_msgs::Float64>("/ikid_robot/right_hip_rotation_position_controller/command", 100);  
+    pub_right_hip_side_swing = n_.advertise<std_msgs::Float64>("/ikid_robot/right_hip_side_swing_position_controller/command", 100);  
+    pub_right_knee_front_swing = n_.advertise<std_msgs::Float64>("/ikid_robot/right_knee_front_swing_position_controller/command", 100);  
+    //Topic you want to subscribe  
+    // sub_ = n_.subscribe("/subscribed_topic", 1, &SubscribeAndPublish::callback, this);  //注意这里，和平时使用回调函数不一样了。
+}
+
+void ikidRobotDynaPosPub(){
+	std_msgs::Float64 msg;
+	ros::Rate ikidPubRate(50);
+    msg.data = robotModel[FRONT_NECK_SWING].q;
+    pub_neck_front_swing.publish(msg);
+    msg.data = robotModel[NECK_ROTATION].q;
+    pub_neck_rotation.publish(msg);
+    msg.data = robotModel[LEFT_ARM_FRONT_SWING].q;
+    pub_left_arm_front_swing.publish(msg);
+    msg.data = robotModel[LEFT_ARM_SIDE_SWING].q;
+    pub_left_arm_side_swing.publish(msg);
+    msg.data = robotModel[LEFT_ARM_ELBOW_FRONT_SWING].q;
+    pub_left_arm_elbow_front_swing.publish(msg);
+    msg.data = robotModel[RIGHT_ARM_FRONT_SWING].q;
+    pub_right_arm_front_swing.publish(msg);
+    msg.data = robotModel[RIGHT_ARM_SIDE_SWING].q;
+    pub_right_arm_side_swing.publish(msg);
+    msg.data = robotModel[RIGHT_ARM_ELBOW_FRONT_SWING].q;
+    pub_right_arm_elbow_front_swing.publish(msg);
+    msg.data = robotModel[LEFT_HIP_FRONT_SWING].q;
+    pub_left_hip_front_swing.publish(msg);
+    msg.data = robotModel[LEFT_HIP_SIDE_SWING].q;
+    pub_left_hip_side_swing.publish(msg);
+    msg.data = robotModel[LEFT_HIP_ROTATION].q;
+    pub_left_hip_rotation.publish(msg);
+    msg.data = robotModel[RIGHT_HIP_FRONT_SWING].q;
+    pub_right_hip_front_swing.publish(msg);
+    msg.data = robotModel[RIGHT_HIP_SIDE_SWING].q;
+    pub_right_hip_side_swing.publish(msg);
+    msg.data = robotModel[RIGHT_HIP_ROTATION].q;
+    pub_right_hip_rotation.publish(msg);
+    msg.data = robotModel[LEFT_KNEE_FRONT_SWING].q;
+    pub_left_knee_front_swing.publish(msg);
+    msg.data = robotModel[RIGHT_KNEE_FRONT_SWING].q;
+    pub_right_knee_front_swing.publish(msg);
+    msg.data = robotModel[LEFT_ANKLE_FRONT_SWING].q;
+    pub_left_ankle_front_swing.publish(msg);
+    msg.data = robotModel[LEFT_ANKLE_SIDE_SWING].q;
+    pub_left_ankle_side_swing.publish(msg);
+    msg.data = robotModel[RIGHT_ANKLE_FRONT_SWING].q;
+    pub_right_ankle_front_swing.publish(msg);
+    msg.data = robotModel[RIGHT_ANKLE_SIDE_SWING].q;
+    pub_right_ankle_side_swing.publish(msg);
+	ikidPubRate.sleep();
+}
 
 void robotModelInit(robotLink* robotModel)
 {
@@ -697,15 +796,16 @@ void robotModelInit(robotLink* robotModel)
 	robotModel[LEFT_FOOT].I[2][0] = 0; robotModel[LEFT_FOOT].I[2][1] = 0; robotModel[LEFT_FOOT].I[2][2] = 0;
 }
 
-void robotStart()
+void robotStart(ros::NodeHandle& n_)
 {
 	robotModelInit(robotModel);
+	ikidRobotDynaPosPubInit(n_);
 #if WRITETXT
 	clearTxt();
 #endif
 	robotModel[MAIN_BODY].p[0] = 0;
 	robotModel[MAIN_BODY].p[1] = 0;
-	robotModel[MAIN_BODY].p[2] = 0.3;
+	robotModel[MAIN_BODY].p[2] = c_h;
 	forwardKinematics(MAIN_BODY);
 	double R[3][3];
 	double temp[3];
@@ -729,6 +829,55 @@ void robotStart()
 	PC_MAIN_BODY[2] = Com[2] - robotModel[MAIN_BODY].p[2];
 	state_space_Com[0][0] = Com[0];
 	state_space_Com[1][0] = Com[1];
+
+#if ROSPUB
+	
+	for(int i = 0; i < 21; i++){
+		std_msgs::Float64 msg;
+		ros::Rate ikidPubRate(20);
+		msg.data = robotModel[FRONT_NECK_SWING].q/20*i;
+		pub_neck_front_swing.publish(msg);
+		msg.data = robotModel[NECK_ROTATION].q/20*i;
+		pub_neck_rotation.publish(msg);
+		msg.data = robotModel[LEFT_ARM_FRONT_SWING].q/20*i;
+		pub_left_arm_front_swing.publish(msg);
+		msg.data = robotModel[LEFT_ARM_SIDE_SWING].q/20*i;
+		pub_left_arm_side_swing.publish(msg);
+		msg.data = robotModel[LEFT_ARM_ELBOW_FRONT_SWING].q/20*i;
+		pub_left_arm_elbow_front_swing.publish(msg);
+		msg.data = robotModel[RIGHT_ARM_FRONT_SWING].q/20*i;
+		pub_right_arm_front_swing.publish(msg);
+		msg.data = robotModel[RIGHT_ARM_SIDE_SWING].q/20*i;
+		pub_right_arm_side_swing.publish(msg);
+		msg.data = robotModel[RIGHT_ARM_ELBOW_FRONT_SWING].q/20*i;
+		pub_right_arm_elbow_front_swing.publish(msg);
+		msg.data = robotModel[LEFT_HIP_FRONT_SWING].q/20*i;
+		pub_left_hip_front_swing.publish(msg);
+		msg.data = robotModel[LEFT_HIP_SIDE_SWING].q/20*i;
+		pub_left_hip_side_swing.publish(msg);
+		msg.data = robotModel[LEFT_HIP_ROTATION].q/20*i;
+		pub_left_hip_rotation.publish(msg);
+		msg.data = robotModel[RIGHT_HIP_FRONT_SWING].q/20*i;
+		pub_right_hip_front_swing.publish(msg);
+		msg.data = robotModel[RIGHT_HIP_SIDE_SWING].q/20*i;
+		pub_right_hip_side_swing.publish(msg);
+		msg.data = robotModel[RIGHT_HIP_ROTATION].q/20*i;
+		pub_right_hip_rotation.publish(msg);
+		msg.data = robotModel[LEFT_KNEE_FRONT_SWING].q/20*i;
+		pub_left_knee_front_swing.publish(msg);
+		msg.data = robotModel[RIGHT_KNEE_FRONT_SWING].q/20*i;
+		pub_right_knee_front_swing.publish(msg);
+		msg.data = robotModel[LEFT_ANKLE_FRONT_SWING].q/20*i;
+		pub_left_ankle_front_swing.publish(msg);
+		msg.data = robotModel[LEFT_ANKLE_SIDE_SWING].q/20*i;
+		pub_left_ankle_side_swing.publish(msg);
+		msg.data = robotModel[RIGHT_ANKLE_FRONT_SWING].q/20*i;
+		pub_right_ankle_front_swing.publish(msg);
+		msg.data = robotModel[RIGHT_ANKLE_SIDE_SWING].q/20*i;
+		pub_right_ankle_side_swing.publish(msg);
+		ikidPubRate.sleep();
+	}
+#endif
 }
 
 void MatrixSquare3x3(double a[3][3], double a_square[3][3]) {
@@ -2089,6 +2238,9 @@ void trajPlan() {
 #if WRITETXT
 			writeTxt();
 #endif
+#if ROSPUB
+	ikidRobotDynaPosPub();
+#endif
 		}
 	}
 	else
@@ -2190,6 +2342,9 @@ void trajPlan() {
 
 #if WRITETXT
 			writeTxt();
+#endif
+#if ROSPUB
+	ikidRobotDynaPosPub();
 #endif
 		}
 	}
@@ -2307,6 +2462,9 @@ void anglePlan(double delta) {
 #if WRITETXT
 			writeTxt();
 #endif
+#if ROSPUB
+	ikidRobotDynaPosPub();
+#endif
 		}
 	}
 	else
@@ -2408,6 +2566,9 @@ void anglePlan(double delta) {
 
 #if WRITETXT
 			writeTxt();
+#endif
+#if ROSPUB
+	ikidRobotDynaPosPub();
 #endif
 		}
 	}
@@ -2529,6 +2690,9 @@ void anglePlan(double delta) {
 #if WRITETXT
 			writeTxt();
 #endif
+#if ROSPUB
+	ikidRobotDynaPosPub();
+#endif
 		}
 	}
 	else
@@ -2630,6 +2794,9 @@ void anglePlan(double delta) {
 
 #if WRITETXT
 			writeTxt();
+#endif
+#if ROSPUB
+	ikidRobotDynaPosPub();
 #endif
 		}
 	}
@@ -2744,9 +2911,12 @@ void dFootSupportPhase(double theta_mainbody, double theta_left, double theta_ri
 		robotModel[LEFT_ANKLE_SIDE_SWING].p[1] = solid_left_foot[1] - temp[1];
 		robotModel[LEFT_ANKLE_SIDE_SWING].p[2] = solid_left_foot[2] - temp[2];
 		inverseKinmatics_leftFoot(0, 0, theta_left);
-		#if WRITETXT
-		writeTxt();
-		#endif
+#if WRITETXT
+	writeTxt();
+#endif
+#if ROSPUB
+	ikidRobotDynaPosPub();
+#endif
 	}
 }
 

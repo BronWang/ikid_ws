@@ -1,7 +1,10 @@
+#include <ros/ros.h>
+
 #ifndef ROBOTMODEL
 #define ROBOTMODEL
 #define DEBUG 0
 #define WRITETXT 0
+#define ROSPUB 1    // 是否向Gazebo中的关节控制器发送计算出的关节位置信息
 #define SWING_ARM 1
 #define PART_NUMBER 26
 #define NONE_JOINT  255
@@ -81,9 +84,11 @@ enum {
 // id 22 左膝前摆		初始位置2048    前1024-3096后
 // id 23 左踝前摆		初始位置2048    下1376-2851上
 // id 24 左踝侧摆		初始位置2048    右1536-2560左
-// id 25 左脚端		    
+// id 25 左脚端	
+void ikidRobotDynaPosPubInit(ros::NodeHandle& n_);	    
+void ikidRobotDynaPosPub();
 void robotModelInit(robotLink*); // 已测试
-void robotStart(); // 已测试
+void robotStart(ros::NodeHandle& n_); // 已测试
 void MatrixSquare3x3(double a[3][3], double a_square[3][3]); // 已测试
 void MatrixMultiMatrix3x3(double a[3][3], double b[3][3], double result[3][3]); // 已测试
 void MatrixMultiVector3x1(double a[3][3], double b[3], double result[3]); // 已测试
