@@ -14,7 +14,7 @@
 
 (defclass ikid_motion_control::cmd_walk
   :super ros::object
-  :slots (_sx _sy _var_theta ))
+  :slots (_sx _sy _var_theta _walk_with_ball ))
 
 (defmethod ikid_motion_control::cmd_walk
   (:init
@@ -22,11 +22,13 @@
     ((:sx __sx) 0.0)
     ((:sy __sy) 0.0)
     ((:var_theta __var_theta) 0.0)
+    ((:walk_with_ball __walk_with_ball) nil)
     )
    (send-super :init)
    (setq _sx (float __sx))
    (setq _sy (float __sy))
    (setq _var_theta (float __var_theta))
+   (setq _walk_with_ball __walk_with_ball)
    self)
   (:sx
    (&optional __sx)
@@ -37,6 +39,9 @@
   (:var_theta
    (&optional __var_theta)
    (if __var_theta (setq _var_theta __var_theta)) _var_theta)
+  (:walk_with_ball
+   (&optional (__walk_with_ball :null))
+   (if (not (eq __walk_with_ball :null)) (setq _walk_with_ball __walk_with_ball)) _walk_with_ball)
   (:serialization-length
    ()
    (+
@@ -46,6 +51,8 @@
     8
     ;; float64 _var_theta
     8
+    ;; bool _walk_with_ball
+    1
     ))
   (:serialize
    (&optional strm)
@@ -57,6 +64,8 @@
        (sys::poke _sy (send s :buffer) (send s :count) :double) (incf (stream-count s) 8)
      ;; float64 _var_theta
        (sys::poke _var_theta (send s :buffer) (send s :count) :double) (incf (stream-count s) 8)
+     ;; bool _walk_with_ball
+       (if _walk_with_ball (write-byte -1 s) (write-byte 0 s))
      ;;
      (if (null strm) (get-output-stream-string s))))
   (:deserialize
@@ -67,20 +76,23 @@
      (setq _sy (sys::peek buf ptr- :double)) (incf ptr- 8)
    ;; float64 _var_theta
      (setq _var_theta (sys::peek buf ptr- :double)) (incf ptr- 8)
+   ;; bool _walk_with_ball
+     (setq _walk_with_ball (not (= 0 (sys::peek buf ptr- :char)))) (incf ptr- 1)
    ;;
    self)
   )
 
-(setf (get ikid_motion_control::cmd_walk :md5sum-) "642b1806da11ae8975a1c844cb320e6d")
+(setf (get ikid_motion_control::cmd_walk :md5sum-) "9ad235b8f570d179119733addd31d488")
 (setf (get ikid_motion_control::cmd_walk :datatype-) "ikid_motion_control/cmd_walk")
 (setf (get ikid_motion_control::cmd_walk :definition-)
       "float64 sx
 float64 sy
 float64 var_theta
+bool walk_with_ball
 ")
 
 
 
-(provide :ikid_motion_control/cmd_walk "642b1806da11ae8975a1c844cb320e6d")
+(provide :ikid_motion_control/cmd_walk "9ad235b8f570d179119733addd31d488")
 
 

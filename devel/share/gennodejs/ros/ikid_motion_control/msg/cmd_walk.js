@@ -21,6 +21,7 @@ class cmd_walk {
       this.sx = null;
       this.sy = null;
       this.var_theta = null;
+      this.walk_with_ball = null;
     }
     else {
       if (initObj.hasOwnProperty('sx')) {
@@ -41,6 +42,12 @@ class cmd_walk {
       else {
         this.var_theta = 0.0;
       }
+      if (initObj.hasOwnProperty('walk_with_ball')) {
+        this.walk_with_ball = initObj.walk_with_ball
+      }
+      else {
+        this.walk_with_ball = false;
+      }
     }
   }
 
@@ -52,6 +59,8 @@ class cmd_walk {
     bufferOffset = _serializer.float64(obj.sy, buffer, bufferOffset);
     // Serialize message field [var_theta]
     bufferOffset = _serializer.float64(obj.var_theta, buffer, bufferOffset);
+    // Serialize message field [walk_with_ball]
+    bufferOffset = _serializer.bool(obj.walk_with_ball, buffer, bufferOffset);
     return bufferOffset;
   }
 
@@ -65,11 +74,13 @@ class cmd_walk {
     data.sy = _deserializer.float64(buffer, bufferOffset);
     // Deserialize message field [var_theta]
     data.var_theta = _deserializer.float64(buffer, bufferOffset);
+    // Deserialize message field [walk_with_ball]
+    data.walk_with_ball = _deserializer.bool(buffer, bufferOffset);
     return data;
   }
 
   static getMessageSize(object) {
-    return 24;
+    return 25;
   }
 
   static datatype() {
@@ -79,7 +90,7 @@ class cmd_walk {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return '642b1806da11ae8975a1c844cb320e6d';
+    return '9ad235b8f570d179119733addd31d488';
   }
 
   static messageDefinition() {
@@ -88,6 +99,7 @@ class cmd_walk {
     float64 sx
     float64 sy
     float64 var_theta
+    bool walk_with_ball
     `;
   }
 
@@ -116,6 +128,13 @@ class cmd_walk {
     }
     else {
       resolved.var_theta = 0.0
+    }
+
+    if (msg.walk_with_ball !== undefined) {
+      resolved.walk_with_ball = msg.walk_with_ball;
+    }
+    else {
+      resolved.walk_with_ball = false
     }
 
     return resolved;

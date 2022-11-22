@@ -26,12 +26,14 @@ struct cmd_walk_
   cmd_walk_()
     : sx(0.0)
     , sy(0.0)
-    , var_theta(0.0)  {
+    , var_theta(0.0)
+    , walk_with_ball(false)  {
     }
   cmd_walk_(const ContainerAllocator& _alloc)
     : sx(0.0)
     , sy(0.0)
-    , var_theta(0.0)  {
+    , var_theta(0.0)
+    , walk_with_ball(false)  {
   (void)_alloc;
     }
 
@@ -45,6 +47,9 @@ struct cmd_walk_
 
    typedef double _var_theta_type;
   _var_theta_type var_theta;
+
+   typedef uint8_t _walk_with_ball_type;
+  _walk_with_ball_type walk_with_ball;
 
 
 
@@ -77,7 +82,8 @@ bool operator==(const ::ikid_motion_control::cmd_walk_<ContainerAllocator1> & lh
 {
   return lhs.sx == rhs.sx &&
     lhs.sy == rhs.sy &&
-    lhs.var_theta == rhs.var_theta;
+    lhs.var_theta == rhs.var_theta &&
+    lhs.walk_with_ball == rhs.walk_with_ball;
 }
 
 template<typename ContainerAllocator1, typename ContainerAllocator2>
@@ -134,12 +140,12 @@ struct MD5Sum< ::ikid_motion_control::cmd_walk_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "642b1806da11ae8975a1c844cb320e6d";
+    return "9ad235b8f570d179119733addd31d488";
   }
 
   static const char* value(const ::ikid_motion_control::cmd_walk_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x642b1806da11ae89ULL;
-  static const uint64_t static_value2 = 0x75a1c844cb320e6dULL;
+  static const uint64_t static_value1 = 0x9ad235b8f570d179ULL;
+  static const uint64_t static_value2 = 0x119733addd31d488ULL;
 };
 
 template<class ContainerAllocator>
@@ -161,6 +167,7 @@ struct Definition< ::ikid_motion_control::cmd_walk_<ContainerAllocator> >
     return "float64 sx\n"
 "float64 sy\n"
 "float64 var_theta\n"
+"bool walk_with_ball\n"
 ;
   }
 
@@ -182,6 +189,7 @@ namespace serialization
       stream.next(m.sx);
       stream.next(m.sy);
       stream.next(m.var_theta);
+      stream.next(m.walk_with_ball);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -206,6 +214,8 @@ struct Printer< ::ikid_motion_control::cmd_walk_<ContainerAllocator> >
     Printer<double>::stream(s, indent + "  ", v.sy);
     s << indent << "var_theta: ";
     Printer<double>::stream(s, indent + "  ", v.var_theta);
+    s << indent << "walk_with_ball: ";
+    Printer<uint8_t>::stream(s, indent + "  ", v.walk_with_ball);
   }
 };
 

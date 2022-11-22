@@ -12,7 +12,7 @@ if(NOT DEFINED CMAKE_INSTALL_CONFIG_NAME)
     string(REGEX REPLACE "^[^A-Za-z0-9_]+" ""
            CMAKE_INSTALL_CONFIG_NAME "${BUILD_TYPE}")
   else()
-    set(CMAKE_INSTALL_CONFIG_NAME "RelWithDebInfo")
+    set(CMAKE_INSTALL_CONFIG_NAME "Debug")
   endif()
   message(STATUS "Install configuration: \"${CMAKE_INSTALL_CONFIG_NAME}\"")
 endif()
@@ -134,6 +134,7 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/wp/ikid_ws/build/ikid_motion_control/cmake_install.cmake")
   include("/home/wp/ikid_ws/build/ros_socket/cmake_install.cmake")
   include("/home/wp/ikid_ws/build/ikid_robot/cmake_install.cmake")
+  include("/home/wp/ikid_ws/build/ros_qt_ikid/cmake_install.cmake")
 
 endif()
 

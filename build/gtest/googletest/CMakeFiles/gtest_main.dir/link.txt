@@ -1,1 +1,1 @@
-/usr/bin/c++ -fPIC -O2 -g -DNDEBUG  -shared -Wl,-soname,libgtest_main.so -o ../lib/libgtest_main.so CMakeFiles/gtest_main.dir/src/gtest_main.cc.o  -Wl,-rpath,/home/wp/ikid_ws/build/gtest/lib ../lib/libgtest.so -lpthread 
+/usr/bin/c++ -fPIC -g  -shared -Wl,-soname,libgtest_maind.so -o ../lib/libgtest_maind.so CMakeFiles/gtest_main.dir/src/gtest_main.cc.o  -Wl,-rpath,/home/wp/ikid_ws/build/gtest/lib ../lib/libgtestd.so -lpthread 

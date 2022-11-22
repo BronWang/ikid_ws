@@ -765,6 +765,19 @@ _catkin_empty_exported_target/fast:
 	$(MAKE) -f ikid_robot/CMakeFiles/_catkin_empty_exported_target.dir/build.make ikid_robot/CMakeFiles/_catkin_empty_exported_target.dir/build
 .PHONY : _catkin_empty_exported_target/fast
 
+#=============================================================================
+# Target rules for targets named ros_qt_ikid
+
+# Build rule for target.
+ros_qt_ikid: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ros_qt_ikid
+.PHONY : ros_qt_ikid
+
+# fast build rule for target.
+ros_qt_ikid/fast:
+	$(MAKE) -f ros_qt_ikid/CMakeFiles/ros_qt_ikid.dir/build.make ros_qt_ikid/CMakeFiles/ros_qt_ikid.dir/build
+.PHONY : ros_qt_ikid/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -824,6 +837,7 @@ help:
 	@echo "... client_node"
 	@echo "... server_node"
 	@echo "... _catkin_empty_exported_target"
+	@echo "... ros_qt_ikid"
 .PHONY : help
 
 

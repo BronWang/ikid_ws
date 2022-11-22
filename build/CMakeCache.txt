@@ -47,7 +47,7 @@ CMAKE_AR:FILEPATH=/usr/bin/ar
 
 //Choose the type of build, options are: None Debug Release RelWithDebInfo
 // MinSizeRel ...
-CMAKE_BUILD_TYPE:STRING=RelWithDebInfo
+CMAKE_BUILD_TYPE:STRING=Debug
 
 //Enable/Disable color output during build.
 CMAKE_COLOR_MAKEFILE:BOOL=ON
@@ -352,6 +352,18 @@ Project_BINARY_DIR:STATIC=/home/wp/ikid_ws/build
 //Value Computed by CMake
 Project_SOURCE_DIR:STATIC=/home/wp/ikid_ws/src
 
+//The directory containing a CMake configuration file for Qt5Core.
+Qt5Core_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/Qt5Core
+
+//The directory containing a CMake configuration file for Qt5Gui.
+Qt5Gui_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui
+
+//The directory containing a CMake configuration file for Qt5Widgets.
+Qt5Widgets_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets
+
+//The directory containing a CMake configuration file for Qt5.
+Qt5_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/Qt5
+
 //Path to a library.
 RT_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/librt.so
 
@@ -462,7 +474,7 @@ ikid_robot_BINARY_DIR:STATIC=/home/wp/ikid_ws/build/ikid_robot
 ikid_robot_SOURCE_DIR:STATIC=/home/wp/ikid_ws/src/ikid_robot
 
 //Path to a library.
-lib:FILEPATH=/opt/ros/noetic/lib/libserial.so
+lib:FILEPATH=/opt/ros/noetic/lib/libxmlrpcpp.so
 
 //Dependencies for the target
 matlab_inv_LIB_DEPENDS:STATIC=general;/opt/ros/noetic/lib/libroscpp.so;general;/usr/lib/x86_64-linux-gnu/libpthread.so;general;/usr/lib/x86_64-linux-gnu/libboost_chrono.so.1.71.0;general;/usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.71.0;general;/opt/ros/noetic/lib/librosconsole.so;general;/opt/ros/noetic/lib/librosconsole_log4cxx.so;general;/opt/ros/noetic/lib/librosconsole_backend_interface.so;general;/usr/lib/x86_64-linux-gnu/liblog4cxx.so;general;/usr/lib/x86_64-linux-gnu/libboost_regex.so.1.71.0;general;/opt/ros/noetic/lib/libxmlrpcpp.so;general;/opt/ros/noetic/lib/libroscpp_serialization.so;general;/opt/ros/noetic/lib/librostime.so;general;/usr/lib/x86_64-linux-gnu/libboost_date_time.so.1.71.0;general;/opt/ros/noetic/lib/libcpp_common.so;general;/usr/lib/x86_64-linux-gnu/libboost_system.so.1.71.0;general;/usr/lib/x86_64-linux-gnu/libboost_thread.so.1.71.0;general;/usr/lib/x86_64-linux-gnu/libconsole_bridge.so.0.4;
@@ -484,6 +496,12 @@ message_runtime_DIR:PATH=/opt/ros/noetic/share/message_runtime/cmake
 
 //Dependencies for the target
 robotModel_LIB_DEPENDS:STATIC=general;/opt/ros/noetic/lib/libroscpp.so;general;/usr/lib/x86_64-linux-gnu/libpthread.so;general;/usr/lib/x86_64-linux-gnu/libboost_chrono.so.1.71.0;general;/usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.71.0;general;/opt/ros/noetic/lib/librosconsole.so;general;/opt/ros/noetic/lib/librosconsole_log4cxx.so;general;/opt/ros/noetic/lib/librosconsole_backend_interface.so;general;/usr/lib/x86_64-linux-gnu/liblog4cxx.so;general;/usr/lib/x86_64-linux-gnu/libboost_regex.so.1.71.0;general;/opt/ros/noetic/lib/libxmlrpcpp.so;general;/opt/ros/noetic/lib/libroscpp_serialization.so;general;/opt/ros/noetic/lib/librostime.so;general;/usr/lib/x86_64-linux-gnu/libboost_date_time.so.1.71.0;general;/opt/ros/noetic/lib/libcpp_common.so;general;/usr/lib/x86_64-linux-gnu/libboost_system.so.1.71.0;general;/usr/lib/x86_64-linux-gnu/libboost_thread.so.1.71.0;general;/usr/lib/x86_64-linux-gnu/libconsole_bridge.so.0.4;
+
+//Value Computed by CMake
+ros_qt_ikid_BINARY_DIR:STATIC=/home/wp/ikid_ws/build/ros_qt_ikid
+
+//Value Computed by CMake
+ros_qt_ikid_SOURCE_DIR:STATIC=/home/wp/ikid_ws/src/ros_qt_ikid
 
 //Value Computed by CMake
 ros_socket_BINARY_DIR:STATIC=/home/wp/ikid_ws/build/ros_socket
@@ -672,7 +690,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=7
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=8
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
