@@ -1,0 +1,726 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						4,
+						5,
+						6,
+						7
+					],
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.0.2"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						2,
+						4,
+						5,
+						42,
+						52
+					]
+				},
+				{
+					"build" : "gtest",
+					"childIndexes" : 
+					[
+						2
+					],
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.8"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "/usr/src/googletest"
+				},
+				{
+					"build" : "gtest/googlemock",
+					"childIndexes" : 
+					[
+						3
+					],
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.6.4"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 2,
+					"source" : "/usr/src/googletest/googlemock",
+					"targetIndexes" : 
+					[
+						6,
+						7
+					]
+				},
+				{
+					"build" : "gtest/googletest",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.6.4"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 3,
+					"source" : "/usr/src/googletest/googletest",
+					"targetIndexes" : 
+					[
+						8,
+						9
+					]
+				},
+				{
+					"build" : "ikid_motion_control",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.0.2"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 4,
+					"source" : "ikid_motion_control",
+					"targetIndexes" : 
+					[
+						1,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18,
+						19,
+						20,
+						21,
+						22,
+						24,
+						27,
+						29,
+						32,
+						33,
+						34,
+						35,
+						36,
+						37,
+						38,
+						39,
+						40,
+						41,
+						46,
+						47,
+						48,
+						49,
+						50,
+						51
+					]
+				},
+				{
+					"build" : "ros_socket",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.0.2"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 5,
+					"source" : "ros_socket",
+					"targetIndexes" : 
+					[
+						3,
+						23,
+						25,
+						26,
+						28,
+						30,
+						43,
+						44,
+						45
+					]
+				},
+				{
+					"build" : "ikid_robot",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.3"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 6,
+					"source" : "ikid_robot",
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"build" : "ros_qt_ikid",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 7,
+					"source" : "ros_qt_ikid",
+					"targetIndexes" : 
+					[
+						31
+					]
+				}
+			],
+			"name" : "RelWithDebInfo",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1,
+						4,
+						5,
+						6,
+						7
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "Project",
+					"targetIndexes" : 
+					[
+						2,
+						4,
+						5,
+						42,
+						52
+					]
+				},
+				{
+					"childIndexes" : 
+					[
+						2
+					],
+					"directoryIndexes" : 
+					[
+						1
+					],
+					"name" : "googletest-distribution",
+					"parentIndex" : 0
+				},
+				{
+					"childIndexes" : 
+					[
+						3
+					],
+					"directoryIndexes" : 
+					[
+						2
+					],
+					"name" : "gmock",
+					"parentIndex" : 1,
+					"targetIndexes" : 
+					[
+						6,
+						7
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						3
+					],
+					"name" : "gtest",
+					"parentIndex" : 2,
+					"targetIndexes" : 
+					[
+						8,
+						9
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						4
+					],
+					"name" : "ikid_motion_control",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						1,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18,
+						19,
+						20,
+						21,
+						22,
+						24,
+						27,
+						29,
+						32,
+						33,
+						34,
+						35,
+						36,
+						37,
+						38,
+						39,
+						40,
+						41,
+						46,
+						47,
+						48,
+						49,
+						50,
+						51
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						5
+					],
+					"name" : "ros_socket",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						3,
+						23,
+						25,
+						26,
+						28,
+						30,
+						43,
+						44,
+						45
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						6
+					],
+					"name" : "ikid_robot",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						7
+					],
+					"name" : "ros_qt_ikid",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						31
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 6,
+					"id" : "_catkin_empty_exported_target::@f0727b80a7f1cf509bb4",
+					"jsonFile" : "target-_catkin_empty_exported_target-RelWithDebInfo-d23fd723f7d0f070fe32.json",
+					"name" : "_catkin_empty_exported_target",
+					"projectIndex" : 6
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "_ikid_motion_control_generate_messages_check_deps_cmd_walk::@0d7eeefa06facc620343",
+					"jsonFile" : "target-_ikid_motion_control_generate_messages_check_deps_cmd_walk-RelWithDebInfo-a5f5cc46994b808837ea.json",
+					"name" : "_ikid_motion_control_generate_messages_check_deps_cmd_walk",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "clean_test_results::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-clean_test_results-RelWithDebInfo-77c3211f710c14f3c9c1.json",
+					"name" : "clean_test_results",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "client_node::@1c08b48abe6b4e2f409c",
+					"jsonFile" : "target-client_node-RelWithDebInfo-5a02656847ddf73224aa.json",
+					"name" : "client_node",
+					"projectIndex" : 5
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "download_extra_data::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-download_extra_data-RelWithDebInfo-26d419a6bf2b582c2a72.json",
+					"name" : "download_extra_data",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "doxygen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-doxygen-RelWithDebInfo-88595cbda2a15872d775.json",
+					"name" : "doxygen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "gmock::@e3f94eedc5dc07131386",
+					"jsonFile" : "target-gmock-RelWithDebInfo-5c80accc52239e8b3dfb.json",
+					"name" : "gmock",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "gmock_main::@e3f94eedc5dc07131386",
+					"jsonFile" : "target-gmock_main-RelWithDebInfo-a7f13d8edc50e4e98275.json",
+					"name" : "gmock_main",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "gtest::@b738d542747fbb7ea6e3",
+					"jsonFile" : "target-gtest-RelWithDebInfo-ba0df07d5e40591bb045.json",
+					"name" : "gtest",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "gtest_main::@b738d542747fbb7ea6e3",
+					"jsonFile" : "target-gtest_main-RelWithDebInfo-88356500bc8100142f6e.json",
+					"name" : "gtest_main",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ikid_motion_control_gencpp::@0d7eeefa06facc620343",
+					"jsonFile" : "target-ikid_motion_control_gencpp-RelWithDebInfo-5f3d69462655921df55c.json",
+					"name" : "ikid_motion_control_gencpp",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ikid_motion_control_generate_messages::@0d7eeefa06facc620343",
+					"jsonFile" : "target-ikid_motion_control_generate_messages-RelWithDebInfo-b5c80daec4430acf3dd3.json",
+					"name" : "ikid_motion_control_generate_messages",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ikid_motion_control_generate_messages_cpp::@0d7eeefa06facc620343",
+					"jsonFile" : "target-ikid_motion_control_generate_messages_cpp-RelWithDebInfo-dd82a5be880c4a5d8e29.json",
+					"name" : "ikid_motion_control_generate_messages_cpp",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ikid_motion_control_generate_messages_eus::@0d7eeefa06facc620343",
+					"jsonFile" : "target-ikid_motion_control_generate_messages_eus-RelWithDebInfo-d8c2fe9d5a1fe2c7b845.json",
+					"name" : "ikid_motion_control_generate_messages_eus",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ikid_motion_control_generate_messages_lisp::@0d7eeefa06facc620343",
+					"jsonFile" : "target-ikid_motion_control_generate_messages_lisp-RelWithDebInfo-da180528cd4bb6baa875.json",
+					"name" : "ikid_motion_control_generate_messages_lisp",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ikid_motion_control_generate_messages_nodejs::@0d7eeefa06facc620343",
+					"jsonFile" : "target-ikid_motion_control_generate_messages_nodejs-RelWithDebInfo-70475e37a6e73ab7cd09.json",
+					"name" : "ikid_motion_control_generate_messages_nodejs",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ikid_motion_control_generate_messages_py::@0d7eeefa06facc620343",
+					"jsonFile" : "target-ikid_motion_control_generate_messages_py-RelWithDebInfo-b53da6640a52ada432eb.json",
+					"name" : "ikid_motion_control_generate_messages_py",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ikid_motion_control_geneus::@0d7eeefa06facc620343",
+					"jsonFile" : "target-ikid_motion_control_geneus-RelWithDebInfo-df649315995fb9373ac2.json",
+					"name" : "ikid_motion_control_geneus",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ikid_motion_control_genlisp::@0d7eeefa06facc620343",
+					"jsonFile" : "target-ikid_motion_control_genlisp-RelWithDebInfo-e7457833fa325d4fefef.json",
+					"name" : "ikid_motion_control_genlisp",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ikid_motion_control_gennodejs::@0d7eeefa06facc620343",
+					"jsonFile" : "target-ikid_motion_control_gennodejs-RelWithDebInfo-fd3453fc20938877e290.json",
+					"name" : "ikid_motion_control_gennodejs",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "ikid_motion_control_genpy::@0d7eeefa06facc620343",
+					"jsonFile" : "target-ikid_motion_control_genpy-RelWithDebInfo-f3bc81c096aae8d8ba42.json",
+					"name" : "ikid_motion_control_genpy",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "matlab_inv::@0d7eeefa06facc620343",
+					"jsonFile" : "target-matlab_inv-RelWithDebInfo-e38560152d40f66781dc.json",
+					"name" : "matlab_inv",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "matlab_inv_data::@0d7eeefa06facc620343",
+					"jsonFile" : "target-matlab_inv_data-RelWithDebInfo-c8fe59fb69d22ec898b6.json",
+					"name" : "matlab_inv_data",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "matlab_inv_data_ros_socket::@1c08b48abe6b4e2f409c",
+					"jsonFile" : "target-matlab_inv_data_ros_socket-RelWithDebInfo-6d27b72cf531b5c6a8ba.json",
+					"name" : "matlab_inv_data_ros_socket",
+					"projectIndex" : 5
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "matlab_inv_initialize::@0d7eeefa06facc620343",
+					"jsonFile" : "target-matlab_inv_initialize-RelWithDebInfo-3c6274bf122c084c00e0.json",
+					"name" : "matlab_inv_initialize",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "matlab_inv_initialize_ros_socket::@1c08b48abe6b4e2f409c",
+					"jsonFile" : "target-matlab_inv_initialize_ros_socket-RelWithDebInfo-11927f487a96aaa235f7.json",
+					"name" : "matlab_inv_initialize_ros_socket",
+					"projectIndex" : 5
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "matlab_inv_ros_socket::@1c08b48abe6b4e2f409c",
+					"jsonFile" : "target-matlab_inv_ros_socket-RelWithDebInfo-0bd6b0c07c86900145bd.json",
+					"name" : "matlab_inv_ros_socket",
+					"projectIndex" : 5
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "matlab_inv_terminate::@0d7eeefa06facc620343",
+					"jsonFile" : "target-matlab_inv_terminate-RelWithDebInfo-72ba1135e697eebc65d0.json",
+					"name" : "matlab_inv_terminate",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "matlab_inv_terminate_ros_socket::@1c08b48abe6b4e2f409c",
+					"jsonFile" : "target-matlab_inv_terminate_ros_socket-RelWithDebInfo-0859280135dc61b1333f.json",
+					"name" : "matlab_inv_terminate_ros_socket",
+					"projectIndex" : 5
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "robotModel::@0d7eeefa06facc620343",
+					"jsonFile" : "target-robotModel-RelWithDebInfo-8fa92138ab1b452c9e81.json",
+					"name" : "robotModel",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "robotModel_ros_socket::@1c08b48abe6b4e2f409c",
+					"jsonFile" : "target-robotModel_ros_socket-RelWithDebInfo-6fc84917b2d1ac546a9a.json",
+					"name" : "robotModel_ros_socket",
+					"projectIndex" : 5
+				},
+				{
+					"directoryIndex" : 7,
+					"id" : "ros_qt_ikid::@b7692e3fc5817362a1da",
+					"jsonFile" : "target-ros_qt_ikid-RelWithDebInfo-e69b8072e736cda060cb.json",
+					"name" : "ros_qt_ikid",
+					"projectIndex" : 7
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "roscpp_generate_messages_cpp::@0d7eeefa06facc620343",
+					"jsonFile" : "target-roscpp_generate_messages_cpp-RelWithDebInfo-100a55890dbeb63866de.json",
+					"name" : "roscpp_generate_messages_cpp",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "roscpp_generate_messages_eus::@0d7eeefa06facc620343",
+					"jsonFile" : "target-roscpp_generate_messages_eus-RelWithDebInfo-69ecd8e55cfd5f209b13.json",
+					"name" : "roscpp_generate_messages_eus",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "roscpp_generate_messages_lisp::@0d7eeefa06facc620343",
+					"jsonFile" : "target-roscpp_generate_messages_lisp-RelWithDebInfo-99718c14bf52165f7d14.json",
+					"name" : "roscpp_generate_messages_lisp",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "roscpp_generate_messages_nodejs::@0d7eeefa06facc620343",
+					"jsonFile" : "target-roscpp_generate_messages_nodejs-RelWithDebInfo-311340b0c935272dbb70.json",
+					"name" : "roscpp_generate_messages_nodejs",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "roscpp_generate_messages_py::@0d7eeefa06facc620343",
+					"jsonFile" : "target-roscpp_generate_messages_py-RelWithDebInfo-112e3989fdaa4cdfe3e5.json",
+					"name" : "roscpp_generate_messages_py",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "rosgraph_msgs_generate_messages_cpp::@0d7eeefa06facc620343",
+					"jsonFile" : "target-rosgraph_msgs_generate_messages_cpp-RelWithDebInfo-5f9d0192e632352a6579.json",
+					"name" : "rosgraph_msgs_generate_messages_cpp",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "rosgraph_msgs_generate_messages_eus::@0d7eeefa06facc620343",
+					"jsonFile" : "target-rosgraph_msgs_generate_messages_eus-RelWithDebInfo-c2929915238c09bc3a72.json",
+					"name" : "rosgraph_msgs_generate_messages_eus",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "rosgraph_msgs_generate_messages_lisp::@0d7eeefa06facc620343",
+					"jsonFile" : "target-rosgraph_msgs_generate_messages_lisp-RelWithDebInfo-c58810e2f452000e8f5c.json",
+					"name" : "rosgraph_msgs_generate_messages_lisp",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "rosgraph_msgs_generate_messages_nodejs::@0d7eeefa06facc620343",
+					"jsonFile" : "target-rosgraph_msgs_generate_messages_nodejs-RelWithDebInfo-85fdaaccfee0c0ec59a3.json",
+					"name" : "rosgraph_msgs_generate_messages_nodejs",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "rosgraph_msgs_generate_messages_py::@0d7eeefa06facc620343",
+					"jsonFile" : "target-rosgraph_msgs_generate_messages_py-RelWithDebInfo-09741139da051171be12.json",
+					"name" : "rosgraph_msgs_generate_messages_py",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "run_tests::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-run_tests-RelWithDebInfo-8df51f7a33fa18f9de57.json",
+					"name" : "run_tests",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "serial_port::@1c08b48abe6b4e2f409c",
+					"jsonFile" : "target-serial_port-RelWithDebInfo-af85e63388ecd7747cad.json",
+					"name" : "serial_port",
+					"projectIndex" : 5
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "server_node::@1c08b48abe6b4e2f409c",
+					"jsonFile" : "target-server_node-RelWithDebInfo-3d0c7cfff89cab078e4e.json",
+					"name" : "server_node",
+					"projectIndex" : 5
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "server_special_gait::@1c08b48abe6b4e2f409c",
+					"jsonFile" : "target-server_special_gait-RelWithDebInfo-defe5954c90dd7ce93fc.json",
+					"name" : "server_special_gait",
+					"projectIndex" : 5
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "std_msgs_generate_messages_cpp::@0d7eeefa06facc620343",
+					"jsonFile" : "target-std_msgs_generate_messages_cpp-RelWithDebInfo-10c05c28baeb8fab71fa.json",
+					"name" : "std_msgs_generate_messages_cpp",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "std_msgs_generate_messages_eus::@0d7eeefa06facc620343",
+					"jsonFile" : "target-std_msgs_generate_messages_eus-RelWithDebInfo-afbdce391d5dccdd52bf.json",
+					"name" : "std_msgs_generate_messages_eus",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "std_msgs_generate_messages_lisp::@0d7eeefa06facc620343",
+					"jsonFile" : "target-std_msgs_generate_messages_lisp-RelWithDebInfo-6bb9e5b24bd44271b4a4.json",
+					"name" : "std_msgs_generate_messages_lisp",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "std_msgs_generate_messages_nodejs::@0d7eeefa06facc620343",
+					"jsonFile" : "target-std_msgs_generate_messages_nodejs-RelWithDebInfo-63a2ccf132112b62394d.json",
+					"name" : "std_msgs_generate_messages_nodejs",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "std_msgs_generate_messages_py::@0d7eeefa06facc620343",
+					"jsonFile" : "target-std_msgs_generate_messages_py-RelWithDebInfo-038aa8d2f2632e6f6e4c.json",
+					"name" : "std_msgs_generate_messages_py",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "test_traj_node::@0d7eeefa06facc620343",
+					"jsonFile" : "target-test_traj_node-RelWithDebInfo-454f9c3440aa3a21fe42.json",
+					"name" : "test_traj_node",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "tests::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-tests-RelWithDebInfo-645674a8b6faee116c67.json",
+					"name" : "tests",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/wp/ikid_ws/build",
+		"source" : "/home/wp/ikid_ws/src"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 0
+	}
+}

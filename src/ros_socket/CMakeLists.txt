@@ -117,7 +117,7 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-# include
+  include
   ${catkin_INCLUDE_DIRS}
 )
 
@@ -125,6 +125,25 @@ include_directories(
 # add_library(${PROJECT_NAME}
 #   src/${PROJECT_NAME}/ros_socket.cpp
 # )
+add_library(matlab_inv_data_ros_socket include/ros_socket/matlab_inv_data.h src/source/matlab_inv_data.c)
+add_dependencies(matlab_inv_data_ros_socket ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(matlab_inv_data_ros_socket ${catkin_LIBRARIES} )
+
+add_library(matlab_inv_initialize_ros_socket include/ros_socket/matlab_inv_initialize.h src/source/matlab_inv_initialize.c)
+add_dependencies(matlab_inv_initialize_ros_socket ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(matlab_inv_initialize_ros_socket ${catkin_LIBRARIES} )
+
+add_library(matlab_inv_terminate_ros_socket include/ros_socket/matlab_inv_terminate.h src/source/matlab_inv_terminate.c)
+add_dependencies(matlab_inv_terminate_ros_socket ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(matlab_inv_terminate_ros_socket ${catkin_LIBRARIES} )
+
+add_library(matlab_inv_ros_socket include/ros_socket/matlab_inv.h src/source/matlab_inv.c)
+add_dependencies(matlab_inv_ros_socket ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(matlab_inv_ros_socket ${catkin_LIBRARIES} )
+
+add_library(robotModel_ros_socket include/ros_socket/robotModel.h src/source/robotModel.cpp)
+add_dependencies(robotModel_ros_socket ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(robotModel_ros_socket ${catkin_LIBRARIES} )
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
@@ -137,6 +156,7 @@ include_directories(
  add_executable(server_node src/server_node.cpp)
  add_executable(client_node src/client_node.cpp)
  add_executable(serial_port src/serial_port.cpp)
+ add_executable(server_special_gait src/server_special_gait.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -149,6 +169,7 @@ include_directories(
 add_dependencies(server_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(client_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(serial_port ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(server_special_gait ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(server_node
@@ -159,6 +180,14 @@ target_link_libraries(serial_port
 )
 target_link_libraries(client_node
   ${catkin_LIBRARIES}
+)
+target_link_libraries(server_special_gait
+robotModel_ros_socket
+matlab_inv_ros_socket
+matlab_inv_data_ros_socket
+matlab_inv_terminate_ros_socket
+matlab_inv_initialize_ros_socket
+${catkin_LIBRARIES}
 )
 #############
 ## Install ##

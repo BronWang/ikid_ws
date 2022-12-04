@@ -1,0 +1,8 @@
+prefix=/home/wp/ikid_ws/devel
+
+Name: ros_qt_ikid
+Description: Description of ros_qt_ikid
+Version: 0.1.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

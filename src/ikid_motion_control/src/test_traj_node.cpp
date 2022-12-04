@@ -9,10 +9,10 @@ extern double theta;
 int main(int argc, char *argv[])
 {
     
-    //执行 ros 节点初始化
-    ros::init(argc,argv,"test_traj_node");
-    //创建 ros 节点句柄
-    ros::NodeHandle n;
+  //执行 ros 节点初始化
+  ros::init(argc,argv,"test_traj_node");
+  //创建 ros 节点句柄
+  ros::NodeHandle n;
 	
 	ROS_INFO("hello world!");
 	robotStart(n);
@@ -26,5 +26,5 @@ int main(int argc, char *argv[])
 	trajPlan();
 	trajPlan();
 	trajPlan();
-    return 0;
+  return 0;
 }

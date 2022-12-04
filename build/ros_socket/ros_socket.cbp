@@ -1,0 +1,700 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="ros_socket"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\opt\;CMake Files\..\..\..\..\opt\ros\;CMake Files\..\..\..\..\opt\ros\noetic\;CMake Files\..\..\..\..\opt\ros\noetic\share\;CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\;CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\;CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\platform\;CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\test\;CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\tools\;CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\templates\;CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\em\;CMake Files\..\..\..\..\opt\ros\noetic\share\roscpp\;CMake Files\..\..\..\..\opt\ros\noetic\share\roscpp\cmake\;CMake Files\..\..\..\..\opt\ros\noetic\share\cpp_common\;CMake Files\..\..\..\..\opt\ros\noetic\share\cpp_common\cmake\;CMake Files\..\..\..\..\opt\ros\noetic\share\message_runtime\;CMake Files\..\..\..\..\opt\ros\noetic\share\message_runtime\cmake\;CMake Files\..\..\..\..\opt\ros\noetic\share\roscpp_serialization\;CMake Files\..\..\..\..\opt\ros\noetic\share\roscpp_serialization\cmake\;CMake Files\..\..\..\..\opt\ros\noetic\share\roscpp_traits\;CMake Files\..\..\..\..\opt\ros\noetic\share\roscpp_traits\cmake\;CMake Files\..\..\..\..\opt\ros\noetic\share\rostime\;CMake Files\..\..\..\..\opt\ros\noetic\share\rostime\cmake\;CMake Files\..\..\..\..\opt\ros\noetic\share\rosconsole\;CMake Files\..\..\..\..\opt\ros\noetic\share\rosconsole\cmake\;CMake Files\..\..\..\..\opt\ros\noetic\share\rosgraph_msgs\;CMake Files\..\..\..\..\opt\ros\noetic\share\rosgraph_msgs\cmake\;CMake Files\..\..\..\..\opt\ros\noetic\share\std_msgs\;CMake Files\..\..\..\..\opt\ros\noetic\share\std_msgs\cmake\;CMake Files\..\..\..\..\opt\ros\noetic\share\xmlrpcpp\;CMake Files\..\..\..\..\opt\ros\noetic\share\xmlrpcpp\cmake\;CMake Files\..\..\..\..\opt\ros\noetic\share\rospy\;CMake Files\..\..\..\..\opt\ros\noetic\share\rospy\cmake\;CMake Files\..\..\..\..\opt\ros\noetic\share\message_generation\;CMake Files\..\..\..\..\opt\ros\noetic\share\message_generation\cmake\;CMake Files\..\..\..\..\opt\ros\noetic\share\gencpp\;CMake Files\..\..\..\..\opt\ros\noetic\share\gencpp\cmake\;CMake Files\..\..\..\..\opt\ros\noetic\share\genmsg\;CMake Files\..\..\..\..\opt\ros\noetic\share\genmsg\cmake\;CMake Files\..\..\..\..\opt\ros\noetic\share\geneus\;CMake Files\..\..\..\..\opt\ros\noetic\share\geneus\cmake\;CMake Files\..\..\..\..\opt\ros\noetic\share\genlisp\;CMake Files\..\..\..\..\opt\ros\noetic\share\genlisp\cmake\;CMake Files\..\..\..\..\opt\ros\noetic\share\gennodejs\;CMake Files\..\..\..\..\opt\ros\noetic\share\gennodejs\cmake\;CMake Files\..\..\..\..\opt\ros\noetic\share\genpy\;CMake Files\..\..\..\..\opt\ros\noetic\share\genpy\cmake\;CMake Files\..\..\..\..\opt\ros\noetic\share\serial\;CMake Files\..\..\..\..\opt\ros\noetic\share\serial\cmake\;CMake Files\..\..\..\..\opt\ros\noetic\share\roslaunch\;CMake Files\..\..\..\..\opt\ros\noetic\share\roslaunch\cmake\;CMake Files\..\..\..\..\usr\;CMake Files\..\..\..\..\usr\src\;CMake Files\..\..\..\..\usr\src\googletest\;CMake Files\..\..\..\..\usr\src\googletest\googlemock\;CMake Files\..\..\..\..\usr\src\googletest\googletest\;CMake Files\..\..\..\..\usr\src\googletest\googletest\cmake\;CMake Files\..\..\..\..\usr\lib\;CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\;CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\;CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5\;CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Core\;CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Widgets\;CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Gui\;CMake Files\..\build\;CMake Files\..\build\catkin\;CMake Files\..\build\catkin\catkin_generated\;CMake Files\..\build\catkin\catkin_generated\version\;CMake Files\..\build\catkin_generated\;CMake Files\..\build\catkin_generated\installspace\;CMake Files\..\build\ikid_motion_control\;CMake Files\..\build\ikid_motion_control\catkin_generated\;CMake Files\..\build\ikid_motion_control\cmake\;CMake Files\..\build\ros_socket\;CMake Files\..\build\ros_socket\catkin_generated\;CMake Files\..\build\ikid_robot\;CMake Files\..\build\ikid_robot\catkin_generated\;CMake Files\..\build\ros_qt_ikid\;CMake Files\..\build\ros_qt_ikid\catkin_generated\;CMake Files\..\devel\;CMake Files\..\devel\share\;CMake Files\..\devel\share\ikid_motion_control\;CMake Files\..\devel\share\ikid_motion_control\cmake\;CMake Files\ikid_motion_control\;CMake Files\ros_socket\;CMake Files\ikid_robot\;CMake Files\ros_qt_ikid\;CMake Files\ros_qt_ikid\resources\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/wp/ikid_ws/build/ros_socket"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/wp/ikid_ws/build/ros_socket/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/wp/ikid_ws/build/ros_socket/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/wp/ikid_ws/build/ros_socket/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/wp/ikid_ws/build/ros_socket/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="serial_port">
+				<Option output="/home/wp/ikid_ws/devel/lib/ros_socket/serial_port" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/wp/ikid_ws/devel/lib/ros_socket"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DROS_BUILD_SHARED_LIBS=1"/>
+					<Add option="-DROS_PACKAGE_NAME=&quot;ros_socket&quot;"/>
+					<Add option="-DROSCONSOLE_BACKEND_LOG4CXX"/>
+					<Add directory="/opt/ros/noetic/include"/>
+					<Add directory="/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/wp/ikid_ws/build/ros_socket/Makefile&quot;  VERBOSE=1 serial_port"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/wp/ikid_ws/build/ros_socket/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/wp/ikid_ws/build/ros_socket/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/wp/ikid_ws/build/ros_socket/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="serial_port/fast">
+				<Option output="/home/wp/ikid_ws/devel/lib/ros_socket/serial_port" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/wp/ikid_ws/devel/lib/ros_socket"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DROS_BUILD_SHARED_LIBS=1"/>
+					<Add option="-DROS_PACKAGE_NAME=&quot;ros_socket&quot;"/>
+					<Add option="-DROSCONSOLE_BACKEND_LOG4CXX"/>
+					<Add directory="/opt/ros/noetic/include"/>
+					<Add directory="/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/wp/ikid_ws/build/ros_socket/Makefile&quot;  VERBOSE=1 serial_port/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/wp/ikid_ws/build/ros_socket/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/wp/ikid_ws/build/ros_socket/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/wp/ikid_ws/build/ros_socket/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="client_node">
+				<Option output="/home/wp/ikid_ws/devel/lib/ros_socket/client_node" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/wp/ikid_ws/devel/lib/ros_socket"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DROS_BUILD_SHARED_LIBS=1"/>
+					<Add option="-DROS_PACKAGE_NAME=&quot;ros_socket&quot;"/>
+					<Add option="-DROSCONSOLE_BACKEND_LOG4CXX"/>
+					<Add directory="/opt/ros/noetic/include"/>
+					<Add directory="/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/wp/ikid_ws/build/ros_socket/Makefile&quot;  VERBOSE=1 client_node"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/wp/ikid_ws/build/ros_socket/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/wp/ikid_ws/build/ros_socket/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/wp/ikid_ws/build/ros_socket/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="client_node/fast">
+				<Option output="/home/wp/ikid_ws/devel/lib/ros_socket/client_node" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/wp/ikid_ws/devel/lib/ros_socket"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DROS_BUILD_SHARED_LIBS=1"/>
+					<Add option="-DROS_PACKAGE_NAME=&quot;ros_socket&quot;"/>
+					<Add option="-DROSCONSOLE_BACKEND_LOG4CXX"/>
+					<Add directory="/opt/ros/noetic/include"/>
+					<Add directory="/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/wp/ikid_ws/build/ros_socket/Makefile&quot;  VERBOSE=1 client_node/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/wp/ikid_ws/build/ros_socket/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/wp/ikid_ws/build/ros_socket/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/wp/ikid_ws/build/ros_socket/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="server_node">
+				<Option output="/home/wp/ikid_ws/devel/lib/ros_socket/server_node" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/wp/ikid_ws/devel/lib/ros_socket"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DROS_BUILD_SHARED_LIBS=1"/>
+					<Add option="-DROS_PACKAGE_NAME=&quot;ros_socket&quot;"/>
+					<Add option="-DROSCONSOLE_BACKEND_LOG4CXX"/>
+					<Add directory="/opt/ros/noetic/include"/>
+					<Add directory="/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/wp/ikid_ws/build/ros_socket/Makefile&quot;  VERBOSE=1 server_node"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/wp/ikid_ws/build/ros_socket/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/wp/ikid_ws/build/ros_socket/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/wp/ikid_ws/build/ros_socket/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="server_node/fast">
+				<Option output="/home/wp/ikid_ws/devel/lib/ros_socket/server_node" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/wp/ikid_ws/devel/lib/ros_socket"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DROS_BUILD_SHARED_LIBS=1"/>
+					<Add option="-DROS_PACKAGE_NAME=&quot;ros_socket&quot;"/>
+					<Add option="-DROSCONSOLE_BACKEND_LOG4CXX"/>
+					<Add directory="/opt/ros/noetic/include"/>
+					<Add directory="/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/wp/ikid_ws/build/ros_socket/Makefile&quot;  VERBOSE=1 server_node/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/wp/ikid_ws/build/ros_socket/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/wp/ikid_ws/build/ros_socket/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/wp/ikid_ws/build/ros_socket/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/wp/ikid_ws/src/ros_socket/src/client_node.cpp">
+			<Option target="client_node"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/ros_socket/src/serial_port.cpp">
+			<Option target="serial_port"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/ros_socket/src/server_node.cpp">
+			<Option target="server_node"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/package.xml">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/all.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/assert.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/atomic_configure_file.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/catkinConfig-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/catkinConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/catkin_add_env_hooks.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/catkin_destinations.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/catkin_download.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/catkin_generate_environment.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/catkin_install_python.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/catkin_libraries.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/catkin_metapackage.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/catkin_package.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/catkin_package_xml.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/catkin_python_setup.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/catkin_symlink_install.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/catkin_workspace.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/custom_install.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/debug_message.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/em_expand.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/empy.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/find_program_required.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/interrogate_setup_dot_py.py">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/legacy.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/list_append_deduplicate.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/list_append_unique.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/list_insert_in_workspace_order.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/python.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/safe_execute_process.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/stamp.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/string_starts_with.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/platform/lsb.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\platform\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/platform/ubuntu.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\platform\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/platform/windows.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\platform\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/test/catkin_download_test_data.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\test\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/test/gtest.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\test\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/test/nosetests.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\test\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/test/tests.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\test\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/tools/doxygen.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\tools\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/tools/libraries.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\tools\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/tools/rt.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\tools\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/templates/_setup_util.py.in">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\templates\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/templates/env.sh.in">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\templates\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/templates/generate_cached_setup.py.in">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\templates\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/templates/local_setup.bash.in">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\templates\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/templates/local_setup.sh.in">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\templates\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/templates/local_setup.zsh.in">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\templates\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/templates/order_packages.context.py.in">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\templates\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/templates/pkg.context.pc.in">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\templates\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/templates/pkgConfig-version.cmake.in">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\templates\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/templates/pkgConfig.cmake.in">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\templates\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/templates/rosinstall.in">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\templates\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/templates/setup.bash.in">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\templates\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/templates/setup.sh.in">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\templates\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/templates/setup.zsh.in">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\templates\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/em/order_packages.cmake.em">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\em\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/catkin/cmake/em/pkg.pc.em">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\catkin\cmake\em\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/roscpp/cmake/roscpp-msg-extras.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\roscpp\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/roscpp/cmake/roscppConfig-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\roscpp\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/roscpp/cmake/roscppConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\roscpp\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/cpp_common/cmake/cpp_commonConfig-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\cpp_common\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/cpp_common/cmake/cpp_commonConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\cpp_common\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/message_runtime/cmake/message_runtimeConfig-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\message_runtime\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/message_runtime/cmake/message_runtimeConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\message_runtime\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/roscpp_serialization/cmake/roscpp_serializationConfig-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\roscpp_serialization\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/roscpp_serialization/cmake/roscpp_serializationConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\roscpp_serialization\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/roscpp_traits/cmake/roscpp_traitsConfig-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\roscpp_traits\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/roscpp_traits/cmake/roscpp_traitsConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\roscpp_traits\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/rostime/cmake/rostimeConfig-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\rostime\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/rostime/cmake/rostimeConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\rostime\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/rosconsole/cmake/rosconsole-extras.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\rosconsole\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/rosconsole/cmake/rosconsoleConfig-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\rosconsole\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/rosconsole/cmake/rosconsoleConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\rosconsole\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/rosgraph_msgs/cmake/rosgraph_msgs-msg-extras.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\rosgraph_msgs\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/rosgraph_msgs/cmake/rosgraph_msgsConfig-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\rosgraph_msgs\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/rosgraph_msgs/cmake/rosgraph_msgsConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\rosgraph_msgs\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/std_msgs/cmake/std_msgs-msg-extras.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\std_msgs\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/std_msgs/cmake/std_msgs-msg-paths.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\std_msgs\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/std_msgs/cmake/std_msgsConfig-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\std_msgs\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/std_msgs/cmake/std_msgsConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\std_msgs\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/xmlrpcpp/cmake/xmlrpcpp-extras.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\xmlrpcpp\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/xmlrpcpp/cmake/xmlrpcppConfig-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\xmlrpcpp\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/xmlrpcpp/cmake/xmlrpcppConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\xmlrpcpp\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/rospy/cmake/rospyConfig-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\rospy\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/rospy/cmake/rospyConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\rospy\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/message_generation/cmake/message_generationConfig-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\message_generation\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/message_generation/cmake/message_generationConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\message_generation\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/gencpp/cmake/gencpp-extras.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\gencpp\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/gencpp/cmake/gencppConfig-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\gencpp\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/gencpp/cmake/gencppConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\gencpp\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/genmsg/cmake/genmsg-extras.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\genmsg\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/genmsg/cmake/genmsgConfig-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\genmsg\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/genmsg/cmake/genmsgConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\genmsg\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/genmsg/cmake/pkg-genmsg.cmake.em">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\genmsg\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/genmsg/cmake/pkg-genmsg.context.in">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\genmsg\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/genmsg/cmake/pkg-msg-extras.cmake.in">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\genmsg\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/genmsg/cmake/pkg-msg-paths.cmake.develspace.in">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\genmsg\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/genmsg/cmake/pkg-msg-paths.cmake.installspace.in">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\genmsg\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/geneus/cmake/geneus-extras.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\geneus\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/geneus/cmake/geneusConfig-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\geneus\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/geneus/cmake/geneusConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\geneus\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/genlisp/cmake/genlisp-extras.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\genlisp\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/genlisp/cmake/genlispConfig-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\genlisp\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/genlisp/cmake/genlispConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\genlisp\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/gennodejs/cmake/gennodejs-extras.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\gennodejs\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/gennodejs/cmake/gennodejsConfig-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\gennodejs\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/gennodejs/cmake/gennodejsConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\gennodejs\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/genpy/cmake/genpy-extras.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\genpy\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/genpy/cmake/genpyConfig-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\genpy\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/genpy/cmake/genpyConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\genpy\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/serial/cmake/serialConfig-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\serial\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/serial/cmake/serialConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\serial\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/roslaunch/cmake/roslaunch-extras.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\roslaunch\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/roslaunch/cmake/roslaunchConfig-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\roslaunch\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../opt/ros/noetic/share/roslaunch/cmake/roslaunchConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\opt\ros\noetic\share\roslaunch\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/src/googletest/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\src\googletest\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/src/googletest/googlemock/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\src\googletest\googlemock\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/src/googletest/googletest/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\src\googletest\googletest\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/src/googletest/googletest/cmake/internal_utils.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\src\googletest\googletest\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5/Qt5Config.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5/Qt5ConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5/Qt5ModuleLocation.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Core\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfigExtras.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Core\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Core\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Core\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreMacros.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Core\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Widgets\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfigExtras.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Widgets\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Widgets\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsMacros.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Widgets\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5GuiConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5GuiConfigExtras.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5GuiConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QComposePlatformInputContextPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEglFSEmulatorIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEglFSIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEglFSKmsEglDeviceIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEglFSKmsGbmIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEglFSX11IntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEvdevKeyboardPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEvdevMousePlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEvdevTabletPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEvdevTouchScreenPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QGifPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QICOPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QIbusPlatformInputContextPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QJpegPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QLibInputPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QLinuxFbIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QMinimalEglIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QMinimalIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QOffscreenIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QTuioTouchPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QVncIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QXcbEglIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QXcbGlxIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QXcbIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../build/catkin/catkin_generated/version/package.cmake">
+			<Option virtualFolder="CMake Files\..\build\catkin\catkin_generated\version\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../build/catkin_generated/order_packages.cmake">
+			<Option virtualFolder="CMake Files\..\build\catkin_generated\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../build/catkin_generated/installspace/_setup_util.py">
+			<Option virtualFolder="CMake Files\..\build\catkin_generated\installspace\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../build/ikid_motion_control/catkin_generated/ikid_motion_control-msg-extras.cmake.develspace.in">
+			<Option virtualFolder="CMake Files\..\build\ikid_motion_control\catkin_generated\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../build/ikid_motion_control/catkin_generated/ikid_motion_control-msg-extras.cmake.installspace.in">
+			<Option virtualFolder="CMake Files\..\build\ikid_motion_control\catkin_generated\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../build/ikid_motion_control/catkin_generated/ordered_paths.cmake">
+			<Option virtualFolder="CMake Files\..\build\ikid_motion_control\catkin_generated\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../build/ikid_motion_control/catkin_generated/package.cmake">
+			<Option virtualFolder="CMake Files\..\build\ikid_motion_control\catkin_generated\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../build/ikid_motion_control/cmake/ikid_motion_control-genmsg.cmake">
+			<Option virtualFolder="CMake Files\..\build\ikid_motion_control\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../build/ros_socket/catkin_generated/ordered_paths.cmake">
+			<Option virtualFolder="CMake Files\..\build\ros_socket\catkin_generated\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../build/ros_socket/catkin_generated/package.cmake">
+			<Option virtualFolder="CMake Files\..\build\ros_socket\catkin_generated\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../build/ikid_robot/catkin_generated/package.cmake">
+			<Option virtualFolder="CMake Files\..\build\ikid_robot\catkin_generated\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../build/ros_qt_ikid/catkin_generated/ordered_paths.cmake">
+			<Option virtualFolder="CMake Files\..\build\ros_qt_ikid\catkin_generated\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../build/ros_qt_ikid/catkin_generated/package.cmake">
+			<Option virtualFolder="CMake Files\..\build\ros_qt_ikid\catkin_generated\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/../devel/share/ikid_motion_control/cmake/ikid_motion_control-msg-paths.cmake">
+			<Option virtualFolder="CMake Files\..\devel\share\ikid_motion_control\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/ikid_motion_control/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ikid_motion_control\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/ikid_motion_control/package.xml">
+			<Option virtualFolder="CMake Files\ikid_motion_control\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/ros_socket/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ros_socket\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/ros_socket/package.xml">
+			<Option virtualFolder="CMake Files\ros_socket\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/ikid_robot/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ikid_robot\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/ikid_robot/package.xml">
+			<Option virtualFolder="CMake Files\ikid_robot\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/ros_qt_ikid/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ros_qt_ikid\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/ros_qt_ikid/package.xml">
+			<Option virtualFolder="CMake Files\ros_qt_ikid\"/>
+		</Unit>
+		<Unit filename="/home/wp/ikid_ws/src/ros_qt_ikid/resources/images.qrc">
+			<Option virtualFolder="CMake Files\ros_qt_ikid\resources\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

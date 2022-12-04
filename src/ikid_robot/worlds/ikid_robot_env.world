@@ -1002,10 +1002,10 @@
       <pose>3.85258 -0.200997 0 0 -0 0</pose>
     </model>
     <state world_name='default'>
-      <sim_time>411 634000000</sim_time>
-      <real_time>36 938020902</real_time>
-      <wall_time>1666858242 880495188</wall_time>
-      <iterations>32991</iterations>
+      <sim_time>200 81000000</sim_time>
+      <real_time>427 508181532</real_time>
+      <wall_time>1669985855 19119246</wall_time>
+      <iterations>200081</iterations>
       <model name='ground_plane'>
         <pose>0 0 0 0 -0 0</pose>
         <scale>1 1 1</scale>
@@ -1037,176 +1037,176 @@
         </link>
       </model>
       <model name='teensize_goal'>
-        <pose>3.50843 -0.201 0 0 -0 0</pose>
+        <pose>4.50107 0.002326 0 0 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='center_net'>
-          <pose>4.10843 -0.200997 0.6 0 -0 0</pose>
+          <pose>5.10107 0.002329 0.6 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='center_support_horiz_lower'>
-          <pose>4.10843 -0.200997 0.01 3.14159 1.57079 3.14159</pose>
+          <pose>5.10107 0.002329 0.01 3.14159 1.57079 3.14159</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='center_support_horiz_upper'>
-          <pose>4.10843 -0.200997 1.2 3.14159 1.57079 3.14159</pose>
+          <pose>5.10107 0.002329 1.2 3.14159 1.57079 3.14159</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='crossbar'>
-          <pose>3.50843 -0.200997 1.85 1.57 1.57 0</pose>
+          <pose>4.50107 0.002329 1.85 1.57 1.57 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='left_net'>
-          <pose>3.80843 1.149 0.6 0 -0 0</pose>
+          <pose>4.80107 1.35233 0.6 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='left_post'>
-          <pose>3.50843 1.149 0.95 0 -0 0</pose>
+          <pose>4.50107 1.35233 0.95 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='left_support_horiz_lower'>
-          <pose>3.80843 1.149 0.01 0 -0 0</pose>
+          <pose>4.80107 1.35233 0.01 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='left_support_horiz_upper'>
-          <pose>3.80843 1.149 1.2 0 -0 0</pose>
+          <pose>4.80107 1.35233 1.2 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='left_support_vertical'>
-          <pose>4.10843 1.149 0.6 3.14159 1.57079 3.14159</pose>
+          <pose>5.10107 1.35233 0.6 3.14159 1.57079 3.14159</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='right_net'>
-          <pose>3.80843 -1.551 0.6 0 -0 0</pose>
+          <pose>4.80107 -1.34767 0.6 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='right_post'>
-          <pose>3.50843 -1.551 0.95 0 -0 0</pose>
+          <pose>4.50107 -1.34767 0.95 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='right_support_horiz_lower'>
-          <pose>3.80843 -1.551 0.01 0 -0 0</pose>
+          <pose>4.80107 -1.34767 0.01 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='right_support_horiz_upper'>
-          <pose>3.80843 -1.551 1.2 0 -0 0</pose>
+          <pose>4.80107 -1.34767 1.2 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='right_support_vertical'>
-          <pose>4.10843 -1.551 0.6 3.14159 1.57079 3.14159</pose>
+          <pose>5.10107 -1.34767 0.6 3.14159 1.57079 3.14159</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
       <model name='teensize_goal_0'>
-        <pose>-3.55544 -0.078881 -0 0 -0 3.13062</pose>
+        <pose>-4.55258 -0.005148 -0 0 -0 3.13062</pose>
         <scale>1 1 1</scale>
         <link name='center_net'>
-          <pose>-4.1554 -0.072299 0.6 0 -0 3.13062</pose>
+          <pose>-5.15255 0.001434 0.6 0 -0 3.13062</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='center_support_horiz_lower'>
-          <pose>-4.1554 -0.072299 0.01 3.14159 1.57079 -0.010973</pose>
+          <pose>-5.15255 0.001434 0.01 3.14159 1.57079 -0.010973</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='center_support_horiz_upper'>
-          <pose>-4.1554 -0.072299 1.2 3.14159 1.57079 -0.010973</pose>
+          <pose>-5.15255 0.001434 1.2 3.14159 1.57079 -0.010973</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='crossbar'>
-          <pose>-3.55544 -0.078881 1.85 1.57 1.57 3.13062</pose>
+          <pose>-4.55259 -0.005148 1.85 1.57 1.57 3.13062</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='left_net'>
-          <pose>-3.87023 -1.42551 0.6 0 -0 3.13062</pose>
+          <pose>-4.86738 -1.35178 0.6 0 -0 3.13062</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='left_post'>
-          <pose>-3.57025 -1.4288 0.95 0 -0 3.13062</pose>
+          <pose>-4.5674 -1.35507 0.95 0 -0 3.13062</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='left_support_horiz_lower'>
-          <pose>-3.87023 -1.42551 0.01 0 -0 3.13062</pose>
+          <pose>-4.86738 -1.35178 0.01 0 -0 3.13062</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='left_support_horiz_upper'>
-          <pose>-3.87023 -1.42551 1.2 0 -0 3.13062</pose>
+          <pose>-4.86738 -1.35178 1.2 0 -0 3.13062</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='left_support_vertical'>
-          <pose>-4.17021 -1.42222 0.6 3.14159 1.57079 -0.010973</pose>
+          <pose>-5.16736 -1.34849 0.6 3.14159 1.57079 -0.010973</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='right_net'>
-          <pose>-3.84061 1.27433 0.6 0 -0 3.13062</pose>
+          <pose>-4.83776 1.34806 0.6 0 -0 3.13062</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='right_post'>
-          <pose>-3.54063 1.27104 0.95 0 -0 3.13062</pose>
+          <pose>-4.53778 1.34477 0.95 0 -0 3.13062</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='right_support_horiz_lower'>
-          <pose>-3.84061 1.27433 0.01 0 -0 3.13062</pose>
+          <pose>-4.83776 1.34806 0.01 0 -0 3.13062</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='right_support_horiz_upper'>
-          <pose>-3.84061 1.27433 1.2 0 -0 3.13062</pose>
+          <pose>-4.83776 1.34806 1.2 0 -0 3.13062</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='right_support_vertical'>
-          <pose>-4.14059 1.27762 0.6 3.14159 1.57079 -0.010973</pose>
+          <pose>-5.13774 1.35135 0.6 3.14159 1.57079 -0.010973</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
@@ -1777,7 +1777,7 @@
     </model>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose>2.89673 -4.72339 1.40671 0 0.312281 1.86878</pose>
+        <pose>2.75426 -9.28649 6.5932 -0 0.540282 1.87676</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>

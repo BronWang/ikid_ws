@@ -92,26 +92,16 @@ install/fast: preinstall/fast
 	/usr/bin/cmake -P cmake_install.cmake
 .PHONY : install/fast
 
-# Special rule for the target list_install_components
-list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
-.PHONY : list_install_components
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
+	/usr/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
 
-# Special rule for the target list_install_components
-list_install_components/fast: list_install_components
+# Special rule for the target test
+test/fast: test
 
-.PHONY : list_install_components/fast
-
-# Special rule for the target rebuild_cache
-rebuild_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/usr/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : rebuild_cache
-
-# Special rule for the target rebuild_cache
-rebuild_cache/fast: rebuild_cache
-
-.PHONY : rebuild_cache/fast
+.PHONY : test/fast
 
 # Special rule for the target edit_cache
 edit_cache:
@@ -124,16 +114,26 @@ edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
 
-# Special rule for the target test
-test:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
-	/usr/bin/ctest --force-new-ctest-process $(ARGS)
-.PHONY : test
+# Special rule for the target rebuild_cache
+rebuild_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
+	/usr/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : rebuild_cache
 
-# Special rule for the target test
-test/fast: test
+# Special rule for the target rebuild_cache
+rebuild_cache/fast: rebuild_cache
 
-.PHONY : test/fast
+.PHONY : rebuild_cache/fast
+
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -168,6 +168,111 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/rule
+.PHONY : ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/rule
+
+# Convenience name for target.
+matlab_inv_data_ros_socket: ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/rule
+
+.PHONY : matlab_inv_data_ros_socket
+
+# fast build rule for target.
+matlab_inv_data_ros_socket/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/build
+.PHONY : matlab_inv_data_ros_socket/fast
+
+# Convenience name for target.
+ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/rule
+.PHONY : ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/rule
+
+# Convenience name for target.
+matlab_inv_terminate_ros_socket: ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/rule
+
+.PHONY : matlab_inv_terminate_ros_socket
+
+# fast build rule for target.
+matlab_inv_terminate_ros_socket/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/build
+.PHONY : matlab_inv_terminate_ros_socket/fast
+
+# Convenience name for target.
+ros_socket/CMakeFiles/server_special_gait.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/server_special_gait.dir/rule
+.PHONY : ros_socket/CMakeFiles/server_special_gait.dir/rule
+
+# Convenience name for target.
+server_special_gait: ros_socket/CMakeFiles/server_special_gait.dir/rule
+
+.PHONY : server_special_gait
+
+# fast build rule for target.
+server_special_gait/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/server_special_gait.dir/build.make ros_socket/CMakeFiles/server_special_gait.dir/build
+.PHONY : server_special_gait/fast
+
+# Convenience name for target.
+ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/rule
+.PHONY : ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/rule
+
+# Convenience name for target.
+matlab_inv_initialize_ros_socket: ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/rule
+
+.PHONY : matlab_inv_initialize_ros_socket
+
+# fast build rule for target.
+matlab_inv_initialize_ros_socket/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/build
+.PHONY : matlab_inv_initialize_ros_socket/fast
+
+# Convenience name for target.
+ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/rule
+.PHONY : ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/rule
+
+# Convenience name for target.
+matlab_inv_ros_socket: ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/rule
+
+.PHONY : matlab_inv_ros_socket
+
+# fast build rule for target.
+matlab_inv_ros_socket/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/build
+.PHONY : matlab_inv_ros_socket/fast
+
+# Convenience name for target.
+ros_socket/CMakeFiles/robotModel_ros_socket.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/robotModel_ros_socket.dir/rule
+.PHONY : ros_socket/CMakeFiles/robotModel_ros_socket.dir/rule
+
+# Convenience name for target.
+robotModel_ros_socket: ros_socket/CMakeFiles/robotModel_ros_socket.dir/rule
+
+.PHONY : robotModel_ros_socket
+
+# fast build rule for target.
+robotModel_ros_socket/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/robotModel_ros_socket.dir/build.make ros_socket/CMakeFiles/robotModel_ros_socket.dir/build
+.PHONY : robotModel_ros_socket/fast
+
+# Convenience name for target.
+ros_socket/CMakeFiles/server_node.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/server_node.dir/rule
+.PHONY : ros_socket/CMakeFiles/server_node.dir/rule
+
+# Convenience name for target.
+server_node: ros_socket/CMakeFiles/server_node.dir/rule
+
+.PHONY : server_node
+
+# fast build rule for target.
+server_node/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/server_node.dir/build.make ros_socket/CMakeFiles/server_node.dir/build
+.PHONY : server_node/fast
+
+# Convenience name for target.
 ros_socket/CMakeFiles/serial_port.dir/rule:
 	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/serial_port.dir/rule
 .PHONY : ros_socket/CMakeFiles/serial_port.dir/rule
@@ -196,21 +301,6 @@ client_node: ros_socket/CMakeFiles/client_node.dir/rule
 client_node/fast:
 	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/client_node.dir/build.make ros_socket/CMakeFiles/client_node.dir/build
 .PHONY : client_node/fast
-
-# Convenience name for target.
-ros_socket/CMakeFiles/server_node.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/server_node.dir/rule
-.PHONY : ros_socket/CMakeFiles/server_node.dir/rule
-
-# Convenience name for target.
-server_node: ros_socket/CMakeFiles/server_node.dir/rule
-
-.PHONY : server_node
-
-# fast build rule for target.
-server_node/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/server_node.dir/build.make ros_socket/CMakeFiles/server_node.dir/build
-.PHONY : server_node/fast
 
 src/client_node.o: src/client_node.cpp.o
 
@@ -293,6 +383,168 @@ src/server_node.cpp.s:
 	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/server_node.dir/build.make ros_socket/CMakeFiles/server_node.dir/src/server_node.cpp.s
 .PHONY : src/server_node.cpp.s
 
+src/server_special_gait.o: src/server_special_gait.cpp.o
+
+.PHONY : src/server_special_gait.o
+
+# target to build an object file
+src/server_special_gait.cpp.o:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/server_special_gait.dir/build.make ros_socket/CMakeFiles/server_special_gait.dir/src/server_special_gait.cpp.o
+.PHONY : src/server_special_gait.cpp.o
+
+src/server_special_gait.i: src/server_special_gait.cpp.i
+
+.PHONY : src/server_special_gait.i
+
+# target to preprocess a source file
+src/server_special_gait.cpp.i:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/server_special_gait.dir/build.make ros_socket/CMakeFiles/server_special_gait.dir/src/server_special_gait.cpp.i
+.PHONY : src/server_special_gait.cpp.i
+
+src/server_special_gait.s: src/server_special_gait.cpp.s
+
+.PHONY : src/server_special_gait.s
+
+# target to generate assembly for a file
+src/server_special_gait.cpp.s:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/server_special_gait.dir/build.make ros_socket/CMakeFiles/server_special_gait.dir/src/server_special_gait.cpp.s
+.PHONY : src/server_special_gait.cpp.s
+
+src/source/matlab_inv.o: src/source/matlab_inv.c.o
+
+.PHONY : src/source/matlab_inv.o
+
+# target to build an object file
+src/source/matlab_inv.c.o:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/src/source/matlab_inv.c.o
+.PHONY : src/source/matlab_inv.c.o
+
+src/source/matlab_inv.i: src/source/matlab_inv.c.i
+
+.PHONY : src/source/matlab_inv.i
+
+# target to preprocess a source file
+src/source/matlab_inv.c.i:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/src/source/matlab_inv.c.i
+.PHONY : src/source/matlab_inv.c.i
+
+src/source/matlab_inv.s: src/source/matlab_inv.c.s
+
+.PHONY : src/source/matlab_inv.s
+
+# target to generate assembly for a file
+src/source/matlab_inv.c.s:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/src/source/matlab_inv.c.s
+.PHONY : src/source/matlab_inv.c.s
+
+src/source/matlab_inv_data.o: src/source/matlab_inv_data.c.o
+
+.PHONY : src/source/matlab_inv_data.o
+
+# target to build an object file
+src/source/matlab_inv_data.c.o:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/src/source/matlab_inv_data.c.o
+.PHONY : src/source/matlab_inv_data.c.o
+
+src/source/matlab_inv_data.i: src/source/matlab_inv_data.c.i
+
+.PHONY : src/source/matlab_inv_data.i
+
+# target to preprocess a source file
+src/source/matlab_inv_data.c.i:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/src/source/matlab_inv_data.c.i
+.PHONY : src/source/matlab_inv_data.c.i
+
+src/source/matlab_inv_data.s: src/source/matlab_inv_data.c.s
+
+.PHONY : src/source/matlab_inv_data.s
+
+# target to generate assembly for a file
+src/source/matlab_inv_data.c.s:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/src/source/matlab_inv_data.c.s
+.PHONY : src/source/matlab_inv_data.c.s
+
+src/source/matlab_inv_initialize.o: src/source/matlab_inv_initialize.c.o
+
+.PHONY : src/source/matlab_inv_initialize.o
+
+# target to build an object file
+src/source/matlab_inv_initialize.c.o:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/src/source/matlab_inv_initialize.c.o
+.PHONY : src/source/matlab_inv_initialize.c.o
+
+src/source/matlab_inv_initialize.i: src/source/matlab_inv_initialize.c.i
+
+.PHONY : src/source/matlab_inv_initialize.i
+
+# target to preprocess a source file
+src/source/matlab_inv_initialize.c.i:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/src/source/matlab_inv_initialize.c.i
+.PHONY : src/source/matlab_inv_initialize.c.i
+
+src/source/matlab_inv_initialize.s: src/source/matlab_inv_initialize.c.s
+
+.PHONY : src/source/matlab_inv_initialize.s
+
+# target to generate assembly for a file
+src/source/matlab_inv_initialize.c.s:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/src/source/matlab_inv_initialize.c.s
+.PHONY : src/source/matlab_inv_initialize.c.s
+
+src/source/matlab_inv_terminate.o: src/source/matlab_inv_terminate.c.o
+
+.PHONY : src/source/matlab_inv_terminate.o
+
+# target to build an object file
+src/source/matlab_inv_terminate.c.o:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/src/source/matlab_inv_terminate.c.o
+.PHONY : src/source/matlab_inv_terminate.c.o
+
+src/source/matlab_inv_terminate.i: src/source/matlab_inv_terminate.c.i
+
+.PHONY : src/source/matlab_inv_terminate.i
+
+# target to preprocess a source file
+src/source/matlab_inv_terminate.c.i:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/src/source/matlab_inv_terminate.c.i
+.PHONY : src/source/matlab_inv_terminate.c.i
+
+src/source/matlab_inv_terminate.s: src/source/matlab_inv_terminate.c.s
+
+.PHONY : src/source/matlab_inv_terminate.s
+
+# target to generate assembly for a file
+src/source/matlab_inv_terminate.c.s:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/src/source/matlab_inv_terminate.c.s
+.PHONY : src/source/matlab_inv_terminate.c.s
+
+src/source/robotModel.o: src/source/robotModel.cpp.o
+
+.PHONY : src/source/robotModel.o
+
+# target to build an object file
+src/source/robotModel.cpp.o:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/robotModel_ros_socket.dir/build.make ros_socket/CMakeFiles/robotModel_ros_socket.dir/src/source/robotModel.cpp.o
+.PHONY : src/source/robotModel.cpp.o
+
+src/source/robotModel.i: src/source/robotModel.cpp.i
+
+.PHONY : src/source/robotModel.i
+
+# target to preprocess a source file
+src/source/robotModel.cpp.i:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/robotModel_ros_socket.dir/build.make ros_socket/CMakeFiles/robotModel_ros_socket.dir/src/source/robotModel.cpp.i
+.PHONY : src/source/robotModel.cpp.i
+
+src/source/robotModel.s: src/source/robotModel.cpp.s
+
+.PHONY : src/source/robotModel.s
+
+# target to generate assembly for a file
+src/source/robotModel.cpp.s:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/robotModel_ros_socket.dir/build.make ros_socket/CMakeFiles/robotModel_ros_socket.dir/src/source/robotModel.cpp.s
+.PHONY : src/source/robotModel.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -302,13 +554,19 @@ help:
 	@echo "... install/strip"
 	@echo "... install/local"
 	@echo "... install"
-	@echo "... list_install_components"
-	@echo "... rebuild_cache"
-	@echo "... edit_cache"
-	@echo "... test"
+	@echo "... matlab_inv_data_ros_socket"
+	@echo "... matlab_inv_terminate_ros_socket"
+	@echo "... server_special_gait"
+	@echo "... matlab_inv_initialize_ros_socket"
+	@echo "... matlab_inv_ros_socket"
+	@echo "... robotModel_ros_socket"
+	@echo "... server_node"
 	@echo "... serial_port"
 	@echo "... client_node"
-	@echo "... server_node"
+	@echo "... test"
+	@echo "... edit_cache"
+	@echo "... rebuild_cache"
+	@echo "... list_install_components"
 	@echo "... src/client_node.o"
 	@echo "... src/client_node.i"
 	@echo "... src/client_node.s"
@@ -318,6 +576,24 @@ help:
 	@echo "... src/server_node.o"
 	@echo "... src/server_node.i"
 	@echo "... src/server_node.s"
+	@echo "... src/server_special_gait.o"
+	@echo "... src/server_special_gait.i"
+	@echo "... src/server_special_gait.s"
+	@echo "... src/source/matlab_inv.o"
+	@echo "... src/source/matlab_inv.i"
+	@echo "... src/source/matlab_inv.s"
+	@echo "... src/source/matlab_inv_data.o"
+	@echo "... src/source/matlab_inv_data.i"
+	@echo "... src/source/matlab_inv_data.s"
+	@echo "... src/source/matlab_inv_initialize.o"
+	@echo "... src/source/matlab_inv_initialize.i"
+	@echo "... src/source/matlab_inv_initialize.s"
+	@echo "... src/source/matlab_inv_terminate.o"
+	@echo "... src/source/matlab_inv_terminate.i"
+	@echo "... src/source/matlab_inv_terminate.s"
+	@echo "... src/source/robotModel.o"
+	@echo "... src/source/robotModel.i"
+	@echo "... src/source/robotModel.s"
 .PHONY : help
 
 
