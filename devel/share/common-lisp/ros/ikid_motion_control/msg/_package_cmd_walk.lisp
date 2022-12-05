@@ -5,4 +5,6 @@
           SY
           VAR_THETA-VAL
           VAR_THETA
+          WALK_WITH_BALL-VAL
+          WALK_WITH_BALL
 ))

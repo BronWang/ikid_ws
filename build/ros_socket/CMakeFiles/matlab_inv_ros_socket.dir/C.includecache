@@ -1,0 +1,38 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/wp/ikid_ws/src/ros_socket/include/ros_socket/matlab_inv.h
+ros_socket/rtwtypes.h
+/home/wp/ikid_ws/src/ros_socket/include/ros_socket/ros_socket/rtwtypes.h
+stddef.h
+-
+stdlib.h
+-
+
+/home/wp/ikid_ws/src/ros_socket/include/ros_socket/rtwtypes.h
+ros_socket/tmwtypes.h
+/home/wp/ikid_ws/src/ros_socket/include/ros_socket/ros_socket/tmwtypes.h
+
+/home/wp/ikid_ws/src/ros_socket/include/ros_socket/tmwtypes.h
+mwstdint.h
+/home/wp/ikid_ws/src/ros_socket/include/ros_socket/mwstdint.h
+limits.h
+-
+stdbool.h
+-
+float.h
+-
+stddef.h
+-
+
+/home/wp/ikid_ws/src/ros_socket/src/source/matlab_inv.c
+ros_socket/matlab_inv.h
+/home/wp/ikid_ws/src/ros_socket/src/source/ros_socket/matlab_inv.h
+math.h
+-
+

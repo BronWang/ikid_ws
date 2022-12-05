@@ -57,6 +57,7 @@ all: gtest/all
 all: ikid_motion_control/all
 all: ros_socket/all
 all: ikid_robot/all
+all: ros_qt_ikid/all
 
 .PHONY : all
 
@@ -65,6 +66,7 @@ preinstall: gtest/preinstall
 preinstall: ikid_motion_control/preinstall
 preinstall: ros_socket/preinstall
 preinstall: ikid_robot/preinstall
+preinstall: ros_qt_ikid/preinstall
 
 .PHONY : preinstall
 
@@ -78,6 +80,7 @@ clean: gtest/clean
 clean: ikid_motion_control/clean
 clean: ros_socket/clean
 clean: ikid_robot/clean
+clean: ros_qt_ikid/clean
 
 .PHONY : clean
 
@@ -213,12 +216,36 @@ ikid_robot/clean: ikid_robot/CMakeFiles/_catkin_empty_exported_target.dir/clean
 .PHONY : ikid_robot/clean
 
 #=============================================================================
+# Directory level rules for directory ros_qt_ikid
+
+# Recursive "all" directory target.
+ros_qt_ikid/all: ros_qt_ikid/CMakeFiles/ros_qt_ikid.dir/all
+
+.PHONY : ros_qt_ikid/all
+
+# Recursive "preinstall" directory target.
+ros_qt_ikid/preinstall:
+
+.PHONY : ros_qt_ikid/preinstall
+
+# Recursive "clean" directory target.
+ros_qt_ikid/clean: ros_qt_ikid/CMakeFiles/ros_qt_ikid.dir/clean
+
+.PHONY : ros_qt_ikid/clean
+
+#=============================================================================
 # Directory level rules for directory ros_socket
 
 # Recursive "all" directory target.
+ros_socket/all: ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/all
+ros_socket/all: ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/all
+ros_socket/all: ros_socket/CMakeFiles/server_special_gait.dir/all
+ros_socket/all: ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/all
+ros_socket/all: ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/all
+ros_socket/all: ros_socket/CMakeFiles/robotModel_ros_socket.dir/all
+ros_socket/all: ros_socket/CMakeFiles/server_node.dir/all
 ros_socket/all: ros_socket/CMakeFiles/serial_port.dir/all
 ros_socket/all: ros_socket/CMakeFiles/client_node.dir/all
-ros_socket/all: ros_socket/CMakeFiles/server_node.dir/all
 
 .PHONY : ros_socket/all
 
@@ -228,9 +255,15 @@ ros_socket/preinstall:
 .PHONY : ros_socket/preinstall
 
 # Recursive "clean" directory target.
+ros_socket/clean: ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/clean
+ros_socket/clean: ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/clean
+ros_socket/clean: ros_socket/CMakeFiles/server_special_gait.dir/clean
+ros_socket/clean: ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/clean
+ros_socket/clean: ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/clean
+ros_socket/clean: ros_socket/CMakeFiles/robotModel_ros_socket.dir/clean
+ros_socket/clean: ros_socket/CMakeFiles/server_node.dir/clean
 ros_socket/clean: ros_socket/CMakeFiles/serial_port.dir/clean
 ros_socket/clean: ros_socket/CMakeFiles/client_node.dir/clean
-ros_socket/clean: ros_socket/CMakeFiles/server_node.dir/clean
 
 .PHONY : ros_socket/clean
 
@@ -509,7 +542,7 @@ ikid_motion_control/CMakeFiles/test_traj_node.dir/all: ikid_motion_control/CMake
 ikid_motion_control/CMakeFiles/test_traj_node.dir/all: ikid_motion_control/CMakeFiles/matlab_inv_initialize.dir/all
 	$(MAKE) -f ikid_motion_control/CMakeFiles/test_traj_node.dir/build.make ikid_motion_control/CMakeFiles/test_traj_node.dir/depend
 	$(MAKE) -f ikid_motion_control/CMakeFiles/test_traj_node.dir/build.make ikid_motion_control/CMakeFiles/test_traj_node.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/wp/ikid_ws/build/CMakeFiles --progress-num=32,33 "Built target test_traj_node"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/wp/ikid_ws/build/CMakeFiles --progress-num=55,56 "Built target test_traj_node"
 .PHONY : ikid_motion_control/CMakeFiles/test_traj_node.dir/all
 
 # Build rule for subdir invocation for target.
@@ -555,7 +588,7 @@ ikid_motion_control/CMakeFiles/robotModel.dir/all: ikid_motion_control/CMakeFile
 ikid_motion_control/CMakeFiles/robotModel.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
 	$(MAKE) -f ikid_motion_control/CMakeFiles/robotModel.dir/build.make ikid_motion_control/CMakeFiles/robotModel.dir/depend
 	$(MAKE) -f ikid_motion_control/CMakeFiles/robotModel.dir/build.make ikid_motion_control/CMakeFiles/robotModel.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/wp/ikid_ws/build/CMakeFiles --progress-num=26,27 "Built target robotModel"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/wp/ikid_ws/build/CMakeFiles --progress-num=34,35 "Built target robotModel"
 .PHONY : ikid_motion_control/CMakeFiles/robotModel.dir/all
 
 # Build rule for subdir invocation for target.
@@ -647,7 +680,7 @@ ikid_motion_control/CMakeFiles/matlab_inv_terminate.dir/all: ikid_motion_control
 ikid_motion_control/CMakeFiles/matlab_inv_terminate.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
 	$(MAKE) -f ikid_motion_control/CMakeFiles/matlab_inv_terminate.dir/build.make ikid_motion_control/CMakeFiles/matlab_inv_terminate.dir/depend
 	$(MAKE) -f ikid_motion_control/CMakeFiles/matlab_inv_terminate.dir/build.make ikid_motion_control/CMakeFiles/matlab_inv_terminate.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/wp/ikid_ws/build/CMakeFiles --progress-num=24,25 "Built target matlab_inv_terminate"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/wp/ikid_ws/build/CMakeFiles --progress-num=30,31 "Built target matlab_inv_terminate"
 .PHONY : ikid_motion_control/CMakeFiles/matlab_inv_terminate.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1477,7 +1510,7 @@ ikid_motion_control/CMakeFiles/matlab_inv_initialize.dir/all: ikid_motion_contro
 ikid_motion_control/CMakeFiles/matlab_inv_initialize.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
 	$(MAKE) -f ikid_motion_control/CMakeFiles/matlab_inv_initialize.dir/build.make ikid_motion_control/CMakeFiles/matlab_inv_initialize.dir/depend
 	$(MAKE) -f ikid_motion_control/CMakeFiles/matlab_inv_initialize.dir/build.make ikid_motion_control/CMakeFiles/matlab_inv_initialize.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/wp/ikid_ws/build/CMakeFiles --progress-num=22,23 "Built target matlab_inv_initialize"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/wp/ikid_ws/build/CMakeFiles --progress-num=24,25 "Built target matlab_inv_initialize"
 .PHONY : ikid_motion_control/CMakeFiles/matlab_inv_initialize.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1496,6 +1529,298 @@ matlab_inv_initialize: ikid_motion_control/CMakeFiles/matlab_inv_initialize.dir/
 ikid_motion_control/CMakeFiles/matlab_inv_initialize.dir/clean:
 	$(MAKE) -f ikid_motion_control/CMakeFiles/matlab_inv_initialize.dir/build.make ikid_motion_control/CMakeFiles/matlab_inv_initialize.dir/clean
 .PHONY : ikid_motion_control/CMakeFiles/matlab_inv_initialize.dir/clean
+
+#=============================================================================
+# Target rules for target ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir
+
+# All Build rule for target.
+ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/all
+ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_lisp.dir/all
+ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/all
+ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/all
+ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/all
+ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_nodejs.dir/all
+ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_eus.dir/all
+ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_py.dir/all
+ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_lisp.dir/all
+ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/all
+ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_eus.dir/all
+ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_cpp.dir/all
+ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_nodejs.dir/all
+ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_py.dir/all
+ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
+	$(MAKE) -f ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/depend
+	$(MAKE) -f ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/wp/ikid_ws/build/CMakeFiles --progress-num=22,23 "Built target matlab_inv_data_ros_socket"
+.PHONY : ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/all
+
+# Build rule for subdir invocation for target.
+ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/wp/ikid_ws/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/wp/ikid_ws/build/CMakeFiles 0
+.PHONY : ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/rule
+
+# Convenience name for target.
+matlab_inv_data_ros_socket: ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/rule
+
+.PHONY : matlab_inv_data_ros_socket
+
+# clean rule for target.
+ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/clean:
+	$(MAKE) -f ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/clean
+.PHONY : ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/clean
+
+#=============================================================================
+# Target rules for target ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir
+
+# All Build rule for target.
+ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/all
+ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_lisp.dir/all
+ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/all
+ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/all
+ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/all
+ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_nodejs.dir/all
+ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_eus.dir/all
+ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_py.dir/all
+ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_lisp.dir/all
+ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/all
+ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_eus.dir/all
+ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_cpp.dir/all
+ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_nodejs.dir/all
+ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_py.dir/all
+ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
+	$(MAKE) -f ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/depend
+	$(MAKE) -f ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/wp/ikid_ws/build/CMakeFiles --progress-num=32,33 "Built target matlab_inv_terminate_ros_socket"
+.PHONY : ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/all
+
+# Build rule for subdir invocation for target.
+ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/wp/ikid_ws/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/wp/ikid_ws/build/CMakeFiles 0
+.PHONY : ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/rule
+
+# Convenience name for target.
+matlab_inv_terminate_ros_socket: ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/rule
+
+.PHONY : matlab_inv_terminate_ros_socket
+
+# clean rule for target.
+ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/clean:
+	$(MAKE) -f ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/clean
+.PHONY : ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/clean
+
+#=============================================================================
+# Target rules for target ros_socket/CMakeFiles/server_special_gait.dir
+
+# All Build rule for target.
+ros_socket/CMakeFiles/server_special_gait.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/all
+ros_socket/CMakeFiles/server_special_gait.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_lisp.dir/all
+ros_socket/CMakeFiles/server_special_gait.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/all
+ros_socket/CMakeFiles/server_special_gait.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/all
+ros_socket/CMakeFiles/server_special_gait.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/all
+ros_socket/CMakeFiles/server_special_gait.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_nodejs.dir/all
+ros_socket/CMakeFiles/server_special_gait.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_eus.dir/all
+ros_socket/CMakeFiles/server_special_gait.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_py.dir/all
+ros_socket/CMakeFiles/server_special_gait.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_lisp.dir/all
+ros_socket/CMakeFiles/server_special_gait.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/all
+ros_socket/CMakeFiles/server_special_gait.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_eus.dir/all
+ros_socket/CMakeFiles/server_special_gait.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_cpp.dir/all
+ros_socket/CMakeFiles/server_special_gait.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_nodejs.dir/all
+ros_socket/CMakeFiles/server_special_gait.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_py.dir/all
+ros_socket/CMakeFiles/server_special_gait.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
+ros_socket/CMakeFiles/server_special_gait.dir/all: ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/all
+ros_socket/CMakeFiles/server_special_gait.dir/all: ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/all
+ros_socket/CMakeFiles/server_special_gait.dir/all: ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/all
+ros_socket/CMakeFiles/server_special_gait.dir/all: ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/all
+ros_socket/CMakeFiles/server_special_gait.dir/all: ros_socket/CMakeFiles/robotModel_ros_socket.dir/all
+	$(MAKE) -f ros_socket/CMakeFiles/server_special_gait.dir/build.make ros_socket/CMakeFiles/server_special_gait.dir/depend
+	$(MAKE) -f ros_socket/CMakeFiles/server_special_gait.dir/build.make ros_socket/CMakeFiles/server_special_gait.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/wp/ikid_ws/build/CMakeFiles --progress-num=53,54 "Built target server_special_gait"
+.PHONY : ros_socket/CMakeFiles/server_special_gait.dir/all
+
+# Build rule for subdir invocation for target.
+ros_socket/CMakeFiles/server_special_gait.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/wp/ikid_ws/build/CMakeFiles 12
+	$(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/server_special_gait.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/wp/ikid_ws/build/CMakeFiles 0
+.PHONY : ros_socket/CMakeFiles/server_special_gait.dir/rule
+
+# Convenience name for target.
+server_special_gait: ros_socket/CMakeFiles/server_special_gait.dir/rule
+
+.PHONY : server_special_gait
+
+# clean rule for target.
+ros_socket/CMakeFiles/server_special_gait.dir/clean:
+	$(MAKE) -f ros_socket/CMakeFiles/server_special_gait.dir/build.make ros_socket/CMakeFiles/server_special_gait.dir/clean
+.PHONY : ros_socket/CMakeFiles/server_special_gait.dir/clean
+
+#=============================================================================
+# Target rules for target ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir
+
+# All Build rule for target.
+ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/all
+ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_lisp.dir/all
+ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/all
+ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/all
+ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/all
+ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_nodejs.dir/all
+ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_eus.dir/all
+ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_py.dir/all
+ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_lisp.dir/all
+ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/all
+ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_eus.dir/all
+ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_cpp.dir/all
+ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_nodejs.dir/all
+ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_py.dir/all
+ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
+	$(MAKE) -f ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/depend
+	$(MAKE) -f ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/wp/ikid_ws/build/CMakeFiles --progress-num=26,27 "Built target matlab_inv_initialize_ros_socket"
+.PHONY : ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/all
+
+# Build rule for subdir invocation for target.
+ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/wp/ikid_ws/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/wp/ikid_ws/build/CMakeFiles 0
+.PHONY : ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/rule
+
+# Convenience name for target.
+matlab_inv_initialize_ros_socket: ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/rule
+
+.PHONY : matlab_inv_initialize_ros_socket
+
+# clean rule for target.
+ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/clean:
+	$(MAKE) -f ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/clean
+.PHONY : ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/clean
+
+#=============================================================================
+# Target rules for target ros_socket/CMakeFiles/matlab_inv_ros_socket.dir
+
+# All Build rule for target.
+ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/all
+ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_lisp.dir/all
+ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/all
+ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/all
+ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/all
+ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_nodejs.dir/all
+ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_eus.dir/all
+ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_py.dir/all
+ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_lisp.dir/all
+ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/all
+ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_eus.dir/all
+ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_cpp.dir/all
+ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_nodejs.dir/all
+ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_py.dir/all
+ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
+	$(MAKE) -f ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/depend
+	$(MAKE) -f ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/wp/ikid_ws/build/CMakeFiles --progress-num=28,29 "Built target matlab_inv_ros_socket"
+.PHONY : ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/all
+
+# Build rule for subdir invocation for target.
+ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/wp/ikid_ws/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/wp/ikid_ws/build/CMakeFiles 0
+.PHONY : ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/rule
+
+# Convenience name for target.
+matlab_inv_ros_socket: ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/rule
+
+.PHONY : matlab_inv_ros_socket
+
+# clean rule for target.
+ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/clean:
+	$(MAKE) -f ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/clean
+.PHONY : ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/clean
+
+#=============================================================================
+# Target rules for target ros_socket/CMakeFiles/robotModel_ros_socket.dir
+
+# All Build rule for target.
+ros_socket/CMakeFiles/robotModel_ros_socket.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/all
+ros_socket/CMakeFiles/robotModel_ros_socket.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_lisp.dir/all
+ros_socket/CMakeFiles/robotModel_ros_socket.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/all
+ros_socket/CMakeFiles/robotModel_ros_socket.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/all
+ros_socket/CMakeFiles/robotModel_ros_socket.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/all
+ros_socket/CMakeFiles/robotModel_ros_socket.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_nodejs.dir/all
+ros_socket/CMakeFiles/robotModel_ros_socket.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_eus.dir/all
+ros_socket/CMakeFiles/robotModel_ros_socket.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_py.dir/all
+ros_socket/CMakeFiles/robotModel_ros_socket.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_lisp.dir/all
+ros_socket/CMakeFiles/robotModel_ros_socket.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/all
+ros_socket/CMakeFiles/robotModel_ros_socket.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_eus.dir/all
+ros_socket/CMakeFiles/robotModel_ros_socket.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_cpp.dir/all
+ros_socket/CMakeFiles/robotModel_ros_socket.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_nodejs.dir/all
+ros_socket/CMakeFiles/robotModel_ros_socket.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_py.dir/all
+ros_socket/CMakeFiles/robotModel_ros_socket.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
+	$(MAKE) -f ros_socket/CMakeFiles/robotModel_ros_socket.dir/build.make ros_socket/CMakeFiles/robotModel_ros_socket.dir/depend
+	$(MAKE) -f ros_socket/CMakeFiles/robotModel_ros_socket.dir/build.make ros_socket/CMakeFiles/robotModel_ros_socket.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/wp/ikid_ws/build/CMakeFiles --progress-num=36,37 "Built target robotModel_ros_socket"
+.PHONY : ros_socket/CMakeFiles/robotModel_ros_socket.dir/all
+
+# Build rule for subdir invocation for target.
+ros_socket/CMakeFiles/robotModel_ros_socket.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/wp/ikid_ws/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/robotModel_ros_socket.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/wp/ikid_ws/build/CMakeFiles 0
+.PHONY : ros_socket/CMakeFiles/robotModel_ros_socket.dir/rule
+
+# Convenience name for target.
+robotModel_ros_socket: ros_socket/CMakeFiles/robotModel_ros_socket.dir/rule
+
+.PHONY : robotModel_ros_socket
+
+# clean rule for target.
+ros_socket/CMakeFiles/robotModel_ros_socket.dir/clean:
+	$(MAKE) -f ros_socket/CMakeFiles/robotModel_ros_socket.dir/build.make ros_socket/CMakeFiles/robotModel_ros_socket.dir/clean
+.PHONY : ros_socket/CMakeFiles/robotModel_ros_socket.dir/clean
+
+#=============================================================================
+# Target rules for target ros_socket/CMakeFiles/server_node.dir
+
+# All Build rule for target.
+ros_socket/CMakeFiles/server_node.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/all
+ros_socket/CMakeFiles/server_node.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_lisp.dir/all
+ros_socket/CMakeFiles/server_node.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/all
+ros_socket/CMakeFiles/server_node.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/all
+ros_socket/CMakeFiles/server_node.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/all
+ros_socket/CMakeFiles/server_node.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_nodejs.dir/all
+ros_socket/CMakeFiles/server_node.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_eus.dir/all
+ros_socket/CMakeFiles/server_node.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_py.dir/all
+ros_socket/CMakeFiles/server_node.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_lisp.dir/all
+ros_socket/CMakeFiles/server_node.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/all
+ros_socket/CMakeFiles/server_node.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_eus.dir/all
+ros_socket/CMakeFiles/server_node.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_cpp.dir/all
+ros_socket/CMakeFiles/server_node.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_nodejs.dir/all
+ros_socket/CMakeFiles/server_node.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_py.dir/all
+ros_socket/CMakeFiles/server_node.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
+	$(MAKE) -f ros_socket/CMakeFiles/server_node.dir/build.make ros_socket/CMakeFiles/server_node.dir/depend
+	$(MAKE) -f ros_socket/CMakeFiles/server_node.dir/build.make ros_socket/CMakeFiles/server_node.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/wp/ikid_ws/build/CMakeFiles --progress-num=51,52 "Built target server_node"
+.PHONY : ros_socket/CMakeFiles/server_node.dir/all
+
+# Build rule for subdir invocation for target.
+ros_socket/CMakeFiles/server_node.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/wp/ikid_ws/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/server_node.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/wp/ikid_ws/build/CMakeFiles 0
+.PHONY : ros_socket/CMakeFiles/server_node.dir/rule
+
+# Convenience name for target.
+server_node: ros_socket/CMakeFiles/server_node.dir/rule
+
+.PHONY : server_node
+
+# clean rule for target.
+ros_socket/CMakeFiles/server_node.dir/clean:
+	$(MAKE) -f ros_socket/CMakeFiles/server_node.dir/build.make ros_socket/CMakeFiles/server_node.dir/clean
+.PHONY : ros_socket/CMakeFiles/server_node.dir/clean
 
 #=============================================================================
 # Target rules for target ros_socket/CMakeFiles/serial_port.dir
@@ -1518,7 +1843,7 @@ ros_socket/CMakeFiles/serial_port.dir/all: ikid_motion_control/CMakeFiles/std_ms
 ros_socket/CMakeFiles/serial_port.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
 	$(MAKE) -f ros_socket/CMakeFiles/serial_port.dir/build.make ros_socket/CMakeFiles/serial_port.dir/depend
 	$(MAKE) -f ros_socket/CMakeFiles/serial_port.dir/build.make ros_socket/CMakeFiles/serial_port.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/wp/ikid_ws/build/CMakeFiles --progress-num=28,29 "Built target serial_port"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/wp/ikid_ws/build/CMakeFiles --progress-num=49,50 "Built target serial_port"
 .PHONY : ros_socket/CMakeFiles/serial_port.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1580,47 +1905,6 @@ ros_socket/CMakeFiles/client_node.dir/clean:
 .PHONY : ros_socket/CMakeFiles/client_node.dir/clean
 
 #=============================================================================
-# Target rules for target ros_socket/CMakeFiles/server_node.dir
-
-# All Build rule for target.
-ros_socket/CMakeFiles/server_node.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/all
-ros_socket/CMakeFiles/server_node.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_lisp.dir/all
-ros_socket/CMakeFiles/server_node.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/all
-ros_socket/CMakeFiles/server_node.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/all
-ros_socket/CMakeFiles/server_node.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/all
-ros_socket/CMakeFiles/server_node.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_nodejs.dir/all
-ros_socket/CMakeFiles/server_node.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_eus.dir/all
-ros_socket/CMakeFiles/server_node.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_py.dir/all
-ros_socket/CMakeFiles/server_node.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_lisp.dir/all
-ros_socket/CMakeFiles/server_node.dir/all: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/all
-ros_socket/CMakeFiles/server_node.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_eus.dir/all
-ros_socket/CMakeFiles/server_node.dir/all: ikid_motion_control/CMakeFiles/roscpp_generate_messages_cpp.dir/all
-ros_socket/CMakeFiles/server_node.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_nodejs.dir/all
-ros_socket/CMakeFiles/server_node.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_py.dir/all
-ros_socket/CMakeFiles/server_node.dir/all: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
-	$(MAKE) -f ros_socket/CMakeFiles/server_node.dir/build.make ros_socket/CMakeFiles/server_node.dir/depend
-	$(MAKE) -f ros_socket/CMakeFiles/server_node.dir/build.make ros_socket/CMakeFiles/server_node.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/wp/ikid_ws/build/CMakeFiles --progress-num=30,31 "Built target server_node"
-.PHONY : ros_socket/CMakeFiles/server_node.dir/all
-
-# Build rule for subdir invocation for target.
-ros_socket/CMakeFiles/server_node.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/wp/ikid_ws/build/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/server_node.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/wp/ikid_ws/build/CMakeFiles 0
-.PHONY : ros_socket/CMakeFiles/server_node.dir/rule
-
-# Convenience name for target.
-server_node: ros_socket/CMakeFiles/server_node.dir/rule
-
-.PHONY : server_node
-
-# clean rule for target.
-ros_socket/CMakeFiles/server_node.dir/clean:
-	$(MAKE) -f ros_socket/CMakeFiles/server_node.dir/build.make ros_socket/CMakeFiles/server_node.dir/clean
-.PHONY : ros_socket/CMakeFiles/server_node.dir/clean
-
-#=============================================================================
 # Target rules for target ikid_robot/CMakeFiles/_catkin_empty_exported_target.dir
 
 # All Build rule for target.
@@ -1646,6 +1930,33 @@ _catkin_empty_exported_target: ikid_robot/CMakeFiles/_catkin_empty_exported_targ
 ikid_robot/CMakeFiles/_catkin_empty_exported_target.dir/clean:
 	$(MAKE) -f ikid_robot/CMakeFiles/_catkin_empty_exported_target.dir/build.make ikid_robot/CMakeFiles/_catkin_empty_exported_target.dir/clean
 .PHONY : ikid_robot/CMakeFiles/_catkin_empty_exported_target.dir/clean
+
+#=============================================================================
+# Target rules for target ros_qt_ikid/CMakeFiles/ros_qt_ikid.dir
+
+# All Build rule for target.
+ros_qt_ikid/CMakeFiles/ros_qt_ikid.dir/all:
+	$(MAKE) -f ros_qt_ikid/CMakeFiles/ros_qt_ikid.dir/build.make ros_qt_ikid/CMakeFiles/ros_qt_ikid.dir/depend
+	$(MAKE) -f ros_qt_ikid/CMakeFiles/ros_qt_ikid.dir/build.make ros_qt_ikid/CMakeFiles/ros_qt_ikid.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/wp/ikid_ws/build/CMakeFiles --progress-num=38,39,40,41,42,43,44,45,46,47,48 "Built target ros_qt_ikid"
+.PHONY : ros_qt_ikid/CMakeFiles/ros_qt_ikid.dir/all
+
+# Build rule for subdir invocation for target.
+ros_qt_ikid/CMakeFiles/ros_qt_ikid.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/wp/ikid_ws/build/CMakeFiles 11
+	$(MAKE) -f CMakeFiles/Makefile2 ros_qt_ikid/CMakeFiles/ros_qt_ikid.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/wp/ikid_ws/build/CMakeFiles 0
+.PHONY : ros_qt_ikid/CMakeFiles/ros_qt_ikid.dir/rule
+
+# Convenience name for target.
+ros_qt_ikid: ros_qt_ikid/CMakeFiles/ros_qt_ikid.dir/rule
+
+.PHONY : ros_qt_ikid
+
+# clean rule for target.
+ros_qt_ikid/CMakeFiles/ros_qt_ikid.dir/clean:
+	$(MAKE) -f ros_qt_ikid/CMakeFiles/ros_qt_ikid.dir/build.make ros_qt_ikid/CMakeFiles/ros_qt_ikid.dir/clean
+.PHONY : ros_qt_ikid/CMakeFiles/ros_qt_ikid.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

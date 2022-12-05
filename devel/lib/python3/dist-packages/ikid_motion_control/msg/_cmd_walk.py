@@ -8,14 +8,15 @@ import struct
 
 
 class cmd_walk(genpy.Message):
-  _md5sum = "642b1806da11ae8975a1c844cb320e6d"
+  _md5sum = "9ad235b8f570d179119733addd31d488"
   _type = "ikid_motion_control/cmd_walk"
   _has_header = False  # flag to mark the presence of a Header object
   _full_text = """float64 sx
 float64 sy
-float64 var_theta"""
-  __slots__ = ['sx','sy','var_theta']
-  _slot_types = ['float64','float64','float64']
+float64 var_theta
+bool walk_with_ball"""
+  __slots__ = ['sx','sy','var_theta','walk_with_ball']
+  _slot_types = ['float64','float64','float64','bool']
 
   def __init__(self, *args, **kwds):
     """
@@ -25,7 +26,7 @@ float64 var_theta"""
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       sx,sy,var_theta
+       sx,sy,var_theta,walk_with_ball
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -40,10 +41,13 @@ float64 var_theta"""
         self.sy = 0.
       if self.var_theta is None:
         self.var_theta = 0.
+      if self.walk_with_ball is None:
+        self.walk_with_ball = False
     else:
       self.sx = 0.
       self.sy = 0.
       self.var_theta = 0.
+      self.walk_with_ball = False
 
   def _get_types(self):
     """
@@ -58,7 +62,7 @@ float64 var_theta"""
     """
     try:
       _x = self
-      buff.write(_get_struct_3d().pack(_x.sx, _x.sy, _x.var_theta))
+      buff.write(_get_struct_3dB().pack(_x.sx, _x.sy, _x.var_theta, _x.walk_with_ball))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -73,8 +77,9 @@ float64 var_theta"""
       end = 0
       _x = self
       start = end
-      end += 24
-      (_x.sx, _x.sy, _x.var_theta,) = _get_struct_3d().unpack(str[start:end])
+      end += 25
+      (_x.sx, _x.sy, _x.var_theta, _x.walk_with_ball,) = _get_struct_3dB().unpack(str[start:end])
+      self.walk_with_ball = bool(self.walk_with_ball)
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
@@ -88,7 +93,7 @@ float64 var_theta"""
     """
     try:
       _x = self
-      buff.write(_get_struct_3d().pack(_x.sx, _x.sy, _x.var_theta))
+      buff.write(_get_struct_3dB().pack(_x.sx, _x.sy, _x.var_theta, _x.walk_with_ball))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -104,8 +109,9 @@ float64 var_theta"""
       end = 0
       _x = self
       start = end
-      end += 24
-      (_x.sx, _x.sy, _x.var_theta,) = _get_struct_3d().unpack(str[start:end])
+      end += 25
+      (_x.sx, _x.sy, _x.var_theta, _x.walk_with_ball,) = _get_struct_3dB().unpack(str[start:end])
+      self.walk_with_ball = bool(self.walk_with_ball)
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
@@ -114,9 +120,9 @@ _struct_I = genpy.struct_I
 def _get_struct_I():
     global _struct_I
     return _struct_I
-_struct_3d = None
-def _get_struct_3d():
-    global _struct_3d
-    if _struct_3d is None:
-        _struct_3d = struct.Struct("<3d")
-    return _struct_3d
+_struct_3dB = None
+def _get_struct_3dB():
+    global _struct_3dB
+    if _struct_3dB is None:
+        _struct_3dB = struct.Struct("<3dB")
+    return _struct_3dB

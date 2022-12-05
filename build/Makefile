@@ -714,6 +714,97 @@ matlab_inv_initialize/fast:
 .PHONY : matlab_inv_initialize/fast
 
 #=============================================================================
+# Target rules for targets named matlab_inv_data_ros_socket
+
+# Build rule for target.
+matlab_inv_data_ros_socket: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 matlab_inv_data_ros_socket
+.PHONY : matlab_inv_data_ros_socket
+
+# fast build rule for target.
+matlab_inv_data_ros_socket/fast:
+	$(MAKE) -f ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/build
+.PHONY : matlab_inv_data_ros_socket/fast
+
+#=============================================================================
+# Target rules for targets named matlab_inv_terminate_ros_socket
+
+# Build rule for target.
+matlab_inv_terminate_ros_socket: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 matlab_inv_terminate_ros_socket
+.PHONY : matlab_inv_terminate_ros_socket
+
+# fast build rule for target.
+matlab_inv_terminate_ros_socket/fast:
+	$(MAKE) -f ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/build
+.PHONY : matlab_inv_terminate_ros_socket/fast
+
+#=============================================================================
+# Target rules for targets named server_special_gait
+
+# Build rule for target.
+server_special_gait: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 server_special_gait
+.PHONY : server_special_gait
+
+# fast build rule for target.
+server_special_gait/fast:
+	$(MAKE) -f ros_socket/CMakeFiles/server_special_gait.dir/build.make ros_socket/CMakeFiles/server_special_gait.dir/build
+.PHONY : server_special_gait/fast
+
+#=============================================================================
+# Target rules for targets named matlab_inv_initialize_ros_socket
+
+# Build rule for target.
+matlab_inv_initialize_ros_socket: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 matlab_inv_initialize_ros_socket
+.PHONY : matlab_inv_initialize_ros_socket
+
+# fast build rule for target.
+matlab_inv_initialize_ros_socket/fast:
+	$(MAKE) -f ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/build
+.PHONY : matlab_inv_initialize_ros_socket/fast
+
+#=============================================================================
+# Target rules for targets named matlab_inv_ros_socket
+
+# Build rule for target.
+matlab_inv_ros_socket: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 matlab_inv_ros_socket
+.PHONY : matlab_inv_ros_socket
+
+# fast build rule for target.
+matlab_inv_ros_socket/fast:
+	$(MAKE) -f ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/build
+.PHONY : matlab_inv_ros_socket/fast
+
+#=============================================================================
+# Target rules for targets named robotModel_ros_socket
+
+# Build rule for target.
+robotModel_ros_socket: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 robotModel_ros_socket
+.PHONY : robotModel_ros_socket
+
+# fast build rule for target.
+robotModel_ros_socket/fast:
+	$(MAKE) -f ros_socket/CMakeFiles/robotModel_ros_socket.dir/build.make ros_socket/CMakeFiles/robotModel_ros_socket.dir/build
+.PHONY : robotModel_ros_socket/fast
+
+#=============================================================================
+# Target rules for targets named server_node
+
+# Build rule for target.
+server_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 server_node
+.PHONY : server_node
+
+# fast build rule for target.
+server_node/fast:
+	$(MAKE) -f ros_socket/CMakeFiles/server_node.dir/build.make ros_socket/CMakeFiles/server_node.dir/build
+.PHONY : server_node/fast
+
+#=============================================================================
 # Target rules for targets named serial_port
 
 # Build rule for target.
@@ -740,19 +831,6 @@ client_node/fast:
 .PHONY : client_node/fast
 
 #=============================================================================
-# Target rules for targets named server_node
-
-# Build rule for target.
-server_node: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 server_node
-.PHONY : server_node
-
-# fast build rule for target.
-server_node/fast:
-	$(MAKE) -f ros_socket/CMakeFiles/server_node.dir/build.make ros_socket/CMakeFiles/server_node.dir/build
-.PHONY : server_node/fast
-
-#=============================================================================
 # Target rules for targets named _catkin_empty_exported_target
 
 # Build rule for target.
@@ -764,6 +842,19 @@ _catkin_empty_exported_target: cmake_check_build_system
 _catkin_empty_exported_target/fast:
 	$(MAKE) -f ikid_robot/CMakeFiles/_catkin_empty_exported_target.dir/build.make ikid_robot/CMakeFiles/_catkin_empty_exported_target.dir/build
 .PHONY : _catkin_empty_exported_target/fast
+
+#=============================================================================
+# Target rules for targets named ros_qt_ikid
+
+# Build rule for target.
+ros_qt_ikid: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ros_qt_ikid
+.PHONY : ros_qt_ikid
+
+# fast build rule for target.
+ros_qt_ikid/fast:
+	$(MAKE) -f ros_qt_ikid/CMakeFiles/ros_qt_ikid.dir/build.make ros_qt_ikid/CMakeFiles/ros_qt_ikid.dir/build
+.PHONY : ros_qt_ikid/fast
 
 # Help Target
 help:
@@ -820,10 +911,17 @@ help:
 	@echo "... std_msgs_generate_messages_cpp"
 	@echo "... matlab_inv_data"
 	@echo "... matlab_inv_initialize"
+	@echo "... matlab_inv_data_ros_socket"
+	@echo "... matlab_inv_terminate_ros_socket"
+	@echo "... server_special_gait"
+	@echo "... matlab_inv_initialize_ros_socket"
+	@echo "... matlab_inv_ros_socket"
+	@echo "... robotModel_ros_socket"
+	@echo "... server_node"
 	@echo "... serial_port"
 	@echo "... client_node"
-	@echo "... server_node"
 	@echo "... _catkin_empty_exported_target"
+	@echo "... ros_qt_ikid"
 .PHONY : help
 
 
