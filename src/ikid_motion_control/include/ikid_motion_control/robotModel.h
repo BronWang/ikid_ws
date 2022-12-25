@@ -1,11 +1,13 @@
-#include <ros/ros.h>
-
 #ifndef ROBOTMODEL
 #define ROBOTMODEL
+
+#include <ros/ros.h>
 #define DEBUG 0
 #define WRITETXT 0
+#define WRITEIMUDATA 1
 #define ROSPUB 1    // 是否向Gazebo中的关节控制器发送计算出的关节位置信息
 #define SWING_ARM 1
+#define PID_AMEND  1  // 是否对机器人的姿态进行PID修正
 #define PART_NUMBER 26
 #define NONE_JOINT  255
 #define PI  3.1415926
@@ -88,6 +90,7 @@ enum {
 void ikidRobotDynaPosPubInit(ros::NodeHandle& n_);	    
 void ikidRobotDynaPosPub();
 void robotModelInit(robotLink*); // 已测试
+void initRobotPos(); 
 void robotStart(ros::NodeHandle& n_); // 已测试
 void MatrixSquare3x3(double a[3][3], double a_square[3][3]); // 已测试
 void MatrixMultiMatrix3x3(double a[3][3], double b[3][3], double result[3][3]); // 已测试
@@ -128,9 +131,13 @@ void trajPlan(); // 已测试
 void anglePlan(double delta); // 已测试
 void CalcTrajectory_Com(int current_frame_count);
 void dFootSupportPhase(double theta_mainbody, double theta_left, double theta_right);
-//void test();
-//void test2();
-//void test3();
+void imuGesturePidControl(double &delta_roll, double &delta_pitch, double &delta_yaw);
+void specialGaitExec(int id);
+void judgeFall();
+void FallUpInitPos(); //机器人跌倒起立后把腰部的高度调节到和初始一样
+void writeImuData();
+void clearImuDataTxt();
+
 
 #endif // !ROBOTMODEL
 

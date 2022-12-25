@@ -285,17 +285,368 @@ gtest/fast:
 .PHONY : gtest/fast
 
 #=============================================================================
-# Target rules for targets named test_traj_node
+# Target rules for targets named rosgraph_msgs_generate_messages_py
 
 # Build rule for target.
-test_traj_node: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 test_traj_node
-.PHONY : test_traj_node
+rosgraph_msgs_generate_messages_py: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 rosgraph_msgs_generate_messages_py
+.PHONY : rosgraph_msgs_generate_messages_py
 
 # fast build rule for target.
-test_traj_node/fast:
-	$(MAKE) -f ikid_motion_control/CMakeFiles/test_traj_node.dir/build.make ikid_motion_control/CMakeFiles/test_traj_node.dir/build
-.PHONY : test_traj_node/fast
+rosgraph_msgs_generate_messages_py/fast:
+	$(MAKE) -f ikid_key_ctrl/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/build.make ikid_key_ctrl/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/build
+.PHONY : rosgraph_msgs_generate_messages_py/fast
+
+#=============================================================================
+# Target rules for targets named rosgraph_msgs_generate_messages_lisp
+
+# Build rule for target.
+rosgraph_msgs_generate_messages_lisp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 rosgraph_msgs_generate_messages_lisp
+.PHONY : rosgraph_msgs_generate_messages_lisp
+
+# fast build rule for target.
+rosgraph_msgs_generate_messages_lisp/fast:
+	$(MAKE) -f ikid_key_ctrl/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/build.make ikid_key_ctrl/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/build
+.PHONY : rosgraph_msgs_generate_messages_lisp/fast
+
+#=============================================================================
+# Target rules for targets named rosgraph_msgs_generate_messages_eus
+
+# Build rule for target.
+rosgraph_msgs_generate_messages_eus: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 rosgraph_msgs_generate_messages_eus
+.PHONY : rosgraph_msgs_generate_messages_eus
+
+# fast build rule for target.
+rosgraph_msgs_generate_messages_eus/fast:
+	$(MAKE) -f ikid_key_ctrl/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/build.make ikid_key_ctrl/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/build
+.PHONY : rosgraph_msgs_generate_messages_eus/fast
+
+#=============================================================================
+# Target rules for targets named std_msgs_generate_messages_cpp
+
+# Build rule for target.
+std_msgs_generate_messages_cpp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 std_msgs_generate_messages_cpp
+.PHONY : std_msgs_generate_messages_cpp
+
+# fast build rule for target.
+std_msgs_generate_messages_cpp/fast:
+	$(MAKE) -f ikid_key_ctrl/CMakeFiles/std_msgs_generate_messages_cpp.dir/build.make ikid_key_ctrl/CMakeFiles/std_msgs_generate_messages_cpp.dir/build
+.PHONY : std_msgs_generate_messages_cpp/fast
+
+#=============================================================================
+# Target rules for targets named roscpp_generate_messages_nodejs
+
+# Build rule for target.
+roscpp_generate_messages_nodejs: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 roscpp_generate_messages_nodejs
+.PHONY : roscpp_generate_messages_nodejs
+
+# fast build rule for target.
+roscpp_generate_messages_nodejs/fast:
+	$(MAKE) -f ikid_key_ctrl/CMakeFiles/roscpp_generate_messages_nodejs.dir/build.make ikid_key_ctrl/CMakeFiles/roscpp_generate_messages_nodejs.dir/build
+.PHONY : roscpp_generate_messages_nodejs/fast
+
+#=============================================================================
+# Target rules for targets named roscpp_generate_messages_py
+
+# Build rule for target.
+roscpp_generate_messages_py: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 roscpp_generate_messages_py
+.PHONY : roscpp_generate_messages_py
+
+# fast build rule for target.
+roscpp_generate_messages_py/fast:
+	$(MAKE) -f ikid_key_ctrl/CMakeFiles/roscpp_generate_messages_py.dir/build.make ikid_key_ctrl/CMakeFiles/roscpp_generate_messages_py.dir/build
+.PHONY : roscpp_generate_messages_py/fast
+
+#=============================================================================
+# Target rules for targets named std_msgs_generate_messages_lisp
+
+# Build rule for target.
+std_msgs_generate_messages_lisp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 std_msgs_generate_messages_lisp
+.PHONY : std_msgs_generate_messages_lisp
+
+# fast build rule for target.
+std_msgs_generate_messages_lisp/fast:
+	$(MAKE) -f ikid_key_ctrl/CMakeFiles/std_msgs_generate_messages_lisp.dir/build.make ikid_key_ctrl/CMakeFiles/std_msgs_generate_messages_lisp.dir/build
+.PHONY : std_msgs_generate_messages_lisp/fast
+
+#=============================================================================
+# Target rules for targets named rosgraph_msgs_generate_messages_nodejs
+
+# Build rule for target.
+rosgraph_msgs_generate_messages_nodejs: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 rosgraph_msgs_generate_messages_nodejs
+.PHONY : rosgraph_msgs_generate_messages_nodejs
+
+# fast build rule for target.
+rosgraph_msgs_generate_messages_nodejs/fast:
+	$(MAKE) -f ikid_key_ctrl/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/build.make ikid_key_ctrl/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/build
+.PHONY : rosgraph_msgs_generate_messages_nodejs/fast
+
+#=============================================================================
+# Target rules for targets named roscpp_generate_messages_eus
+
+# Build rule for target.
+roscpp_generate_messages_eus: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 roscpp_generate_messages_eus
+.PHONY : roscpp_generate_messages_eus
+
+# fast build rule for target.
+roscpp_generate_messages_eus/fast:
+	$(MAKE) -f ikid_key_ctrl/CMakeFiles/roscpp_generate_messages_eus.dir/build.make ikid_key_ctrl/CMakeFiles/roscpp_generate_messages_eus.dir/build
+.PHONY : roscpp_generate_messages_eus/fast
+
+#=============================================================================
+# Target rules for targets named roscpp_generate_messages_cpp
+
+# Build rule for target.
+roscpp_generate_messages_cpp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 roscpp_generate_messages_cpp
+.PHONY : roscpp_generate_messages_cpp
+
+# fast build rule for target.
+roscpp_generate_messages_cpp/fast:
+	$(MAKE) -f ikid_key_ctrl/CMakeFiles/roscpp_generate_messages_cpp.dir/build.make ikid_key_ctrl/CMakeFiles/roscpp_generate_messages_cpp.dir/build
+.PHONY : roscpp_generate_messages_cpp/fast
+
+#=============================================================================
+# Target rules for targets named std_msgs_generate_messages_nodejs
+
+# Build rule for target.
+std_msgs_generate_messages_nodejs: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 std_msgs_generate_messages_nodejs
+.PHONY : std_msgs_generate_messages_nodejs
+
+# fast build rule for target.
+std_msgs_generate_messages_nodejs/fast:
+	$(MAKE) -f ikid_key_ctrl/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build.make ikid_key_ctrl/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build
+.PHONY : std_msgs_generate_messages_nodejs/fast
+
+#=============================================================================
+# Target rules for targets named ikid_key_ctrl_generate_messages
+
+# Build rule for target.
+ikid_key_ctrl_generate_messages: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ikid_key_ctrl_generate_messages
+.PHONY : ikid_key_ctrl_generate_messages
+
+# fast build rule for target.
+ikid_key_ctrl_generate_messages/fast:
+	$(MAKE) -f ikid_key_ctrl/CMakeFiles/ikid_key_ctrl_generate_messages.dir/build.make ikid_key_ctrl/CMakeFiles/ikid_key_ctrl_generate_messages.dir/build
+.PHONY : ikid_key_ctrl_generate_messages/fast
+
+#=============================================================================
+# Target rules for targets named std_msgs_generate_messages_py
+
+# Build rule for target.
+std_msgs_generate_messages_py: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 std_msgs_generate_messages_py
+.PHONY : std_msgs_generate_messages_py
+
+# fast build rule for target.
+std_msgs_generate_messages_py/fast:
+	$(MAKE) -f ikid_key_ctrl/CMakeFiles/std_msgs_generate_messages_py.dir/build.make ikid_key_ctrl/CMakeFiles/std_msgs_generate_messages_py.dir/build
+.PHONY : std_msgs_generate_messages_py/fast
+
+#=============================================================================
+# Target rules for targets named ikid_key_ctrl_generate_messages_cpp
+
+# Build rule for target.
+ikid_key_ctrl_generate_messages_cpp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ikid_key_ctrl_generate_messages_cpp
+.PHONY : ikid_key_ctrl_generate_messages_cpp
+
+# fast build rule for target.
+ikid_key_ctrl_generate_messages_cpp/fast:
+	$(MAKE) -f ikid_key_ctrl/CMakeFiles/ikid_key_ctrl_generate_messages_cpp.dir/build.make ikid_key_ctrl/CMakeFiles/ikid_key_ctrl_generate_messages_cpp.dir/build
+.PHONY : ikid_key_ctrl_generate_messages_cpp/fast
+
+#=============================================================================
+# Target rules for targets named ikid_key_ctrl_gencpp
+
+# Build rule for target.
+ikid_key_ctrl_gencpp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ikid_key_ctrl_gencpp
+.PHONY : ikid_key_ctrl_gencpp
+
+# fast build rule for target.
+ikid_key_ctrl_gencpp/fast:
+	$(MAKE) -f ikid_key_ctrl/CMakeFiles/ikid_key_ctrl_gencpp.dir/build.make ikid_key_ctrl/CMakeFiles/ikid_key_ctrl_gencpp.dir/build
+.PHONY : ikid_key_ctrl_gencpp/fast
+
+#=============================================================================
+# Target rules for targets named ikid_key_ctrl_generate_messages_eus
+
+# Build rule for target.
+ikid_key_ctrl_generate_messages_eus: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ikid_key_ctrl_generate_messages_eus
+.PHONY : ikid_key_ctrl_generate_messages_eus
+
+# fast build rule for target.
+ikid_key_ctrl_generate_messages_eus/fast:
+	$(MAKE) -f ikid_key_ctrl/CMakeFiles/ikid_key_ctrl_generate_messages_eus.dir/build.make ikid_key_ctrl/CMakeFiles/ikid_key_ctrl_generate_messages_eus.dir/build
+.PHONY : ikid_key_ctrl_generate_messages_eus/fast
+
+#=============================================================================
+# Target rules for targets named roscpp_generate_messages_lisp
+
+# Build rule for target.
+roscpp_generate_messages_lisp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 roscpp_generate_messages_lisp
+.PHONY : roscpp_generate_messages_lisp
+
+# fast build rule for target.
+roscpp_generate_messages_lisp/fast:
+	$(MAKE) -f ikid_key_ctrl/CMakeFiles/roscpp_generate_messages_lisp.dir/build.make ikid_key_ctrl/CMakeFiles/roscpp_generate_messages_lisp.dir/build
+.PHONY : roscpp_generate_messages_lisp/fast
+
+#=============================================================================
+# Target rules for targets named _ikid_key_ctrl_generate_messages_check_deps_cmd_walk
+
+# Build rule for target.
+_ikid_key_ctrl_generate_messages_check_deps_cmd_walk: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _ikid_key_ctrl_generate_messages_check_deps_cmd_walk
+.PHONY : _ikid_key_ctrl_generate_messages_check_deps_cmd_walk
+
+# fast build rule for target.
+_ikid_key_ctrl_generate_messages_check_deps_cmd_walk/fast:
+	$(MAKE) -f ikid_key_ctrl/CMakeFiles/_ikid_key_ctrl_generate_messages_check_deps_cmd_walk.dir/build.make ikid_key_ctrl/CMakeFiles/_ikid_key_ctrl_generate_messages_check_deps_cmd_walk.dir/build
+.PHONY : _ikid_key_ctrl_generate_messages_check_deps_cmd_walk/fast
+
+#=============================================================================
+# Target rules for targets named ikid_key_ctrl_generate_messages_lisp
+
+# Build rule for target.
+ikid_key_ctrl_generate_messages_lisp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ikid_key_ctrl_generate_messages_lisp
+.PHONY : ikid_key_ctrl_generate_messages_lisp
+
+# fast build rule for target.
+ikid_key_ctrl_generate_messages_lisp/fast:
+	$(MAKE) -f ikid_key_ctrl/CMakeFiles/ikid_key_ctrl_generate_messages_lisp.dir/build.make ikid_key_ctrl/CMakeFiles/ikid_key_ctrl_generate_messages_lisp.dir/build
+.PHONY : ikid_key_ctrl_generate_messages_lisp/fast
+
+#=============================================================================
+# Target rules for targets named ikid_key_ctrl_genlisp
+
+# Build rule for target.
+ikid_key_ctrl_genlisp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ikid_key_ctrl_genlisp
+.PHONY : ikid_key_ctrl_genlisp
+
+# fast build rule for target.
+ikid_key_ctrl_genlisp/fast:
+	$(MAKE) -f ikid_key_ctrl/CMakeFiles/ikid_key_ctrl_genlisp.dir/build.make ikid_key_ctrl/CMakeFiles/ikid_key_ctrl_genlisp.dir/build
+.PHONY : ikid_key_ctrl_genlisp/fast
+
+#=============================================================================
+# Target rules for targets named ikid_key_ctrl_generate_messages_py
+
+# Build rule for target.
+ikid_key_ctrl_generate_messages_py: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ikid_key_ctrl_generate_messages_py
+.PHONY : ikid_key_ctrl_generate_messages_py
+
+# fast build rule for target.
+ikid_key_ctrl_generate_messages_py/fast:
+	$(MAKE) -f ikid_key_ctrl/CMakeFiles/ikid_key_ctrl_generate_messages_py.dir/build.make ikid_key_ctrl/CMakeFiles/ikid_key_ctrl_generate_messages_py.dir/build
+.PHONY : ikid_key_ctrl_generate_messages_py/fast
+
+#=============================================================================
+# Target rules for targets named std_msgs_generate_messages_eus
+
+# Build rule for target.
+std_msgs_generate_messages_eus: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 std_msgs_generate_messages_eus
+.PHONY : std_msgs_generate_messages_eus
+
+# fast build rule for target.
+std_msgs_generate_messages_eus/fast:
+	$(MAKE) -f ikid_key_ctrl/CMakeFiles/std_msgs_generate_messages_eus.dir/build.make ikid_key_ctrl/CMakeFiles/std_msgs_generate_messages_eus.dir/build
+.PHONY : std_msgs_generate_messages_eus/fast
+
+#=============================================================================
+# Target rules for targets named ikid_key_ctrl_gennodejs
+
+# Build rule for target.
+ikid_key_ctrl_gennodejs: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ikid_key_ctrl_gennodejs
+.PHONY : ikid_key_ctrl_gennodejs
+
+# fast build rule for target.
+ikid_key_ctrl_gennodejs/fast:
+	$(MAKE) -f ikid_key_ctrl/CMakeFiles/ikid_key_ctrl_gennodejs.dir/build.make ikid_key_ctrl/CMakeFiles/ikid_key_ctrl_gennodejs.dir/build
+.PHONY : ikid_key_ctrl_gennodejs/fast
+
+#=============================================================================
+# Target rules for targets named ikid_key_ctrl_geneus
+
+# Build rule for target.
+ikid_key_ctrl_geneus: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ikid_key_ctrl_geneus
+.PHONY : ikid_key_ctrl_geneus
+
+# fast build rule for target.
+ikid_key_ctrl_geneus/fast:
+	$(MAKE) -f ikid_key_ctrl/CMakeFiles/ikid_key_ctrl_geneus.dir/build.make ikid_key_ctrl/CMakeFiles/ikid_key_ctrl_geneus.dir/build
+.PHONY : ikid_key_ctrl_geneus/fast
+
+#=============================================================================
+# Target rules for targets named ikid_key_ctrl_generate_messages_nodejs
+
+# Build rule for target.
+ikid_key_ctrl_generate_messages_nodejs: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ikid_key_ctrl_generate_messages_nodejs
+.PHONY : ikid_key_ctrl_generate_messages_nodejs
+
+# fast build rule for target.
+ikid_key_ctrl_generate_messages_nodejs/fast:
+	$(MAKE) -f ikid_key_ctrl/CMakeFiles/ikid_key_ctrl_generate_messages_nodejs.dir/build.make ikid_key_ctrl/CMakeFiles/ikid_key_ctrl_generate_messages_nodejs.dir/build
+.PHONY : ikid_key_ctrl_generate_messages_nodejs/fast
+
+#=============================================================================
+# Target rules for targets named ikid_key_ctrl_genpy
+
+# Build rule for target.
+ikid_key_ctrl_genpy: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ikid_key_ctrl_genpy
+.PHONY : ikid_key_ctrl_genpy
+
+# fast build rule for target.
+ikid_key_ctrl_genpy/fast:
+	$(MAKE) -f ikid_key_ctrl/CMakeFiles/ikid_key_ctrl_genpy.dir/build.make ikid_key_ctrl/CMakeFiles/ikid_key_ctrl_genpy.dir/build
+.PHONY : ikid_key_ctrl_genpy/fast
+
+#=============================================================================
+# Target rules for targets named key_ctrl_node
+
+# Build rule for target.
+key_ctrl_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 key_ctrl_node
+.PHONY : key_ctrl_node
+
+# fast build rule for target.
+key_ctrl_node/fast:
+	$(MAKE) -f ikid_key_ctrl/CMakeFiles/key_ctrl_node.dir/build.make ikid_key_ctrl/CMakeFiles/key_ctrl_node.dir/build
+.PHONY : key_ctrl_node/fast
+
+#=============================================================================
+# Target rules for targets named rosgraph_msgs_generate_messages_cpp
+
+# Build rule for target.
+rosgraph_msgs_generate_messages_cpp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 rosgraph_msgs_generate_messages_cpp
+.PHONY : rosgraph_msgs_generate_messages_cpp
+
+# fast build rule for target.
+rosgraph_msgs_generate_messages_cpp/fast:
+	$(MAKE) -f ikid_key_ctrl/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build.make ikid_key_ctrl/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build
+.PHONY : rosgraph_msgs_generate_messages_cpp/fast
 
 #=============================================================================
 # Target rules for targets named robotModel
@@ -309,6 +660,123 @@ robotModel: cmake_check_build_system
 robotModel/fast:
 	$(MAKE) -f ikid_motion_control/CMakeFiles/robotModel.dir/build.make ikid_motion_control/CMakeFiles/robotModel.dir/build
 .PHONY : robotModel/fast
+
+#=============================================================================
+# Target rules for targets named matlab_inv_initialize
+
+# Build rule for target.
+matlab_inv_initialize: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 matlab_inv_initialize
+.PHONY : matlab_inv_initialize
+
+# fast build rule for target.
+matlab_inv_initialize/fast:
+	$(MAKE) -f ikid_motion_control/CMakeFiles/matlab_inv_initialize.dir/build.make ikid_motion_control/CMakeFiles/matlab_inv_initialize.dir/build
+.PHONY : matlab_inv_initialize/fast
+
+#=============================================================================
+# Target rules for targets named ikid_motion_control_generate_messages
+
+# Build rule for target.
+ikid_motion_control_generate_messages: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control_generate_messages
+.PHONY : ikid_motion_control_generate_messages
+
+# fast build rule for target.
+ikid_motion_control_generate_messages/fast:
+	$(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages.dir/build
+.PHONY : ikid_motion_control_generate_messages/fast
+
+#=============================================================================
+# Target rules for targets named test_traj_node
+
+# Build rule for target.
+test_traj_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 test_traj_node
+.PHONY : test_traj_node
+
+# fast build rule for target.
+test_traj_node/fast:
+	$(MAKE) -f ikid_motion_control/CMakeFiles/test_traj_node.dir/build.make ikid_motion_control/CMakeFiles/test_traj_node.dir/build
+.PHONY : test_traj_node/fast
+
+#=============================================================================
+# Target rules for targets named _ikid_motion_control_generate_messages_check_deps_cmd_walk
+
+# Build rule for target.
+_ikid_motion_control_generate_messages_check_deps_cmd_walk: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _ikid_motion_control_generate_messages_check_deps_cmd_walk
+.PHONY : _ikid_motion_control_generate_messages_check_deps_cmd_walk
+
+# fast build rule for target.
+_ikid_motion_control_generate_messages_check_deps_cmd_walk/fast:
+	$(MAKE) -f ikid_motion_control/CMakeFiles/_ikid_motion_control_generate_messages_check_deps_cmd_walk.dir/build.make ikid_motion_control/CMakeFiles/_ikid_motion_control_generate_messages_check_deps_cmd_walk.dir/build
+.PHONY : _ikid_motion_control_generate_messages_check_deps_cmd_walk/fast
+
+#=============================================================================
+# Target rules for targets named robot_walk_node
+
+# Build rule for target.
+robot_walk_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 robot_walk_node
+.PHONY : robot_walk_node
+
+# fast build rule for target.
+robot_walk_node/fast:
+	$(MAKE) -f ikid_motion_control/CMakeFiles/robot_walk_node.dir/build.make ikid_motion_control/CMakeFiles/robot_walk_node.dir/build
+.PHONY : robot_walk_node/fast
+
+#=============================================================================
+# Target rules for targets named ikid_motion_control_generate_messages_cpp
+
+# Build rule for target.
+ikid_motion_control_generate_messages_cpp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control_generate_messages_cpp
+.PHONY : ikid_motion_control_generate_messages_cpp
+
+# fast build rule for target.
+ikid_motion_control_generate_messages_cpp/fast:
+	$(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_cpp.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_cpp.dir/build
+.PHONY : ikid_motion_control_generate_messages_cpp/fast
+
+#=============================================================================
+# Target rules for targets named ikid_motion_control_genpy
+
+# Build rule for target.
+ikid_motion_control_genpy: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control_genpy
+.PHONY : ikid_motion_control_genpy
+
+# fast build rule for target.
+ikid_motion_control_genpy/fast:
+	$(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_genpy.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_genpy.dir/build
+.PHONY : ikid_motion_control_genpy/fast
+
+#=============================================================================
+# Target rules for targets named ikid_motion_control_gencpp
+
+# Build rule for target.
+ikid_motion_control_gencpp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control_gencpp
+.PHONY : ikid_motion_control_gencpp
+
+# fast build rule for target.
+ikid_motion_control_gencpp/fast:
+	$(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_gencpp.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_gencpp.dir/build
+.PHONY : ikid_motion_control_gencpp/fast
+
+#=============================================================================
+# Target rules for targets named ikid_motion_control_generate_messages_py
+
+# Build rule for target.
+ikid_motion_control_generate_messages_py: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control_generate_messages_py
+.PHONY : ikid_motion_control_generate_messages_py
+
+# fast build rule for target.
+ikid_motion_control_generate_messages_py/fast:
+	$(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_py.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_py.dir/build
+.PHONY : ikid_motion_control_generate_messages_py/fast
 
 #=============================================================================
 # Target rules for targets named matlab_inv
@@ -337,95 +805,43 @@ matlab_inv_terminate/fast:
 .PHONY : matlab_inv_terminate/fast
 
 #=============================================================================
-# Target rules for targets named rosgraph_msgs_generate_messages_py
+# Target rules for targets named ikid_motion_control_generate_messages_eus
 
 # Build rule for target.
-rosgraph_msgs_generate_messages_py: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 rosgraph_msgs_generate_messages_py
-.PHONY : rosgraph_msgs_generate_messages_py
+ikid_motion_control_generate_messages_eus: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control_generate_messages_eus
+.PHONY : ikid_motion_control_generate_messages_eus
 
 # fast build rule for target.
-rosgraph_msgs_generate_messages_py/fast:
-	$(MAKE) -f ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/build.make ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/build
-.PHONY : rosgraph_msgs_generate_messages_py/fast
+ikid_motion_control_generate_messages_eus/fast:
+	$(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_eus.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_eus.dir/build
+.PHONY : ikid_motion_control_generate_messages_eus/fast
 
 #=============================================================================
-# Target rules for targets named roscpp_generate_messages_lisp
+# Target rules for targets named pid_amend_node
 
 # Build rule for target.
-roscpp_generate_messages_lisp: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 roscpp_generate_messages_lisp
-.PHONY : roscpp_generate_messages_lisp
+pid_amend_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 pid_amend_node
+.PHONY : pid_amend_node
 
 # fast build rule for target.
-roscpp_generate_messages_lisp/fast:
-	$(MAKE) -f ikid_motion_control/CMakeFiles/roscpp_generate_messages_lisp.dir/build.make ikid_motion_control/CMakeFiles/roscpp_generate_messages_lisp.dir/build
-.PHONY : roscpp_generate_messages_lisp/fast
+pid_amend_node/fast:
+	$(MAKE) -f ikid_motion_control/CMakeFiles/pid_amend_node.dir/build.make ikid_motion_control/CMakeFiles/pid_amend_node.dir/build
+.PHONY : pid_amend_node/fast
 
 #=============================================================================
-# Target rules for targets named rosgraph_msgs_generate_messages_lisp
+# Target rules for targets named ikid_motion_control_generate_messages_lisp
 
 # Build rule for target.
-rosgraph_msgs_generate_messages_lisp: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 rosgraph_msgs_generate_messages_lisp
-.PHONY : rosgraph_msgs_generate_messages_lisp
+ikid_motion_control_generate_messages_lisp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control_generate_messages_lisp
+.PHONY : ikid_motion_control_generate_messages_lisp
 
 # fast build rule for target.
-rosgraph_msgs_generate_messages_lisp/fast:
-	$(MAKE) -f ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/build.make ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/build
-.PHONY : rosgraph_msgs_generate_messages_lisp/fast
-
-#=============================================================================
-# Target rules for targets named rosgraph_msgs_generate_messages_eus
-
-# Build rule for target.
-rosgraph_msgs_generate_messages_eus: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 rosgraph_msgs_generate_messages_eus
-.PHONY : rosgraph_msgs_generate_messages_eus
-
-# fast build rule for target.
-rosgraph_msgs_generate_messages_eus/fast:
-	$(MAKE) -f ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/build.make ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/build
-.PHONY : rosgraph_msgs_generate_messages_eus/fast
-
-#=============================================================================
-# Target rules for targets named rosgraph_msgs_generate_messages_cpp
-
-# Build rule for target.
-rosgraph_msgs_generate_messages_cpp: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 rosgraph_msgs_generate_messages_cpp
-.PHONY : rosgraph_msgs_generate_messages_cpp
-
-# fast build rule for target.
-rosgraph_msgs_generate_messages_cpp/fast:
-	$(MAKE) -f ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build.make ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build
-.PHONY : rosgraph_msgs_generate_messages_cpp/fast
-
-#=============================================================================
-# Target rules for targets named roscpp_generate_messages_nodejs
-
-# Build rule for target.
-roscpp_generate_messages_nodejs: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 roscpp_generate_messages_nodejs
-.PHONY : roscpp_generate_messages_nodejs
-
-# fast build rule for target.
-roscpp_generate_messages_nodejs/fast:
-	$(MAKE) -f ikid_motion_control/CMakeFiles/roscpp_generate_messages_nodejs.dir/build.make ikid_motion_control/CMakeFiles/roscpp_generate_messages_nodejs.dir/build
-.PHONY : roscpp_generate_messages_nodejs/fast
-
-#=============================================================================
-# Target rules for targets named std_msgs_generate_messages_eus
-
-# Build rule for target.
-std_msgs_generate_messages_eus: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 std_msgs_generate_messages_eus
-.PHONY : std_msgs_generate_messages_eus
-
-# fast build rule for target.
-std_msgs_generate_messages_eus/fast:
-	$(MAKE) -f ikid_motion_control/CMakeFiles/std_msgs_generate_messages_eus.dir/build.make ikid_motion_control/CMakeFiles/std_msgs_generate_messages_eus.dir/build
-.PHONY : std_msgs_generate_messages_eus/fast
+ikid_motion_control_generate_messages_lisp/fast:
+	$(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_lisp.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_lisp.dir/build
+.PHONY : ikid_motion_control_generate_messages_lisp/fast
 
 #=============================================================================
 # Target rules for targets named ikid_motion_control_geneus
@@ -454,82 +870,17 @@ ikid_motion_control_genlisp/fast:
 .PHONY : ikid_motion_control_genlisp/fast
 
 #=============================================================================
-# Target rules for targets named roscpp_generate_messages_py
+# Target rules for targets named ikid_motion_control_generate_messages_nodejs
 
 # Build rule for target.
-roscpp_generate_messages_py: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 roscpp_generate_messages_py
-.PHONY : roscpp_generate_messages_py
+ikid_motion_control_generate_messages_nodejs: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control_generate_messages_nodejs
+.PHONY : ikid_motion_control_generate_messages_nodejs
 
 # fast build rule for target.
-roscpp_generate_messages_py/fast:
-	$(MAKE) -f ikid_motion_control/CMakeFiles/roscpp_generate_messages_py.dir/build.make ikid_motion_control/CMakeFiles/roscpp_generate_messages_py.dir/build
-.PHONY : roscpp_generate_messages_py/fast
-
-#=============================================================================
-# Target rules for targets named std_msgs_generate_messages_lisp
-
-# Build rule for target.
-std_msgs_generate_messages_lisp: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 std_msgs_generate_messages_lisp
-.PHONY : std_msgs_generate_messages_lisp
-
-# fast build rule for target.
-std_msgs_generate_messages_lisp/fast:
-	$(MAKE) -f ikid_motion_control/CMakeFiles/std_msgs_generate_messages_lisp.dir/build.make ikid_motion_control/CMakeFiles/std_msgs_generate_messages_lisp.dir/build
-.PHONY : std_msgs_generate_messages_lisp/fast
-
-#=============================================================================
-# Target rules for targets named rosgraph_msgs_generate_messages_nodejs
-
-# Build rule for target.
-rosgraph_msgs_generate_messages_nodejs: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 rosgraph_msgs_generate_messages_nodejs
-.PHONY : rosgraph_msgs_generate_messages_nodejs
-
-# fast build rule for target.
-rosgraph_msgs_generate_messages_nodejs/fast:
-	$(MAKE) -f ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/build.make ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/build
-.PHONY : rosgraph_msgs_generate_messages_nodejs/fast
-
-#=============================================================================
-# Target rules for targets named roscpp_generate_messages_eus
-
-# Build rule for target.
-roscpp_generate_messages_eus: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 roscpp_generate_messages_eus
-.PHONY : roscpp_generate_messages_eus
-
-# fast build rule for target.
-roscpp_generate_messages_eus/fast:
-	$(MAKE) -f ikid_motion_control/CMakeFiles/roscpp_generate_messages_eus.dir/build.make ikid_motion_control/CMakeFiles/roscpp_generate_messages_eus.dir/build
-.PHONY : roscpp_generate_messages_eus/fast
-
-#=============================================================================
-# Target rules for targets named ikid_motion_control_generate_messages_py
-
-# Build rule for target.
-ikid_motion_control_generate_messages_py: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control_generate_messages_py
-.PHONY : ikid_motion_control_generate_messages_py
-
-# fast build rule for target.
-ikid_motion_control_generate_messages_py/fast:
-	$(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_py.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_py.dir/build
-.PHONY : ikid_motion_control_generate_messages_py/fast
-
-#=============================================================================
-# Target rules for targets named roscpp_generate_messages_cpp
-
-# Build rule for target.
-roscpp_generate_messages_cpp: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 roscpp_generate_messages_cpp
-.PHONY : roscpp_generate_messages_cpp
-
-# fast build rule for target.
-roscpp_generate_messages_cpp/fast:
-	$(MAKE) -f ikid_motion_control/CMakeFiles/roscpp_generate_messages_cpp.dir/build.make ikid_motion_control/CMakeFiles/roscpp_generate_messages_cpp.dir/build
-.PHONY : roscpp_generate_messages_cpp/fast
+ikid_motion_control_generate_messages_nodejs/fast:
+	$(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_nodejs.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_nodejs.dir/build
+.PHONY : ikid_motion_control_generate_messages_nodejs/fast
 
 #=============================================================================
 # Target rules for targets named ikid_motion_control_gennodejs
@@ -545,149 +896,6 @@ ikid_motion_control_gennodejs/fast:
 .PHONY : ikid_motion_control_gennodejs/fast
 
 #=============================================================================
-# Target rules for targets named ikid_motion_control_generate_messages_cpp
-
-# Build rule for target.
-ikid_motion_control_generate_messages_cpp: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control_generate_messages_cpp
-.PHONY : ikid_motion_control_generate_messages_cpp
-
-# fast build rule for target.
-ikid_motion_control_generate_messages_cpp/fast:
-	$(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_cpp.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_cpp.dir/build
-.PHONY : ikid_motion_control_generate_messages_cpp/fast
-
-#=============================================================================
-# Target rules for targets named std_msgs_generate_messages_nodejs
-
-# Build rule for target.
-std_msgs_generate_messages_nodejs: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 std_msgs_generate_messages_nodejs
-.PHONY : std_msgs_generate_messages_nodejs
-
-# fast build rule for target.
-std_msgs_generate_messages_nodejs/fast:
-	$(MAKE) -f ikid_motion_control/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build.make ikid_motion_control/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build
-.PHONY : std_msgs_generate_messages_nodejs/fast
-
-#=============================================================================
-# Target rules for targets named std_msgs_generate_messages_py
-
-# Build rule for target.
-std_msgs_generate_messages_py: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 std_msgs_generate_messages_py
-.PHONY : std_msgs_generate_messages_py
-
-# fast build rule for target.
-std_msgs_generate_messages_py/fast:
-	$(MAKE) -f ikid_motion_control/CMakeFiles/std_msgs_generate_messages_py.dir/build.make ikid_motion_control/CMakeFiles/std_msgs_generate_messages_py.dir/build
-.PHONY : std_msgs_generate_messages_py/fast
-
-#=============================================================================
-# Target rules for targets named _ikid_motion_control_generate_messages_check_deps_cmd_walk
-
-# Build rule for target.
-_ikid_motion_control_generate_messages_check_deps_cmd_walk: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 _ikid_motion_control_generate_messages_check_deps_cmd_walk
-.PHONY : _ikid_motion_control_generate_messages_check_deps_cmd_walk
-
-# fast build rule for target.
-_ikid_motion_control_generate_messages_check_deps_cmd_walk/fast:
-	$(MAKE) -f ikid_motion_control/CMakeFiles/_ikid_motion_control_generate_messages_check_deps_cmd_walk.dir/build.make ikid_motion_control/CMakeFiles/_ikid_motion_control_generate_messages_check_deps_cmd_walk.dir/build
-.PHONY : _ikid_motion_control_generate_messages_check_deps_cmd_walk/fast
-
-#=============================================================================
-# Target rules for targets named ikid_motion_control_gencpp
-
-# Build rule for target.
-ikid_motion_control_gencpp: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control_gencpp
-.PHONY : ikid_motion_control_gencpp
-
-# fast build rule for target.
-ikid_motion_control_gencpp/fast:
-	$(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_gencpp.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_gencpp.dir/build
-.PHONY : ikid_motion_control_gencpp/fast
-
-#=============================================================================
-# Target rules for targets named ikid_motion_control_generate_messages_eus
-
-# Build rule for target.
-ikid_motion_control_generate_messages_eus: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control_generate_messages_eus
-.PHONY : ikid_motion_control_generate_messages_eus
-
-# fast build rule for target.
-ikid_motion_control_generate_messages_eus/fast:
-	$(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_eus.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_eus.dir/build
-.PHONY : ikid_motion_control_generate_messages_eus/fast
-
-#=============================================================================
-# Target rules for targets named ikid_motion_control_generate_messages_lisp
-
-# Build rule for target.
-ikid_motion_control_generate_messages_lisp: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control_generate_messages_lisp
-.PHONY : ikid_motion_control_generate_messages_lisp
-
-# fast build rule for target.
-ikid_motion_control_generate_messages_lisp/fast:
-	$(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_lisp.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_lisp.dir/build
-.PHONY : ikid_motion_control_generate_messages_lisp/fast
-
-#=============================================================================
-# Target rules for targets named ikid_motion_control_generate_messages
-
-# Build rule for target.
-ikid_motion_control_generate_messages: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control_generate_messages
-.PHONY : ikid_motion_control_generate_messages
-
-# fast build rule for target.
-ikid_motion_control_generate_messages/fast:
-	$(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages.dir/build
-.PHONY : ikid_motion_control_generate_messages/fast
-
-#=============================================================================
-# Target rules for targets named ikid_motion_control_generate_messages_nodejs
-
-# Build rule for target.
-ikid_motion_control_generate_messages_nodejs: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control_generate_messages_nodejs
-.PHONY : ikid_motion_control_generate_messages_nodejs
-
-# fast build rule for target.
-ikid_motion_control_generate_messages_nodejs/fast:
-	$(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_nodejs.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_nodejs.dir/build
-.PHONY : ikid_motion_control_generate_messages_nodejs/fast
-
-#=============================================================================
-# Target rules for targets named ikid_motion_control_genpy
-
-# Build rule for target.
-ikid_motion_control_genpy: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control_genpy
-.PHONY : ikid_motion_control_genpy
-
-# fast build rule for target.
-ikid_motion_control_genpy/fast:
-	$(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_genpy.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_genpy.dir/build
-.PHONY : ikid_motion_control_genpy/fast
-
-#=============================================================================
-# Target rules for targets named std_msgs_generate_messages_cpp
-
-# Build rule for target.
-std_msgs_generate_messages_cpp: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 std_msgs_generate_messages_cpp
-.PHONY : std_msgs_generate_messages_cpp
-
-# fast build rule for target.
-std_msgs_generate_messages_cpp/fast:
-	$(MAKE) -f ikid_motion_control/CMakeFiles/std_msgs_generate_messages_cpp.dir/build.make ikid_motion_control/CMakeFiles/std_msgs_generate_messages_cpp.dir/build
-.PHONY : std_msgs_generate_messages_cpp/fast
-
-#=============================================================================
 # Target rules for targets named matlab_inv_data
 
 # Build rule for target.
@@ -699,19 +907,6 @@ matlab_inv_data: cmake_check_build_system
 matlab_inv_data/fast:
 	$(MAKE) -f ikid_motion_control/CMakeFiles/matlab_inv_data.dir/build.make ikid_motion_control/CMakeFiles/matlab_inv_data.dir/build
 .PHONY : matlab_inv_data/fast
-
-#=============================================================================
-# Target rules for targets named matlab_inv_initialize
-
-# Build rule for target.
-matlab_inv_initialize: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 matlab_inv_initialize
-.PHONY : matlab_inv_initialize
-
-# fast build rule for target.
-matlab_inv_initialize/fast:
-	$(MAKE) -f ikid_motion_control/CMakeFiles/matlab_inv_initialize.dir/build.make ikid_motion_control/CMakeFiles/matlab_inv_initialize.dir/build
-.PHONY : matlab_inv_initialize/fast
 
 #=============================================================================
 # Target rules for targets named matlab_inv_data_ros_socket
@@ -878,39 +1073,54 @@ help:
 	@echo "... gmock"
 	@echo "... gtest_main"
 	@echo "... gtest"
-	@echo "... test_traj_node"
-	@echo "... robotModel"
-	@echo "... matlab_inv"
-	@echo "... matlab_inv_terminate"
 	@echo "... rosgraph_msgs_generate_messages_py"
-	@echo "... roscpp_generate_messages_lisp"
 	@echo "... rosgraph_msgs_generate_messages_lisp"
 	@echo "... rosgraph_msgs_generate_messages_eus"
-	@echo "... rosgraph_msgs_generate_messages_cpp"
+	@echo "... std_msgs_generate_messages_cpp"
 	@echo "... roscpp_generate_messages_nodejs"
-	@echo "... std_msgs_generate_messages_eus"
-	@echo "... ikid_motion_control_geneus"
-	@echo "... ikid_motion_control_genlisp"
 	@echo "... roscpp_generate_messages_py"
 	@echo "... std_msgs_generate_messages_lisp"
 	@echo "... rosgraph_msgs_generate_messages_nodejs"
 	@echo "... roscpp_generate_messages_eus"
-	@echo "... ikid_motion_control_generate_messages_py"
 	@echo "... roscpp_generate_messages_cpp"
-	@echo "... ikid_motion_control_gennodejs"
-	@echo "... ikid_motion_control_generate_messages_cpp"
 	@echo "... std_msgs_generate_messages_nodejs"
+	@echo "... ikid_key_ctrl_generate_messages"
 	@echo "... std_msgs_generate_messages_py"
-	@echo "... _ikid_motion_control_generate_messages_check_deps_cmd_walk"
-	@echo "... ikid_motion_control_gencpp"
-	@echo "... ikid_motion_control_generate_messages_eus"
-	@echo "... ikid_motion_control_generate_messages_lisp"
-	@echo "... ikid_motion_control_generate_messages"
-	@echo "... ikid_motion_control_generate_messages_nodejs"
-	@echo "... ikid_motion_control_genpy"
-	@echo "... std_msgs_generate_messages_cpp"
-	@echo "... matlab_inv_data"
+	@echo "... ikid_key_ctrl_generate_messages_cpp"
+	@echo "... ikid_key_ctrl_gencpp"
+	@echo "... ikid_key_ctrl_generate_messages_eus"
+	@echo "... roscpp_generate_messages_lisp"
+	@echo "... _ikid_key_ctrl_generate_messages_check_deps_cmd_walk"
+	@echo "... ikid_key_ctrl_generate_messages_lisp"
+	@echo "... ikid_key_ctrl_genlisp"
+	@echo "... ikid_key_ctrl_generate_messages_py"
+	@echo "... std_msgs_generate_messages_eus"
+	@echo "... ikid_key_ctrl_gennodejs"
+	@echo "... ikid_key_ctrl_geneus"
+	@echo "... ikid_key_ctrl_generate_messages_nodejs"
+	@echo "... ikid_key_ctrl_genpy"
+	@echo "... key_ctrl_node"
+	@echo "... rosgraph_msgs_generate_messages_cpp"
+	@echo "... robotModel"
 	@echo "... matlab_inv_initialize"
+	@echo "... ikid_motion_control_generate_messages"
+	@echo "... test_traj_node"
+	@echo "... _ikid_motion_control_generate_messages_check_deps_cmd_walk"
+	@echo "... robot_walk_node"
+	@echo "... ikid_motion_control_generate_messages_cpp"
+	@echo "... ikid_motion_control_genpy"
+	@echo "... ikid_motion_control_gencpp"
+	@echo "... ikid_motion_control_generate_messages_py"
+	@echo "... matlab_inv"
+	@echo "... matlab_inv_terminate"
+	@echo "... ikid_motion_control_generate_messages_eus"
+	@echo "... pid_amend_node"
+	@echo "... ikid_motion_control_generate_messages_lisp"
+	@echo "... ikid_motion_control_geneus"
+	@echo "... ikid_motion_control_genlisp"
+	@echo "... ikid_motion_control_generate_messages_nodejs"
+	@echo "... ikid_motion_control_gennodejs"
+	@echo "... matlab_inv_data"
 	@echo "... matlab_inv_data_ros_socket"
 	@echo "... matlab_inv_terminate_ros_socket"
 	@echo "... server_special_gait"

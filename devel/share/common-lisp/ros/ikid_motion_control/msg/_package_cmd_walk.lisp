@@ -7,4 +7,6 @@
           VAR_THETA
           WALK_WITH_BALL-VAL
           WALK_WITH_BALL
+          STOP_WALK-VAL
+          STOP_WALK
 ))

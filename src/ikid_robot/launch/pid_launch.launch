@@ -1,0 +1,7 @@
+<launch>
+
+<node pkg="ikid_motion_control" type="pid_amend_node" name="pid_amend" output="screen">
+    <rosparam file="$(find ikid_motion_control)/config/config.yaml" command="load"/>
+</node>
+
+</launch>

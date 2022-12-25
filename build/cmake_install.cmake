@@ -131,6 +131,7 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("/home/wp/ikid_ws/build/gtest/cmake_install.cmake")
+  include("/home/wp/ikid_ws/build/ikid_key_ctrl/cmake_install.cmake")
   include("/home/wp/ikid_ws/build/ikid_motion_control/cmake_install.cmake")
   include("/home/wp/ikid_ws/build/ros_socket/cmake_install.cmake")
   include("/home/wp/ikid_ws/build/ikid_robot/cmake_install.cmake")

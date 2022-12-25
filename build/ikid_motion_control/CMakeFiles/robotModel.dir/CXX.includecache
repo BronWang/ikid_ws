@@ -45,6 +45,10 @@ string.h
 -
 stdio.h
 -
+dirent.h
+-
+sys/stat.h
+-
 std_msgs/Float64.h
 /home/wp/ikid_ws/src/ikid_motion_control/src/source/std_msgs/Float64.h
 

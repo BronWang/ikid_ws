@@ -48,7 +48,7 @@ int main(int argc, char** argv)
     bzero(&servaddr, sizeof(servaddr));
     //2.准备通讯地址（必须是服务器的）192.168.186.130是本机的IP
     servaddr.sin_family = AF_INET;
-    servaddr.sin_port = htons(1200);//将一个无符号短整型的主机数值转换为网络字节顺序，即大尾顺序(big-endian)
+    servaddr.sin_port = htons(1110);//将一个无符号短整型的主机数值转换为网络字节顺序，即大尾顺序(big-endian)
     servaddr.sin_addr.s_addr = inet_addr("192.168.186.130");//net_addr方法可以转化字符串，主要用来将一个十进制的数转化为二进制的数，用途多于ipv4的IP转化。
 
     //3.bind()绑定
@@ -99,7 +99,7 @@ int main(int argc, char** argv)
                         token = strtok(NULL, ",");
                         double robot_q = atof(token);
                         robotModel[i].q = robot_q;
-                        cout << "[out] " << robot_q << endl;
+                        //cout << "[out] " << robot_q << endl;
                     }
                     ikidRobotDynaPosPub();
                 }

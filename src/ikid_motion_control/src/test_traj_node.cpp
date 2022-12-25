@@ -20,11 +20,6 @@ int main(int argc, char *argv[])
 	double com[3];
 	Calc_com(com);
 	printf("重心 :%f %f %f", com[0], com[1], com[2]);
-	trajPlan();
-	trajPlan();
-	trajPlan();
-	trajPlan();
-	trajPlan();
-	trajPlan();
+	specialGaitExec(1);
   return 0;
 }

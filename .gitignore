@@ -1,2 +1,4 @@
 .vscode/
 .qtc_clangd/
+build/
+devel/

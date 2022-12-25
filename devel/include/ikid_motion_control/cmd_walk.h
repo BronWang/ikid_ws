@@ -27,13 +27,15 @@ struct cmd_walk_
     : sx(0.0)
     , sy(0.0)
     , var_theta(0.0)
-    , walk_with_ball(false)  {
+    , walk_with_ball(false)
+    , stop_walk(false)  {
     }
   cmd_walk_(const ContainerAllocator& _alloc)
     : sx(0.0)
     , sy(0.0)
     , var_theta(0.0)
-    , walk_with_ball(false)  {
+    , walk_with_ball(false)
+    , stop_walk(false)  {
   (void)_alloc;
     }
 
@@ -50,6 +52,9 @@ struct cmd_walk_
 
    typedef uint8_t _walk_with_ball_type;
   _walk_with_ball_type walk_with_ball;
+
+   typedef uint8_t _stop_walk_type;
+  _stop_walk_type stop_walk;
 
 
 
@@ -83,7 +88,8 @@ bool operator==(const ::ikid_motion_control::cmd_walk_<ContainerAllocator1> & lh
   return lhs.sx == rhs.sx &&
     lhs.sy == rhs.sy &&
     lhs.var_theta == rhs.var_theta &&
-    lhs.walk_with_ball == rhs.walk_with_ball;
+    lhs.walk_with_ball == rhs.walk_with_ball &&
+    lhs.stop_walk == rhs.stop_walk;
 }
 
 template<typename ContainerAllocator1, typename ContainerAllocator2>
@@ -140,12 +146,12 @@ struct MD5Sum< ::ikid_motion_control::cmd_walk_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "9ad235b8f570d179119733addd31d488";
+    return "768710e1aa78c3a3025d8ab3e396f5e8";
   }
 
   static const char* value(const ::ikid_motion_control::cmd_walk_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x9ad235b8f570d179ULL;
-  static const uint64_t static_value2 = 0x119733addd31d488ULL;
+  static const uint64_t static_value1 = 0x768710e1aa78c3a3ULL;
+  static const uint64_t static_value2 = 0x025d8ab3e396f5e8ULL;
 };
 
 template<class ContainerAllocator>
@@ -164,10 +170,11 @@ struct Definition< ::ikid_motion_control::cmd_walk_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "float64 sx\n"
-"float64 sy\n"
-"float64 var_theta\n"
-"bool walk_with_ball\n"
+    return "float64 sx  # 步长\n"
+"float64 sy   # 步宽\n"
+"float64 var_theta  # 转角增量\n"
+"bool walk_with_ball  # 是否带球行走\n"
+"bool stop_walk   # 停止行走标志位\n"
 ;
   }
 
@@ -190,6 +197,7 @@ namespace serialization
       stream.next(m.sy);
       stream.next(m.var_theta);
       stream.next(m.walk_with_ball);
+      stream.next(m.stop_walk);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -216,6 +224,8 @@ struct Printer< ::ikid_motion_control::cmd_walk_<ContainerAllocator> >
     Printer<double>::stream(s, indent + "  ", v.var_theta);
     s << indent << "walk_with_ball: ";
     Printer<uint8_t>::stream(s, indent + "  ", v.walk_with_ball);
+    s << indent << "stop_walk: ";
+    Printer<uint8_t>::stream(s, indent + "  ", v.stop_walk);
   }
 };
 
