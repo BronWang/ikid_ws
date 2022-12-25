@@ -1,6 +1,6 @@
 # ikid_ws
 ![image](https://github.com/BronWang/ikid_ws/blob/ikid_ws_ros_control/img/team_logo.png)
-
+Ikid Robot ros仿真环境＋机器人模型+运动功能包
 # ubuntu 20.04 + ros/noetic
 
 # 安装依赖：
@@ -15,5 +15,6 @@
 - 添加了键盘控制功能包
 - 添加了机器人跌倒爬起的功能
 - 使用PID控制来稳定机器人主体的 **roll angle** 和 **pitch angle**
+
 
 
