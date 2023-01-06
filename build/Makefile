@@ -649,6 +649,19 @@ rosgraph_msgs_generate_messages_cpp/fast:
 .PHONY : rosgraph_msgs_generate_messages_cpp/fast
 
 #=============================================================================
+# Target rules for targets named special_gait_node
+
+# Build rule for target.
+special_gait_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 special_gait_node
+.PHONY : special_gait_node
+
+# fast build rule for target.
+special_gait_node/fast:
+	$(MAKE) -f ikid_motion_control/CMakeFiles/special_gait_node.dir/build.make ikid_motion_control/CMakeFiles/special_gait_node.dir/build
+.PHONY : special_gait_node/fast
+
+#=============================================================================
 # Target rules for targets named robotModel
 
 # Build rule for target.
@@ -1101,6 +1114,7 @@ help:
 	@echo "... ikid_key_ctrl_genpy"
 	@echo "... key_ctrl_node"
 	@echo "... rosgraph_msgs_generate_messages_cpp"
+	@echo "... special_gait_node"
 	@echo "... robotModel"
 	@echo "... matlab_inv_initialize"
 	@echo "... ikid_motion_control_generate_messages"

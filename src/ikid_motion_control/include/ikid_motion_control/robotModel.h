@@ -5,6 +5,7 @@
 #define DEBUG 0
 #define WRITETXT 0
 #define WRITEIMUDATA 1
+#define WRITEZMPDATA 1
 #define ROSPUB 1    // 是否向Gazebo中的关节控制器发送计算出的关节位置信息
 #define SWING_ARM 1
 #define PID_AMEND  1  // 是否对机器人的姿态进行PID修正
@@ -127,6 +128,7 @@ void inverseKinmatics_leftFoot(double r, double p, double y); //已测试，这�
 void inverseKinmatics_rightFoot(double r, double p, double y);//已测试，这里结合了解析法和数值法迭代，可以调整迭代次数提高精度,实际需要给定的是踝关节的坐标和位姿，其可以通过足部的坐标和位姿算出
 void clearTxt(); // 只是方便自己输出数据在matlab可视化用
 void writeTxt(); // 只是方便自己输出数据在matlab可视化用
+void startTrajPlan(); // 为了让起步更稳定
 void trajPlan(); // 已测试
 void anglePlan(double delta); // 已测试
 void CalcTrajectory_Com(int current_frame_count);
@@ -137,7 +139,8 @@ void judgeFall();
 void FallUpInitPos(); //机器人跌倒起立后把腰部的高度调节到和初始一样
 void writeImuData();
 void clearImuDataTxt();
-
+void writeZmpData(double z_d_x, double z_d_y, double z_f_x, double z_f_y);
+void clearZmpDataTxt();
 
 #endif // !ROBOTMODEL
 

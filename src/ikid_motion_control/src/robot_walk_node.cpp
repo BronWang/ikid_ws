@@ -14,6 +14,11 @@ void doWalkMsg(const ikid_motion_control::cmd_walk::ConstPtr& walkMsg){
     sx = walkMsg->sx;
     sy = walkMsg->sy;
 	if(!(walkMsg->stop_walk)){
+        bool stop_walk_flag;
+        ros::param::get("stop_walk_flag",stop_walk_flag); //如果是停止开始，先执行启动步态
+        if(stop_walk_flag){
+            startTrajPlan();
+        }
         ros::param::set("stop_walk_flag",false);
         if(walkMsg->var_theta > 10e-5){
             ros::param::set("stop_turn_flag",false);
@@ -27,6 +32,7 @@ void doWalkMsg(const ikid_motion_control::cmd_walk::ConstPtr& walkMsg){
     }else{
         sx = 0;
         trajPlan();
+        FallUpInitPos();  // 保证停稳
         ros::param::set("stop_walk_flag",true);
     }
 }
@@ -48,15 +54,16 @@ int main(int argc, char *argv[])
     ros::param::set("stop_turn_flag",true);  //设置停止转弯标志位于参数服务器中
 
     clearImuDataTxt();
+    clearZmpDataTxt();
 
     while (ros::ok())
     {
         bool stop_walk_flag;
         ros::param::get("stop_walk_flag",stop_walk_flag);
+        judgeFall();
         if(!stop_walk_flag){
             trajPlan();
         }
-        judgeFall();
         ros::spinOnce();
     }
     

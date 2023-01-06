@@ -8,7 +8,7 @@ roslaunch ikid_robot my_launch.launch; \
 exec bash"
 
 gnome-terminal --tab -- bash -c "\
-sleep 10s; \
+sleep 15s; \
 source /home/wp/ikid_ws/devel/setup.bash; \
 rosrun ikid_motion_control test_traj_node; \
 exec bash"

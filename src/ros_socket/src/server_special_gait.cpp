@@ -69,6 +69,18 @@ int main(int argc, char** argv)
     socklen_t len = sizeof(cliaddr);
     ros::Rate loop_rate(50);
     
+    //保存关节数据
+    FILE* fp = NULL;
+	char ch[500];
+	char filename[] = "/home/wp/ikid_ws/specialgait_data.txt";
+    fp = fopen(filename, "w");
+	if (fp == NULL)
+	{
+		exit(0);
+	}
+	fclose(fp);
+	
+
    while (ros::ok()) 
    {
         cout << "正在监听网络连接...\n" << endl;
@@ -102,6 +114,22 @@ int main(int argc, char** argv)
                         //cout << "[out] " << robot_q << endl;
                     }
                     ikidRobotDynaPosPub();
+                    //保存关节数据
+                    fp = fopen(filename, "a");
+                    if(fp == NULL)
+                    {
+                        exit(0);
+                    }
+                    sprintf(ch, "%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf\n",
+                    robotModel[0].q, robotModel[1].q,robotModel[2].q,robotModel[3].q,
+                    robotModel[4].q, robotModel[5].q,robotModel[6].q,robotModel[7].q,
+                    robotModel[8].q, robotModel[9].q,robotModel[10].q,robotModel[11].q,
+                    robotModel[12].q, robotModel[13].q,robotModel[14].q,robotModel[15].q,
+                    robotModel[16].q, robotModel[17].q,robotModel[18].q,robotModel[19].q,
+                    robotModel[20].q, robotModel[21].q,robotModel[22].q,robotModel[23].q,
+                    robotModel[24].q, robotModel[25].q);
+                    fputs(ch, fp);
+                    fclose(fp);
                 }
             }else{
                 printf("The client ip: %s, port: %d\n has beens closed!\n", 

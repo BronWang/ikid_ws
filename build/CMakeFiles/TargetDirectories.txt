@@ -73,6 +73,7 @@
 /home/wp/ikid_ws/build/ikid_motion_control/CMakeFiles/install/strip.dir
 /home/wp/ikid_ws/build/ikid_motion_control/CMakeFiles/rebuild_cache.dir
 /home/wp/ikid_ws/build/ikid_motion_control/CMakeFiles/edit_cache.dir
+/home/wp/ikid_ws/build/ikid_motion_control/CMakeFiles/special_gait_node.dir
 /home/wp/ikid_ws/build/ikid_motion_control/CMakeFiles/robotModel.dir
 /home/wp/ikid_ws/build/ikid_motion_control/CMakeFiles/matlab_inv_initialize.dir
 /home/wp/ikid_ws/build/ikid_motion_control/CMakeFiles/list_install_components.dir

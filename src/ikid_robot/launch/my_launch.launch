@@ -54,15 +54,18 @@
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
       <remap from="/joint_states" to="/ikid_robot/joint_states" />
     </node>
-    <node
+    <!-- <node
     name="rviz"
     pkg="rviz"
     type="rviz"
-    args="-d $(find ikid_robot)/urdf.rviz" />
+    args="-d $(find ikid_robot)/urdf.rviz" /> -->
 
     <!-- 启动IMU数据参数服务节点 -->
     <node pkg="ikid_motion_control" type="pid_amend_node" name="pid_amend">
       <rosparam file="$(find ikid_motion_control)/config/config.yaml" command="load"/>
     </node>
+
+    <!-- 启动特殊步态节点 -->
+    <node pkg="ikid_motion_control" type="special_gait_node" name="special_gait"/>
 
 </launch>

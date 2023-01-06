@@ -319,6 +319,7 @@ set(CMAKE_DEPEND_INFO_FILES
   "ikid_key_ctrl/CMakeFiles/ikid_key_ctrl_genpy.dir/DependInfo.cmake"
   "ikid_key_ctrl/CMakeFiles/key_ctrl_node.dir/DependInfo.cmake"
   "ikid_key_ctrl/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/DependInfo.cmake"
+  "ikid_motion_control/CMakeFiles/special_gait_node.dir/DependInfo.cmake"
   "ikid_motion_control/CMakeFiles/robotModel.dir/DependInfo.cmake"
   "ikid_motion_control/CMakeFiles/matlab_inv_initialize.dir/DependInfo.cmake"
   "ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages.dir/DependInfo.cmake"

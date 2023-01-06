@@ -168,6 +168,21 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+ikid_motion_control/CMakeFiles/special_gait_node.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/special_gait_node.dir/rule
+.PHONY : ikid_motion_control/CMakeFiles/special_gait_node.dir/rule
+
+# Convenience name for target.
+special_gait_node: ikid_motion_control/CMakeFiles/special_gait_node.dir/rule
+
+.PHONY : special_gait_node
+
+# fast build rule for target.
+special_gait_node/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/special_gait_node.dir/build.make ikid_motion_control/CMakeFiles/special_gait_node.dir/build
+.PHONY : special_gait_node/fast
+
+# Convenience name for target.
 ikid_motion_control/CMakeFiles/robotModel.dir/rule:
 	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/robotModel.dir/rule
 .PHONY : ikid_motion_control/CMakeFiles/robotModel.dir/rule
@@ -656,6 +671,33 @@ src/source/robotModel.cpp.s:
 	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/robotModel.dir/build.make ikid_motion_control/CMakeFiles/robotModel.dir/src/source/robotModel.cpp.s
 .PHONY : src/source/robotModel.cpp.s
 
+src/special_gait_node.o: src/special_gait_node.cpp.o
+
+.PHONY : src/special_gait_node.o
+
+# target to build an object file
+src/special_gait_node.cpp.o:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/special_gait_node.dir/build.make ikid_motion_control/CMakeFiles/special_gait_node.dir/src/special_gait_node.cpp.o
+.PHONY : src/special_gait_node.cpp.o
+
+src/special_gait_node.i: src/special_gait_node.cpp.i
+
+.PHONY : src/special_gait_node.i
+
+# target to preprocess a source file
+src/special_gait_node.cpp.i:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/special_gait_node.dir/build.make ikid_motion_control/CMakeFiles/special_gait_node.dir/src/special_gait_node.cpp.i
+.PHONY : src/special_gait_node.cpp.i
+
+src/special_gait_node.s: src/special_gait_node.cpp.s
+
+.PHONY : src/special_gait_node.s
+
+# target to generate assembly for a file
+src/special_gait_node.cpp.s:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/special_gait_node.dir/build.make ikid_motion_control/CMakeFiles/special_gait_node.dir/src/special_gait_node.cpp.s
+.PHONY : src/special_gait_node.cpp.s
+
 src/test_traj_node.o: src/test_traj_node.cpp.o
 
 .PHONY : src/test_traj_node.o
@@ -692,6 +734,7 @@ help:
 	@echo "... install/strip"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... special_gait_node"
 	@echo "... robotModel"
 	@echo "... matlab_inv_initialize"
 	@echo "... list_install_components"
@@ -737,6 +780,9 @@ help:
 	@echo "... src/source/robotModel.o"
 	@echo "... src/source/robotModel.i"
 	@echo "... src/source/robotModel.s"
+	@echo "... src/special_gait_node.o"
+	@echo "... src/special_gait_node.i"
+	@echo "... src/special_gait_node.s"
 	@echo "... src/test_traj_node.o"
 	@echo "... src/test_traj_node.i"
 	@echo "... src/test_traj_node.s"
