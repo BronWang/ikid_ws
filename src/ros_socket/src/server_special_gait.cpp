@@ -69,6 +69,9 @@ int main(int argc, char** argv)
     socklen_t len = sizeof(cliaddr);
     ros::Rate loop_rate(50);
     
+    // 需要等待上传文件的路径
+    string txt_src = "";
+    
     //保存关节数据
     FILE* fp = NULL;
 	char ch[500];
@@ -99,7 +102,7 @@ int main(int argc, char** argv)
         {
             
             n = read(connfd, buf, sizeof(buf));
-            if(n!=0){
+            if(n!=0 && n!=-1){
                 // 接收网络通信消息，并处理后发送到仿真环境中的机器人
                 char* token;
                 const char spl_chara[2] = "\n";
@@ -130,6 +133,33 @@ int main(int argc, char** argv)
                     robotModel[24].q, robotModel[25].q);
                     fputs(ch, fp);
                     fclose(fp);
+                }
+                if(token_str == "start_write_gait_txt"){
+                    txt_src = "/home/wp/ikid_ws/specialGaitFile/";
+                    token = strtok(NULL, spl_chara);
+                    string temp_str = token;
+                    txt_src = txt_src + temp_str+".txt";
+                    fp = fopen(txt_src.data(), "w");
+                    if(fp == NULL)
+                    {
+                        exit(0);
+                    }
+                    fclose(fp);
+                }
+                if(token_str == "gait_txt_data"){
+
+                    token = strtok(NULL, spl_chara);
+                    string txt_data = "";
+                    //保存txt文件数据
+                    string temp_str = token;
+                    txt_data = temp_str + "\n";
+                    fp = fopen(txt_src.data(), "a");
+                    if(fp == NULL)
+                    {
+                        exit(0);
+                    }
+                    fputs(txt_data.data(), fp);
+	                fclose(fp);
                 }
             }else{
                 printf("The client ip: %s, port: %d\n has beens closed!\n", 

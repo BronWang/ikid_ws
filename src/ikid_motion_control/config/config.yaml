@@ -1,7 +1,10 @@
 # pid参数
-imu_roll_p: 3
-imu_roll_i: 0
-imu_roll_d: 10
-imu_pitch_p: 3
-imu_pitch_i: 0
-imu_pitch_d: 10
+imu_roll_p: 2.3
+imu_roll_i: 0.3
+imu_roll_d: 0.22
+imu_pitch_p: 1
+imu_pitch_i: 0.4
+imu_pitch_d: 0.25
+imu_yaw_p: 1 # 未使用
+imu_yaw_i: 0 # 未使用
+imu_yaw_d: 5 # 未使用

@@ -16,6 +16,9 @@ static double eye[3][3] = { {1,0,0},{0,1,0},{0,0,1} };
 const int FALL_BACK_UP_ID = 1;
 const int FALL_FORWARD_UP_ID = 2;
 
+// 机器人零点数据
+double ikid_robot_zero_point[26] = {0};
+
 // 步行单元帧数
 const int step_basic_frame = 25;
 // 双脚支撑帧数
@@ -32,7 +35,7 @@ double	c_h = 0.35;
 // 初始手部离地面高度
 double	hand_h = c_h-0.1;
 // 脚步抬高
-double fh = 0.08;
+double fh = 0.05;
 // 帧间隔时间
 double frame_T = 0.02;
 double T_cell = step_basic_frame * frame_T;
@@ -48,7 +51,10 @@ double arm_swing_angle = 0;
 double left_arm_swing_angle = 0;
 double right_arm_swing_angle = 0;
 // 当前的支撑点
-double support_ZMP[3] = { 0,-sy / 2,0 };
+double support_ZMP[3] = { 0,0,0 };
+
+// 开始步行的起步标志位
+bool ikid_start_walk_flag = true;
 // 质心牵引向量PC_MAIN_BODY
 double PC_MAIN_BODY[3] = { 0 };
 // 质心世界坐标
@@ -73,9 +79,16 @@ double imu_pitch_d = 0;
 double imu_pitch_err = 0;
 double imu_pitch_err_sum = 0;
 double imu_pitch_err_partial = 0;
+double imu_yaw_p = 0;
+double imu_yaw_i = 0;
+double imu_yaw_d = 0;
+double imu_yaw_err = 0;
+double imu_yaw_err_sum = 0;
+double imu_yaw_err_partial = 0;
 // 稳定姿态值
 double stable_roll = 0;
 double stable_pitch = 0;
+double stable_yaw = 0;
 
 bool isLeft = true;
 bool isDsPhase = true;
@@ -106,13 +119,13 @@ double state_space_A[3][3] = { {1, dt, dt * dt / 2},
 								{0, 0,  1}};
 double state_space_B[3] = { powf(dt,3) / 6, dt * dt / 2,dt };
 double state_space_C[3] = { 1,0,-zc / gravity };
-double state_space_Com[2][3] = {0};
-double sum_e[2] = { 0 };
-const int N_preview = 2 * step_basic_frame + 2 * ds_frame;
+double state_space_Com[2][3] = {{0,0,0},{0,-0.2,-0.2}}; // 对速度和加速度设置合适的初值，来防止启动颠簸
+double sum_e[2] = { 0,0 };
+const int N_preview = 3 * step_basic_frame + 2 * ds_frame;
 // 计算结果
 double ks = 513.065437881280;
 double kx[3] = { 9851.88969316012,	1990.28012970936,	56.0842014734676 };
-double zmp_weight_f[2 * N_preview] = {
+double zmp_weight_f[N_preview] = {
 	-513.065437881280,	-669.044492627062,	-787.219987623670,	-820.144778041021,	-784.735591163344,	
 	-713.111266237544,	-631.117856575249,	-553.379682040566,	-485.524281248355,	-428.025315098025,	
 	-379.266272082517,	-337.295676245997,	-300.545489048873,	-267.957472348649,	-238.867737752140,	
@@ -124,8 +137,18 @@ double zmp_weight_f[2 * N_preview] = {
 	-11.6902139505115,	-10.4088102036766,	-9.26784929409089,	-8.25194036951309,	-7.34737902091173,	
 	-6.54196252077760,	-5.82482529842180,	-5.18629243584815,	-4.61774921151216,	-4.11152493522781,	
 	-3.66078950946079,	-3.25946132324272,	-2.90212523735726,	-2.58395955530568,	-2.30067099561974,	
-	-2.04843678892821,	-1.82385311922127,	-1.62388921427297,	-1.44584646632633,	-1.28732203194441
+	-2.04843678892821,	-1.82385311922127,	-1.62388921427297,	-1.44584646632633,	-1.28732203194441,	
+	-1.14617642030094,	-1.02050463294051,	-0.90861046590631,	-0.80898362775839,	-0.72027936496178,	
+	-0.64130031992237,	-0.57098037704553,	-0.50837027899181,	-0.45262481916853,	-0.40299143774610,	
+	-0.35880006740983,	-0.31945409190749,	-0.28442229545623,	-0.25323169443224,	-0.22546115466303,	
+	-0.20073570823493,	-0.17872149316096,	-0.15912124765336,	-0.14167029822398,	-0.12613298749508,	
+	-0.11229949353325,	-0.09998299779912,	-0.08901716350743,	-0.07925389037833,	-0.07056131548892
 };
+// double ks = 513.065437881280;
+// double kx[3] = { 9851.88969316012,	1990.28012970936,	56.0842014734676 };
+// double zmp_weight_f[N_preview] = {
+	
+// };
 
 // 定义机器人舵机信息发布句柄
 ros::Publisher pub_left_ankle_front_swing;  
@@ -188,47 +211,143 @@ void ikidRobotDynaPosPubInit(ros::NodeHandle& n_){
 void ikidRobotDynaPosPub(){
 	std_msgs::Float64 msg;
 	ros::Rate ikidPubRate(50);
-    msg.data = robotModel[FRONT_NECK_SWING].q;
+    msg.data = robotModel[FRONT_NECK_SWING].q + ikid_robot_zero_point[FRONT_NECK_SWING];
     pub_neck_front_swing.publish(msg);
-    msg.data = robotModel[NECK_ROTATION].q;
+    msg.data = robotModel[NECK_ROTATION].q + ikid_robot_zero_point[NECK_ROTATION];
     pub_neck_rotation.publish(msg);
-    msg.data = robotModel[LEFT_ARM_FRONT_SWING].q;
+    msg.data = robotModel[LEFT_ARM_FRONT_SWING].q + ikid_robot_zero_point[LEFT_ARM_FRONT_SWING];
     pub_left_arm_front_swing.publish(msg);
-    msg.data = robotModel[LEFT_ARM_SIDE_SWING].q;
+    msg.data = robotModel[LEFT_ARM_SIDE_SWING].q + ikid_robot_zero_point[LEFT_ARM_SIDE_SWING];
     pub_left_arm_side_swing.publish(msg);
-    msg.data = robotModel[LEFT_ARM_ELBOW_FRONT_SWING].q;
+    msg.data = robotModel[LEFT_ARM_ELBOW_FRONT_SWING].q + ikid_robot_zero_point[LEFT_ARM_ELBOW_FRONT_SWING];
     pub_left_arm_elbow_front_swing.publish(msg);
-    msg.data = robotModel[RIGHT_ARM_FRONT_SWING].q;
+    msg.data = robotModel[RIGHT_ARM_FRONT_SWING].q + ikid_robot_zero_point[RIGHT_ARM_FRONT_SWING];
     pub_right_arm_front_swing.publish(msg);
-    msg.data = robotModel[RIGHT_ARM_SIDE_SWING].q;
+    msg.data = robotModel[RIGHT_ARM_SIDE_SWING].q + ikid_robot_zero_point[RIGHT_ARM_SIDE_SWING];
     pub_right_arm_side_swing.publish(msg);
-    msg.data = robotModel[RIGHT_ARM_ELBOW_FRONT_SWING].q;
+    msg.data = robotModel[RIGHT_ARM_ELBOW_FRONT_SWING].q + ikid_robot_zero_point[RIGHT_ARM_ELBOW_FRONT_SWING];
     pub_right_arm_elbow_front_swing.publish(msg);
-    msg.data = robotModel[LEFT_HIP_FRONT_SWING].q;
+    msg.data = robotModel[LEFT_HIP_FRONT_SWING].q + ikid_robot_zero_point[LEFT_HIP_FRONT_SWING];
     pub_left_hip_front_swing.publish(msg);
-    msg.data = robotModel[LEFT_HIP_SIDE_SWING].q;
+    msg.data = robotModel[LEFT_HIP_SIDE_SWING].q + ikid_robot_zero_point[LEFT_HIP_SIDE_SWING];
     pub_left_hip_side_swing.publish(msg);
-    msg.data = robotModel[LEFT_HIP_ROTATION].q;
+    msg.data = robotModel[LEFT_HIP_ROTATION].q + ikid_robot_zero_point[LEFT_HIP_ROTATION];
     pub_left_hip_rotation.publish(msg);
-    msg.data = robotModel[RIGHT_HIP_FRONT_SWING].q;
+    msg.data = robotModel[RIGHT_HIP_FRONT_SWING].q + ikid_robot_zero_point[RIGHT_HIP_FRONT_SWING];
     pub_right_hip_front_swing.publish(msg);
-    msg.data = robotModel[RIGHT_HIP_SIDE_SWING].q;
+    msg.data = robotModel[RIGHT_HIP_SIDE_SWING].q + ikid_robot_zero_point[RIGHT_HIP_SIDE_SWING];
     pub_right_hip_side_swing.publish(msg);
-    msg.data = robotModel[RIGHT_HIP_ROTATION].q;
+    msg.data = robotModel[RIGHT_HIP_ROTATION].q + ikid_robot_zero_point[RIGHT_HIP_ROTATION];
     pub_right_hip_rotation.publish(msg);
-    msg.data = robotModel[LEFT_KNEE_FRONT_SWING].q;
+    msg.data = robotModel[LEFT_KNEE_FRONT_SWING].q + ikid_robot_zero_point[LEFT_KNEE_FRONT_SWING];
     pub_left_knee_front_swing.publish(msg);
-    msg.data = robotModel[RIGHT_KNEE_FRONT_SWING].q;
+    msg.data = robotModel[RIGHT_KNEE_FRONT_SWING].q + ikid_robot_zero_point[RIGHT_KNEE_FRONT_SWING];
     pub_right_knee_front_swing.publish(msg);
-    msg.data = robotModel[LEFT_ANKLE_FRONT_SWING].q;
+    msg.data = robotModel[LEFT_ANKLE_FRONT_SWING].q + ikid_robot_zero_point[LEFT_ANKLE_FRONT_SWING];
     pub_left_ankle_front_swing.publish(msg);
-    msg.data = robotModel[LEFT_ANKLE_SIDE_SWING].q;
+    msg.data = robotModel[LEFT_ANKLE_SIDE_SWING].q + ikid_robot_zero_point[LEFT_ANKLE_SIDE_SWING];
     pub_left_ankle_side_swing.publish(msg);
-    msg.data = robotModel[RIGHT_ANKLE_FRONT_SWING].q;
+    msg.data = robotModel[RIGHT_ANKLE_FRONT_SWING].q + ikid_robot_zero_point[RIGHT_ANKLE_FRONT_SWING];
     pub_right_ankle_front_swing.publish(msg);
-    msg.data = robotModel[RIGHT_ANKLE_SIDE_SWING].q;
+    msg.data = robotModel[RIGHT_ANKLE_SIDE_SWING].q + ikid_robot_zero_point[RIGHT_ANKLE_SIDE_SWING];
     pub_right_ankle_side_swing.publish(msg);
 	ikidPubRate.sleep();
+}
+
+void readIkidRobotZeroPoint(int id){
+	DIR *dp = NULL;
+	struct dirent *st;  // 文件夹中的子文件数据结构
+	struct stat sta;
+	int ret = 0;
+	char tmp_name[1024] = {0};
+	char path[50] = "/home/wp/ikid_ws/specialGaitFile\0";
+	dp = opendir(path);
+	if (dp == NULL)
+	{
+		printf("open dir error!!\n");
+		return;
+	}
+
+	while (1)
+	{
+		st = readdir(dp);
+		if (NULL == st) // 读取完毕
+		{
+			break;
+		}
+		strcpy(tmp_name, path);
+		if (path[strlen(path) - 1] != '/') // 判断路径名是否带/
+			strcat(tmp_name, "/");
+		strcat(tmp_name, st->d_name); // 新文件路径名
+
+		//获取文件中步态
+		char c[300];
+		char *f_ret;
+		FILE *fptr = fopen(tmp_name, "r");
+		if (fgets(c,sizeof(c),fptr) != NULL)
+		{
+			//ROS_INFO("%s",tmp_name);
+			f_ret = fgets(c,sizeof(c),fptr);
+			if(c[strlen(c)-1]=='\n') c[strlen(c)-1] = '\0';
+			int temp_id = atoi(c);
+			if (temp_id == id){
+				//获取步态频率
+				f_ret = fgets(c,sizeof(c),fptr);
+				if(c[strlen(c)-1]=='\r') c[strlen(c)-1] = '\0'; // 由于windows和linux文本文件的换行符规则不同，这里统一消去
+				if(c[strlen(c)-2]=='\r') c[strlen(c)-2] = '\0';
+				if(c[strlen(c)-1]=='\n') c[strlen(c)-1] = '\0';
+				if(c[strlen(c)-2]=='\n') c[strlen(c)-2] = '\0';
+				if(strcmp(c,"GaitRate") != 0) break;
+				f_ret = fgets(c,sizeof(c),fptr);
+				if(c[strlen(c)-1]=='\r') c[strlen(c)-1] = '\0';
+				if(c[strlen(c)-2]=='\r') c[strlen(c)-2] = '\0';
+				if(c[strlen(c)-1]=='\n') c[strlen(c)-1] = '\0';
+				if(c[strlen(c)-2]=='\n') c[strlen(c)-2] = '\0';
+				int gaitRate = atoi(c);
+
+				//读出步态描述
+				f_ret = fgets(c,sizeof(c),fptr);
+				if(c[strlen(c)-1]=='\r') c[strlen(c)-1] = '\0';
+				if(c[strlen(c)-2]=='\r') c[strlen(c)-2] = '\0';
+				if(c[strlen(c)-1]=='\n') c[strlen(c)-1] = '\0';
+				if(c[strlen(c)-2]=='\n') c[strlen(c)-2] = '\0';
+				if(strcmp(c,"GaitDescription") != 0) break;
+				f_ret = fgets(c,sizeof(c),fptr);
+				
+				//读取步态零点
+				f_ret = fgets(c,sizeof(c),fptr);
+				if(c[strlen(c)-1]=='\r') c[strlen(c)-1] = '\0';
+				if(c[strlen(c)-2]=='\r') c[strlen(c)-2] = '\0';
+				if(c[strlen(c)-1]=='\n') c[strlen(c)-1] = '\0';
+				if(c[strlen(c)-2]=='\n') c[strlen(c)-2] = '\0';
+				if(strcmp(c,"zero_point") != 0) break;
+				f_ret = fgets(c,sizeof(c),fptr);
+				if(c[strlen(c)-1]=='\r') c[strlen(c)-1] = '\0';
+				if(c[strlen(c)-2]=='\r') c[strlen(c)-2] = '\0';
+				if(c[strlen(c)-1]=='\n') c[strlen(c)-1] = '\0';
+				if(c[strlen(c)-2]=='\n') c[strlen(c)-2] = '\0';
+				char* token;
+                const char spl_chara[2] = ",";
+                token = strtok(c,spl_chara);
+                if(token != NULL){
+					ikid_robot_zero_point[1] = atof(token);
+                    for (int i = 2; i <= 25; i++)
+                    {
+                        token = strtok(NULL, ",");
+                        ikid_robot_zero_point[i] = atof(token);
+                    }
+					printf("\n");
+                }
+				fclose(fptr);
+				break;
+			}
+			else{
+				fclose(fptr);
+				continue;
+			}
+		}
+	}
+	closedir(dp);
 }
 
 void robotModelInit(robotLink* robotModel)
@@ -869,45 +988,45 @@ void initRobotPos(){
 	for(int i = 0; i < 21; i++){
 		std_msgs::Float64 msg;
 		ros::Rate ikidPubRate(20);
-		msg.data = robotModel[FRONT_NECK_SWING].q/20*i;
+		msg.data = robotModel[FRONT_NECK_SWING].q/20*i + ikid_robot_zero_point[FRONT_NECK_SWING];
 		pub_neck_front_swing.publish(msg);
-		msg.data = robotModel[NECK_ROTATION].q/20*i;
+		msg.data = robotModel[NECK_ROTATION].q/20*i + ikid_robot_zero_point[NECK_ROTATION];
 		pub_neck_rotation.publish(msg);
-		msg.data = robotModel[LEFT_ARM_FRONT_SWING].q/20*i;
+		msg.data = robotModel[LEFT_ARM_FRONT_SWING].q/20*i + ikid_robot_zero_point[LEFT_ARM_FRONT_SWING];
 		pub_left_arm_front_swing.publish(msg);
-		msg.data = robotModel[LEFT_ARM_SIDE_SWING].q/20*i;
+		msg.data = robotModel[LEFT_ARM_SIDE_SWING].q/20*i + ikid_robot_zero_point[LEFT_ARM_SIDE_SWING];
 		pub_left_arm_side_swing.publish(msg);
-		msg.data = robotModel[LEFT_ARM_ELBOW_FRONT_SWING].q/20*i;
+		msg.data = robotModel[LEFT_ARM_ELBOW_FRONT_SWING].q/20*i + ikid_robot_zero_point[LEFT_ARM_ELBOW_FRONT_SWING];
 		pub_left_arm_elbow_front_swing.publish(msg);
-		msg.data = robotModel[RIGHT_ARM_FRONT_SWING].q/20*i;
+		msg.data = robotModel[RIGHT_ARM_FRONT_SWING].q/20*i + ikid_robot_zero_point[RIGHT_ARM_FRONT_SWING];
 		pub_right_arm_front_swing.publish(msg);
-		msg.data = robotModel[RIGHT_ARM_SIDE_SWING].q/20*i;
+		msg.data = robotModel[RIGHT_ARM_SIDE_SWING].q/20*i + ikid_robot_zero_point[RIGHT_ARM_SIDE_SWING];
 		pub_right_arm_side_swing.publish(msg);
-		msg.data = robotModel[RIGHT_ARM_ELBOW_FRONT_SWING].q/20*i;
+		msg.data = robotModel[RIGHT_ARM_ELBOW_FRONT_SWING].q/20*i + ikid_robot_zero_point[RIGHT_ARM_ELBOW_FRONT_SWING];
 		pub_right_arm_elbow_front_swing.publish(msg);
-		msg.data = robotModel[LEFT_HIP_FRONT_SWING].q/20*i;
+		msg.data = robotModel[LEFT_HIP_FRONT_SWING].q/20*i + ikid_robot_zero_point[LEFT_HIP_FRONT_SWING];
 		pub_left_hip_front_swing.publish(msg);
-		msg.data = robotModel[LEFT_HIP_SIDE_SWING].q/20*i;
+		msg.data = robotModel[LEFT_HIP_SIDE_SWING].q/20*i + ikid_robot_zero_point[LEFT_HIP_SIDE_SWING];
 		pub_left_hip_side_swing.publish(msg);
-		msg.data = robotModel[LEFT_HIP_ROTATION].q/20*i;
+		msg.data = robotModel[LEFT_HIP_ROTATION].q/20*i + ikid_robot_zero_point[LEFT_HIP_ROTATION];
 		pub_left_hip_rotation.publish(msg);
-		msg.data = robotModel[RIGHT_HIP_FRONT_SWING].q/20*i;
+		msg.data = robotModel[RIGHT_HIP_FRONT_SWING].q/20*i + ikid_robot_zero_point[RIGHT_HIP_FRONT_SWING];
 		pub_right_hip_front_swing.publish(msg);
-		msg.data = robotModel[RIGHT_HIP_SIDE_SWING].q/20*i;
+		msg.data = robotModel[RIGHT_HIP_SIDE_SWING].q/20*i + ikid_robot_zero_point[RIGHT_HIP_SIDE_SWING];
 		pub_right_hip_side_swing.publish(msg);
-		msg.data = robotModel[RIGHT_HIP_ROTATION].q/20*i;
+		msg.data = robotModel[RIGHT_HIP_ROTATION].q/20*i + ikid_robot_zero_point[RIGHT_HIP_ROTATION];
 		pub_right_hip_rotation.publish(msg);
-		msg.data = robotModel[LEFT_KNEE_FRONT_SWING].q/20*i;
+		msg.data = robotModel[LEFT_KNEE_FRONT_SWING].q/20*i + ikid_robot_zero_point[LEFT_KNEE_FRONT_SWING];
 		pub_left_knee_front_swing.publish(msg);
-		msg.data = robotModel[RIGHT_KNEE_FRONT_SWING].q/20*i;
+		msg.data = robotModel[RIGHT_KNEE_FRONT_SWING].q/20*i + ikid_robot_zero_point[RIGHT_KNEE_FRONT_SWING];
 		pub_right_knee_front_swing.publish(msg);
-		msg.data = robotModel[LEFT_ANKLE_FRONT_SWING].q/20*i;
+		msg.data = robotModel[LEFT_ANKLE_FRONT_SWING].q/20*i + ikid_robot_zero_point[LEFT_ANKLE_FRONT_SWING];
 		pub_left_ankle_front_swing.publish(msg);
-		msg.data = robotModel[LEFT_ANKLE_SIDE_SWING].q/20*i;
+		msg.data = robotModel[LEFT_ANKLE_SIDE_SWING].q/20*i + ikid_robot_zero_point[LEFT_ANKLE_SIDE_SWING];
 		pub_left_ankle_side_swing.publish(msg);
-		msg.data = robotModel[RIGHT_ANKLE_FRONT_SWING].q/20*i;
+		msg.data = robotModel[RIGHT_ANKLE_FRONT_SWING].q/20*i + ikid_robot_zero_point[RIGHT_ANKLE_FRONT_SWING];
 		pub_right_ankle_front_swing.publish(msg);
-		msg.data = robotModel[RIGHT_ANKLE_SIDE_SWING].q/20*i;
+		msg.data = robotModel[RIGHT_ANKLE_SIDE_SWING].q/20*i + ikid_robot_zero_point[RIGHT_ANKLE_SIDE_SWING];
 		pub_right_ankle_side_swing.publish(msg);
 		ikidPubRate.sleep();
 	}
@@ -916,6 +1035,7 @@ void initRobotPos(){
 
 void robotStart(ros::NodeHandle& n_)
 {
+	readIkidRobotZeroPoint(1);
 	robotModelInit(robotModel);
 	ikidRobotDynaPosPubInit(n_);
 #if WRITETXT
@@ -2179,6 +2299,7 @@ void waistPosition_com(double r,double p,double y, int current_frame_count) {   
 
 void startTrajPlan(){
 	// 启动步
+	ikid_start_walk_flag = true;
 	support_ZMP[0] = (robotModel[RIGHT_FOOT].p[0]+robotModel[LEFT_FOOT].p[0])/2;
 	support_ZMP[1] = (robotModel[RIGHT_FOOT].p[1]+robotModel[LEFT_FOOT].p[1])/2;
 	if(isLeft){
@@ -2191,6 +2312,7 @@ void startTrajPlan(){
 	dFootSupportPhase(theta,theta,theta);
 	support_ZMP[0] = pn[0];
 	support_ZMP[1] = pn[1];
+	ikid_start_walk_flag = false;
 }
 
 void trajPlan() {
@@ -2663,13 +2785,13 @@ void anglePlan(double delta) {
 			x3 = robotModel[RIGHT_HAND].p[0]; y3 = robotModel[RIGHT_HAND].p[1];
 			x4 = robotModel[LEFT_HAND].p[0]; y4 = robotModel[LEFT_HAND].p[1];
 			//waistPosition(x1, y1, x2, y2, x3, y3, x4, y4);
-			waistPosition_com(delta_roll, delta_pitch, theta + theta_frame / 2,i);
+			waistPosition_com(delta_roll, delta_pitch, theta + theta_frame / 2 ,i);
 
 
 			robotModel[RIGHT_ANKLE_SIDE_SWING].p[0] = basic_right_foot[i][0] - temp[0];
 			robotModel[RIGHT_ANKLE_SIDE_SWING].p[1] = basic_right_foot[i][1] - temp[1];
 			robotModel[RIGHT_ANKLE_SIDE_SWING].p[2] = basic_right_foot[i][2] - temp[2];
-			inverseKinmatics_rightFoot(0, 0, theta + theta_frame);
+			inverseKinmatics_rightFoot(0, 0, theta + theta_frame );
 
 			rpy2rot(0, 0, theta, R);
 			MatrixMultiVector3x1(R, robotModel[LEFT_FOOT].b, temp);
@@ -2783,7 +2905,7 @@ void anglePlan(double delta) {
 			imuGesturePidControl(delta_roll, delta_pitch, delta_yaw);
 
 
-			rpy2rot(0, 0, theta + theta_frame, R);
+			rpy2rot(0, 0, theta + theta_frame , R);
 			MatrixMultiVector3x1(R, robotModel[LEFT_FOOT].b, temp);
 
 
@@ -2802,20 +2924,20 @@ void anglePlan(double delta) {
 			x3 = robotModel[RIGHT_HAND].p[0]; y3 = robotModel[RIGHT_HAND].p[1];
 			x4 = robotModel[LEFT_HAND].p[0]; y4 = robotModel[LEFT_HAND].p[1];
 			//waistPosition(x1, y1, x2, y2, x3, y3, x4, y4);
-			waistPosition_com(delta_roll, delta_pitch, theta + delta / 2+theta_frame / 2,i);
+			waistPosition_com(delta_roll, delta_pitch, theta + delta / 2+theta_frame / 2 ,i);
 
 
 			robotModel[LEFT_ANKLE_SIDE_SWING].p[0] = basic_left_foot[i][0] - temp[0];
 			robotModel[LEFT_ANKLE_SIDE_SWING].p[1] = basic_left_foot[i][1] - temp[1];
 			robotModel[LEFT_ANKLE_SIDE_SWING].p[2] = basic_left_foot[i][2] - temp[2];
-			inverseKinmatics_leftFoot(0, 0, theta + theta_frame);
+			inverseKinmatics_leftFoot(0, 0, theta + theta_frame );
 
 			rpy2rot(0, 0, theta + delta, R);
 			MatrixMultiVector3x1(R, robotModel[RIGHT_FOOT].b, temp);
 			robotModel[RIGHT_ANKLE_SIDE_SWING].p[0] = solid_right_foot[0] - temp[0];
 			robotModel[RIGHT_ANKLE_SIDE_SWING].p[1] = solid_right_foot[1] - temp[1];
 			robotModel[RIGHT_ANKLE_SIDE_SWING].p[2] = solid_right_foot[2] - temp[2];
-			inverseKinmatics_rightFoot(0, 0, theta + delta);
+			inverseKinmatics_rightFoot(0, 0, theta + delta );
 
 			#if PID_AMEND
 			robotModel[RIGHT_ANKLE_SIDE_SWING].q -= delta_roll;
@@ -2905,7 +3027,7 @@ void anglePlan(double delta) {
 			imuGesturePidControl(delta_roll, delta_pitch, delta_yaw);
 
 
-			rpy2rot(0, 0, theta + theta_frame, R);
+			rpy2rot(0, 0, theta + theta_frame , R);
 			MatrixMultiVector3x1(R, robotModel[RIGHT_FOOT].b, temp);
 
 
@@ -2924,20 +3046,20 @@ void anglePlan(double delta) {
 			x3 = robotModel[RIGHT_HAND].p[0]; y3 = robotModel[RIGHT_HAND].p[1];
 			x4 = robotModel[LEFT_HAND].p[0]; y4 = robotModel[LEFT_HAND].p[1];
 			//waistPosition(x1, y1, x2, y2, x3, y3, x4, y4);
-			waistPosition_com(delta_roll, delta_pitch, theta + delta / 2 + theta_frame / 2,i);
+			waistPosition_com(delta_roll, delta_pitch, theta + delta / 2 + theta_frame / 2 ,i);
 
 
 			robotModel[RIGHT_ANKLE_SIDE_SWING].p[0] = basic_right_foot[i][0] - temp[0];
 			robotModel[RIGHT_ANKLE_SIDE_SWING].p[1] = basic_right_foot[i][1] - temp[1];
 			robotModel[RIGHT_ANKLE_SIDE_SWING].p[2] = basic_right_foot[i][2] - temp[2];
-			inverseKinmatics_rightFoot(0, 0, theta + theta_frame);
+			inverseKinmatics_rightFoot(0, 0, theta + theta_frame );
 
-			rpy2rot(0, 0, theta + delta, R);
+			rpy2rot(0, 0, theta + delta , R);
 			MatrixMultiVector3x1(R, robotModel[LEFT_FOOT].b, temp);
 			robotModel[LEFT_ANKLE_SIDE_SWING].p[0] = solid_left_foot[0] - temp[0];
 			robotModel[LEFT_ANKLE_SIDE_SWING].p[1] = solid_left_foot[1] - temp[1];
 			robotModel[LEFT_ANKLE_SIDE_SWING].p[2] = solid_left_foot[2] - temp[2];
-			inverseKinmatics_leftFoot(0, 0, theta + delta);
+			inverseKinmatics_leftFoot(0, 0, theta + delta );
 
 			#if PID_AMEND
 			robotModel[RIGHT_ANKLE_SIDE_SWING].q -= delta_roll;
@@ -2962,18 +3084,17 @@ void anglePlan(double delta) {
 }
 
 void CalcTrajectory_Com(int current_frame_count) {
-	double zmp_preview[2][N_preview];
-	bool temp_isLeft = isLeft;
+	double zmp_preview[2][N_preview] = {0};
 	double temp_pn[2] = { 0 };
-	if (temp_isLeft) {
-		temp_isLeft = false;
+	if(ikid_start_walk_flag){  // 起步状态单独处理
+		temp_pn[0] = pn[0] + cos(theta) * sx + (-sin(theta) * sy * (-1) * pow(-1, isLeft));
+		temp_pn[1] = pn[1] + sin(theta) * sx + (cos(theta) * sy * (-1) * pow(-1, isLeft));
+	}else{
+		temp_pn[0] = pn[0] + cos(theta) * sx + (-sin(theta) * sy * (-1) * pow(-1, !isLeft));
+		temp_pn[1] = pn[1] + sin(theta) * sx + (cos(theta) * sy * (-1) * pow(-1, !isLeft));
 	}
-	else
-	{
-		temp_isLeft = true;
-	}
-	temp_pn[0] = pn[0] + cos(theta) * sx + (-sin(theta) * sy * (-1) * pow(-1, temp_isLeft));
-	temp_pn[1] = pn[1] + sin(theta) * sx + (cos(theta) * sy * (-1) * pow(-1, temp_isLeft));
+	
+	
 	
 	for (int i = 0; i < N_preview; i++)
 	{
@@ -2994,10 +3115,32 @@ void CalcTrajectory_Com(int current_frame_count) {
 				zmp_preview[0][i] = pn[0] + (i - (step_basic_frame - current_frame_count) - ds_frame - step_basic_frame) * (temp_pn[0] - pn[0]) / ds_frame;
 				zmp_preview[1][i] = pn[1] + (i - (step_basic_frame - current_frame_count) - ds_frame - step_basic_frame) * (temp_pn[1] - pn[1]) / ds_frame;
 			}
-			else
+			else if(i - (step_basic_frame*2 - current_frame_count) - ds_frame*2 <= step_basic_frame)
 			{
 				zmp_preview[0][i] = temp_pn[0];
 				zmp_preview[1][i] = temp_pn[1];
+			}else if(i - (step_basic_frame*3 - current_frame_count) - ds_frame*2 <= ds_frame){
+				double ttpn[2] = {0};
+				if(ikid_start_walk_flag){
+					ttpn[0] = temp_pn[0] + cos(theta) * sx + (-sin(theta) * sy * (-1) * pow(-1, !isLeft));
+					ttpn[1] = temp_pn[1] + sin(theta) * sx + (cos(theta) * sy * (-1) * pow(-1, !isLeft));
+				}else{
+					ttpn[0] = temp_pn[0] + cos(theta) * sx + (-sin(theta) * sy * (-1) * pow(-1, isLeft));
+					ttpn[1] = temp_pn[1] + sin(theta) * sx + (cos(theta) * sy * (-1) * pow(-1, isLeft));
+				}
+				zmp_preview[0][i] = temp_pn[0] + (i - (step_basic_frame*3 - current_frame_count) - ds_frame*2)*(ttpn[0] - temp_pn[0]) / ds_frame;
+				zmp_preview[1][i] = temp_pn[1] + (i - (step_basic_frame*3 - current_frame_count) - ds_frame*2)*(ttpn[1] - temp_pn[1]) / ds_frame;
+			}else{
+				double ttpn[2] = {0};
+				if(ikid_start_walk_flag){
+					ttpn[0] = temp_pn[0] + cos(theta) * sx + (-sin(theta) * sy * (-1) * pow(-1, !isLeft));
+					ttpn[1] = temp_pn[1] + sin(theta) * sx + (cos(theta) * sy * (-1) * pow(-1, !isLeft));
+				}else{
+					ttpn[0] = temp_pn[0] + cos(theta) * sx + (-sin(theta) * sy * (-1) * pow(-1, isLeft));
+					ttpn[1] = temp_pn[1] + sin(theta) * sx + (cos(theta) * sy * (-1) * pow(-1, isLeft));
+				}
+				zmp_preview[0][i] = ttpn[0];
+				zmp_preview[1][i] = ttpn[1];
 			}
 		}
 		else
@@ -3011,13 +3154,35 @@ void CalcTrajectory_Com(int current_frame_count) {
 				zmp_preview[1][i] = pn[1];
 			}
 			else if (i - (ds_frame - current_frame_count)- step_basic_frame  <= ds_frame) {
-				zmp_preview[0][i] = pn[0] + (i - (step_basic_frame - current_frame_count) - step_basic_frame) * (temp_pn[0] - pn[0]) / ds_frame;
-				zmp_preview[1][i] = pn[1] + (i - (step_basic_frame - current_frame_count) - step_basic_frame) * (temp_pn[1] - pn[1]) / ds_frame;
+				zmp_preview[0][i] = pn[0] + (i - (ds_frame - current_frame_count) - step_basic_frame) * (temp_pn[0] - pn[0]) / ds_frame;
+				zmp_preview[1][i] = pn[1] + (i - (ds_frame - current_frame_count) - step_basic_frame) * (temp_pn[1] - pn[1]) / ds_frame;
 			}
-			else
+			else if(i - (ds_frame - current_frame_count)- step_basic_frame - ds_frame <= step_basic_frame)
 			{
 				zmp_preview[0][i] = temp_pn[0];
 				zmp_preview[1][i] = temp_pn[1];
+			}else if(i - (ds_frame*2 - current_frame_count)- step_basic_frame*2 <= ds_frame){
+				double ttpn[2] = {0};
+				if(ikid_start_walk_flag){
+					ttpn[0] = temp_pn[0] + cos(theta) * sx + (-sin(theta) * sy * (-1) * pow(-1, !isLeft));
+					ttpn[1] = temp_pn[1] + sin(theta) * sx + (cos(theta) * sy * (-1) * pow(-1, !isLeft));
+				}else{
+					ttpn[0] = temp_pn[0] + cos(theta) * sx + (-sin(theta) * sy * (-1) * pow(-1, isLeft));
+					ttpn[1] = temp_pn[1] + sin(theta) * sx + (cos(theta) * sy * (-1) * pow(-1, isLeft));
+				}
+				zmp_preview[0][i] = temp_pn[0] + (i - (ds_frame - current_frame_count)- step_basic_frame - ds_frame - step_basic_frame)*(ttpn[0] - temp_pn[0]) / ds_frame;
+				zmp_preview[1][i] = temp_pn[1] + (i - (ds_frame - current_frame_count)- step_basic_frame - ds_frame - step_basic_frame)*(ttpn[1] - temp_pn[1]) / ds_frame;
+			}else{
+				double ttpn[2] = {0};
+				if(ikid_start_walk_flag){
+					ttpn[0] = temp_pn[0] + cos(theta) * sx + (-sin(theta) * sy * (-1) * pow(-1, !isLeft));
+					ttpn[1] = temp_pn[1] + sin(theta) * sx + (cos(theta) * sy * (-1) * pow(-1, !isLeft));
+				}else{
+					ttpn[0] = temp_pn[0] + cos(theta) * sx + (-sin(theta) * sy * (-1) * pow(-1, isLeft));
+					ttpn[1] = temp_pn[1] + sin(theta) * sx + (cos(theta) * sy * (-1) * pow(-1, isLeft));
+				}
+				zmp_preview[0][i] = ttpn[0];
+				zmp_preview[1][i] = ttpn[1];
 			}
 		}
 	}
@@ -3026,7 +3191,7 @@ void CalcTrajectory_Com(int current_frame_count) {
 	double zmp_y = state_space_C[0] * state_space_Com[1][0] + state_space_C[1] * state_space_Com[1][1] + state_space_C[2] * state_space_Com[1][2];
 	sum_e[0] = sum_e[0] + zmp_x - zmp_preview[0][0];
 	sum_e[1] = sum_e[1] + zmp_y - zmp_preview[1][0];
-	writeZmpData(zmp_preview[0][0],zmp_preview[1][0],zmp_x,zmp_y);
+	writeZmpData(zmp_preview, zmp_preview[0][0],zmp_preview[1][0],zmp_x,zmp_y);
 	double FMultiZmpPre[2] = { 0 };
 	for (int i = 0; i < N_preview; i++)
 	{
@@ -3109,15 +3274,22 @@ void imuGesturePidControl(double &delta_roll, double &delta_pitch, double &delta
 	#if PID_AMEND
 	double temp_roll_err = 0;
 	double temp_pitch_err = 0;
+	double temp_yaw_err = 0;
 	temp_roll_err = stable_roll - data_roll;
-	imu_roll_err_partial = temp_roll_err - imu_roll_err;
+	imu_roll_err_partial = (temp_roll_err - imu_roll_err)/frame_T;
 	imu_roll_err = temp_roll_err;
-	imu_roll_err_sum += imu_roll_err;
+	imu_roll_err_sum += imu_roll_err*frame_T;
 
 	temp_pitch_err = stable_pitch - data_pitch;
-	imu_pitch_err_partial = temp_pitch_err - imu_pitch_err;
+	imu_pitch_err_partial = (temp_pitch_err - imu_pitch_err)/frame_T;
 	imu_pitch_err = temp_pitch_err;
-	imu_pitch_err_sum += imu_pitch_err;
+	imu_pitch_err_sum += imu_pitch_err*frame_T;
+
+	stable_yaw = theta;
+	temp_yaw_err = stable_yaw - data_yaw;
+	imu_yaw_err_partial = (temp_yaw_err - imu_yaw_err)/frame_T;
+	imu_yaw_err = temp_yaw_err;
+	imu_yaw_err_sum += imu_yaw_err*frame_T;
 	printf("%f,%f,%f\n", imu_pitch_err, imu_pitch_err_sum, imu_pitch_err_partial);
 
 	ros::param::get("/pid_amend/imu_roll_p",imu_roll_p);
@@ -3126,8 +3298,12 @@ void imuGesturePidControl(double &delta_roll, double &delta_pitch, double &delta
 	ros::param::get("/pid_amend/imu_pitch_p",imu_pitch_p);
 	ros::param::get("/pid_amend/imu_pitch_i",imu_pitch_i);
 	ros::param::get("/pid_amend/imu_pitch_d",imu_pitch_d);
+	ros::param::get("/pid_amend/imu_yaw_p",imu_yaw_p);
+	ros::param::get("/pid_amend/imu_yaw_i",imu_yaw_i);
+	ros::param::get("/pid_amend/imu_yaw_d",imu_yaw_d);
 	delta_roll = imu_roll_p*imu_roll_err + imu_roll_i*imu_roll_err_sum + imu_roll_d*imu_roll_err_partial;
 	delta_pitch = imu_pitch_p*imu_pitch_err + imu_pitch_i*imu_pitch_err_sum + imu_pitch_d*imu_pitch_err_partial;
+	delta_yaw = imu_yaw_p*imu_yaw_err + imu_yaw_i*imu_yaw_err_sum + imu_yaw_d*imu_yaw_err_partial;
 
 	// 分配到关节
 	if(abs(delta_roll) > 10){
@@ -3138,12 +3314,18 @@ void imuGesturePidControl(double &delta_roll, double &delta_pitch, double &delta
 		if(delta_pitch > 0) delta_pitch = 10;
 		else delta_pitch = -10;
 	}
+	if(abs(delta_yaw) > 10){
+		if(delta_yaw > 0) delta_yaw = 10;
+		else delta_yaw = -10;
+	}
 	
 	// 转换为弧度
 	delta_roll = delta_roll/180*M_PI;
 	delta_pitch = delta_pitch/180*M_PI;
+	delta_yaw = delta_yaw/180*M_PI;
 	delta_roll /= 2;
 	delta_pitch /= 2;
+	delta_yaw /= 2;
 	#endif
 }
 
@@ -3342,50 +3524,54 @@ void FallUpInitPos(){
 	imu_pitch_err = 0;
 	imu_pitch_err_sum = 0;
 	imu_pitch_err_partial = 0;
+	state_space_Com[0][1] += -state_space_Com[0][1]*0.25; //微调，为了再次稳定的起步
+	state_space_Com[0][2] += -state_space_Com[0][2]*0.25;
+	state_space_Com[1][1] += -state_space_Com[1][1]*0.25;
+	state_space_Com[1][2] += -state_space_Com[1][2]*0.25;
 
 #if ROSPUB
 	for(int i = 0; i < 21; i++){
 		std_msgs::Float64 msg;
 		ros::Rate ikidPubRate(20);
-		msg.data = robotModel[FRONT_NECK_SWING].q + (FallUpRobotPos_q[FRONT_NECK_SWING] - robotModel[FRONT_NECK_SWING].q)/20*i;
+		msg.data = ikid_robot_zero_point[FRONT_NECK_SWING] + robotModel[FRONT_NECK_SWING].q + (FallUpRobotPos_q[FRONT_NECK_SWING] - robotModel[FRONT_NECK_SWING].q)/20*i;
 		pub_neck_front_swing.publish(msg);
-		msg.data = robotModel[NECK_ROTATION].q + (FallUpRobotPos_q[NECK_ROTATION] - robotModel[NECK_ROTATION].q)/20*i;
+		msg.data = ikid_robot_zero_point[NECK_ROTATION] + robotModel[NECK_ROTATION].q + (FallUpRobotPos_q[NECK_ROTATION] - robotModel[NECK_ROTATION].q)/20*i;
 		pub_neck_rotation.publish(msg);
-		msg.data = robotModel[LEFT_ARM_FRONT_SWING].q + (FallUpRobotPos_q[LEFT_ARM_FRONT_SWING] - robotModel[LEFT_ARM_FRONT_SWING].q)/20*i;
+		msg.data = ikid_robot_zero_point[LEFT_ARM_FRONT_SWING] + robotModel[LEFT_ARM_FRONT_SWING].q + (FallUpRobotPos_q[LEFT_ARM_FRONT_SWING] - robotModel[LEFT_ARM_FRONT_SWING].q)/20*i;
 		pub_left_arm_front_swing.publish(msg);
-		msg.data = robotModel[LEFT_ARM_SIDE_SWING].q + (FallUpRobotPos_q[LEFT_ARM_SIDE_SWING] - robotModel[LEFT_ARM_SIDE_SWING].q)/20*i;
+		msg.data = ikid_robot_zero_point[LEFT_ARM_SIDE_SWING] + robotModel[LEFT_ARM_SIDE_SWING].q + (FallUpRobotPos_q[LEFT_ARM_SIDE_SWING] - robotModel[LEFT_ARM_SIDE_SWING].q)/20*i;
 		pub_left_arm_side_swing.publish(msg);
-		msg.data = robotModel[LEFT_ARM_ELBOW_FRONT_SWING].q + (FallUpRobotPos_q[LEFT_ARM_ELBOW_FRONT_SWING] - robotModel[LEFT_ARM_ELBOW_FRONT_SWING].q)/20*i;
+		msg.data = ikid_robot_zero_point[LEFT_ARM_ELBOW_FRONT_SWING] + robotModel[LEFT_ARM_ELBOW_FRONT_SWING].q + (FallUpRobotPos_q[LEFT_ARM_ELBOW_FRONT_SWING] - robotModel[LEFT_ARM_ELBOW_FRONT_SWING].q)/20*i;
 		pub_left_arm_elbow_front_swing.publish(msg);
-		msg.data = robotModel[RIGHT_ARM_FRONT_SWING].q + (FallUpRobotPos_q[RIGHT_ARM_FRONT_SWING] - robotModel[RIGHT_ARM_FRONT_SWING].q)/20*i;
+		msg.data = ikid_robot_zero_point[RIGHT_ARM_FRONT_SWING] + robotModel[RIGHT_ARM_FRONT_SWING].q + (FallUpRobotPos_q[RIGHT_ARM_FRONT_SWING] - robotModel[RIGHT_ARM_FRONT_SWING].q)/20*i;
 		pub_right_arm_front_swing.publish(msg);
-		msg.data = robotModel[RIGHT_ARM_SIDE_SWING].q + (FallUpRobotPos_q[RIGHT_ARM_SIDE_SWING] - robotModel[RIGHT_ARM_SIDE_SWING].q)/20*i;
+		msg.data = ikid_robot_zero_point[RIGHT_ARM_SIDE_SWING] + robotModel[RIGHT_ARM_SIDE_SWING].q + (FallUpRobotPos_q[RIGHT_ARM_SIDE_SWING] - robotModel[RIGHT_ARM_SIDE_SWING].q)/20*i;
 		pub_right_arm_side_swing.publish(msg);
-		msg.data = robotModel[RIGHT_ARM_ELBOW_FRONT_SWING].q + (FallUpRobotPos_q[RIGHT_ARM_ELBOW_FRONT_SWING] - robotModel[RIGHT_ARM_ELBOW_FRONT_SWING].q)/20*i;
+		msg.data = ikid_robot_zero_point[RIGHT_ARM_ELBOW_FRONT_SWING] + robotModel[RIGHT_ARM_ELBOW_FRONT_SWING].q + (FallUpRobotPos_q[RIGHT_ARM_ELBOW_FRONT_SWING] - robotModel[RIGHT_ARM_ELBOW_FRONT_SWING].q)/20*i;
 		pub_right_arm_elbow_front_swing.publish(msg);
-		msg.data = robotModel[LEFT_HIP_FRONT_SWING].q + (FallUpRobotPos_q[LEFT_HIP_FRONT_SWING] - robotModel[LEFT_HIP_FRONT_SWING].q)/20*i;
+		msg.data = ikid_robot_zero_point[LEFT_HIP_FRONT_SWING] + robotModel[LEFT_HIP_FRONT_SWING].q + (FallUpRobotPos_q[LEFT_HIP_FRONT_SWING] - robotModel[LEFT_HIP_FRONT_SWING].q)/20*i;
 		pub_left_hip_front_swing.publish(msg);
-		msg.data = robotModel[LEFT_HIP_SIDE_SWING].q + (FallUpRobotPos_q[LEFT_HIP_SIDE_SWING] - robotModel[LEFT_HIP_SIDE_SWING].q)/20*i;
+		msg.data = ikid_robot_zero_point[LEFT_HIP_SIDE_SWING] + robotModel[LEFT_HIP_SIDE_SWING].q + (FallUpRobotPos_q[LEFT_HIP_SIDE_SWING] - robotModel[LEFT_HIP_SIDE_SWING].q)/20*i;
 		pub_left_hip_side_swing.publish(msg);
-		msg.data = robotModel[LEFT_HIP_ROTATION].q + (FallUpRobotPos_q[LEFT_HIP_ROTATION] - robotModel[LEFT_HIP_ROTATION].q)/20*i;
+		msg.data = ikid_robot_zero_point[LEFT_HIP_ROTATION] + robotModel[LEFT_HIP_ROTATION].q + (FallUpRobotPos_q[LEFT_HIP_ROTATION] - robotModel[LEFT_HIP_ROTATION].q)/20*i;
 		pub_left_hip_rotation.publish(msg);
-		msg.data = robotModel[RIGHT_HIP_FRONT_SWING].q + (FallUpRobotPos_q[RIGHT_HIP_FRONT_SWING] - robotModel[RIGHT_HIP_FRONT_SWING].q)/20*i;
+		msg.data = ikid_robot_zero_point[RIGHT_HIP_FRONT_SWING] + robotModel[RIGHT_HIP_FRONT_SWING].q + (FallUpRobotPos_q[RIGHT_HIP_FRONT_SWING] - robotModel[RIGHT_HIP_FRONT_SWING].q)/20*i;
 		pub_right_hip_front_swing.publish(msg);
-		msg.data = robotModel[RIGHT_HIP_SIDE_SWING].q + (FallUpRobotPos_q[RIGHT_HIP_SIDE_SWING] - robotModel[RIGHT_HIP_SIDE_SWING].q)/20*i;
+		msg.data = ikid_robot_zero_point[RIGHT_HIP_SIDE_SWING] + robotModel[RIGHT_HIP_SIDE_SWING].q + (FallUpRobotPos_q[RIGHT_HIP_SIDE_SWING] - robotModel[RIGHT_HIP_SIDE_SWING].q)/20*i;
 		pub_right_hip_side_swing.publish(msg);
-		msg.data = robotModel[RIGHT_HIP_ROTATION].q + (FallUpRobotPos_q[RIGHT_HIP_ROTATION] - robotModel[RIGHT_HIP_ROTATION].q)/20*i;
+		msg.data = ikid_robot_zero_point[RIGHT_HIP_ROTATION] + robotModel[RIGHT_HIP_ROTATION].q + (FallUpRobotPos_q[RIGHT_HIP_ROTATION] - robotModel[RIGHT_HIP_ROTATION].q)/20*i;
 		pub_right_hip_rotation.publish(msg);
-		msg.data = robotModel[LEFT_KNEE_FRONT_SWING].q + (FallUpRobotPos_q[LEFT_KNEE_FRONT_SWING] - robotModel[LEFT_KNEE_FRONT_SWING].q)/20*i;
+		msg.data = ikid_robot_zero_point[LEFT_KNEE_FRONT_SWING] + robotModel[LEFT_KNEE_FRONT_SWING].q + (FallUpRobotPos_q[LEFT_KNEE_FRONT_SWING] - robotModel[LEFT_KNEE_FRONT_SWING].q)/20*i;
 		pub_left_knee_front_swing.publish(msg);
-		msg.data = robotModel[RIGHT_KNEE_FRONT_SWING].q + (FallUpRobotPos_q[RIGHT_KNEE_FRONT_SWING] - robotModel[RIGHT_KNEE_FRONT_SWING].q)/20*i;
+		msg.data = ikid_robot_zero_point[RIGHT_KNEE_FRONT_SWING] + robotModel[RIGHT_KNEE_FRONT_SWING].q + (FallUpRobotPos_q[RIGHT_KNEE_FRONT_SWING] - robotModel[RIGHT_KNEE_FRONT_SWING].q)/20*i;
 		pub_right_knee_front_swing.publish(msg);
-		msg.data = robotModel[LEFT_ANKLE_FRONT_SWING].q + (FallUpRobotPos_q[LEFT_ANKLE_FRONT_SWING] - robotModel[LEFT_ANKLE_FRONT_SWING].q)/20*i;
+		msg.data = ikid_robot_zero_point[LEFT_ANKLE_FRONT_SWING] + robotModel[LEFT_ANKLE_FRONT_SWING].q + (FallUpRobotPos_q[LEFT_ANKLE_FRONT_SWING] - robotModel[LEFT_ANKLE_FRONT_SWING].q)/20*i;
 		pub_left_ankle_front_swing.publish(msg);
-		msg.data = robotModel[LEFT_ANKLE_SIDE_SWING].q + (FallUpRobotPos_q[LEFT_ANKLE_SIDE_SWING] - robotModel[LEFT_ANKLE_SIDE_SWING].q)/20*i;
+		msg.data = ikid_robot_zero_point[LEFT_ANKLE_SIDE_SWING] + robotModel[LEFT_ANKLE_SIDE_SWING].q + (FallUpRobotPos_q[LEFT_ANKLE_SIDE_SWING] - robotModel[LEFT_ANKLE_SIDE_SWING].q)/20*i;
 		pub_left_ankle_side_swing.publish(msg);
-		msg.data = robotModel[RIGHT_ANKLE_FRONT_SWING].q + (FallUpRobotPos_q[RIGHT_ANKLE_FRONT_SWING] - robotModel[RIGHT_ANKLE_FRONT_SWING].q)/20*i;
+		msg.data = ikid_robot_zero_point[RIGHT_ANKLE_FRONT_SWING] + robotModel[RIGHT_ANKLE_FRONT_SWING].q + (FallUpRobotPos_q[RIGHT_ANKLE_FRONT_SWING] - robotModel[RIGHT_ANKLE_FRONT_SWING].q)/20*i;
 		pub_right_ankle_front_swing.publish(msg);
-		msg.data = robotModel[RIGHT_ANKLE_SIDE_SWING].q + (FallUpRobotPos_q[RIGHT_ANKLE_SIDE_SWING] - robotModel[RIGHT_ANKLE_SIDE_SWING].q)/20*i;
+		msg.data = ikid_robot_zero_point[RIGHT_ANKLE_SIDE_SWING] + robotModel[RIGHT_ANKLE_SIDE_SWING].q + (FallUpRobotPos_q[RIGHT_ANKLE_SIDE_SWING] - robotModel[RIGHT_ANKLE_SIDE_SWING].q)/20*i;
 		pub_right_ankle_side_swing.publish(msg);
 		ikidPubRate.sleep();
 	}
@@ -3405,11 +3591,12 @@ void writeImuData(){
 	{
 		exit(0);
 	}
-	double data_roll,data_pitch;
+	double data_roll,data_pitch,data_yaw;
 	ros::param::get("imu_data_roll",data_roll);
 	ros::param::get("imu_data_pitch",data_pitch);
+	ros::param::get("imu_data_yaw",data_yaw);
 
-	sprintf(ch, "%lf,%lf\n",data_roll, data_pitch);
+	sprintf(ch, "%lf,%lf,%lf\n",data_roll, data_pitch, data_yaw);
 	fputs(ch, fp);
 	fclose(fp);
 #endif
@@ -3429,7 +3616,7 @@ void clearImuDataTxt(){
 	return;
 }
 
-void writeZmpData(double z_d_x, double z_d_y, double z_f_x, double z_f_y){
+void writeZmpData(double zmp_data[2][N_preview], double z_d_x, double z_d_y, double z_f_x, double z_f_y){
 #if WRITEZMPDATA
 	FILE* fp = NULL;
 	char ch[100];
@@ -3439,8 +3626,17 @@ void writeZmpData(double z_d_x, double z_d_y, double z_f_x, double z_f_y){
 	{
 		exit(0);
 	}
-
-	sprintf(ch, "%lf,%lf,%lf,%lf\n",z_d_x, z_d_y,z_f_x,z_f_y);
+	// for(int i = 0; i < N_preview; i++){
+	// 	sprintf(ch, "%lf,",zmp_data[0][i]);
+	// 	fputs(ch, fp);
+	// }
+	// for(int i = 0; i < N_preview-1; i++){
+	// 	sprintf(ch, "%lf,",zmp_data[1][i]);
+	// 	fputs(ch, fp);
+	// }
+	// sprintf(ch, "%lf\n",zmp_data[1][N_preview-1]);
+	// fputs(ch, fp);
+	sprintf(ch, "%lf,%lf,%lf,%lf,%lf,%lf\n",z_d_x, z_d_y,z_f_x,z_f_y,Com[0],Com[1]);
 	fputs(ch, fp);
 	fclose(fp);
 #endif

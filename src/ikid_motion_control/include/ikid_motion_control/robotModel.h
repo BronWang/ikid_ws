@@ -90,6 +90,7 @@ enum {
 // id 25 左脚端	
 void ikidRobotDynaPosPubInit(ros::NodeHandle& n_);	    
 void ikidRobotDynaPosPub();
+void readIkidRobotZeroPoint(int id);
 void robotModelInit(robotLink*); // 已测试
 void initRobotPos(); 
 void robotStart(ros::NodeHandle& n_); // 已测试
@@ -139,7 +140,7 @@ void judgeFall();
 void FallUpInitPos(); //机器人跌倒起立后把腰部的高度调节到和初始一样
 void writeImuData();
 void clearImuDataTxt();
-void writeZmpData(double z_d_x, double z_d_y, double z_f_x, double z_f_y);
+void writeZmpData(double zmp_data[2][85],double z_d_x, double z_d_y, double z_f_x, double z_f_y);
 void clearZmpDataTxt();
 
 #endif // !ROBOTMODEL

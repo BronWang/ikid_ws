@@ -30,10 +30,15 @@ void doWalkMsg(const ikid_motion_control::cmd_walk::ConstPtr& walkMsg){
             ros::param::set("stop_turn_flag",true);
         }
     }else{
-        sx = 0;
-        trajPlan();
-        FallUpInitPos();  // 保证停稳
-        ros::param::set("stop_walk_flag",true);
+        bool stop_walk_flag;
+        ros::param::get("stop_walk_flag",stop_walk_flag); //如果已经停止，不执行操作
+        if(!stop_walk_flag){
+            sx = 0;
+            trajPlan();
+            FallUpInitPos();  // 保证停稳
+            ros::param::set("stop_walk_flag",true);
+        }
+        
     }
 }
 

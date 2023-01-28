@@ -57,7 +57,7 @@ int main(int argc, char **argv) {
             walk_msg.stop_walk = false;
             walk_msg.sx = step_len;
             walk_msg.sy = step_wid;
-            walk_msg.var_theta = 10/180.0*M_PI;
+            walk_msg.var_theta = 25/180.0*M_PI;
             walk_msg.walk_with_ball = false;
             pub_keyboard.publish(walk_msg);
             break;
@@ -69,7 +69,7 @@ int main(int argc, char **argv) {
             walk_msg.stop_walk = false;
             walk_msg.sx = step_len;
             walk_msg.sy = step_wid;
-            walk_msg.var_theta = -10/180.0*M_PI;
+            walk_msg.var_theta = -25/180.0*M_PI;
             walk_msg.walk_with_ball = false;
             pub_keyboard.publish(walk_msg);
             break;
@@ -78,15 +78,16 @@ int main(int argc, char **argv) {
             bool has_value;
             has_value = ros::param::get("stop_walk_flag",stop_walk_flag);
             if(has_value){
-                walk_msg.stop_walk = !stop_walk_flag;
-            }else{
-                walk_msg.stop_walk = true;
+                if(!stop_walk_flag){
+                    walk_msg.stop_walk = true;
+                    walk_msg.sx = step_len;
+                    walk_msg.sy = step_wid;
+                    walk_msg.var_theta = 0;
+                    walk_msg.walk_with_ball = false;
+                    pub_keyboard.publish(walk_msg);
+                } 
             }
-            walk_msg.sx = step_len;
-            walk_msg.sy = step_wid;
-            walk_msg.var_theta = 0;
-            walk_msg.walk_with_ball = false;
-            pub_keyboard.publish(walk_msg);
+            
             break;
         default:
             break;
