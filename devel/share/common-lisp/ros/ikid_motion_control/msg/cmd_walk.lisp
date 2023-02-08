@@ -148,10 +148,10 @@
   "768710e1aa78c3a3025d8ab3e396f5e8")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<cmd_walk>)))
   "Returns full string definition for message of type '<cmd_walk>"
-  (cl:format cl:nil "float64 sx  # 步长~%float64 sy   # 步宽~%float64 var_theta  # 转角增量~%bool walk_with_ball  # 是否带球行走~%bool stop_walk   # 停止行走标志位~%~%"))
+  (cl:format cl:nil "float64 sx  # 步长~%float64 sy   # 步宽~%float64 var_theta  # 转角增量~%bool walk_with_ball  # 是否带球行走/动态踢球~%bool stop_walk   # 停止行走标志位~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'cmd_walk)))
   "Returns full string definition for message of type 'cmd_walk"
-  (cl:format cl:nil "float64 sx  # 步长~%float64 sy   # 步宽~%float64 var_theta  # 转角增量~%bool walk_with_ball  # 是否带球行走~%bool stop_walk   # 停止行走标志位~%~%"))
+  (cl:format cl:nil "float64 sx  # 步长~%float64 sy   # 步宽~%float64 var_theta  # 转角增量~%bool walk_with_ball  # 是否带球行走/动态踢球~%bool stop_walk   # 停止行走标志位~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <cmd_walk>))
   (cl:+ 0
      8

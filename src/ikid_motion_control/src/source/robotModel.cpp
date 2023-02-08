@@ -35,7 +35,7 @@ double	c_h = 0.35;
 // 初始手部离地面高度
 double	hand_h = c_h-0.1;
 // 脚步抬高
-double fh = 0.05;
+double fh = 0.03;
 // 帧间隔时间
 double frame_T = 0.02;
 double T_cell = step_basic_frame * frame_T;
@@ -52,6 +52,10 @@ double left_arm_swing_angle = 0;
 double right_arm_swing_angle = 0;
 // 当前的支撑点
 double support_ZMP[3] = { 0,0,0 };
+// 当前的期望ZMP点
+double current_ZMP_point[3] = { 0,0,0 };
+// 通过公式计算的较为准确的ZMP
+double Compute_fact_zmp[3] = {0};
 
 // 开始步行的起步标志位
 bool ikid_start_walk_flag = true;
@@ -62,6 +66,15 @@ double Com[3] = { 0 };
 // 实际全身质心与ZMP生成的质心位置误差
 double error_Com_ZmpCom[3] = { 0 };
 double sum_error_Com_ZmpCom = 0;
+// 计算动量和动量矩对时间的一阶导数
+double pre_robot_P[3] = {0};
+double cur_robot_P[3] = {0};
+double pre_robot_L[3] = {0};
+double cur_robot_L[3] = {0};
+double robot_dPdt[3] = {0};
+double robot_dLdt[3] = {0};
+// 机器人在Z轴方向的偏摆力矩
+double robot_taoz = 0;
 
 // 记录机器人启动时的各关节位置，方便跌倒爬起的姿态恢复
 double FallUpRobotPos_q[26] = {0};
@@ -210,7 +223,6 @@ void ikidRobotDynaPosPubInit(ros::NodeHandle& n_){
 
 void ikidRobotDynaPosPub(){
 	std_msgs::Float64 msg;
-	ros::Rate ikidPubRate(50);
     msg.data = robotModel[FRONT_NECK_SWING].q + ikid_robot_zero_point[FRONT_NECK_SWING];
     pub_neck_front_swing.publish(msg);
     msg.data = robotModel[NECK_ROTATION].q + ikid_robot_zero_point[NECK_ROTATION];
@@ -251,7 +263,7 @@ void ikidRobotDynaPosPub(){
     pub_right_ankle_front_swing.publish(msg);
     msg.data = robotModel[RIGHT_ANKLE_SIDE_SWING].q + ikid_robot_zero_point[RIGHT_ANKLE_SIDE_SWING];
     pub_right_ankle_side_swing.publish(msg);
-	ikidPubRate.sleep();
+	ros::Duration(0.02).sleep();
 }
 
 void readIkidRobotZeroPoint(int id){
@@ -1603,6 +1615,28 @@ void Calc_com(double com[3]) {
 	com[2] = mc[2] / M;
 }
 
+void Calc_ZMP(double fact_zmp[3], double *taoz){
+	double M;
+	M = totalMass(MAIN_BODY);
+	double G = 9.8;
+	double temp_com[3];
+	Calc_com(temp_com);
+	CalcP(MAIN_BODY, cur_robot_P);
+	CalcL(MAIN_BODY, cur_robot_L);
+	robot_dPdt[0] = (cur_robot_P[0]-pre_robot_P[0])/frame_T;
+	robot_dPdt[1] = (cur_robot_P[1]-pre_robot_P[1])/frame_T;
+	robot_dPdt[2] = (cur_robot_P[2]-pre_robot_P[2])/frame_T;
+	robot_dLdt[0] = (cur_robot_L[0]-pre_robot_L[0])/frame_T;
+	robot_dLdt[1] = (cur_robot_L[1]-pre_robot_L[1])/frame_T;
+	robot_dLdt[2] = (cur_robot_L[2]-pre_robot_L[2])/frame_T;
+	fact_zmp[0] = (M*G*temp_com[0]-robot_dLdt[1])/(M*G+robot_dPdt[2]);
+	fact_zmp[1] = (M*G*temp_com[1]+robot_dLdt[0])/(M*G+robot_dPdt[2]);
+	fact_zmp[2] = 0;
+	*taoz = robot_dLdt[2]+robot_dPdt[0]*fact_zmp[1]-robot_dPdt[1]*fact_zmp[0];
+	pre_robot_P[0] = cur_robot_P[0];pre_robot_P[1] = cur_robot_P[1];pre_robot_P[2] = cur_robot_P[2];
+	pre_robot_L[0] = cur_robot_L[0];pre_robot_L[1] = cur_robot_L[1];pre_robot_L[2] = cur_robot_L[2];
+}
+
 void changeFoot()
 {
 	if (isLeft) {
@@ -1680,8 +1714,8 @@ void inverseKinmatics_head() {
 	robotModel[NECK_ROTATION].dq = robotModel[NECK_ROTATION].q;
 	robotModel[FRONT_NECK_SWING].q = PI - acos((a_square + b_square - c_square) / (2 * a * b));
 	robotModel[NECK_ROTATION].q = atan2(temp[1], temp[0]);
-	robotModel[FRONT_NECK_SWING].dq -= robotModel[FRONT_NECK_SWING].q;
-	robotModel[NECK_ROTATION].dq -= robotModel[NECK_ROTATION].q;
+	robotModel[FRONT_NECK_SWING].dq = -(robotModel[FRONT_NECK_SWING].dq-robotModel[FRONT_NECK_SWING].q)/frame_T;
+	robotModel[NECK_ROTATION].dq = -(robotModel[NECK_ROTATION].dq-robotModel[NECK_ROTATION].q)/frame_T;
 	ForwardVelocity(MAIN_BODY);
 }
 
@@ -1790,9 +1824,9 @@ void inverseKinmatics_leftHand() {
 		angleLimit();
 		forwardKinematics(MAIN_BODY);
 	}
-	robotModel[LEFT_ARM_FRONT_SWING].dq -= robotModel[LEFT_ARM_FRONT_SWING].q;
-	robotModel[LEFT_ARM_SIDE_SWING].dq -= robotModel[LEFT_ARM_SIDE_SWING].q;
-	robotModel[LEFT_ARM_ELBOW_FRONT_SWING].dq -= robotModel[LEFT_ARM_ELBOW_FRONT_SWING].q;
+	robotModel[LEFT_ARM_FRONT_SWING].dq = -(robotModel[LEFT_ARM_FRONT_SWING].dq-robotModel[LEFT_ARM_FRONT_SWING].q)/frame_T;
+	robotModel[LEFT_ARM_SIDE_SWING].dq = -(robotModel[LEFT_ARM_SIDE_SWING].dq-robotModel[LEFT_ARM_SIDE_SWING].q)/frame_T;
+	robotModel[LEFT_ARM_ELBOW_FRONT_SWING].dq = -(robotModel[LEFT_ARM_ELBOW_FRONT_SWING].dq-robotModel[LEFT_ARM_ELBOW_FRONT_SWING].q)/frame_T;
 	ForwardVelocity(MAIN_BODY);
 
 }
@@ -1901,9 +1935,9 @@ void inverseKinmatics_rightHand() {
 		angleLimit();
 		forwardKinematics(MAIN_BODY);
 	}
-	robotModel[RIGHT_ARM_FRONT_SWING].dq -= robotModel[RIGHT_ARM_FRONT_SWING].q;
-	robotModel[RIGHT_ARM_SIDE_SWING].dq -= robotModel[RIGHT_ARM_SIDE_SWING].q;
-	robotModel[RIGHT_ARM_ELBOW_FRONT_SWING].dq -= robotModel[RIGHT_ARM_ELBOW_FRONT_SWING].q;
+	robotModel[RIGHT_ARM_FRONT_SWING].dq = -(robotModel[RIGHT_ARM_FRONT_SWING].dq-robotModel[RIGHT_ARM_FRONT_SWING].q)/frame_T;
+	robotModel[RIGHT_ARM_SIDE_SWING].dq = -(robotModel[RIGHT_ARM_SIDE_SWING].dq-robotModel[RIGHT_ARM_SIDE_SWING].q)/frame_T;
+	robotModel[RIGHT_ARM_ELBOW_FRONT_SWING].dq = -(robotModel[RIGHT_ARM_ELBOW_FRONT_SWING].dq-robotModel[RIGHT_ARM_ELBOW_FRONT_SWING].q)/frame_T;
 	ForwardVelocity(MAIN_BODY);
 }
 
@@ -2051,12 +2085,12 @@ void inverseKinmatics_leftFoot(double x, double y, double z) {
 		robotModel[LEFT_ANKLE_SIDE_SWING].q = robotModel[LEFT_ANKLE_SIDE_SWING].q + lamda * dq[5];
 		forwardKinematics(MAIN_BODY);
 	}
-	robotModel[LEFT_HIP_FRONT_SWING].dq -= robotModel[LEFT_HIP_FRONT_SWING].q;
-	robotModel[LEFT_HIP_SIDE_SWING].dq -= robotModel[LEFT_HIP_SIDE_SWING].q;
-	robotModel[LEFT_HIP_ROTATION].dq -= robotModel[LEFT_HIP_ROTATION].q;
-	robotModel[LEFT_KNEE_FRONT_SWING].dq -= robotModel[LEFT_KNEE_FRONT_SWING].q;
-	robotModel[LEFT_ANKLE_FRONT_SWING].dq -= robotModel[LEFT_ANKLE_FRONT_SWING].q;
-	robotModel[LEFT_ANKLE_SIDE_SWING].dq -= robotModel[LEFT_ANKLE_SIDE_SWING].q;
+	robotModel[LEFT_HIP_FRONT_SWING].dq = -(robotModel[LEFT_HIP_FRONT_SWING].dq-robotModel[LEFT_HIP_FRONT_SWING].q)/frame_T;
+	robotModel[LEFT_HIP_SIDE_SWING].dq = -(robotModel[LEFT_HIP_SIDE_SWING].dq-robotModel[LEFT_HIP_SIDE_SWING].q)/frame_T;
+	robotModel[LEFT_HIP_ROTATION].dq = -(robotModel[LEFT_HIP_ROTATION].dq-robotModel[LEFT_HIP_ROTATION].q)/frame_T;
+	robotModel[LEFT_KNEE_FRONT_SWING].dq = -(robotModel[LEFT_KNEE_FRONT_SWING].dq-robotModel[LEFT_KNEE_FRONT_SWING].q)/frame_T;
+	robotModel[LEFT_ANKLE_FRONT_SWING].dq = -(robotModel[LEFT_ANKLE_FRONT_SWING].dq-robotModel[LEFT_ANKLE_FRONT_SWING].q)/frame_T;
+	robotModel[LEFT_ANKLE_SIDE_SWING].dq = -(robotModel[LEFT_ANKLE_SIDE_SWING].dq-robotModel[LEFT_ANKLE_SIDE_SWING].q)/frame_T;
 	ForwardVelocity(MAIN_BODY);
 }
 
@@ -2204,12 +2238,12 @@ void inverseKinmatics_rightFoot(double x, double y, double z) {
 		robotModel[RIGHT_ANKLE_SIDE_SWING].q = robotModel[RIGHT_ANKLE_SIDE_SWING].q + lamda * dq[5];
 		forwardKinematics(MAIN_BODY);
 	}
-	robotModel[RIGHT_HIP_FRONT_SWING].dq -= robotModel[RIGHT_HIP_FRONT_SWING].q;
-	robotModel[RIGHT_HIP_SIDE_SWING].dq -= robotModel[RIGHT_HIP_SIDE_SWING].q;
-	robotModel[RIGHT_HIP_ROTATION].dq -= robotModel[RIGHT_HIP_ROTATION].q;
-	robotModel[RIGHT_KNEE_FRONT_SWING].dq -= robotModel[RIGHT_KNEE_FRONT_SWING].q;
-	robotModel[RIGHT_ANKLE_FRONT_SWING].dq -= robotModel[RIGHT_ANKLE_FRONT_SWING].q;
-	robotModel[RIGHT_ANKLE_SIDE_SWING].dq -= robotModel[RIGHT_ANKLE_SIDE_SWING].q;
+	robotModel[RIGHT_HIP_FRONT_SWING].dq = -(robotModel[RIGHT_HIP_FRONT_SWING].dq-robotModel[RIGHT_HIP_FRONT_SWING].q)/frame_T;
+	robotModel[RIGHT_HIP_SIDE_SWING].dq = -(robotModel[RIGHT_HIP_SIDE_SWING].dq-robotModel[RIGHT_HIP_SIDE_SWING].q)/frame_T;
+	robotModel[RIGHT_HIP_ROTATION].dq = -(robotModel[RIGHT_HIP_ROTATION].dq-robotModel[RIGHT_HIP_ROTATION].q)/frame_T;
+	robotModel[RIGHT_KNEE_FRONT_SWING].dq = -(robotModel[RIGHT_KNEE_FRONT_SWING].dq-robotModel[RIGHT_KNEE_FRONT_SWING].q)/frame_T;
+	robotModel[RIGHT_ANKLE_FRONT_SWING].dq = -(robotModel[RIGHT_ANKLE_FRONT_SWING].dq-robotModel[RIGHT_ANKLE_FRONT_SWING].q)/frame_T;
+	robotModel[RIGHT_ANKLE_SIDE_SWING].dq = -(robotModel[RIGHT_ANKLE_SIDE_SWING].dq-robotModel[RIGHT_ANKLE_SIDE_SWING].q)/frame_T;
 	ForwardVelocity(MAIN_BODY);
 }
 
@@ -2217,7 +2251,7 @@ void clearTxt()
 {
 	FILE* fp;
 	char ch[200];
-	char filename[] = "/home/wp/ikid_ws/MOS2018.txt";
+	char filename[] = "/home/wp/ikid_ws/MOS2023.txt";
 	fp = fopen(filename, "w");
 	if (fp == NULL)
 	{
@@ -2230,7 +2264,7 @@ void clearTxt()
 void writeTxt() {
 	FILE* fp = NULL;
 	char ch[200];
-	char filename[] = "/home/wp/ikid_ws/MOS2018.txt";
+	char filename[] = "/home/wp/ikid_ws/MOS2023.txt";
 	fp = fopen(filename, "a");
 	if(fp == NULL)
 	{
@@ -2238,12 +2272,13 @@ void writeTxt() {
 	}
 	for (int i = 0; i < PART_NUMBER; i++)
 	{
-		sprintf(ch, "%d,%s,%d,%d,%d,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf\n",
+		sprintf(ch, "%d,%s,%d,%d,%d,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf\n",
 			robotModel[i].linkID, robotModel[i].name, robotModel[i].sister, robotModel[i].child, robotModel[i].mother,
 			robotModel[i].p[0], robotModel[i].p[1], robotModel[i].p[2],
 			robotModel[i].R[0][0], robotModel[i].R[0][1], robotModel[i].R[0][2],
 			robotModel[i].R[1][0], robotModel[i].R[1][1], robotModel[i].R[1][2],
-			robotModel[i].R[2][0], robotModel[i].R[2][1], robotModel[i].R[2][2], robotModel[i].q);
+			robotModel[i].R[2][0], robotModel[i].R[2][1], robotModel[i].R[2][2], robotModel[i].q, 
+			current_ZMP_point[0], current_ZMP_point[1], current_ZMP_point[2]);
 		fputs(ch, fp);
 	}
 	fclose(fp);
@@ -2353,6 +2388,20 @@ void trajPlan() {
 		double T_T[3][3];
 		invMatrix3x3(T, T_T);
 
+		bool walk_with_ball;
+        ros::param::get("walk_with_ball",walk_with_ball);
+		double quintic_A[6][4] = {};
+		double quintic_B[6][4] = {};
+		if(walk_with_ball){
+			// 求解四段五次多项式插值参数
+			quinticPolyInterFour(quintic_A, quintic_B, CP_norm*2);
+		}else{
+			// 求解两段五次多项式插值参数
+			quinticPolyInterTwo(quintic_A, quintic_B, CP_norm*2);
+		}
+		
+
+
 #if SWING_ARM
 		// 右臂
 		double current_arm_angle_right = robotModel[RIGHT_ARM_FRONT_SWING].q;
@@ -2366,14 +2415,49 @@ void trajPlan() {
 		arm_swing_angle = asin(sx/2 / arm_length);
 
 #endif
-
+		
 		for (int i = 0; i < step_basic_frame; i++)
 		{
-			// SIN曲线
 			double world_p[3];
 			double local_p[3];
-			double x = CP_norm + (-(i + 1) * 2 * CP_norm / step_basic_frame);
-			double y = fh * cos(PI / (2 * CP_norm) * x);
+			double x;
+			double y;
+			// 决策是否动态踢球 开始
+			if(walk_with_ball){
+				//{0, step_basic_frame/5*2*frame_T, step_basic_frame/5*3*frame_T, step_basic_frame/5*4*frame_T, step_basic_frame*frame_T}
+				if(i < step_basic_frame/5*2){
+					double temp_t = i*frame_T;
+					x = quintic_A[0][0]+quintic_A[1][0]*temp_t+quintic_A[2][0]*pow(temp_t,2)+quintic_A[3][0]*pow(temp_t,3)+quintic_A[4][0]*pow(temp_t,4)+quintic_A[5][0]*pow(temp_t,5);
+					y = quintic_B[0][0]+quintic_B[1][0]*temp_t+quintic_B[2][0]*pow(temp_t,2)+quintic_B[3][0]*pow(temp_t,3)+quintic_B[4][0]*pow(temp_t,4)+quintic_B[5][0]*pow(temp_t,5);
+				}else if(i < step_basic_frame/5*3){
+					double temp_t = i*frame_T;
+					x = quintic_A[0][1]+quintic_A[1][1]*temp_t+quintic_A[2][1]*pow(temp_t,2)+quintic_A[3][1]*pow(temp_t,3)+quintic_A[4][1]*pow(temp_t,4)+quintic_A[5][1]*pow(temp_t,5);
+					y = quintic_B[0][1]+quintic_B[1][1]*temp_t+quintic_B[2][1]*pow(temp_t,2)+quintic_B[3][1]*pow(temp_t,3)+quintic_B[4][1]*pow(temp_t,4)+quintic_B[5][1]*pow(temp_t,5);
+				}else if(i < step_basic_frame/5*4){
+					double temp_t = i*frame_T;
+					x = quintic_A[0][2]+quintic_A[1][2]*temp_t+quintic_A[2][2]*pow(temp_t,2)+quintic_A[3][2]*pow(temp_t,3)+quintic_A[4][2]*pow(temp_t,4)+quintic_A[5][2]*pow(temp_t,5);
+					y = quintic_B[0][2]+quintic_B[1][2]*temp_t+quintic_B[2][2]*pow(temp_t,2)+quintic_B[3][2]*pow(temp_t,3)+quintic_B[4][2]*pow(temp_t,4)+quintic_B[5][2]*pow(temp_t,5);
+				}else{
+					double temp_t = i*frame_T;
+					x = quintic_A[0][3]+quintic_A[1][3]*temp_t+quintic_A[2][3]*pow(temp_t,2)+quintic_A[3][3]*pow(temp_t,3)+quintic_A[4][3]*pow(temp_t,4)+quintic_A[5][3]*pow(temp_t,5);
+					y = quintic_B[0][3]+quintic_B[1][3]*temp_t+quintic_B[2][3]*pow(temp_t,2)+quintic_B[3][3]*pow(temp_t,3)+quintic_B[4][3]*pow(temp_t,4)+quintic_B[5][3]*pow(temp_t,5);
+				}
+				//printf(" x:%f,y:%f ", x, y);
+			}else{
+				//  x = CP_norm + -(i + 1) * 2 * CP_norm / step_basic_frame; // sin曲线
+				//  y = fh * cos(PI / (2 * CP_norm) * x);
+				if(i < step_basic_frame/2){
+					double temp_t = i*frame_T;
+					x = quintic_A[0][0]+quintic_A[1][0]*temp_t+quintic_A[2][0]*pow(temp_t,2)+quintic_A[3][0]*pow(temp_t,3)+quintic_A[4][0]*pow(temp_t,4)+quintic_A[5][0]*pow(temp_t,5);
+					y = quintic_B[0][0]+quintic_B[1][0]*temp_t+quintic_B[2][0]*pow(temp_t,2)+quintic_B[3][0]*pow(temp_t,3)+quintic_B[4][0]*pow(temp_t,4)+quintic_B[5][0]*pow(temp_t,5);
+				}else{
+					double temp_t = i*frame_T;
+					x = quintic_A[0][1]+quintic_A[1][1]*temp_t+quintic_A[2][1]*pow(temp_t,2)+quintic_A[3][1]*pow(temp_t,3)+quintic_A[4][1]*pow(temp_t,4)+quintic_A[5][1]*pow(temp_t,5);
+					y = quintic_B[0][1]+quintic_B[1][1]*temp_t+quintic_B[2][1]*pow(temp_t,2)+quintic_B[3][1]*pow(temp_t,3)+quintic_B[4][1]*pow(temp_t,4)+quintic_B[5][1]*pow(temp_t,5);
+				}
+			}
+			
+			// 决策是否动态踢球 结束
 			local_p[0] = x;
 			local_p[1] = y;
 			local_p[2] = 0;
@@ -2423,6 +2507,8 @@ void trajPlan() {
 			robotModel[RIGHT_ANKLE_SIDE_SWING].p[2] = solid_right_foot[2] - temp[2];
 			inverseKinmatics_rightFoot(0, 0, theta);
 
+			Calc_ZMP(Compute_fact_zmp,&robot_taoz);
+
 			#if PID_AMEND
 			robotModel[RIGHT_ANKLE_SIDE_SWING].q -= delta_roll;   // 负号是因为要靠地面反作用力来修正姿态
 			robotModel[LEFT_ANKLE_SIDE_SWING].q -= delta_roll;
@@ -2471,6 +2557,19 @@ void trajPlan() {
 		T[2][0] = i_prime[2]; T[2][1] = j_prime[2]; T[2][2] = k_prime[2];
 		double T_T[3][3];
 		invMatrix3x3(T, T_T);
+
+		bool walk_with_ball;
+        ros::param::get("walk_with_ball",walk_with_ball);
+		double quintic_A[6][4] = {};
+		double quintic_B[6][4] = {};
+		if(walk_with_ball){
+			// 求解四段五次多项式插值参数
+			quinticPolyInterFour(quintic_A, quintic_B, CP_norm*2);
+		}else{
+			// 求解两段五次多项式插值参数
+			quinticPolyInterTwo(quintic_A, quintic_B, CP_norm*2);
+		}
+
 #if SWING_ARM
 		// 左臂
 		double current_arm_angle_left = robotModel[LEFT_ARM_FRONT_SWING].q;
@@ -2483,13 +2582,48 @@ void trajPlan() {
 		arm_length = norm(arm_abc, 1, 3);
 		arm_swing_angle = asin(sx/2 / arm_length);
 #endif
-
 		for (int i = 0; i < step_basic_frame; i++)
 		{
 			double world_p[3];
 			double local_p[3];
-			double x = CP_norm + -(i + 1) * 2 * CP_norm / step_basic_frame;
-			double y = fh * cos(PI / (2 * CP_norm) * x);
+			double x;
+			double y;
+			// 决策是否动态踢球 开始
+			if(walk_with_ball){
+				//{0, step_basic_frame/5*2*frame_T, step_basic_frame/5*3*frame_T, step_basic_frame/5*4*frame_T, step_basic_frame*frame_T}
+				if(i < step_basic_frame/5*2){
+					double temp_t = i*frame_T;
+					x = quintic_A[0][0]+quintic_A[1][0]*temp_t+quintic_A[2][0]*pow(temp_t,2)+quintic_A[3][0]*pow(temp_t,3)+quintic_A[4][0]*pow(temp_t,4)+quintic_A[5][0]*pow(temp_t,5);
+					y = quintic_B[0][0]+quintic_B[1][0]*temp_t+quintic_B[2][0]*pow(temp_t,2)+quintic_B[3][0]*pow(temp_t,3)+quintic_B[4][0]*pow(temp_t,4)+quintic_B[5][0]*pow(temp_t,5);
+				}else if(i < step_basic_frame/5*3){
+					double temp_t = i*frame_T;
+					x = quintic_A[0][1]+quintic_A[1][1]*temp_t+quintic_A[2][1]*pow(temp_t,2)+quintic_A[3][1]*pow(temp_t,3)+quintic_A[4][1]*pow(temp_t,4)+quintic_A[5][1]*pow(temp_t,5);
+					y = quintic_B[0][1]+quintic_B[1][1]*temp_t+quintic_B[2][1]*pow(temp_t,2)+quintic_B[3][1]*pow(temp_t,3)+quintic_B[4][1]*pow(temp_t,4)+quintic_B[5][1]*pow(temp_t,5);
+				}else if(i < step_basic_frame/5*4){
+					double temp_t = i*frame_T;
+					x = quintic_A[0][2]+quintic_A[1][2]*temp_t+quintic_A[2][2]*pow(temp_t,2)+quintic_A[3][2]*pow(temp_t,3)+quintic_A[4][2]*pow(temp_t,4)+quintic_A[5][2]*pow(temp_t,5);
+					y = quintic_B[0][2]+quintic_B[1][2]*temp_t+quintic_B[2][2]*pow(temp_t,2)+quintic_B[3][2]*pow(temp_t,3)+quintic_B[4][2]*pow(temp_t,4)+quintic_B[5][2]*pow(temp_t,5);
+				}else{
+					double temp_t = i*frame_T;
+					x = quintic_A[0][3]+quintic_A[1][3]*temp_t+quintic_A[2][3]*pow(temp_t,2)+quintic_A[3][3]*pow(temp_t,3)+quintic_A[4][3]*pow(temp_t,4)+quintic_A[5][3]*pow(temp_t,5);
+					y = quintic_B[0][3]+quintic_B[1][3]*temp_t+quintic_B[2][3]*pow(temp_t,2)+quintic_B[3][3]*pow(temp_t,3)+quintic_B[4][3]*pow(temp_t,4)+quintic_B[5][3]*pow(temp_t,5);
+				}
+				//printf(" x:%f,y:%f ", x, y);
+			}else{
+				//  x = CP_norm + -(i + 1) * 2 * CP_norm / step_basic_frame; // sin曲线
+				//  y = fh * cos(PI / (2 * CP_norm) * x);
+				if(i < step_basic_frame/2){
+					double temp_t = i*frame_T;
+					x = quintic_A[0][0]+quintic_A[1][0]*temp_t+quintic_A[2][0]*pow(temp_t,2)+quintic_A[3][0]*pow(temp_t,3)+quintic_A[4][0]*pow(temp_t,4)+quintic_A[5][0]*pow(temp_t,5);
+					y = quintic_B[0][0]+quintic_B[1][0]*temp_t+quintic_B[2][0]*pow(temp_t,2)+quintic_B[3][0]*pow(temp_t,3)+quintic_B[4][0]*pow(temp_t,4)+quintic_B[5][0]*pow(temp_t,5);
+				}else{
+					double temp_t = i*frame_T;
+					x = quintic_A[0][1]+quintic_A[1][1]*temp_t+quintic_A[2][1]*pow(temp_t,2)+quintic_A[3][1]*pow(temp_t,3)+quintic_A[4][1]*pow(temp_t,4)+quintic_A[5][1]*pow(temp_t,5);
+					y = quintic_B[0][1]+quintic_B[1][1]*temp_t+quintic_B[2][1]*pow(temp_t,2)+quintic_B[3][1]*pow(temp_t,3)+quintic_B[4][1]*pow(temp_t,4)+quintic_B[5][1]*pow(temp_t,5);
+				}
+			}
+			
+			// 决策是否动态踢球 结束
 			local_p[0] = x;
 			local_p[1] = y;
 			local_p[2] = 0;
@@ -2542,6 +2676,7 @@ void trajPlan() {
 			robotModel[LEFT_ANKLE_SIDE_SWING].p[1] = solid_left_foot[1] - temp[1];
 			robotModel[LEFT_ANKLE_SIDE_SWING].p[2] = solid_left_foot[2] - temp[2];
 			inverseKinmatics_leftFoot(0, 0, theta);
+			Calc_ZMP(Compute_fact_zmp,&robot_taoz);
 
 			#if PID_AMEND
 			robotModel[RIGHT_ANKLE_SIDE_SWING].q -= delta_roll;
@@ -2602,6 +2737,11 @@ void anglePlan(double delta) {
 		T[2][0] = i_prime[2]; T[2][1] = j_prime[2]; T[2][2] = k_prime[2];
 		double T_T[3][3];
 		invMatrix3x3(T, T_T);
+
+		double quintic_A[6][4] = {};
+		double quintic_B[6][4] = {};
+		// 求解两段五次多项式插值参数
+		quinticPolyInterTwo(quintic_A, quintic_B, CP_norm*2);
 #if SWING_ARM
 		// 右臂
 		double current_arm_angle_right = robotModel[RIGHT_ARM_FRONT_SWING].q;
@@ -2621,8 +2761,19 @@ void anglePlan(double delta) {
 			// SIN曲线
 			double world_p[3];
 			double local_p[3];
-			double x = CP_norm + (-(i + 1) * 2 * CP_norm / step_basic_frame);
-			double y = fh * cos(PI / (2 * CP_norm) * x);
+			double x;
+			double y;
+			//  x = CP_norm + -(i + 1) * 2 * CP_norm / step_basic_frame; // sin曲线
+			//  y = fh * cos(PI / (2 * CP_norm) * x);
+			if(i < step_basic_frame/2){
+				double temp_t = i*frame_T;
+				x = quintic_A[0][0]+quintic_A[1][0]*temp_t+quintic_A[2][0]*pow(temp_t,2)+quintic_A[3][0]*pow(temp_t,3)+quintic_A[4][0]*pow(temp_t,4)+quintic_A[5][0]*pow(temp_t,5);
+				y = quintic_B[0][0]+quintic_B[1][0]*temp_t+quintic_B[2][0]*pow(temp_t,2)+quintic_B[3][0]*pow(temp_t,3)+quintic_B[4][0]*pow(temp_t,4)+quintic_B[5][0]*pow(temp_t,5);
+			}else{
+				double temp_t = i*frame_T;
+				x = quintic_A[0][1]+quintic_A[1][1]*temp_t+quintic_A[2][1]*pow(temp_t,2)+quintic_A[3][1]*pow(temp_t,3)+quintic_A[4][1]*pow(temp_t,4)+quintic_A[5][1]*pow(temp_t,5);
+				y = quintic_B[0][1]+quintic_B[1][1]*temp_t+quintic_B[2][1]*pow(temp_t,2)+quintic_B[3][1]*pow(temp_t,3)+quintic_B[4][1]*pow(temp_t,4)+quintic_B[5][1]*pow(temp_t,5);
+			}
 			local_p[0] = x;
 			local_p[1] = y;
 			local_p[2] = 0;
@@ -2678,6 +2829,8 @@ void anglePlan(double delta) {
 			robotModel[RIGHT_ANKLE_SIDE_SWING].p[2] = solid_right_foot[2] - temp[2];
 			inverseKinmatics_rightFoot(0, 0, theta);
 
+			Calc_ZMP(Compute_fact_zmp,&robot_taoz);
+
 			#if PID_AMEND
 			robotModel[RIGHT_ANKLE_SIDE_SWING].q -= delta_roll;
 			robotModel[LEFT_ANKLE_SIDE_SWING].q -= delta_roll;
@@ -2726,6 +2879,11 @@ void anglePlan(double delta) {
 		T[2][0] = i_prime[2]; T[2][1] = j_prime[2]; T[2][2] = k_prime[2];
 		double T_T[3][3];
 		invMatrix3x3(T, T_T);
+
+		double quintic_A[6][4] = {};
+		double quintic_B[6][4] = {};
+		// 求解两段五次多项式插值参数
+		quinticPolyInterTwo(quintic_A, quintic_B, CP_norm*2);
 #if SWING_ARM
 		// 左臂
 		double current_arm_angle_left = robotModel[LEFT_ARM_FRONT_SWING].q;
@@ -2743,8 +2901,19 @@ void anglePlan(double delta) {
 		{
 			double world_p[3];
 			double local_p[3];
-			double x = CP_norm + -(i + 1) * 2 * CP_norm / step_basic_frame;
-			double y = fh * cos(PI / (2 * CP_norm) * x);
+			double x;
+			double y;
+			//  x = CP_norm + -(i + 1) * 2 * CP_norm / step_basic_frame; // sin曲线
+			//  y = fh * cos(PI / (2 * CP_norm) * x);
+			if(i < step_basic_frame/2){
+				double temp_t = i*frame_T;
+				x = quintic_A[0][0]+quintic_A[1][0]*temp_t+quintic_A[2][0]*pow(temp_t,2)+quintic_A[3][0]*pow(temp_t,3)+quintic_A[4][0]*pow(temp_t,4)+quintic_A[5][0]*pow(temp_t,5);
+				y = quintic_B[0][0]+quintic_B[1][0]*temp_t+quintic_B[2][0]*pow(temp_t,2)+quintic_B[3][0]*pow(temp_t,3)+quintic_B[4][0]*pow(temp_t,4)+quintic_B[5][0]*pow(temp_t,5);
+			}else{
+				double temp_t = i*frame_T;
+				x = quintic_A[0][1]+quintic_A[1][1]*temp_t+quintic_A[2][1]*pow(temp_t,2)+quintic_A[3][1]*pow(temp_t,3)+quintic_A[4][1]*pow(temp_t,4)+quintic_A[5][1]*pow(temp_t,5);
+				y = quintic_B[0][1]+quintic_B[1][1]*temp_t+quintic_B[2][1]*pow(temp_t,2)+quintic_B[3][1]*pow(temp_t,3)+quintic_B[4][1]*pow(temp_t,4)+quintic_B[5][1]*pow(temp_t,5);
+			}
 			local_p[0] = x;
 			local_p[1] = y;
 			local_p[2] = 0;
@@ -2799,6 +2968,8 @@ void anglePlan(double delta) {
 			robotModel[LEFT_ANKLE_SIDE_SWING].p[1] = solid_left_foot[1] - temp[1];
 			robotModel[LEFT_ANKLE_SIDE_SWING].p[2] = solid_left_foot[2] - temp[2];
 			inverseKinmatics_leftFoot(0, 0, theta);
+
+			Calc_ZMP(Compute_fact_zmp,&robot_taoz);
 
 			#if PID_AMEND
 			robotModel[RIGHT_ANKLE_SIDE_SWING].q -= delta_roll;
@@ -2863,6 +3034,12 @@ void anglePlan(double delta) {
 		T[2][0] = i_prime[2]; T[2][1] = j_prime[2]; T[2][2] = k_prime[2];
 		double T_T[3][3];
 		invMatrix3x3(T, T_T);
+
+		double quintic_A[6][4] = {};
+		double quintic_B[6][4] = {};
+		// 求解两段五次多项式插值参数
+		quinticPolyInterTwo(quintic_A, quintic_B, CP_norm*2);
+
 #if SWING_ARM
 		// 右臂
 		double current_arm_angle_right = robotModel[RIGHT_ARM_FRONT_SWING].q;
@@ -2882,8 +3059,19 @@ void anglePlan(double delta) {
 			// SIN曲线
 			double world_p[3];
 			double local_p[3];
-			double x = CP_norm + (-(i + 1) * 2 * CP_norm / step_basic_frame);
-			double y = fh * cos(PI / (2 * CP_norm) * x);
+			double x;
+			double y;
+			//  x = CP_norm + -(i + 1) * 2 * CP_norm / step_basic_frame; // sin曲线
+			//  y = fh * cos(PI / (2 * CP_norm) * x);
+			if(i < step_basic_frame/2){
+				double temp_t = i*frame_T;
+				x = quintic_A[0][0]+quintic_A[1][0]*temp_t+quintic_A[2][0]*pow(temp_t,2)+quintic_A[3][0]*pow(temp_t,3)+quintic_A[4][0]*pow(temp_t,4)+quintic_A[5][0]*pow(temp_t,5);
+				y = quintic_B[0][0]+quintic_B[1][0]*temp_t+quintic_B[2][0]*pow(temp_t,2)+quintic_B[3][0]*pow(temp_t,3)+quintic_B[4][0]*pow(temp_t,4)+quintic_B[5][0]*pow(temp_t,5);
+			}else{
+				double temp_t = i*frame_T;
+				x = quintic_A[0][1]+quintic_A[1][1]*temp_t+quintic_A[2][1]*pow(temp_t,2)+quintic_A[3][1]*pow(temp_t,3)+quintic_A[4][1]*pow(temp_t,4)+quintic_A[5][1]*pow(temp_t,5);
+				y = quintic_B[0][1]+quintic_B[1][1]*temp_t+quintic_B[2][1]*pow(temp_t,2)+quintic_B[3][1]*pow(temp_t,3)+quintic_B[4][1]*pow(temp_t,4)+quintic_B[5][1]*pow(temp_t,5);
+			}
 			local_p[0] = x;
 			local_p[1] = y;
 			local_p[2] = 0;
@@ -2939,6 +3127,8 @@ void anglePlan(double delta) {
 			robotModel[RIGHT_ANKLE_SIDE_SWING].p[2] = solid_right_foot[2] - temp[2];
 			inverseKinmatics_rightFoot(0, 0, theta + delta );
 
+			Calc_ZMP(Compute_fact_zmp,&robot_taoz);
+
 			#if PID_AMEND
 			robotModel[RIGHT_ANKLE_SIDE_SWING].q -= delta_roll;
 			robotModel[LEFT_ANKLE_SIDE_SWING].q -= delta_roll;
@@ -2987,6 +3177,11 @@ void anglePlan(double delta) {
 		T[2][0] = i_prime[2]; T[2][1] = j_prime[2]; T[2][2] = k_prime[2];
 		double T_T[3][3];
 		invMatrix3x3(T, T_T);
+
+		double quintic_A[6][4] = {};
+		double quintic_B[6][4] = {};
+		// 求解两段五次多项式插值参数
+		quinticPolyInterTwo(quintic_A, quintic_B, CP_norm*2);
 #if SWING_ARM
 		// 左臂
 		double current_arm_angle_left = robotModel[LEFT_ARM_FRONT_SWING].q;
@@ -3004,8 +3199,19 @@ void anglePlan(double delta) {
 		{
 			double world_p[3];
 			double local_p[3];
-			double x = CP_norm + -(i + 1) * 2 * CP_norm / step_basic_frame;
-			double y = fh * cos(PI / (2 * CP_norm) * x);
+			double x;
+			double y;
+			//  x = CP_norm + -(i + 1) * 2 * CP_norm / step_basic_frame; // sin曲线
+			//  y = fh * cos(PI / (2 * CP_norm) * x);
+			if(i < step_basic_frame/2){
+				double temp_t = i*frame_T;
+				x = quintic_A[0][0]+quintic_A[1][0]*temp_t+quintic_A[2][0]*pow(temp_t,2)+quintic_A[3][0]*pow(temp_t,3)+quintic_A[4][0]*pow(temp_t,4)+quintic_A[5][0]*pow(temp_t,5);
+				y = quintic_B[0][0]+quintic_B[1][0]*temp_t+quintic_B[2][0]*pow(temp_t,2)+quintic_B[3][0]*pow(temp_t,3)+quintic_B[4][0]*pow(temp_t,4)+quintic_B[5][0]*pow(temp_t,5);
+			}else{
+				double temp_t = i*frame_T;
+				x = quintic_A[0][1]+quintic_A[1][1]*temp_t+quintic_A[2][1]*pow(temp_t,2)+quintic_A[3][1]*pow(temp_t,3)+quintic_A[4][1]*pow(temp_t,4)+quintic_A[5][1]*pow(temp_t,5);
+				y = quintic_B[0][1]+quintic_B[1][1]*temp_t+quintic_B[2][1]*pow(temp_t,2)+quintic_B[3][1]*pow(temp_t,3)+quintic_B[4][1]*pow(temp_t,4)+quintic_B[5][1]*pow(temp_t,5);
+			}
 			local_p[0] = x;
 			local_p[1] = y;
 			local_p[2] = 0;
@@ -3061,6 +3267,8 @@ void anglePlan(double delta) {
 			robotModel[LEFT_ANKLE_SIDE_SWING].p[2] = solid_left_foot[2] - temp[2];
 			inverseKinmatics_leftFoot(0, 0, theta + delta );
 
+			Calc_ZMP(Compute_fact_zmp,&robot_taoz);
+
 			#if PID_AMEND
 			robotModel[RIGHT_ANKLE_SIDE_SWING].q -= delta_roll;
 			robotModel[LEFT_ANKLE_SIDE_SWING].q -= delta_roll;
@@ -3099,27 +3307,27 @@ void CalcTrajectory_Com(int current_frame_count) {
 	for (int i = 0; i < N_preview; i++)
 	{
 		if (!isDsPhase) {
-			if (step_basic_frame - current_frame_count >= i) {
+			if (step_basic_frame - current_frame_count > i) {
 				zmp_preview[0][i] = support_ZMP[0];
 				zmp_preview[1][i] = support_ZMP[1];
 			}
-			else if (i - (step_basic_frame - current_frame_count) <= ds_frame) {
+			else if (i - (step_basic_frame - current_frame_count) < ds_frame) {
 				zmp_preview[0][i] = support_ZMP[0] + (i - (step_basic_frame - current_frame_count)) * (pn[0] - support_ZMP[0]) / ds_frame;
 				zmp_preview[1][i] = support_ZMP[1] + (i - (step_basic_frame - current_frame_count)) * (pn[1] - support_ZMP[1]) / ds_frame;
 			}
-			else if (i - (step_basic_frame - current_frame_count) - ds_frame <= step_basic_frame) {
+			else if (i - (step_basic_frame - current_frame_count) - ds_frame < step_basic_frame) {
 				zmp_preview[0][i] = pn[0];
 				zmp_preview[1][i] = pn[1];
 			}
-			else if (i - (step_basic_frame - current_frame_count) - ds_frame - step_basic_frame <= ds_frame) {
+			else if (i - (step_basic_frame - current_frame_count) - ds_frame - step_basic_frame < ds_frame) {
 				zmp_preview[0][i] = pn[0] + (i - (step_basic_frame - current_frame_count) - ds_frame - step_basic_frame) * (temp_pn[0] - pn[0]) / ds_frame;
 				zmp_preview[1][i] = pn[1] + (i - (step_basic_frame - current_frame_count) - ds_frame - step_basic_frame) * (temp_pn[1] - pn[1]) / ds_frame;
 			}
-			else if(i - (step_basic_frame*2 - current_frame_count) - ds_frame*2 <= step_basic_frame)
+			else if(i - (step_basic_frame*2 - current_frame_count) - ds_frame*2 < step_basic_frame)
 			{
 				zmp_preview[0][i] = temp_pn[0];
 				zmp_preview[1][i] = temp_pn[1];
-			}else if(i - (step_basic_frame*3 - current_frame_count) - ds_frame*2 <= ds_frame){
+			}else if(i - (step_basic_frame*3 - current_frame_count) - ds_frame*2 < ds_frame){
 				double ttpn[2] = {0};
 				if(ikid_start_walk_flag){
 					ttpn[0] = temp_pn[0] + cos(theta) * sx + (-sin(theta) * sy * (-1) * pow(-1, !isLeft));
@@ -3145,23 +3353,23 @@ void CalcTrajectory_Com(int current_frame_count) {
 		}
 		else
 		{
-			if (ds_frame - current_frame_count >= i) {
+			if (ds_frame - current_frame_count > i) {
 				zmp_preview[0][i] = support_ZMP[0] + (current_frame_count + i) * (pn[0] - support_ZMP[0]) / ds_frame;
 				zmp_preview[1][i] = support_ZMP[1] + (current_frame_count + i) * (pn[1] - support_ZMP[1]) / ds_frame;
 			}
-			else if (i - (ds_frame - current_frame_count) <= step_basic_frame) {
+			else if (i - (ds_frame - current_frame_count) < step_basic_frame) {
 				zmp_preview[0][i] = pn[0];
 				zmp_preview[1][i] = pn[1];
 			}
-			else if (i - (ds_frame - current_frame_count)- step_basic_frame  <= ds_frame) {
+			else if (i - (ds_frame - current_frame_count)- step_basic_frame  < ds_frame) {
 				zmp_preview[0][i] = pn[0] + (i - (ds_frame - current_frame_count) - step_basic_frame) * (temp_pn[0] - pn[0]) / ds_frame;
 				zmp_preview[1][i] = pn[1] + (i - (ds_frame - current_frame_count) - step_basic_frame) * (temp_pn[1] - pn[1]) / ds_frame;
 			}
-			else if(i - (ds_frame - current_frame_count)- step_basic_frame - ds_frame <= step_basic_frame)
+			else if(i - (ds_frame - current_frame_count)- step_basic_frame - ds_frame < step_basic_frame)
 			{
 				zmp_preview[0][i] = temp_pn[0];
 				zmp_preview[1][i] = temp_pn[1];
-			}else if(i - (ds_frame*2 - current_frame_count)- step_basic_frame*2 <= ds_frame){
+			}else if(i - (ds_frame*2 - current_frame_count)- step_basic_frame*2 < ds_frame){
 				double ttpn[2] = {0};
 				if(ikid_start_walk_flag){
 					ttpn[0] = temp_pn[0] + cos(theta) * sx + (-sin(theta) * sy * (-1) * pow(-1, !isLeft));
@@ -3189,9 +3397,14 @@ void CalcTrajectory_Com(int current_frame_count) {
 	
 	double zmp_x = state_space_C[0] * state_space_Com[0][0] + state_space_C[1] * state_space_Com[0][1] + state_space_C[2] * state_space_Com[0][2];
 	double zmp_y = state_space_C[0] * state_space_Com[1][0] + state_space_C[1] * state_space_Com[1][1] + state_space_C[2] * state_space_Com[1][2];
+	// double zmp_x = Compute_fact_zmp[0];
+	// double zmp_y = Compute_fact_zmp[1];
 	sum_e[0] = sum_e[0] + zmp_x - zmp_preview[0][0];
 	sum_e[1] = sum_e[1] + zmp_y - zmp_preview[1][0];
 	writeZmpData(zmp_preview, zmp_preview[0][0],zmp_preview[1][0],zmp_x,zmp_y);
+	current_ZMP_point[0] = zmp_preview[0][0];
+	current_ZMP_point[1] = zmp_preview[1][0];
+	current_ZMP_point[2] = 0;
 	double FMultiZmpPre[2] = { 0 };
 	for (int i = 0; i < N_preview; i++)
 	{
@@ -3238,6 +3451,8 @@ void dFootSupportPhase(double theta_mainbody, double theta_left, double theta_ri
 		robotModel[LEFT_ANKLE_SIDE_SWING].p[1] = solid_left_foot[1] - temp[1];
 		robotModel[LEFT_ANKLE_SIDE_SWING].p[2] = solid_left_foot[2] - temp[2];
 		inverseKinmatics_leftFoot(0, 0, theta_left);
+
+		Calc_ZMP(Compute_fact_zmp,&robot_taoz);
 
 		#if PID_AMEND
 		robotModel[RIGHT_ANKLE_SIDE_SWING].q -= delta_roll;
@@ -3290,7 +3505,7 @@ void imuGesturePidControl(double &delta_roll, double &delta_pitch, double &delta
 	imu_yaw_err_partial = (temp_yaw_err - imu_yaw_err)/frame_T;
 	imu_yaw_err = temp_yaw_err;
 	imu_yaw_err_sum += imu_yaw_err*frame_T;
-	printf("%f,%f,%f\n", imu_pitch_err, imu_pitch_err_sum, imu_pitch_err_partial);
+	//printf("%f,%f,%f\n", imu_pitch_err, imu_pitch_err_sum, imu_pitch_err_partial);
 
 	ros::param::get("/pid_amend/imu_roll_p",imu_roll_p);
 	ros::param::get("/pid_amend/imu_roll_i",imu_roll_i);
@@ -3306,17 +3521,17 @@ void imuGesturePidControl(double &delta_roll, double &delta_pitch, double &delta
 	delta_yaw = imu_yaw_p*imu_yaw_err + imu_yaw_i*imu_yaw_err_sum + imu_yaw_d*imu_yaw_err_partial;
 
 	// 分配到关节
-	if(abs(delta_roll) > 10){
-		if(delta_roll > 0) delta_roll = 10;
-		else delta_roll = -10;
+	if(abs(delta_roll) > 5){
+		if(delta_roll > 0) delta_roll = 5;
+		else delta_roll = -5;
 	}
-	if(abs(delta_pitch) > 10){
-		if(delta_pitch > 0) delta_pitch = 10;
-		else delta_pitch = -10;
+	if(abs(delta_pitch) > 5){
+		if(delta_pitch > 0) delta_pitch = 5;
+		else delta_pitch = -5;
 	}
-	if(abs(delta_yaw) > 10){
-		if(delta_yaw > 0) delta_yaw = 10;
-		else delta_yaw = -10;
+	if(abs(delta_yaw) > 5){
+		if(delta_yaw > 0) delta_yaw = 5;
+		else delta_yaw = -5;
 	}
 	
 	// 转换为弧度
@@ -3524,6 +3739,12 @@ void FallUpInitPos(){
 	imu_pitch_err = 0;
 	imu_pitch_err_sum = 0;
 	imu_pitch_err_partial = 0;
+	pre_robot_P[0] = 0;pre_robot_P[1] = 0;pre_robot_P[2] = 0;
+	cur_robot_P[0] = 0;cur_robot_P[1] = 0;cur_robot_P[2] = 0;
+	pre_robot_L[0] = 0;pre_robot_L[1] = 0;pre_robot_L[2] = 0;
+	cur_robot_L[0] = 0;cur_robot_L[1] = 0;cur_robot_L[2] = 0;
+	robot_dPdt[0] = 0;robot_dPdt[1] = 0;robot_dPdt[2] = 0;
+	robot_dLdt[0] = 0;robot_dLdt[1] = 0;robot_dLdt[2] = 0;
 	state_space_Com[0][1] += -state_space_Com[0][1]*0.25; //微调，为了再次稳定的起步
 	state_space_Com[0][2] += -state_space_Com[0][2]*0.25;
 	state_space_Com[1][1] += -state_space_Com[1][1]*0.25;
@@ -3636,7 +3857,7 @@ void writeZmpData(double zmp_data[2][N_preview], double z_d_x, double z_d_y, dou
 	// }
 	// sprintf(ch, "%lf\n",zmp_data[1][N_preview-1]);
 	// fputs(ch, fp);
-	sprintf(ch, "%lf,%lf,%lf,%lf,%lf,%lf\n",z_d_x, z_d_y,z_f_x,z_f_y,Com[0],Com[1]);
+	sprintf(ch, "%lf,%lf,%lf,%lf,%lf,%lf,%lf\n",z_d_x, z_d_y,z_f_x,z_f_y,Com[0],Com[1],robot_taoz);
 	fputs(ch, fp);
 	fclose(fp);
 #endif
@@ -3654,6 +3875,94 @@ void clearZmpDataTxt(){
 	}
 	fclose(fp);
 	return;
+}
+
+void quinticPolyInterFour(double A[6][4], double B[6][4], double s){
+
+	// 五个点，分四段进行插值
+	double t[5] = {0, step_basic_frame/5.0*2*frame_T, step_basic_frame/5.0*3*frame_T, step_basic_frame/5.0*4*frame_T, step_basic_frame*frame_T};
+	double x1[5] = {s/2, 3/10.0*s, 1/10.0*s, -3/10.0*s, -s/2}; // x方向的位置
+	double x2[5] = {0, (x1[1]-x1[0])/(t[1]-t[0]), (x1[2]-x1[1])/(t[2]-t[1]), (x1[3]-x1[2])/(t[3]-t[2]), 0 }; // x方向的速度
+	double x3[5] = {0, (x2[1]-x2[0])/(t[1]-t[0]), (x2[2]-x2[1])/(t[2]-t[1]), (x2[3]-x2[2])/(t[3]-t[2]), 0 }; // x方向的加速度
+	double z1[5] = {0, fh, 3/5.0*fh, 2/5.0*fh, 0}; // z方向的位置
+	double z2[5] = {0, 0, (z1[2]-z1[1])/(t[2]-t[1]), (z1[3]-z1[2])/(t[3]-t[2]), 0 };  // z方向的速度
+	double z3[5] = {0, 0, (z2[2]-z2[1])/(t[2]-t[1]), (z2[3]-z2[2])/(t[3]-t[2]), 0 };  // z方向的加速度
+
+	for(int i = 0; i < 4; i++){
+		double T_arg_inv[6][6];
+		double matlab_result[36];
+		double T_arg[6][6] = {
+			{1,  t[i]   , pow(t[i],2)   , pow(t[i],3)      , pow(t[i],4)      , pow(t[i],5)}      ,
+			{0,  1      , 2*t[i]        , 3*pow(t[i],2)    , 4*pow(t[i],3)    , 5*pow(t[i],4)}    ,
+			{0,  0      , 2             , 6*t[i]           , 12*pow(t[i],2)   , 20*pow(t[i],3)}   ,
+			{1,  t[i+1] , pow(t[i+1],2) , pow(t[i+1],3)    , pow(t[i+1],4)    , pow(t[i+1],5)}    ,
+			{0,  1      , 2*t[i+1]      , 3*pow(t[i+1],2)  , 4*pow(t[i+1],3)  , 5*pow(t[i+1],4)}  ,
+			{0,  0      , 2             , 6*t[i+1]         , 12*pow(t[i+1],2) , 20*pow(t[i+1],3)} 
+		};
+		matlab_inv((double*)T_arg, matlab_result);
+		for (int j = 0; j < 6; j++)
+		{
+			for (int k = 0; k < 6; k++) {
+				T_arg_inv[j][k] = matlab_result[j * 6 + k];
+			}
+		}
+		double temp_x[6] = {x1[i],x2[i],x3[i],x1[i+1],x2[i+1],x3[i+1]};
+		double temp_z[6] = {z1[i],z2[i],z3[i],z1[i+1],z2[i+1],z3[i+1]};
+		double A_result[6];
+		double B_result[6];
+		MatrixMultiVector6x1(T_arg_inv, temp_x, A_result);
+		MatrixMultiVector6x1(T_arg_inv, temp_z, B_result);
+		for(int j = 0; j < 6; j++){
+			A[j][i] = A_result[j];
+			B[j][i] = B_result[j];
+			//printf("%f  ", A[j][i]);
+		}
+		//printf("\n");
+	}
+}
+
+void quinticPolyInterTwo(double A[6][4], double B[6][4], double s){
+
+	// 三个点，分两段进行插值
+	double t[5] = {0, step_basic_frame/2*frame_T, step_basic_frame*frame_T};
+	double x1[5] = {s/2, 0, -s/2}; // x方向的位置
+	double x2[5] = {0, (x1[1]-x1[0])/(t[1]-t[0]), 0 }; // x方向的速度
+	double x3[5] = {0, (x2[1]-x2[0])/(t[1]-t[0]), 0 }; // x方向的加速度
+	double z1[5] = {0, fh, 0}; // z方向的位置
+	double z2[5] = {0, 0, 0 };  // z方向的速度
+	double z3[5] = {0, 0, 0 };  // z方向的加速度
+
+	for(int i = 0; i < 2; i++){
+		double T_arg_inv[6][6];
+		double matlab_result[36];
+		double T_arg[6][6] = {
+			{1,  t[i]   , pow(t[i],2)   , pow(t[i],3)      , pow(t[i],4)      , pow(t[i],5)}      ,
+			{0,  1      , 2*t[i]        , 3*pow(t[i],2)    , 4*pow(t[i],3)    , 5*pow(t[i],4)}    ,
+			{0,  0      , 2             , 6*t[i]           , 12*pow(t[i],2)   , 20*pow(t[i],3)}   ,
+			{1,  t[i+1] , pow(t[i+1],2) , pow(t[i+1],3)    , pow(t[i+1],4)    , pow(t[i+1],5)}    ,
+			{0,  1      , 2*t[i+1]      , 3*pow(t[i+1],2)  , 4*pow(t[i+1],3)  , 5*pow(t[i+1],4)}  ,
+			{0,  0      , 2             , 6*t[i+1]         , 12*pow(t[i+1],2) , 20*pow(t[i+1],3)} 
+		};
+		matlab_inv((double*)T_arg, matlab_result);
+		for (int j = 0; j < 6; j++)
+		{
+			for (int k = 0; k < 6; k++) {
+				T_arg_inv[j][k] = matlab_result[j * 6 + k];
+			}
+		}
+		double temp_x[6] = {x1[i],x2[i],x3[i],x1[i+1],x2[i+1],x3[i+1]};
+		double temp_z[6] = {z1[i],z2[i],z3[i],z1[i+1],z2[i+1],z3[i+1]};
+		double A_result[6];
+		double B_result[6];
+		MatrixMultiVector6x1(T_arg_inv, temp_x, A_result);
+		MatrixMultiVector6x1(T_arg_inv, temp_z, B_result);
+		for(int j = 0; j < 6; j++){
+			A[j][i] = A_result[j];
+			B[j][i] = B_result[j];
+			//printf("%f  ", A[j][i]);
+		}
+		//printf("\n");
+	}
 }
 
 

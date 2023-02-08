@@ -29,6 +29,13 @@ void doWalkMsg(const ikid_motion_control::cmd_walk::ConstPtr& walkMsg){
             anglePlan(walkMsg->var_theta);
             ros::param::set("stop_turn_flag",true);
         }
+        if(walkMsg->walk_with_ball){
+            ros::param::set("walk_with_ball",true);
+        }else{
+            ros::param::set("walk_with_ball",false);
+        }
+        
+
     }else{
         bool stop_walk_flag;
         ros::param::get("stop_walk_flag",stop_walk_flag); //如果已经停止，不执行操作
@@ -57,6 +64,7 @@ int main(int argc, char *argv[])
     ros::Subscriber sub = n.subscribe<ikid_motion_control::cmd_walk>("/cmd_walk",5,doWalkMsg);
     ros::param::set("stop_walk_flag",true);  //设置停止行走标志位于参数服务器中
     ros::param::set("stop_turn_flag",true);  //设置停止转弯标志位于参数服务器中
+    ros::param::set("walk_with_ball",false);  //设置动态踢球标志位于参数服务器中
 
     clearImuDataTxt();
     clearZmpDataTxt();

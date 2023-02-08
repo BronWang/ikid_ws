@@ -6,6 +6,7 @@ const int KEYCODE_W = 0x77;
 const int KEYCODE_A = 0x61;
 const int KEYCODE_S = 0x73;
 const int KEYCODE_D = 0x64;
+const int KEYCODE_K = 0x6B;
  
 const int KEYCODE_A_CAP = 0x41;
 const int KEYCODE_D_CAP = 0x44;
@@ -87,7 +88,14 @@ int main(int argc, char **argv) {
                     pub_keyboard.publish(walk_msg);
                 } 
             }
-            
+            break;
+        case KEYCODE_K:
+            walk_msg.stop_walk = false;
+            walk_msg.sx = step_len;
+            walk_msg.sy = step_wid;
+            walk_msg.var_theta = 0;
+            walk_msg.walk_with_ball = true;
+            pub_keyboard.publish(walk_msg);
             break;
         default:
             break;

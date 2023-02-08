@@ -173,7 +173,7 @@ struct Definition< ::ikid_motion_control::cmd_walk_<ContainerAllocator> >
     return "float64 sx  # 步长\n"
 "float64 sy   # 步宽\n"
 "float64 var_theta  # 转角增量\n"
-"bool walk_with_ball  # 是否带球行走\n"
+"bool walk_with_ball  # 是否带球行走/动态踢球\n"
 "bool stop_walk   # 停止行走标志位\n"
 ;
   }

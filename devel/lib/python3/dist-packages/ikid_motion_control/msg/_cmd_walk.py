@@ -14,7 +14,7 @@ class cmd_walk(genpy.Message):
   _full_text = """float64 sx  # 步长
 float64 sy   # 步宽
 float64 var_theta  # 转角增量
-bool walk_with_ball  # 是否带球行走
+bool walk_with_ball  # 是否带球行走/动态踢球
 bool stop_walk   # 停止行走标志位"""
   __slots__ = ['sx','sy','var_theta','walk_with_ball','stop_walk']
   _slot_types = ['float64','float64','float64','bool','bool']

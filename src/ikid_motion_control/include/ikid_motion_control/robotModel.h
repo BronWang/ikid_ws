@@ -3,7 +3,7 @@
 
 #include <ros/ros.h>
 #define DEBUG 0
-#define WRITETXT 0
+#define WRITETXT 1
 #define WRITEIMUDATA 1
 #define WRITEZMPDATA 1
 #define ROSPUB 1    // 是否向Gazebo中的关节控制器发送计算出的关节位置信息
@@ -119,6 +119,7 @@ void R_T3x3(double R[3][3], double R_T[3][3]);
 void CalcL(unsigned int linkID, double L[3]);
 void Calc_mc(unsigned int linkID, double mc[3]); // 已测试
 void Calc_com(double com[3]);// 已测试
+void Calc_ZMP(double fact_zmp[3], double *taoz);
 void changeFoot();
 void angleLimit();
 void waistPosition_com(double r, double p, double y, int current_frame_count);
@@ -142,6 +143,8 @@ void writeImuData();
 void clearImuDataTxt();
 void writeZmpData(double zmp_data[2][85],double z_d_x, double z_d_y, double z_f_x, double z_f_y);
 void clearZmpDataTxt();
+void quinticPolyInterFour(double A[6][4], double B[6][4], double s);
+void quinticPolyInterTwo(double A[6][4], double B[6][4], double s);
 
 #endif // !ROBOTMODEL
 
