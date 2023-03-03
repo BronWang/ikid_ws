@@ -54,6 +54,7 @@ CMAKE_BINARY_DIR = /home/wp/ikid_ws/build
 include ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_cpp.dir/progress.make
 
 ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_cpp: /home/wp/ikid_ws/devel/include/ikid_motion_control/cmd_walk.h
+ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_cpp: /home/wp/ikid_ws/devel/include/ikid_motion_control/robot_joint.h
 
 
 /home/wp/ikid_ws/devel/include/ikid_motion_control/cmd_walk.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
@@ -62,8 +63,15 @@ ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_cpp: /home/
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/wp/ikid_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C++ code from ikid_motion_control/cmd_walk.msg"
 	cd /home/wp/ikid_ws/src/ikid_motion_control && /home/wp/ikid_ws/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/wp/ikid_ws/src/ikid_motion_control/msg/cmd_walk.msg -Iikid_motion_control:/home/wp/ikid_ws/src/ikid_motion_control/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p ikid_motion_control -o /home/wp/ikid_ws/devel/include/ikid_motion_control -e /opt/ros/noetic/share/gencpp/cmake/..
 
+/home/wp/ikid_ws/devel/include/ikid_motion_control/robot_joint.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
+/home/wp/ikid_ws/devel/include/ikid_motion_control/robot_joint.h: /home/wp/ikid_ws/src/ikid_motion_control/msg/robot_joint.msg
+/home/wp/ikid_ws/devel/include/ikid_motion_control/robot_joint.h: /opt/ros/noetic/share/gencpp/msg.h.template
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/wp/ikid_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating C++ code from ikid_motion_control/robot_joint.msg"
+	cd /home/wp/ikid_ws/src/ikid_motion_control && /home/wp/ikid_ws/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/wp/ikid_ws/src/ikid_motion_control/msg/robot_joint.msg -Iikid_motion_control:/home/wp/ikid_ws/src/ikid_motion_control/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p ikid_motion_control -o /home/wp/ikid_ws/devel/include/ikid_motion_control -e /opt/ros/noetic/share/gencpp/cmake/..
+
 ikid_motion_control_generate_messages_cpp: ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_cpp
 ikid_motion_control_generate_messages_cpp: /home/wp/ikid_ws/devel/include/ikid_motion_control/cmd_walk.h
+ikid_motion_control_generate_messages_cpp: /home/wp/ikid_ws/devel/include/ikid_motion_control/robot_joint.h
 ikid_motion_control_generate_messages_cpp: ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_cpp.dir/build.make
 
 .PHONY : ikid_motion_control_generate_messages_cpp

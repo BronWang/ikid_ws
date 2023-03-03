@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   serial
+  message_generation
 )
 
 ## System dependencies are found with CMake's conventions
@@ -53,6 +54,10 @@ find_package(catkin REQUIRED COMPONENTS
 #   Message1.msg
 #   Message2.msg
 # )
+add_message_files(
+  FILES
+  robot_joint.msg
+)
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -73,6 +78,10 @@ find_package(catkin REQUIRED COMPONENTS
 #   DEPENDENCIES
 #   std_msgs
 # )
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -105,8 +114,8 @@ find_package(catkin REQUIRED COMPONENTS
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES ros_socket
-#  CATKIN_DEPENDS roscpp rospy std_msgs
+#  LIBRARIES ikid_motion_control
+  CATKIN_DEPENDS roscpp rospy std_msgs message_runtime
 #  DEPENDS system_lib
 )
 
@@ -145,6 +154,13 @@ add_library(robotModel_ros_socket include/ros_socket/robotModel.h src/source/rob
 add_dependencies(robotModel_ros_socket ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(robotModel_ros_socket ${catkin_LIBRARIES} )
 
+add_library(packetTransformer_ros_socket include/ros_socket/packetTransformer.h src/source/packetTransformer.cpp)
+add_dependencies(packetTransformer_ros_socket ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(packetTransformer_ros_socket ${catkin_LIBRARIES} )
+
+add_library(ByteArray_ros_socket include/ros_socket/ByteArray.h src/source/ByteArray.cpp)
+add_dependencies(ByteArray_ros_socket ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(ByteArray_ros_socket ${catkin_LIBRARIES} )
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
@@ -176,6 +192,8 @@ target_link_libraries(server_node
   ${catkin_LIBRARIES}
 )
 target_link_libraries(serial_port
+  packetTransformer_ros_socket
+  ByteArray_ros_socket
   ${catkin_LIBRARIES}
 )
 target_link_libraries(client_node

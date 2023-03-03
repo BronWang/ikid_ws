@@ -116,7 +116,12 @@ int main(int argc, char** argv)
                         robotModel[i].q = robot_q;
                         //cout << "[out] " << robot_q << endl;
                     }
+                    #if ROSPUB
                     ikidRobotDynaPosPub();
+                    #endif
+                    #if CONTROLBOARDPUB
+                    ikidRobotDynaPosControlBoardPub();
+                    #endif
                     //保存关节数据
                     fp = fopen(filename, "a");
                     if(fp == NULL)

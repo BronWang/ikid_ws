@@ -688,6 +688,19 @@ matlab_inv_initialize/fast:
 .PHONY : matlab_inv_initialize/fast
 
 #=============================================================================
+# Target rules for targets named matlab_inv_data
+
+# Build rule for target.
+matlab_inv_data: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 matlab_inv_data
+.PHONY : matlab_inv_data
+
+# fast build rule for target.
+matlab_inv_data/fast:
+	$(MAKE) -f ikid_motion_control/CMakeFiles/matlab_inv_data.dir/build.make ikid_motion_control/CMakeFiles/matlab_inv_data.dir/build
+.PHONY : matlab_inv_data/fast
+
+#=============================================================================
 # Target rules for targets named ikid_motion_control_generate_messages
 
 # Build rule for target.
@@ -727,6 +740,45 @@ _ikid_motion_control_generate_messages_check_deps_cmd_walk/fast:
 .PHONY : _ikid_motion_control_generate_messages_check_deps_cmd_walk/fast
 
 #=============================================================================
+# Target rules for targets named _ikid_motion_control_generate_messages_check_deps_robot_joint
+
+# Build rule for target.
+_ikid_motion_control_generate_messages_check_deps_robot_joint: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _ikid_motion_control_generate_messages_check_deps_robot_joint
+.PHONY : _ikid_motion_control_generate_messages_check_deps_robot_joint
+
+# fast build rule for target.
+_ikid_motion_control_generate_messages_check_deps_robot_joint/fast:
+	$(MAKE) -f ikid_motion_control/CMakeFiles/_ikid_motion_control_generate_messages_check_deps_robot_joint.dir/build.make ikid_motion_control/CMakeFiles/_ikid_motion_control_generate_messages_check_deps_robot_joint.dir/build
+.PHONY : _ikid_motion_control_generate_messages_check_deps_robot_joint/fast
+
+#=============================================================================
+# Target rules for targets named ikid_motion_control_gencpp
+
+# Build rule for target.
+ikid_motion_control_gencpp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control_gencpp
+.PHONY : ikid_motion_control_gencpp
+
+# fast build rule for target.
+ikid_motion_control_gencpp/fast:
+	$(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_gencpp.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_gencpp.dir/build
+.PHONY : ikid_motion_control_gencpp/fast
+
+#=============================================================================
+# Target rules for targets named ikid_motion_control_generate_messages_py
+
+# Build rule for target.
+ikid_motion_control_generate_messages_py: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control_generate_messages_py
+.PHONY : ikid_motion_control_generate_messages_py
+
+# fast build rule for target.
+ikid_motion_control_generate_messages_py/fast:
+	$(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_py.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_py.dir/build
+.PHONY : ikid_motion_control_generate_messages_py/fast
+
+#=============================================================================
 # Target rules for targets named robot_walk_node
 
 # Build rule for target.
@@ -764,32 +816,6 @@ ikid_motion_control_genpy: cmake_check_build_system
 ikid_motion_control_genpy/fast:
 	$(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_genpy.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_genpy.dir/build
 .PHONY : ikid_motion_control_genpy/fast
-
-#=============================================================================
-# Target rules for targets named ikid_motion_control_gencpp
-
-# Build rule for target.
-ikid_motion_control_gencpp: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control_gencpp
-.PHONY : ikid_motion_control_gencpp
-
-# fast build rule for target.
-ikid_motion_control_gencpp/fast:
-	$(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_gencpp.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_gencpp.dir/build
-.PHONY : ikid_motion_control_gencpp/fast
-
-#=============================================================================
-# Target rules for targets named ikid_motion_control_generate_messages_py
-
-# Build rule for target.
-ikid_motion_control_generate_messages_py: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control_generate_messages_py
-.PHONY : ikid_motion_control_generate_messages_py
-
-# fast build rule for target.
-ikid_motion_control_generate_messages_py/fast:
-	$(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_py.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_py.dir/build
-.PHONY : ikid_motion_control_generate_messages_py/fast
 
 #=============================================================================
 # Target rules for targets named matlab_inv
@@ -909,17 +935,30 @@ ikid_motion_control_gennodejs/fast:
 .PHONY : ikid_motion_control_gennodejs/fast
 
 #=============================================================================
-# Target rules for targets named matlab_inv_data
+# Target rules for targets named client_node
 
 # Build rule for target.
-matlab_inv_data: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 matlab_inv_data
-.PHONY : matlab_inv_data
+client_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 client_node
+.PHONY : client_node
 
 # fast build rule for target.
-matlab_inv_data/fast:
-	$(MAKE) -f ikid_motion_control/CMakeFiles/matlab_inv_data.dir/build.make ikid_motion_control/CMakeFiles/matlab_inv_data.dir/build
-.PHONY : matlab_inv_data/fast
+client_node/fast:
+	$(MAKE) -f ros_socket/CMakeFiles/client_node.dir/build.make ros_socket/CMakeFiles/client_node.dir/build
+.PHONY : client_node/fast
+
+#=============================================================================
+# Target rules for targets named ros_socket_genpy
+
+# Build rule for target.
+ros_socket_genpy: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ros_socket_genpy
+.PHONY : ros_socket_genpy
+
+# fast build rule for target.
+ros_socket_genpy/fast:
+	$(MAKE) -f ros_socket/CMakeFiles/ros_socket_genpy.dir/build.make ros_socket/CMakeFiles/ros_socket_genpy.dir/build
+.PHONY : ros_socket_genpy/fast
 
 #=============================================================================
 # Target rules for targets named matlab_inv_data_ros_socket
@@ -935,82 +974,43 @@ matlab_inv_data_ros_socket/fast:
 .PHONY : matlab_inv_data_ros_socket/fast
 
 #=============================================================================
-# Target rules for targets named matlab_inv_terminate_ros_socket
+# Target rules for targets named ros_socket_generate_messages_lisp
 
 # Build rule for target.
-matlab_inv_terminate_ros_socket: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 matlab_inv_terminate_ros_socket
-.PHONY : matlab_inv_terminate_ros_socket
+ros_socket_generate_messages_lisp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ros_socket_generate_messages_lisp
+.PHONY : ros_socket_generate_messages_lisp
 
 # fast build rule for target.
-matlab_inv_terminate_ros_socket/fast:
-	$(MAKE) -f ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/build
-.PHONY : matlab_inv_terminate_ros_socket/fast
+ros_socket_generate_messages_lisp/fast:
+	$(MAKE) -f ros_socket/CMakeFiles/ros_socket_generate_messages_lisp.dir/build.make ros_socket/CMakeFiles/ros_socket_generate_messages_lisp.dir/build
+.PHONY : ros_socket_generate_messages_lisp/fast
 
 #=============================================================================
-# Target rules for targets named server_special_gait
+# Target rules for targets named ros_socket_generate_messages_eus
 
 # Build rule for target.
-server_special_gait: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 server_special_gait
-.PHONY : server_special_gait
+ros_socket_generate_messages_eus: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ros_socket_generate_messages_eus
+.PHONY : ros_socket_generate_messages_eus
 
 # fast build rule for target.
-server_special_gait/fast:
-	$(MAKE) -f ros_socket/CMakeFiles/server_special_gait.dir/build.make ros_socket/CMakeFiles/server_special_gait.dir/build
-.PHONY : server_special_gait/fast
+ros_socket_generate_messages_eus/fast:
+	$(MAKE) -f ros_socket/CMakeFiles/ros_socket_generate_messages_eus.dir/build.make ros_socket/CMakeFiles/ros_socket_generate_messages_eus.dir/build
+.PHONY : ros_socket_generate_messages_eus/fast
 
 #=============================================================================
-# Target rules for targets named matlab_inv_initialize_ros_socket
+# Target rules for targets named ros_socket_genlisp
 
 # Build rule for target.
-matlab_inv_initialize_ros_socket: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 matlab_inv_initialize_ros_socket
-.PHONY : matlab_inv_initialize_ros_socket
+ros_socket_genlisp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ros_socket_genlisp
+.PHONY : ros_socket_genlisp
 
 # fast build rule for target.
-matlab_inv_initialize_ros_socket/fast:
-	$(MAKE) -f ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/build
-.PHONY : matlab_inv_initialize_ros_socket/fast
-
-#=============================================================================
-# Target rules for targets named matlab_inv_ros_socket
-
-# Build rule for target.
-matlab_inv_ros_socket: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 matlab_inv_ros_socket
-.PHONY : matlab_inv_ros_socket
-
-# fast build rule for target.
-matlab_inv_ros_socket/fast:
-	$(MAKE) -f ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/build
-.PHONY : matlab_inv_ros_socket/fast
-
-#=============================================================================
-# Target rules for targets named robotModel_ros_socket
-
-# Build rule for target.
-robotModel_ros_socket: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 robotModel_ros_socket
-.PHONY : robotModel_ros_socket
-
-# fast build rule for target.
-robotModel_ros_socket/fast:
-	$(MAKE) -f ros_socket/CMakeFiles/robotModel_ros_socket.dir/build.make ros_socket/CMakeFiles/robotModel_ros_socket.dir/build
-.PHONY : robotModel_ros_socket/fast
-
-#=============================================================================
-# Target rules for targets named server_node
-
-# Build rule for target.
-server_node: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 server_node
-.PHONY : server_node
-
-# fast build rule for target.
-server_node/fast:
-	$(MAKE) -f ros_socket/CMakeFiles/server_node.dir/build.make ros_socket/CMakeFiles/server_node.dir/build
-.PHONY : server_node/fast
+ros_socket_genlisp/fast:
+	$(MAKE) -f ros_socket/CMakeFiles/ros_socket_genlisp.dir/build.make ros_socket/CMakeFiles/ros_socket_genlisp.dir/build
+.PHONY : ros_socket_genlisp/fast
 
 #=============================================================================
 # Target rules for targets named serial_port
@@ -1026,17 +1026,212 @@ serial_port/fast:
 .PHONY : serial_port/fast
 
 #=============================================================================
-# Target rules for targets named client_node
+# Target rules for targets named ros_socket_gencpp
 
 # Build rule for target.
-client_node: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 client_node
-.PHONY : client_node
+ros_socket_gencpp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ros_socket_gencpp
+.PHONY : ros_socket_gencpp
 
 # fast build rule for target.
-client_node/fast:
-	$(MAKE) -f ros_socket/CMakeFiles/client_node.dir/build.make ros_socket/CMakeFiles/client_node.dir/build
-.PHONY : client_node/fast
+ros_socket_gencpp/fast:
+	$(MAKE) -f ros_socket/CMakeFiles/ros_socket_gencpp.dir/build.make ros_socket/CMakeFiles/ros_socket_gencpp.dir/build
+.PHONY : ros_socket_gencpp/fast
+
+#=============================================================================
+# Target rules for targets named ros_socket_generate_messages_nodejs
+
+# Build rule for target.
+ros_socket_generate_messages_nodejs: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ros_socket_generate_messages_nodejs
+.PHONY : ros_socket_generate_messages_nodejs
+
+# fast build rule for target.
+ros_socket_generate_messages_nodejs/fast:
+	$(MAKE) -f ros_socket/CMakeFiles/ros_socket_generate_messages_nodejs.dir/build.make ros_socket/CMakeFiles/ros_socket_generate_messages_nodejs.dir/build
+.PHONY : ros_socket_generate_messages_nodejs/fast
+
+#=============================================================================
+# Target rules for targets named ros_socket_generate_messages_cpp
+
+# Build rule for target.
+ros_socket_generate_messages_cpp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ros_socket_generate_messages_cpp
+.PHONY : ros_socket_generate_messages_cpp
+
+# fast build rule for target.
+ros_socket_generate_messages_cpp/fast:
+	$(MAKE) -f ros_socket/CMakeFiles/ros_socket_generate_messages_cpp.dir/build.make ros_socket/CMakeFiles/ros_socket_generate_messages_cpp.dir/build
+.PHONY : ros_socket_generate_messages_cpp/fast
+
+#=============================================================================
+# Target rules for targets named matlab_inv_ros_socket
+
+# Build rule for target.
+matlab_inv_ros_socket: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 matlab_inv_ros_socket
+.PHONY : matlab_inv_ros_socket
+
+# fast build rule for target.
+matlab_inv_ros_socket/fast:
+	$(MAKE) -f ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/build
+.PHONY : matlab_inv_ros_socket/fast
+
+#=============================================================================
+# Target rules for targets named ros_socket_gennodejs
+
+# Build rule for target.
+ros_socket_gennodejs: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ros_socket_gennodejs
+.PHONY : ros_socket_gennodejs
+
+# fast build rule for target.
+ros_socket_gennodejs/fast:
+	$(MAKE) -f ros_socket/CMakeFiles/ros_socket_gennodejs.dir/build.make ros_socket/CMakeFiles/ros_socket_gennodejs.dir/build
+.PHONY : ros_socket_gennodejs/fast
+
+#=============================================================================
+# Target rules for targets named _ros_socket_generate_messages_check_deps_robot_joint
+
+# Build rule for target.
+_ros_socket_generate_messages_check_deps_robot_joint: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _ros_socket_generate_messages_check_deps_robot_joint
+.PHONY : _ros_socket_generate_messages_check_deps_robot_joint
+
+# fast build rule for target.
+_ros_socket_generate_messages_check_deps_robot_joint/fast:
+	$(MAKE) -f ros_socket/CMakeFiles/_ros_socket_generate_messages_check_deps_robot_joint.dir/build.make ros_socket/CMakeFiles/_ros_socket_generate_messages_check_deps_robot_joint.dir/build
+.PHONY : _ros_socket_generate_messages_check_deps_robot_joint/fast
+
+#=============================================================================
+# Target rules for targets named ros_socket_generate_messages
+
+# Build rule for target.
+ros_socket_generate_messages: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ros_socket_generate_messages
+.PHONY : ros_socket_generate_messages
+
+# fast build rule for target.
+ros_socket_generate_messages/fast:
+	$(MAKE) -f ros_socket/CMakeFiles/ros_socket_generate_messages.dir/build.make ros_socket/CMakeFiles/ros_socket_generate_messages.dir/build
+.PHONY : ros_socket_generate_messages/fast
+
+#=============================================================================
+# Target rules for targets named ros_socket_generate_messages_py
+
+# Build rule for target.
+ros_socket_generate_messages_py: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ros_socket_generate_messages_py
+.PHONY : ros_socket_generate_messages_py
+
+# fast build rule for target.
+ros_socket_generate_messages_py/fast:
+	$(MAKE) -f ros_socket/CMakeFiles/ros_socket_generate_messages_py.dir/build.make ros_socket/CMakeFiles/ros_socket_generate_messages_py.dir/build
+.PHONY : ros_socket_generate_messages_py/fast
+
+#=============================================================================
+# Target rules for targets named robotModel_ros_socket
+
+# Build rule for target.
+robotModel_ros_socket: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 robotModel_ros_socket
+.PHONY : robotModel_ros_socket
+
+# fast build rule for target.
+robotModel_ros_socket/fast:
+	$(MAKE) -f ros_socket/CMakeFiles/robotModel_ros_socket.dir/build.make ros_socket/CMakeFiles/robotModel_ros_socket.dir/build
+.PHONY : robotModel_ros_socket/fast
+
+#=============================================================================
+# Target rules for targets named matlab_inv_initialize_ros_socket
+
+# Build rule for target.
+matlab_inv_initialize_ros_socket: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 matlab_inv_initialize_ros_socket
+.PHONY : matlab_inv_initialize_ros_socket
+
+# fast build rule for target.
+matlab_inv_initialize_ros_socket/fast:
+	$(MAKE) -f ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/build
+.PHONY : matlab_inv_initialize_ros_socket/fast
+
+#=============================================================================
+# Target rules for targets named ByteArray_ros_socket
+
+# Build rule for target.
+ByteArray_ros_socket: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ByteArray_ros_socket
+.PHONY : ByteArray_ros_socket
+
+# fast build rule for target.
+ByteArray_ros_socket/fast:
+	$(MAKE) -f ros_socket/CMakeFiles/ByteArray_ros_socket.dir/build.make ros_socket/CMakeFiles/ByteArray_ros_socket.dir/build
+.PHONY : ByteArray_ros_socket/fast
+
+#=============================================================================
+# Target rules for targets named ros_socket_geneus
+
+# Build rule for target.
+ros_socket_geneus: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ros_socket_geneus
+.PHONY : ros_socket_geneus
+
+# fast build rule for target.
+ros_socket_geneus/fast:
+	$(MAKE) -f ros_socket/CMakeFiles/ros_socket_geneus.dir/build.make ros_socket/CMakeFiles/ros_socket_geneus.dir/build
+.PHONY : ros_socket_geneus/fast
+
+#=============================================================================
+# Target rules for targets named packetTransformer_ros_socket
+
+# Build rule for target.
+packetTransformer_ros_socket: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 packetTransformer_ros_socket
+.PHONY : packetTransformer_ros_socket
+
+# fast build rule for target.
+packetTransformer_ros_socket/fast:
+	$(MAKE) -f ros_socket/CMakeFiles/packetTransformer_ros_socket.dir/build.make ros_socket/CMakeFiles/packetTransformer_ros_socket.dir/build
+.PHONY : packetTransformer_ros_socket/fast
+
+#=============================================================================
+# Target rules for targets named server_node
+
+# Build rule for target.
+server_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 server_node
+.PHONY : server_node
+
+# fast build rule for target.
+server_node/fast:
+	$(MAKE) -f ros_socket/CMakeFiles/server_node.dir/build.make ros_socket/CMakeFiles/server_node.dir/build
+.PHONY : server_node/fast
+
+#=============================================================================
+# Target rules for targets named server_special_gait
+
+# Build rule for target.
+server_special_gait: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 server_special_gait
+.PHONY : server_special_gait
+
+# fast build rule for target.
+server_special_gait/fast:
+	$(MAKE) -f ros_socket/CMakeFiles/server_special_gait.dir/build.make ros_socket/CMakeFiles/server_special_gait.dir/build
+.PHONY : server_special_gait/fast
+
+#=============================================================================
+# Target rules for targets named matlab_inv_terminate_ros_socket
+
+# Build rule for target.
+matlab_inv_terminate_ros_socket: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 matlab_inv_terminate_ros_socket
+.PHONY : matlab_inv_terminate_ros_socket
+
+# fast build rule for target.
+matlab_inv_terminate_ros_socket/fast:
+	$(MAKE) -f ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/build
+.PHONY : matlab_inv_terminate_ros_socket/fast
 
 #=============================================================================
 # Target rules for targets named _catkin_empty_exported_target
@@ -1117,14 +1312,16 @@ help:
 	@echo "... special_gait_node"
 	@echo "... robotModel"
 	@echo "... matlab_inv_initialize"
+	@echo "... matlab_inv_data"
 	@echo "... ikid_motion_control_generate_messages"
 	@echo "... test_traj_node"
 	@echo "... _ikid_motion_control_generate_messages_check_deps_cmd_walk"
+	@echo "... _ikid_motion_control_generate_messages_check_deps_robot_joint"
+	@echo "... ikid_motion_control_gencpp"
+	@echo "... ikid_motion_control_generate_messages_py"
 	@echo "... robot_walk_node"
 	@echo "... ikid_motion_control_generate_messages_cpp"
 	@echo "... ikid_motion_control_genpy"
-	@echo "... ikid_motion_control_gencpp"
-	@echo "... ikid_motion_control_generate_messages_py"
 	@echo "... matlab_inv"
 	@echo "... matlab_inv_terminate"
 	@echo "... ikid_motion_control_generate_messages_eus"
@@ -1134,16 +1331,29 @@ help:
 	@echo "... ikid_motion_control_genlisp"
 	@echo "... ikid_motion_control_generate_messages_nodejs"
 	@echo "... ikid_motion_control_gennodejs"
-	@echo "... matlab_inv_data"
-	@echo "... matlab_inv_data_ros_socket"
-	@echo "... matlab_inv_terminate_ros_socket"
-	@echo "... server_special_gait"
-	@echo "... matlab_inv_initialize_ros_socket"
-	@echo "... matlab_inv_ros_socket"
-	@echo "... robotModel_ros_socket"
-	@echo "... server_node"
-	@echo "... serial_port"
 	@echo "... client_node"
+	@echo "... ros_socket_genpy"
+	@echo "... matlab_inv_data_ros_socket"
+	@echo "... ros_socket_generate_messages_lisp"
+	@echo "... ros_socket_generate_messages_eus"
+	@echo "... ros_socket_genlisp"
+	@echo "... serial_port"
+	@echo "... ros_socket_gencpp"
+	@echo "... ros_socket_generate_messages_nodejs"
+	@echo "... ros_socket_generate_messages_cpp"
+	@echo "... matlab_inv_ros_socket"
+	@echo "... ros_socket_gennodejs"
+	@echo "... _ros_socket_generate_messages_check_deps_robot_joint"
+	@echo "... ros_socket_generate_messages"
+	@echo "... ros_socket_generate_messages_py"
+	@echo "... robotModel_ros_socket"
+	@echo "... matlab_inv_initialize_ros_socket"
+	@echo "... ByteArray_ros_socket"
+	@echo "... ros_socket_geneus"
+	@echo "... packetTransformer_ros_socket"
+	@echo "... server_node"
+	@echo "... server_special_gait"
+	@echo "... matlab_inv_terminate_ros_socket"
 	@echo "... _catkin_empty_exported_target"
 	@echo "... ros_qt_ikid"
 .PHONY : help

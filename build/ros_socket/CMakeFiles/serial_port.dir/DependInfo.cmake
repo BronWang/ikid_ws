@@ -17,6 +17,7 @@ set(CMAKE_TARGET_DEFINITIONS_CXX
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
+  "/home/wp/ikid_ws/devel/include"
   "/home/wp/ikid_ws/src/ros_socket/include"
   "/opt/ros/noetic/include"
   "/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"
@@ -24,6 +25,8 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
+  "/home/wp/ikid_ws/build/ros_socket/CMakeFiles/packetTransformer_ros_socket.dir/DependInfo.cmake"
+  "/home/wp/ikid_ws/build/ros_socket/CMakeFiles/ByteArray_ros_socket.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

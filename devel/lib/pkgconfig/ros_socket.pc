@@ -3,6 +3,6 @@ prefix=/home/wp/ikid_ws/devel
 Name: ros_socket
 Description: Description of ros_socket
 Version: 0.0.0
-Cflags: 
+Cflags: -I/home/wp/ikid_ws/devel/include
 Libs: -L${prefix}/lib 
-Requires: 
+Requires: roscpp rospy std_msgs message_runtime

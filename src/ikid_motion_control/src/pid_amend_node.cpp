@@ -22,6 +22,7 @@ void doImuMsg(const sensor_msgs::Imu::ConstPtr& imuMsg_p){
     ros::param::set("imu_data_yaw",yaw);
 }
 
+
 int main(int argc, char *argv[])
 {
     //执行 ros 节点初始化

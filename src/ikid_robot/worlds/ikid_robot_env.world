@@ -383,65 +383,6 @@
       </link>
       <pose>-0.024542 0.001421 0 0 -0 0</pose>
     </model>
-    <model name='teensize_ball'>
-      <pose>2.37369 0.018403 0.095 0 -0 0</pose>
-      <static>0</static>
-      <link name='ball'>
-        <velocity_decay>
-          <linear>0</linear>
-          <angular>0.0008</angular>
-        </velocity_decay>
-        <inertial>
-          <mass>0.26</mass>
-          <inertia>
-            <ixx>0.00156</ixx>
-            <iyy>0.00156</iyy>
-            <izz>0.00156</izz>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyz>0</iyz>
-          </inertia>
-          <pose>0 0 0 0 -0 0</pose>
-        </inertial>
-        <collision name='collision'>
-          <geometry>
-            <sphere>
-              <radius>0.095</radius>
-            </sphere>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <sphere>
-              <radius>0.095</radius>
-            </sphere>
-          </geometry>
-          <material>
-            <script>
-              <uri>model://teensize_ball/materials/scripts</uri>
-              <uri>model://teensize_ball/materials/textures</uri>
-              <name>RoboCup/Ball</name>
-            </script>
-          </material>
-        </visual>
-        <self_collide>0</self_collide>
-        <enable_wind>0</enable_wind>
-        <kinematic>0</kinematic>
-      </link>
-    </model>
     <model name='teensize_goal'>
       <static>1</static>
       <link name='left_post'>
@@ -1002,10 +943,10 @@
       <pose>3.85258 -0.200997 0 0 -0 0</pose>
     </model>
     <state world_name='default'>
-      <sim_time>200 81000000</sim_time>
-      <real_time>427 508181532</real_time>
-      <wall_time>1669985855 19119246</wall_time>
-      <iterations>200081</iterations>
+      <sim_time>374 881000000</sim_time>
+      <real_time>177 725623235</real_time>
+      <wall_time>1677741239 616318302</wall_time>
+      <iterations>174800</iterations>
       <model name='ground_plane'>
         <pose>0 0 0 0 -0 0</pose>
         <scale>1 1 1</scale>
@@ -1016,11 +957,11 @@
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
-      <model name='teensize_ball'>
-        <pose>2.37369 0.018403 0.095 0 -0 0</pose>
+      <model name='teensize_ball_0'>
+        <pose>2.3765 0.000805 0.066 0 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='ball'>
-          <pose>2.37369 0.018403 0.095 0 -0 0</pose>
+          <pose>2.3765 0.000805 0.066 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
@@ -1037,7 +978,7 @@
         </link>
       </model>
       <model name='teensize_goal'>
-        <pose>4.50107 0.002326 0 0 -0 0</pose>
+        <pose>4.50107 0.00233 0 0 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='center_net'>
           <pose>5.10107 0.002329 0.6 0 -0 0</pose>
@@ -1125,7 +1066,7 @@
         </link>
       </model>
       <model name='teensize_goal_0'>
-        <pose>-4.55258 -0.005148 -0 0 -0 3.13062</pose>
+        <pose>-4.55259 -0.005151 -0 0 -0 3.13062</pose>
         <scale>1 1 1</scale>
         <link name='center_net'>
           <pose>-5.15255 0.001434 0.6 0 -0 3.13062</pose>
@@ -1777,10 +1718,69 @@
     </model>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose>2.75426 -9.28649 6.5932 -0 0.540282 1.87676</pose>
+        <pose>2.83559 -4.12893 1.65173 0 0.244282 1.82476</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>
     </gui>
+    <model name='teensize_ball_0'>
+      <pose>2.10901 -0.020031 0.066 0 -0 0</pose>
+      <static>0</static>
+      <link name='ball'>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0.0008</angular>
+        </velocity_decay>
+        <inertial>
+          <mass>0.19</mass>
+          <inertia>
+            <ixx>0.00156</ixx>
+            <iyy>0.00156</iyy>
+            <izz>0.00156</izz>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyz>0</iyz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collision'>
+          <geometry>
+            <sphere>
+              <radius>0.066</radius>
+            </sphere>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <sphere>
+              <radius>0.066</radius>
+            </sphere>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://teensize_ball/materials/scripts</uri>
+              <uri>model://teensize_ball/materials/textures</uri>
+              <name>RoboCup/Ball</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
   </world>
 </sdf>

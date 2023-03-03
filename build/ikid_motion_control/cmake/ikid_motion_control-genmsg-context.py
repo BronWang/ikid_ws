@@ -1,6 +1,6 @@
 # generated from genmsg/cmake/pkg-genmsg.context.in
 
-messages_str = "/home/wp/ikid_ws/src/ikid_motion_control/msg/cmd_walk.msg"
+messages_str = "/home/wp/ikid_ws/src/ikid_motion_control/msg/cmd_walk.msg;/home/wp/ikid_ws/src/ikid_motion_control/msg/robot_joint.msg"
 services_str = ""
 pkg_name = "ikid_motion_control"
 dependencies_str = "std_msgs"

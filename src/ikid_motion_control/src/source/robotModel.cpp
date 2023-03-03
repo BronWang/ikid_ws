@@ -6,6 +6,8 @@
 #include <dirent.h>
 #include <sys/stat.h>
 #include "std_msgs/Float64.h"
+#include "std_msgs/Byte.h"
+#include "ikid_motion_control/robot_joint.h"
 
 
 
@@ -35,7 +37,7 @@ double	c_h = 0.35;
 // 初始手部离地面高度
 double	hand_h = c_h-0.1;
 // 脚步抬高
-double fh = 0.03;
+double fh = 0.05;
 // 帧间隔时间
 double frame_T = 0.02;
 double T_cell = step_basic_frame * frame_T;
@@ -103,6 +105,17 @@ double stable_roll = 0;
 double stable_pitch = 0;
 double stable_yaw = 0;
 
+// 偏摆力矩PID
+double arm_p = 0;
+double arm_i = 0;
+double arm_d = 0;
+double tao_err = 0;
+double tao_err_sum = 0;
+double tao_err_partial = 0;
+// 偏摆力矩期望值
+double stable_tao = 0;
+
+
 bool isLeft = true;
 bool isDsPhase = true;
 
@@ -164,6 +177,7 @@ double zmp_weight_f[N_preview] = {
 // };
 
 // 定义机器人舵机信息发布句柄
+#if ROSPUB
 ros::Publisher pub_left_ankle_front_swing;  
 ros::Publisher pub_left_ankle_side_swing;  
 ros::Publisher pub_left_arm_elbow_front_swing;  
@@ -187,10 +201,16 @@ ros::Publisher pub_right_knee_front_swing;
 ros::Publisher pub_imu_data_roll;
 ros::Publisher pub_imu_data_pitch;
 ros::Publisher pub_imu_data_yaw;
+#endif
 
+#if CONTROLBOARDPUB
+ros::Publisher pub_control_board_joint_msg;
+ros::Publisher pub_control_board_torque_on;
+#endif
 
 void ikidRobotDynaPosPubInit(ros::NodeHandle& n_){
 	//Topic you want to publish
+	#if ROSPUB
     pub_left_ankle_front_swing = n_.advertise<std_msgs::Float64>("/ikid_robot/left_ankle_front_swing_position_controller/command", 100);  
     pub_left_ankle_side_swing = n_.advertise<std_msgs::Float64>("/ikid_robot/left_ankle_side_swing_position_controller/command", 100);  
     pub_left_arm_elbow_front_swing = n_.advertise<std_msgs::Float64>("/ikid_robot/left_arm_elbow_front_swing_position_controller/command", 100);  
@@ -211,7 +231,12 @@ void ikidRobotDynaPosPubInit(ros::NodeHandle& n_){
     pub_right_hip_rotation = n_.advertise<std_msgs::Float64>("/ikid_robot/right_hip_rotation_position_controller/command", 100);  
     pub_right_hip_side_swing = n_.advertise<std_msgs::Float64>("/ikid_robot/right_hip_side_swing_position_controller/command", 100);  
     pub_right_knee_front_swing = n_.advertise<std_msgs::Float64>("/ikid_robot/right_knee_front_swing_position_controller/command", 100);  
-
+	#endif
+	
+	#if CONTROLBOARDPUB
+	pub_control_board_joint_msg = n_.advertise<ikid_motion_control::robot_joint>("/ikid_robot/control_board_joint_msg", 1000);
+	pub_control_board_torque_on = n_.advertise<std_msgs::Byte>("/torque_on", 1000);
+	#endif
 
     pub_imu_data_roll = n_.advertise<std_msgs::Float64>("/imu_data_roll", 100);
     pub_imu_data_pitch = n_.advertise<std_msgs::Float64>("/imu_data_pitch", 100);
@@ -264,6 +289,42 @@ void ikidRobotDynaPosPub(){
     msg.data = robotModel[RIGHT_ANKLE_SIDE_SWING].q + ikid_robot_zero_point[RIGHT_ANKLE_SIDE_SWING];
     pub_right_ankle_side_swing.publish(msg);
 	ros::Duration(0.02).sleep();
+}
+
+void ikidRobotDynaPosControlBoardPub(){
+	ikid_motion_control::robot_joint control_board_joint_msg;
+	control_board_joint_msg.joint = {
+		0,
+		0,
+		robotModel[FRONT_NECK_SWING].q + ikid_robot_zero_point[FRONT_NECK_SWING],
+		robotModel[NECK_ROTATION].q + ikid_robot_zero_point[NECK_ROTATION],
+		robotModel[RIGHT_ARM_FRONT_SWING].q + ikid_robot_zero_point[RIGHT_ARM_FRONT_SWING],
+		robotModel[RIGHT_ARM_SIDE_SWING].q + ikid_robot_zero_point[RIGHT_ARM_SIDE_SWING],
+		robotModel[RIGHT_ARM_ELBOW_FRONT_SWING].q + ikid_robot_zero_point[RIGHT_ARM_ELBOW_FRONT_SWING],
+		0,
+		robotModel[LEFT_ARM_FRONT_SWING].q + ikid_robot_zero_point[LEFT_ARM_FRONT_SWING],
+		robotModel[LEFT_ARM_SIDE_SWING].q + ikid_robot_zero_point[LEFT_ARM_SIDE_SWING],
+		robotModel[LEFT_ARM_ELBOW_FRONT_SWING].q + ikid_robot_zero_point[LEFT_ARM_ELBOW_FRONT_SWING],
+		0,
+		robotModel[RIGHT_HIP_FRONT_SWING].q + ikid_robot_zero_point[RIGHT_HIP_FRONT_SWING],
+		robotModel[RIGHT_HIP_SIDE_SWING].q + ikid_robot_zero_point[RIGHT_HIP_SIDE_SWING],
+		robotModel[RIGHT_HIP_ROTATION].q + ikid_robot_zero_point[RIGHT_HIP_ROTATION],
+		robotModel[RIGHT_KNEE_FRONT_SWING].q + ikid_robot_zero_point[RIGHT_KNEE_FRONT_SWING],
+		robotModel[RIGHT_ANKLE_FRONT_SWING].q + ikid_robot_zero_point[RIGHT_ANKLE_FRONT_SWING],
+		robotModel[RIGHT_ANKLE_SIDE_SWING].q + ikid_robot_zero_point[RIGHT_ANKLE_SIDE_SWING],
+		0,
+		robotModel[LEFT_HIP_FRONT_SWING].q + ikid_robot_zero_point[LEFT_HIP_FRONT_SWING],
+		robotModel[LEFT_HIP_SIDE_SWING].q + ikid_robot_zero_point[LEFT_HIP_SIDE_SWING],
+		robotModel[LEFT_HIP_ROTATION].q + ikid_robot_zero_point[LEFT_HIP_ROTATION],
+		robotModel[LEFT_KNEE_FRONT_SWING].q + ikid_robot_zero_point[LEFT_KNEE_FRONT_SWING],
+		robotModel[LEFT_ANKLE_FRONT_SWING].q + ikid_robot_zero_point[LEFT_ANKLE_FRONT_SWING],
+		robotModel[LEFT_ANKLE_SIDE_SWING].q + ikid_robot_zero_point[LEFT_ANKLE_SIDE_SWING],
+		0
+	};
+	#if CONTROLBOARDPUB
+	pub_control_board_joint_msg.publish(control_board_joint_msg);
+	//ros::Duration(0.02).sleep();
+	#endif
 }
 
 void readIkidRobotZeroPoint(int id){
@@ -994,7 +1055,6 @@ void initRobotPos(){
 	for(int i = 0; i < 26; i++){
 		FallUpRobotPos_q[i] = robotModel[i].q;
 	}
-
 #if ROSPUB
 	
 	for(int i = 0; i < 21; i++){
@@ -1043,6 +1103,47 @@ void initRobotPos(){
 		ikidPubRate.sleep();
 	}
 #endif
+#if CONTROLBOARDPUB
+	// 开启舵机扭矩
+	std_msgs::Byte torque_msg;
+	torque_msg.data = 1;
+	pub_control_board_torque_on.publish(torque_msg);
+	ros::Duration(0.05).sleep();
+	for(int i = 0; i < 21; i++){
+		ikid_motion_control::robot_joint control_board_joint_msg;
+		control_board_joint_msg.joint = {
+			0,
+			0,
+			robotModel[FRONT_NECK_SWING].q/20*i + ikid_robot_zero_point[FRONT_NECK_SWING],
+			robotModel[NECK_ROTATION].q/20*i + ikid_robot_zero_point[NECK_ROTATION],
+			robotModel[RIGHT_ARM_FRONT_SWING].q/20*i + ikid_robot_zero_point[RIGHT_ARM_FRONT_SWING],
+			robotModel[RIGHT_ARM_SIDE_SWING].q/20*i + ikid_robot_zero_point[RIGHT_ARM_SIDE_SWING],
+			robotModel[RIGHT_ARM_ELBOW_FRONT_SWING].q/20*i + ikid_robot_zero_point[RIGHT_ARM_ELBOW_FRONT_SWING],
+			0,
+			robotModel[LEFT_ARM_FRONT_SWING].q/20*i + ikid_robot_zero_point[LEFT_ARM_FRONT_SWING],
+			robotModel[LEFT_ARM_SIDE_SWING].q/20*i + ikid_robot_zero_point[LEFT_ARM_SIDE_SWING],
+			robotModel[LEFT_ARM_ELBOW_FRONT_SWING].q/20*i + ikid_robot_zero_point[LEFT_ARM_ELBOW_FRONT_SWING],
+			0,
+			robotModel[RIGHT_HIP_FRONT_SWING].q/20*i + ikid_robot_zero_point[RIGHT_HIP_FRONT_SWING],
+			robotModel[RIGHT_HIP_SIDE_SWING].q/20*i + ikid_robot_zero_point[RIGHT_HIP_SIDE_SWING],
+			robotModel[RIGHT_HIP_ROTATION].q/20*i + ikid_robot_zero_point[RIGHT_HIP_ROTATION],
+			robotModel[RIGHT_KNEE_FRONT_SWING].q/20*i + ikid_robot_zero_point[RIGHT_KNEE_FRONT_SWING],
+			robotModel[RIGHT_ANKLE_FRONT_SWING].q/20*i + ikid_robot_zero_point[RIGHT_ANKLE_FRONT_SWING],
+			robotModel[RIGHT_ANKLE_SIDE_SWING].q/20*i + ikid_robot_zero_point[RIGHT_ANKLE_SIDE_SWING],
+			0,
+			robotModel[LEFT_HIP_FRONT_SWING].q/20*i + ikid_robot_zero_point[LEFT_HIP_FRONT_SWING],
+			robotModel[LEFT_HIP_SIDE_SWING].q/20*i + ikid_robot_zero_point[LEFT_HIP_SIDE_SWING],
+			robotModel[LEFT_HIP_ROTATION].q/20*i + ikid_robot_zero_point[LEFT_HIP_ROTATION],
+			robotModel[LEFT_KNEE_FRONT_SWING].q/20*i + ikid_robot_zero_point[LEFT_KNEE_FRONT_SWING],
+			robotModel[LEFT_ANKLE_FRONT_SWING].q/20*i + ikid_robot_zero_point[LEFT_ANKLE_FRONT_SWING],
+			robotModel[LEFT_ANKLE_SIDE_SWING].q/20*i + ikid_robot_zero_point[LEFT_ANKLE_SIDE_SWING],
+			0
+		};
+		pub_control_board_joint_msg.publish(control_board_joint_msg);
+		ros::Duration(0.02).sleep();
+	}
+
+#endif
 }
 
 void robotStart(ros::NodeHandle& n_)
@@ -1054,6 +1155,15 @@ void robotStart(ros::NodeHandle& n_)
 	clearTxt();
 #endif
 	initRobotPos();
+	ros::param::get("/pid_amend/imu_roll_p",imu_roll_p);
+	ros::param::get("/pid_amend/imu_roll_i",imu_roll_i);
+	ros::param::get("/pid_amend/imu_roll_d",imu_roll_d);
+	ros::param::get("/pid_amend/imu_pitch_p",imu_pitch_p);
+	ros::param::get("/pid_amend/imu_pitch_i",imu_pitch_i);
+	ros::param::get("/pid_amend/imu_pitch_d",imu_pitch_d);
+	ros::param::get("/pid_amend/imu_yaw_p",imu_yaw_p);
+	ros::param::get("/pid_amend/imu_yaw_i",imu_yaw_i);
+	ros::param::get("/pid_amend/imu_yaw_d",imu_yaw_d);
 }
 
 void MatrixSquare3x3(double a[3][3], double a_square[3][3]) {
@@ -2483,7 +2593,6 @@ void trajPlan() {
 			// 右臂
 			robotModel[RIGHT_ARM_FRONT_SWING].q = current_arm_angle_right + i * (-arm_swing_angle - current_arm_angle_right) / step_basic_frame;
 			robotModel[LEFT_ARM_FRONT_SWING].q = current_arm_angle_left + i * (arm_swing_angle - current_arm_angle_left) / step_basic_frame;
-
 #endif
 			// 确定腰部位置，四边形顶点坐标求对角线交点坐标,两手一条直线，两脚一条直线
 			double x1, y1, x2, y2, x3, y3, x4, y4;
@@ -2523,6 +2632,10 @@ void trajPlan() {
 #endif
 #if ROSPUB
 	ikidRobotDynaPosPub();
+#endif
+#if CONTROLBOARDPUB
+	ikidRobotDynaPosControlBoardPub();
+
 #endif
 		}
 	}
@@ -2650,10 +2763,7 @@ void trajPlan() {
 			// 左臂
 			robotModel[LEFT_ARM_FRONT_SWING].q = current_arm_angle_left + i * (-arm_swing_angle - current_arm_angle_left) / step_basic_frame;
 			robotModel[RIGHT_ARM_FRONT_SWING].q = current_arm_angle_right + i * (arm_swing_angle - current_arm_angle_right) / step_basic_frame;
-
 #endif
-
-
 			
 			// 确定腰部位置，四边形顶点坐标求对角线交点坐标
 			double x1, y1, x2, y2, x3, y3, x4, y4;
@@ -2692,6 +2802,10 @@ void trajPlan() {
 #endif
 #if ROSPUB
 	ikidRobotDynaPosPub();
+#endif
+#if CONTROLBOARDPUB
+	ikidRobotDynaPosControlBoardPub();
+
 #endif
 		}
 	}
@@ -2846,6 +2960,10 @@ void anglePlan(double delta) {
 #if ROSPUB
 	ikidRobotDynaPosPub();
 #endif
+#if CONTROLBOARDPUB
+	ikidRobotDynaPosControlBoardPub();
+
+#endif
 		}
 	}
 	else
@@ -2985,6 +3103,10 @@ void anglePlan(double delta) {
 #endif
 #if ROSPUB
 	ikidRobotDynaPosPub();
+#endif
+#if CONTROLBOARDPUB
+	ikidRobotDynaPosControlBoardPub();
+
 #endif
 		}
 	}
@@ -3144,6 +3266,10 @@ void anglePlan(double delta) {
 #if ROSPUB
 	ikidRobotDynaPosPub();
 #endif
+#if CONTROLBOARDPUB
+	ikidRobotDynaPosControlBoardPub();
+
+#endif
 		}
 	}
 	else
@@ -3283,6 +3409,10 @@ void anglePlan(double delta) {
 #if ROSPUB
 	ikidRobotDynaPosPub();
 #endif
+#if CONTROLBOARDPUB
+	ikidRobotDynaPosControlBoardPub();
+
+#endif
 		}
 	}
 	theta = theta + delta;
@@ -3401,7 +3531,7 @@ void CalcTrajectory_Com(int current_frame_count) {
 	// double zmp_y = Compute_fact_zmp[1];
 	sum_e[0] = sum_e[0] + zmp_x - zmp_preview[0][0];
 	sum_e[1] = sum_e[1] + zmp_y - zmp_preview[1][0];
-	writeZmpData(zmp_preview, zmp_preview[0][0],zmp_preview[1][0],zmp_x,zmp_y);
+	writeZmpData(zmp_preview, zmp_preview[0][0],zmp_preview[1][0],zmp_x,zmp_y,Compute_fact_zmp[0],Compute_fact_zmp[1]);
 	current_ZMP_point[0] = zmp_preview[0][0];
 	current_ZMP_point[1] = zmp_preview[1][0];
 	current_ZMP_point[2] = 0;
@@ -3467,6 +3597,10 @@ void dFootSupportPhase(double theta_mainbody, double theta_left, double theta_ri
 #if ROSPUB
 	ikidRobotDynaPosPub();
 #endif
+#if CONTROLBOARDPUB
+	ikidRobotDynaPosControlBoardPub();
+
+#endif
 	}
 }
 
@@ -3507,15 +3641,6 @@ void imuGesturePidControl(double &delta_roll, double &delta_pitch, double &delta
 	imu_yaw_err_sum += imu_yaw_err*frame_T;
 	//printf("%f,%f,%f\n", imu_pitch_err, imu_pitch_err_sum, imu_pitch_err_partial);
 
-	ros::param::get("/pid_amend/imu_roll_p",imu_roll_p);
-	ros::param::get("/pid_amend/imu_roll_i",imu_roll_i);
-	ros::param::get("/pid_amend/imu_roll_d",imu_roll_d);
-	ros::param::get("/pid_amend/imu_pitch_p",imu_pitch_p);
-	ros::param::get("/pid_amend/imu_pitch_i",imu_pitch_i);
-	ros::param::get("/pid_amend/imu_pitch_d",imu_pitch_d);
-	ros::param::get("/pid_amend/imu_yaw_p",imu_yaw_p);
-	ros::param::get("/pid_amend/imu_yaw_i",imu_yaw_i);
-	ros::param::get("/pid_amend/imu_yaw_d",imu_yaw_d);
 	delta_roll = imu_roll_p*imu_roll_err + imu_roll_i*imu_roll_err_sum + imu_roll_d*imu_roll_err_partial;
 	delta_pitch = imu_pitch_p*imu_pitch_err + imu_pitch_i*imu_pitch_err_sum + imu_pitch_d*imu_pitch_err_partial;
 	delta_yaw = imu_yaw_p*imu_yaw_err + imu_yaw_i*imu_yaw_err_sum + imu_yaw_d*imu_yaw_err_partial;
@@ -3545,6 +3670,7 @@ void imuGesturePidControl(double &delta_roll, double &delta_pitch, double &delta
 }
 
 void specialGaitExec(int id){
+	
 	DIR *dp = NULL;
 	struct dirent *st;  // 文件夹中的子文件数据结构
 	struct stat sta;
@@ -3686,7 +3812,12 @@ void specialGaitExec(int id){
 									robotModel[j].q = before_gait_frame_data[j]+(gait_frame_data[j]-before_gait_frame_data[j])*i/temp_frame_rate;
 								}
 							}
+							#if ROSPUB
 							ikidRobotDynaPosPub();
+							#endif
+							#if CONTROLBOARDPUB
+							ikidRobotDynaPosControlBoardPub();
+							#endif
 							count_frame++;
 						}
                 	}
@@ -3797,8 +3928,43 @@ void FallUpInitPos(){
 		ikidPubRate.sleep();
 	}
 #endif
+#if CONTROLBOARDPUB
+	for(int i = 0; i < 21; i++){
+		ikid_motion_control::robot_joint control_board_joint_msg;
+		control_board_joint_msg.joint = {
+			0,
+			0,
+			ikid_robot_zero_point[FRONT_NECK_SWING] + robotModel[FRONT_NECK_SWING].q + (FallUpRobotPos_q[FRONT_NECK_SWING] - robotModel[FRONT_NECK_SWING].q)/20*i,
+			ikid_robot_zero_point[NECK_ROTATION] + robotModel[NECK_ROTATION].q + (FallUpRobotPos_q[NECK_ROTATION] - robotModel[NECK_ROTATION].q)/20*i,
+			ikid_robot_zero_point[RIGHT_ARM_FRONT_SWING] + robotModel[RIGHT_ARM_FRONT_SWING].q + (FallUpRobotPos_q[RIGHT_ARM_FRONT_SWING] - robotModel[RIGHT_ARM_FRONT_SWING].q)/20*i,
+			ikid_robot_zero_point[RIGHT_ARM_SIDE_SWING] + robotModel[RIGHT_ARM_SIDE_SWING].q + (FallUpRobotPos_q[RIGHT_ARM_SIDE_SWING] - robotModel[RIGHT_ARM_SIDE_SWING].q)/20*i,
+			ikid_robot_zero_point[RIGHT_ARM_ELBOW_FRONT_SWING] + robotModel[RIGHT_ARM_ELBOW_FRONT_SWING].q + (FallUpRobotPos_q[RIGHT_ARM_ELBOW_FRONT_SWING] - robotModel[RIGHT_ARM_ELBOW_FRONT_SWING].q)/20*i,
+			0,
+			ikid_robot_zero_point[LEFT_ARM_FRONT_SWING] + robotModel[LEFT_ARM_FRONT_SWING].q + (FallUpRobotPos_q[LEFT_ARM_FRONT_SWING] - robotModel[LEFT_ARM_FRONT_SWING].q)/20*i,
+			ikid_robot_zero_point[LEFT_ARM_SIDE_SWING] + robotModel[LEFT_ARM_SIDE_SWING].q + (FallUpRobotPos_q[LEFT_ARM_SIDE_SWING] - robotModel[LEFT_ARM_SIDE_SWING].q)/20*i,
+			ikid_robot_zero_point[LEFT_ARM_ELBOW_FRONT_SWING] + robotModel[LEFT_ARM_ELBOW_FRONT_SWING].q + (FallUpRobotPos_q[LEFT_ARM_ELBOW_FRONT_SWING] - robotModel[LEFT_ARM_ELBOW_FRONT_SWING].q)/20*i,
+			0,
+			ikid_robot_zero_point[RIGHT_HIP_FRONT_SWING] + robotModel[RIGHT_HIP_FRONT_SWING].q + (FallUpRobotPos_q[RIGHT_HIP_FRONT_SWING] - robotModel[RIGHT_HIP_FRONT_SWING].q)/20*i,
+			ikid_robot_zero_point[RIGHT_HIP_SIDE_SWING] + robotModel[RIGHT_HIP_SIDE_SWING].q + (FallUpRobotPos_q[RIGHT_HIP_SIDE_SWING] - robotModel[RIGHT_HIP_SIDE_SWING].q)/20*i,
+			ikid_robot_zero_point[RIGHT_HIP_ROTATION] + robotModel[RIGHT_HIP_ROTATION].q + (FallUpRobotPos_q[RIGHT_HIP_ROTATION] - robotModel[RIGHT_HIP_ROTATION].q)/20*i,
+			ikid_robot_zero_point[RIGHT_KNEE_FRONT_SWING] + robotModel[RIGHT_KNEE_FRONT_SWING].q + (FallUpRobotPos_q[RIGHT_KNEE_FRONT_SWING] - robotModel[RIGHT_KNEE_FRONT_SWING].q)/20*i,
+			ikid_robot_zero_point[RIGHT_ANKLE_FRONT_SWING] + robotModel[RIGHT_ANKLE_FRONT_SWING].q + (FallUpRobotPos_q[RIGHT_ANKLE_FRONT_SWING] - robotModel[RIGHT_ANKLE_FRONT_SWING].q)/20*i,
+			ikid_robot_zero_point[RIGHT_ANKLE_SIDE_SWING] + robotModel[RIGHT_ANKLE_SIDE_SWING].q + (FallUpRobotPos_q[RIGHT_ANKLE_SIDE_SWING] - robotModel[RIGHT_ANKLE_SIDE_SWING].q)/20*i,
+			0,
+			ikid_robot_zero_point[LEFT_HIP_FRONT_SWING] + robotModel[LEFT_HIP_FRONT_SWING].q + (FallUpRobotPos_q[LEFT_HIP_FRONT_SWING] - robotModel[LEFT_HIP_FRONT_SWING].q)/20*i,
+			ikid_robot_zero_point[LEFT_HIP_SIDE_SWING] + robotModel[LEFT_HIP_SIDE_SWING].q + (FallUpRobotPos_q[LEFT_HIP_SIDE_SWING] - robotModel[LEFT_HIP_SIDE_SWING].q)/20*i,
+			ikid_robot_zero_point[LEFT_HIP_ROTATION] + robotModel[LEFT_HIP_ROTATION].q + (FallUpRobotPos_q[LEFT_HIP_ROTATION] - robotModel[LEFT_HIP_ROTATION].q)/20*i,
+			ikid_robot_zero_point[LEFT_KNEE_FRONT_SWING] + robotModel[LEFT_KNEE_FRONT_SWING].q + (FallUpRobotPos_q[LEFT_KNEE_FRONT_SWING] - robotModel[LEFT_KNEE_FRONT_SWING].q)/20*i,
+			ikid_robot_zero_point[LEFT_ANKLE_FRONT_SWING] + robotModel[LEFT_ANKLE_FRONT_SWING].q + (FallUpRobotPos_q[LEFT_ANKLE_FRONT_SWING] - robotModel[LEFT_ANKLE_FRONT_SWING].q)/20*i,
+			ikid_robot_zero_point[LEFT_ANKLE_SIDE_SWING] + robotModel[LEFT_ANKLE_SIDE_SWING].q + (FallUpRobotPos_q[LEFT_ANKLE_SIDE_SWING] - robotModel[LEFT_ANKLE_SIDE_SWING].q)/20*i,
+			0
+		};
+		pub_control_board_joint_msg.publish(control_board_joint_msg);
+		ros::Duration(0.02).sleep();
+	}
 
-	
+#endif
+
 
 }
 
@@ -3837,7 +4003,7 @@ void clearImuDataTxt(){
 	return;
 }
 
-void writeZmpData(double zmp_data[2][N_preview], double z_d_x, double z_d_y, double z_f_x, double z_f_y){
+void writeZmpData(double zmp_data[2][N_preview], double z_d_x, double z_d_y, double z_p_x, double z_p_y,double z_f_x, double z_f_y){
 #if WRITEZMPDATA
 	FILE* fp = NULL;
 	char ch[100];
@@ -3881,8 +4047,9 @@ void quinticPolyInterFour(double A[6][4], double B[6][4], double s){
 
 	// 五个点，分四段进行插值
 	double t[5] = {0, step_basic_frame/5.0*2*frame_T, step_basic_frame/5.0*3*frame_T, step_basic_frame/5.0*4*frame_T, step_basic_frame*frame_T};
-	double x1[5] = {s/2, 3/10.0*s, 1/10.0*s, -3/10.0*s, -s/2}; // x方向的位置
-	double x2[5] = {0, (x1[1]-x1[0])/(t[1]-t[0]), (x1[2]-x1[1])/(t[2]-t[1]), (x1[3]-x1[2])/(t[3]-t[2]), 0 }; // x方向的速度
+	//double x1[5] = {s/2, 3/10.0*s, 1/10.0*s, -3/10.0*s, -s/2}; // x方向的位置
+	double x1[5] = {s/2, 3/10.0*s, 1/10.0*s, -s/2*1.5, -s/2}; // x方向的位置
+	double x2[5] = {0, (x1[1]-x1[0])/(t[1]-t[0]), (x1[2]-x1[1])/(t[2]-t[1]), 0.3*(x1[3]-x1[2])/(t[3]-t[2]), 0 }; // x方向的速度
 	double x3[5] = {0, (x2[1]-x2[0])/(t[1]-t[0]), (x2[2]-x2[1])/(t[2]-t[1]), (x2[3]-x2[2])/(t[3]-t[2]), 0 }; // x方向的加速度
 	double z1[5] = {0, fh, 3/5.0*fh, 2/5.0*fh, 0}; // z方向的位置
 	double z2[5] = {0, 0, (z1[2]-z1[1])/(t[2]-t[1]), (z1[3]-z1[2])/(t[3]-t[2]), 0 };  // z方向的速度

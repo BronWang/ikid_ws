@@ -56,6 +56,7 @@ find_package(catkin REQUIRED COMPONENTS
 add_message_files(
   FILES
   cmd_walk.msg
+  robot_joint.msg
 )
 
 ## Generate services in the 'srv' folder

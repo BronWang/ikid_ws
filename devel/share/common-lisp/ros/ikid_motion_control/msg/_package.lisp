@@ -3,5 +3,7 @@
   (:export
    "<CMD_WALK>"
    "CMD_WALK"
+   "<ROBOT_JOINT>"
+   "ROBOT_JOINT"
   ))
 

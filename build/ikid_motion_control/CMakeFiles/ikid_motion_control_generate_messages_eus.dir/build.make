@@ -54,6 +54,7 @@ CMAKE_BINARY_DIR = /home/wp/ikid_ws/build
 include ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_eus.dir/progress.make
 
 ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_eus: /home/wp/ikid_ws/devel/share/roseus/ros/ikid_motion_control/msg/cmd_walk.l
+ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_eus: /home/wp/ikid_ws/devel/share/roseus/ros/ikid_motion_control/msg/robot_joint.l
 ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_eus: /home/wp/ikid_ws/devel/share/roseus/ros/ikid_motion_control/manifest.l
 
 
@@ -62,12 +63,18 @@ ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_eus: /home/
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/wp/ikid_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating EusLisp code from ikid_motion_control/cmd_walk.msg"
 	cd /home/wp/ikid_ws/build/ikid_motion_control && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /home/wp/ikid_ws/src/ikid_motion_control/msg/cmd_walk.msg -Iikid_motion_control:/home/wp/ikid_ws/src/ikid_motion_control/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p ikid_motion_control -o /home/wp/ikid_ws/devel/share/roseus/ros/ikid_motion_control/msg
 
+/home/wp/ikid_ws/devel/share/roseus/ros/ikid_motion_control/msg/robot_joint.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+/home/wp/ikid_ws/devel/share/roseus/ros/ikid_motion_control/msg/robot_joint.l: /home/wp/ikid_ws/src/ikid_motion_control/msg/robot_joint.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/wp/ikid_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating EusLisp code from ikid_motion_control/robot_joint.msg"
+	cd /home/wp/ikid_ws/build/ikid_motion_control && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /home/wp/ikid_ws/src/ikid_motion_control/msg/robot_joint.msg -Iikid_motion_control:/home/wp/ikid_ws/src/ikid_motion_control/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p ikid_motion_control -o /home/wp/ikid_ws/devel/share/roseus/ros/ikid_motion_control/msg
+
 /home/wp/ikid_ws/devel/share/roseus/ros/ikid_motion_control/manifest.l: /opt/ros/noetic/lib/geneus/gen_eus.py
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/wp/ikid_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating EusLisp manifest code for ikid_motion_control"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/wp/ikid_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating EusLisp manifest code for ikid_motion_control"
 	cd /home/wp/ikid_ws/build/ikid_motion_control && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py -m -o /home/wp/ikid_ws/devel/share/roseus/ros/ikid_motion_control ikid_motion_control std_msgs
 
 ikid_motion_control_generate_messages_eus: ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_eus
 ikid_motion_control_generate_messages_eus: /home/wp/ikid_ws/devel/share/roseus/ros/ikid_motion_control/msg/cmd_walk.l
+ikid_motion_control_generate_messages_eus: /home/wp/ikid_ws/devel/share/roseus/ros/ikid_motion_control/msg/robot_joint.l
 ikid_motion_control_generate_messages_eus: /home/wp/ikid_ws/devel/share/roseus/ros/ikid_motion_control/manifest.l
 ikid_motion_control_generate_messages_eus: ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_eus.dir/build.make
 

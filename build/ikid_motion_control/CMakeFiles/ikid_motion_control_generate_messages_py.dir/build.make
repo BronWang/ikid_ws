@@ -54,6 +54,7 @@ CMAKE_BINARY_DIR = /home/wp/ikid_ws/build
 include ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_py.dir/progress.make
 
 ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_py: /home/wp/ikid_ws/devel/lib/python3/dist-packages/ikid_motion_control/msg/_cmd_walk.py
+ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_py: /home/wp/ikid_ws/devel/lib/python3/dist-packages/ikid_motion_control/msg/_robot_joint.py
 ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_py: /home/wp/ikid_ws/devel/lib/python3/dist-packages/ikid_motion_control/msg/__init__.py
 
 
@@ -62,13 +63,20 @@ ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_py: /home/w
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/wp/ikid_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Python from MSG ikid_motion_control/cmd_walk"
 	cd /home/wp/ikid_ws/build/ikid_motion_control && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/wp/ikid_ws/src/ikid_motion_control/msg/cmd_walk.msg -Iikid_motion_control:/home/wp/ikid_ws/src/ikid_motion_control/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p ikid_motion_control -o /home/wp/ikid_ws/devel/lib/python3/dist-packages/ikid_motion_control/msg
 
+/home/wp/ikid_ws/devel/lib/python3/dist-packages/ikid_motion_control/msg/_robot_joint.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
+/home/wp/ikid_ws/devel/lib/python3/dist-packages/ikid_motion_control/msg/_robot_joint.py: /home/wp/ikid_ws/src/ikid_motion_control/msg/robot_joint.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/wp/ikid_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Python from MSG ikid_motion_control/robot_joint"
+	cd /home/wp/ikid_ws/build/ikid_motion_control && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/wp/ikid_ws/src/ikid_motion_control/msg/robot_joint.msg -Iikid_motion_control:/home/wp/ikid_ws/src/ikid_motion_control/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p ikid_motion_control -o /home/wp/ikid_ws/devel/lib/python3/dist-packages/ikid_motion_control/msg
+
 /home/wp/ikid_ws/devel/lib/python3/dist-packages/ikid_motion_control/msg/__init__.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /home/wp/ikid_ws/devel/lib/python3/dist-packages/ikid_motion_control/msg/__init__.py: /home/wp/ikid_ws/devel/lib/python3/dist-packages/ikid_motion_control/msg/_cmd_walk.py
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/wp/ikid_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Python msg __init__.py for ikid_motion_control"
+/home/wp/ikid_ws/devel/lib/python3/dist-packages/ikid_motion_control/msg/__init__.py: /home/wp/ikid_ws/devel/lib/python3/dist-packages/ikid_motion_control/msg/_robot_joint.py
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/wp/ikid_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Python msg __init__.py for ikid_motion_control"
 	cd /home/wp/ikid_ws/build/ikid_motion_control && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /home/wp/ikid_ws/devel/lib/python3/dist-packages/ikid_motion_control/msg --initpy
 
 ikid_motion_control_generate_messages_py: ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_py
 ikid_motion_control_generate_messages_py: /home/wp/ikid_ws/devel/lib/python3/dist-packages/ikid_motion_control/msg/_cmd_walk.py
+ikid_motion_control_generate_messages_py: /home/wp/ikid_ws/devel/lib/python3/dist-packages/ikid_motion_control/msg/_robot_joint.py
 ikid_motion_control_generate_messages_py: /home/wp/ikid_ws/devel/lib/python3/dist-packages/ikid_motion_control/msg/__init__.py
 ikid_motion_control_generate_messages_py: ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_py.dir/build.make
 
