@@ -145,3 +145,10 @@
 /home/wp/ikid_ws/build/ros_qt_ikid/CMakeFiles/edit_cache.dir
 /home/wp/ikid_ws/build/ros_qt_ikid/CMakeFiles/test.dir
 /home/wp/ikid_ws/build/ros_qt_ikid/CMakeFiles/ros_qt_ikid.dir
+/home/wp/ikid_ws/build/wit_ros_imu/CMakeFiles/install/strip.dir
+/home/wp/ikid_ws/build/wit_ros_imu/CMakeFiles/install/local.dir
+/home/wp/ikid_ws/build/wit_ros_imu/CMakeFiles/install.dir
+/home/wp/ikid_ws/build/wit_ros_imu/CMakeFiles/list_install_components.dir
+/home/wp/ikid_ws/build/wit_ros_imu/CMakeFiles/rebuild_cache.dir
+/home/wp/ikid_ws/build/wit_ros_imu/CMakeFiles/edit_cache.dir
+/home/wp/ikid_ws/build/wit_ros_imu/CMakeFiles/test.dir

@@ -60,6 +60,13 @@
     type="rviz"
     args="-d $(find ikid_robot)/urdf.rviz" /> -->
 
+    <!-- ikid out device imu python -->
+    <node pkg="wit_ros_imu" type="wit_normal_ros.py" name="wit_normal" output="screen">
+        <param name="port"               type = "str"    value="/dev/ttyUSB1"/>
+        <param name="baud"               type = "int"    value="115200"/>
+	  <remap from="/wit/imu" to="/ikid/imu/data"/>
+    </node>
+
     <!-- 启动IMU数据参数服务节点 -->
     <node pkg="ikid_motion_control" type="pid_amend_node" name="pid_amend">
       <rosparam file="$(find ikid_motion_control)/config/config.yaml" command="load"/>

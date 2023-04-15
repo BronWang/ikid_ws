@@ -31,6 +31,8 @@ set(CMAKE_MAKEFILE_DEPENDS
   "ros_socket/catkin_generated/ros_socket-msg-extras.cmake.develspace.in"
   "ros_socket/catkin_generated/ros_socket-msg-extras.cmake.installspace.in"
   "ros_socket/cmake/ros_socket-genmsg.cmake"
+  "wit_ros_imu/catkin_generated/ordered_paths.cmake"
+  "wit_ros_imu/catkin_generated/package.cmake"
   "/home/wp/ikid_ws/devel/share/ikid_key_ctrl/cmake/ikid_key_ctrl-msg-paths.cmake"
   "/home/wp/ikid_ws/devel/share/ikid_motion_control/cmake/ikid_motion_control-msg-paths.cmake"
   "/home/wp/ikid_ws/devel/share/ros_socket/cmake/ros_socket-msg-paths.cmake"
@@ -46,6 +48,9 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/home/wp/ikid_ws/src/ros_qt_ikid/resources/images.qrc"
   "/home/wp/ikid_ws/src/ros_socket/CMakeLists.txt"
   "/home/wp/ikid_ws/src/ros_socket/package.xml"
+  "/home/wp/ikid_ws/src/wit_ros_imu/CMakeLists.txt"
+  "/home/wp/ikid_ws/src/wit_ros_imu/package.xml"
+  "/home/wp/ikid_ws/src/wit_ros_imu/scripts/wit_normal_ros.py"
   "/opt/ros/noetic/share/catkin/cmake/all.cmake"
   "/opt/ros/noetic/share/catkin/cmake/assert.cmake"
   "/opt/ros/noetic/share/catkin/cmake/atomic_configure_file.cmake"
@@ -93,6 +98,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/opt/ros/noetic/share/catkin/cmake/templates/pkgConfig-version.cmake.in"
   "/opt/ros/noetic/share/catkin/cmake/templates/pkgConfig.cmake.in"
   "/opt/ros/noetic/share/catkin/cmake/templates/rosinstall.in"
+  "/opt/ros/noetic/share/catkin/cmake/templates/script.py.in"
   "/opt/ros/noetic/share/catkin/cmake/templates/setup.bash.in"
   "/opt/ros/noetic/share/catkin/cmake/templates/setup.sh.in"
   "/opt/ros/noetic/share/catkin/cmake/templates/setup.zsh.in"
@@ -282,6 +288,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "ros_socket/CMakeFiles/CMakeDirectoryInformation.cmake"
   "ikid_robot/CMakeFiles/CMakeDirectoryInformation.cmake"
   "ros_qt_ikid/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "wit_ros_imu/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:

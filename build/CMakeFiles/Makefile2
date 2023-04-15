@@ -59,6 +59,7 @@ all: ikid_motion_control/all
 all: ros_socket/all
 all: ikid_robot/all
 all: ros_qt_ikid/all
+all: wit_ros_imu/all
 
 .PHONY : all
 
@@ -69,6 +70,7 @@ preinstall: ikid_motion_control/preinstall
 preinstall: ros_socket/preinstall
 preinstall: ikid_robot/preinstall
 preinstall: ros_qt_ikid/preinstall
+preinstall: wit_ros_imu/preinstall
 
 .PHONY : preinstall
 
@@ -84,6 +86,7 @@ clean: ikid_motion_control/clean
 clean: ros_socket/clean
 clean: ikid_robot/clean
 clean: ros_qt_ikid/clean
+clean: wit_ros_imu/clean
 
 .PHONY : clean
 
@@ -324,6 +327,24 @@ ros_socket/clean: ros_socket/CMakeFiles/server_special_gait.dir/clean
 ros_socket/clean: ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/clean
 
 .PHONY : ros_socket/clean
+
+#=============================================================================
+# Directory level rules for directory wit_ros_imu
+
+# Recursive "all" directory target.
+wit_ros_imu/all:
+
+.PHONY : wit_ros_imu/all
+
+# Recursive "preinstall" directory target.
+wit_ros_imu/preinstall:
+
+.PHONY : wit_ros_imu/preinstall
+
+# Recursive "clean" directory target.
+wit_ros_imu/clean:
+
+.PHONY : wit_ros_imu/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/doxygen.dir

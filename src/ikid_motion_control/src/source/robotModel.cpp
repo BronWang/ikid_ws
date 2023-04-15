@@ -21,6 +21,10 @@ const int FALL_FORWARD_UP_ID = 2;
 // 机器人零点数据
 double ikid_robot_zero_point[26] = {0};
 
+// 机器人零点IMU数据
+double init_imu_roll = 0;
+double init_imu_pitch = 0;
+
 // 步行单元帧数
 const int step_basic_frame = 25;
 // 双脚支撑帧数
@@ -407,7 +411,7 @@ void readIkidRobotZeroPoint(int id){
                     for (int i = 2; i <= 25; i++)
                     {
                         token = strtok(NULL, ",");
-                        ikid_robot_zero_point[i] = atof(token);
+                        ikid_robot_zero_point[i] = atof(token)/180*M_PI;
                     }
 					printf("\n");
                 }
@@ -1148,7 +1152,7 @@ void initRobotPos(){
 
 void robotStart(ros::NodeHandle& n_)
 {
-	readIkidRobotZeroPoint(1);
+	readIkidRobotZeroPoint(0);
 	robotModelInit(robotModel);
 	ikidRobotDynaPosPubInit(n_);
 #if WRITETXT
@@ -3608,9 +3612,11 @@ void imuGesturePidControl(double &delta_roll, double &delta_pitch, double &delta
 	std_msgs::Float64 msg;
 	double data_roll=0,data_pitch=0,data_yaw=0;
 	ros::param::get("imu_data_roll",data_roll);
+	data_roll -= init_imu_roll;
 	msg.data = data_roll;
 	pub_imu_data_roll.publish(msg);
 	ros::param::get("imu_data_pitch",data_pitch);
+	data_pitch -= init_imu_pitch;
 	msg.data = data_pitch;
 	pub_imu_data_pitch.publish(msg);
 	ros::param::get("imu_data_yaw",data_yaw);
@@ -3634,7 +3640,8 @@ void imuGesturePidControl(double &delta_roll, double &delta_pitch, double &delta
 	imu_pitch_err = temp_pitch_err;
 	imu_pitch_err_sum += imu_pitch_err*frame_T;
 
-	stable_yaw = theta;
+	//stable_yaw = theta; 目前不对偏航角用PID
+	stable_yaw = data_yaw;
 	temp_yaw_err = stable_yaw - data_yaw;
 	imu_yaw_err_partial = (temp_yaw_err - imu_yaw_err)/frame_T;
 	imu_yaw_err = temp_yaw_err;
@@ -3823,6 +3830,10 @@ void specialGaitExec(int id){
                 	}
 
 				}
+				//在执行完特殊步态后，恢复初始q值
+				for(int i = 0; i < 26; i++){
+					robotModel[i].q = FallUpRobotPos_q[i];
+				}
 				fclose(fptr);
 				break;
 			}
@@ -3844,7 +3855,9 @@ void judgeFall(){
 	//判断机器人是否跌倒,并执行步态
 	double data_roll,data_pitch,data_yaw;
 	ros::param::get("imu_data_roll",data_roll);
+	data_roll -= init_imu_roll;
 	ros::param::get("imu_data_pitch",data_pitch);
+	data_pitch -= init_imu_pitch;
 	ros::param::get("imu_data_yaw",data_yaw);
 	if(data_pitch < 110 && data_pitch > 70){
 		double temp_sx = sx;

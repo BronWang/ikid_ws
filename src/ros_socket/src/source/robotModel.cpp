@@ -407,7 +407,7 @@ void readIkidRobotZeroPoint(int id){
                     for (int i = 2; i <= 25; i++)
                     {
                         token = strtok(NULL, ",");
-                        ikid_robot_zero_point[i] = atof(token);
+                        ikid_robot_zero_point[i] = atof(token)/180*M_PI;
                     }
 					printf("\n");
                 }
@@ -1141,6 +1141,9 @@ void initRobotPos(){
 		};
 		pub_control_board_joint_msg.publish(control_board_joint_msg);
 		ros::Duration(0.02).sleep();
+	}
+	for(int i = 0; i < PART_NUMBER; i++){
+		ikid_robot_zero_point[i] = 0;
 	}
 
 #endif
@@ -3816,6 +3819,10 @@ void specialGaitExec(int id){
 						}
                 	}
 
+				}
+				//在执行完特殊步态后，恢复初始q值
+				for(int i = 0; i < 26; i++){
+					robotModel[i].q = FallUpRobotPos_q[i];
 				}
 				fclose(fptr);
 				break;

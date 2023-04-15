@@ -87,8 +87,8 @@ void doControlBoardMsg(const ros_socket::robot_joint::ConstPtr& controlBoardMsg)
     joint_map[LEFT_HIP_FRONT_SWING] = angle_left_hip_front_swing;
     // id 20 左髋侧摆		初始位置2048    右1712-2165左有问题 右1848-2374左
     uint16_t angle_left_hip_side_swing = 2048 + (int)(controlBoardMsg->joint[LEFT_HIP_SIDE_SWING]*180/M_PI/0.088);
-    angle_left_hip_side_swing = angle_left_hip_side_swing>2165?2165:angle_left_hip_side_swing;
-    angle_left_hip_side_swing = angle_left_hip_side_swing<1712?1712:angle_left_hip_side_swing;
+    angle_left_hip_side_swing = angle_left_hip_side_swing>2374?2374:angle_left_hip_side_swing;
+    angle_left_hip_side_swing = angle_left_hip_side_swing<1848?1848:angle_left_hip_side_swing;
     joint_map[LEFT_HIP_SIDE_SWING] = angle_left_hip_side_swing;
     // id 21 左髋旋转		初始位置2048    顺1712-2280逆
     uint16_t angle_left_hip_rotation = 2048 + (int)(controlBoardMsg->joint[LEFT_HIP_ROTATION]*180/M_PI/0.088);
@@ -143,7 +143,7 @@ void doControlBoardMsg(const ros_socket::robot_joint::ConstPtr& controlBoardMsg)
         //return -1;
     }
     // ros::Duration(0.015).sleep();
-    uint8_t buffer[100];
+    //uint8_t buffer[100];
     // size_t n = sp.available();
     // if(n != 0 ){
     //     n = sp.read(buffer,n);
@@ -156,48 +156,48 @@ void doControlBoardMsg(const ros_socket::robot_joint::ConstPtr& controlBoardMsg)
     // }
 
     // 获取IMU数据
-    packet.Reset();
-    packet.dspInst->id = ID_DSP;
-    packet.dspInst->length = 2;
-    packet.dspInst->instruction = INFO_ICM20948_FEEDBACK;
-    packet.ConstructPacket();
-    byteArray = packet.GetByteArray();
-    ret=1;
-    // 发送imu数据
-    try{
-        ret = sp.write(byteArray.getBuffer(),byteArray.getLength());
-    }catch(const serial::IOException& e)
-    {
-        ROS_ERROR_STREAM("unable to send INFO_ICM20948_FEEDBACK msg");
-        //return -1;
-    }
-    // 延时5ms等待下位机的返回数据发送完毕​
-    ros::Duration(0.02).sleep();
-    size_t n = sp.available();
-    if(n > 58) n = 58;
-    printf("%ld \n", n);
-    if(n != 0 ){
-        n = sp.read(buffer,n);
-        std::cout<<"接收到的imu数据";
-        // for(int i = 0; i<n; i++){
-        //     std::cout<< std::hex<< (buffer[i]&0xff)<<" ";
-        // }
-        std::cout<<std::endl;
-    }
-    icm20948_data_t sensors_data;
-    packet.Reset();
-    packet.SetRawPacket(buffer, n);
-    bool tempb = packet.TryDestructOnePacket();
-    //printf("%ld  %d\n", n,tempb);
-    if(packet.dspInst->instruction == INFO_ICM20948_FEEDBACK && n == 58 && tempb){
-        sensors_data = *(icm20948_data_t *)packet.dspInst->parameter;
-        printf("accel: %f, %f, %f\ngyro: %f, %f, %f\ncompass: %f, %f, %f\nori: %f, %f, %f\ntemperature: %f\n",
-        sensors_data.accel_float[0],sensors_data.accel_float[1],sensors_data.accel_float[2],
-        sensors_data.gyro_float[0],sensors_data.gyro_float[1],sensors_data.gyro_float[2],
-        sensors_data.compass_float[0],sensors_data.compass_float[1],sensors_data.compass_float[2],
-        sensors_data.orientation[0],sensors_data.orientation[1],sensors_data.orientation[2],
-        sensors_data.temperature);
-    }
+    // packet.Reset();
+    // packet.dspInst->id = ID_DSP;
+    // packet.dspInst->length = 2;
+    // packet.dspInst->instruction = INFO_ICM20948_FEEDBACK;
+    // packet.ConstructPacket();
+    // byteArray = packet.GetByteArray();
+    // ret=1;
+    // // 发送imu数据
+    // try{
+    //     ret = sp.write(byteArray.getBuffer(),byteArray.getLength());
+    // }catch(const serial::IOException& e)
+    // {
+    //     ROS_ERROR_STREAM("unable to send INFO_ICM20948_FEEDBACK msg");
+    //     //return -1;
+    // }
+    // // 延时5ms等待下位机的返回数据发送完毕​
+    // ros::Duration(0.02).sleep();
+    // size_t n = sp.available();
+    // if(n > 58) n = 58;
+    // printf("%ld \n", n);
+    // if(n != 0 ){
+    //     n = sp.read(buffer,n);
+    //     std::cout<<"接收到的imu数据";
+    //     // for(int i = 0; i<n; i++){
+    //     //     std::cout<< std::hex<< (buffer[i]&0xff)<<" ";
+    //     // }
+    //     std::cout<<std::endl;
+    // }
+    // icm20948_data_t sensors_data;
+    // packet.Reset();
+    // packet.SetRawPacket(buffer, n);
+    // bool tempb = packet.TryDestructOnePacket();
+    // //printf("%ld  %d\n", n,tempb);
+    // if(packet.dspInst->instruction == INFO_ICM20948_FEEDBACK && n == 58 && tempb){
+    //     sensors_data = *(icm20948_data_t *)packet.dspInst->parameter;
+    //     printf("accel: %f, %f, %f\ngyro: %f, %f, %f\ncompass: %f, %f, %f\nori: %f, %f, %f\ntemperature: %f\n",
+    //     sensors_data.accel_float[0],sensors_data.accel_float[1],sensors_data.accel_float[2],
+    //     sensors_data.gyro_float[0],sensors_data.gyro_float[1],sensors_data.gyro_float[2],
+    //     sensors_data.compass_float[0],sensors_data.compass_float[1],sensors_data.compass_float[2],
+    //     sensors_data.orientation[0],sensors_data.orientation[1],sensors_data.orientation[2],
+    //     sensors_data.temperature);
+    // }
     
     
     sp.flushInput();

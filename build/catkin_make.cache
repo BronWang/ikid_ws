@@ -1,2 +1,2 @@
-ikid_key_ctrl:ikid_motion_control:ikid_robot:ros_qt_ikid:ros_socket
+ikid_key_ctrl:ikid_motion_control:ikid_robot:ros_qt_ikid:ros_socket:wit_ros_imu
 -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCATKIN_DEVEL_PREFIX=/home/wp/ikid_ws/devel -DCMAKE_INSTALL_PREFIX=/home/wp/ikid_ws/install -G Unix Makefiles

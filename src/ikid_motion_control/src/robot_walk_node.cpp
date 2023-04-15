@@ -8,6 +8,8 @@ extern robotLink robotModel[26];
 extern double theta;
 extern double sx;
 extern double sy;
+extern double init_imu_roll;
+extern double init_imu_pitch;
 
 void doWalkMsg(const ikid_motion_control::cmd_walk::ConstPtr& walkMsg){
     ROS_INFO("0000");
@@ -59,7 +61,9 @@ int main(int argc, char *argv[])
 
     ROS_INFO("IkID-ROBOT NB! Let's walk it!");
     robotStart(n);
-    ros::Duration(3).sleep();
+    ros::Duration(5).sleep();
+    ros::param::get("imu_data_roll",init_imu_roll);
+    ros::param::get("imu_data_pitch",init_imu_pitch);
 
     ros::Subscriber sub = n.subscribe<ikid_motion_control::cmd_walk>("/cmd_walk",5,doWalkMsg);
     ros::param::set("stop_walk_flag",true);  //设置停止行走标志位于参数服务器中

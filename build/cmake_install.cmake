@@ -136,6 +136,7 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/wp/ikid_ws/build/ros_socket/cmake_install.cmake")
   include("/home/wp/ikid_ws/build/ikid_robot/cmake_install.cmake")
   include("/home/wp/ikid_ws/build/ros_qt_ikid/cmake_install.cmake")
+  include("/home/wp/ikid_ws/build/wit_ros_imu/cmake_install.cmake")
 
 endif()
 
