@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <dirent.h>
 #include <sys/stat.h>
+#include <fstream>
 #include "std_msgs/Float64.h"
 #include "std_msgs/Byte.h"
 #include "ikid_motion_control/robot_joint.h"
@@ -22,8 +23,11 @@ const int FALL_FORWARD_UP_ID = 2;
 double ikid_robot_zero_point[26] = {0};
 
 // 机器人零点IMU数据
-double init_imu_roll = 0;
-double init_imu_pitch = 0;
+double init_imu_roll = 0.0;
+double init_imu_pitch = 0.0;
+double imu_data_roll = 0.0;
+double imu_data_yaw = 0.0;
+double imu_data_pitch = 0.0;
 
 // 步行单元帧数
 const int step_basic_frame = 25;
@@ -3611,15 +3615,22 @@ void dFootSupportPhase(double theta_mainbody, double theta_left, double theta_ri
 void imuGesturePidControl(double &delta_roll, double &delta_pitch, double &delta_yaw){
 	std_msgs::Float64 msg;
 	double data_roll=0,data_pitch=0,data_yaw=0;
-	ros::param::get("imu_data_roll",data_roll);
+	//ros::param::get("imu_data_roll",data_roll);
+	std::fstream fin;
+	fin.open("/home/wp/ikid_ws/imubuffer.txt", std::ios::in);
+	fin >> imu_data_roll >> imu_data_pitch >> imu_data_yaw;
+	fin.close();
+	data_roll = imu_data_roll;
 	data_roll -= init_imu_roll;
 	msg.data = data_roll;
 	pub_imu_data_roll.publish(msg);
-	ros::param::get("imu_data_pitch",data_pitch);
+	//ros::param::get("imu_data_pitch",data_pitch);
+	data_pitch = imu_data_pitch;
 	data_pitch -= init_imu_pitch;
 	msg.data = data_pitch;
 	pub_imu_data_pitch.publish(msg);
-	ros::param::get("imu_data_yaw",data_yaw);
+	//ros::param::get("imu_data_yaw",data_yaw);
+	data_yaw = imu_data_yaw;
 	msg.data = data_yaw;
 	pub_imu_data_yaw.publish(msg);
 	//printf("%f, %f\n",data_roll, data_pitch);
@@ -3853,12 +3864,16 @@ void specialGaitExec(int id){
 
 void judgeFall(){
 	//判断机器人是否跌倒,并执行步态
-	double data_roll,data_pitch,data_yaw;
-	ros::param::get("imu_data_roll",data_roll);
+	double data_roll=0.0,data_pitch=0.0,data_yaw=0.0;
+	std::fstream fin;
+	fin.open("/home/wp/ikid_ws/imubuffer.txt", std::ios::in);
+	fin >> data_roll >> data_pitch >> data_yaw;
+	fin.close();
+	//ros::param::get("imu_data_roll",data_roll);
 	data_roll -= init_imu_roll;
-	ros::param::get("imu_data_pitch",data_pitch);
+	//ros::param::get("imu_data_pitch",data_pitch);
 	data_pitch -= init_imu_pitch;
-	ros::param::get("imu_data_yaw",data_yaw);
+	//ros::param::get("imu_data_yaw",data_yaw);
 	if(data_pitch < 110 && data_pitch > 70){
 		double temp_sx = sx;
 		sx = 0;   // 执行跌倒爬起时，一定要先把前进步长变为0走一步，要不然复位时之前保存的ZMP点可能已经不相对存在于脚底板下

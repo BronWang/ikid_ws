@@ -68,6 +68,18 @@ install/strip/fast: preinstall/fast
 	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
 .PHONY : install/strip/fast
 
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
+
 # Special rule for the target install
 install: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
@@ -123,18 +135,6 @@ list_install_components/fast: list_install_components
 
 .PHONY : list_install_components/fast
 
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
-
-# Special rule for the target install/local
-install/local/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local/fast
-
 # The main all target
 all: cmake_check_build_system
 	cd /home/wp/ikid_ws/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/wp/ikid_ws/build/CMakeFiles /home/wp/ikid_ws/build/ros_socket/CMakeFiles/progress.marks
@@ -166,51 +166,6 @@ preinstall/fast:
 depend:
 	cd /home/wp/ikid_ws/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
-
-# Convenience name for target.
-ros_socket/CMakeFiles/client_node.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/client_node.dir/rule
-.PHONY : ros_socket/CMakeFiles/client_node.dir/rule
-
-# Convenience name for target.
-client_node: ros_socket/CMakeFiles/client_node.dir/rule
-
-.PHONY : client_node
-
-# fast build rule for target.
-client_node/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/client_node.dir/build.make ros_socket/CMakeFiles/client_node.dir/build
-.PHONY : client_node/fast
-
-# Convenience name for target.
-ros_socket/CMakeFiles/ros_socket_genpy.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/ros_socket_genpy.dir/rule
-.PHONY : ros_socket/CMakeFiles/ros_socket_genpy.dir/rule
-
-# Convenience name for target.
-ros_socket_genpy: ros_socket/CMakeFiles/ros_socket_genpy.dir/rule
-
-.PHONY : ros_socket_genpy
-
-# fast build rule for target.
-ros_socket_genpy/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/ros_socket_genpy.dir/build.make ros_socket/CMakeFiles/ros_socket_genpy.dir/build
-.PHONY : ros_socket_genpy/fast
-
-# Convenience name for target.
-ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/rule
-.PHONY : ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/rule
-
-# Convenience name for target.
-matlab_inv_data_ros_socket: ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/rule
-
-.PHONY : matlab_inv_data_ros_socket
-
-# fast build rule for target.
-matlab_inv_data_ros_socket/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/build
-.PHONY : matlab_inv_data_ros_socket/fast
 
 # Convenience name for target.
 ros_socket/CMakeFiles/ros_socket_generate_messages_lisp.dir/rule:
@@ -256,36 +211,6 @@ ros_socket_genlisp: ros_socket/CMakeFiles/ros_socket_genlisp.dir/rule
 ros_socket_genlisp/fast:
 	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/ros_socket_genlisp.dir/build.make ros_socket/CMakeFiles/ros_socket_genlisp.dir/build
 .PHONY : ros_socket_genlisp/fast
-
-# Convenience name for target.
-ros_socket/CMakeFiles/serial_port.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/serial_port.dir/rule
-.PHONY : ros_socket/CMakeFiles/serial_port.dir/rule
-
-# Convenience name for target.
-serial_port: ros_socket/CMakeFiles/serial_port.dir/rule
-
-.PHONY : serial_port
-
-# fast build rule for target.
-serial_port/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/serial_port.dir/build.make ros_socket/CMakeFiles/serial_port.dir/build
-.PHONY : serial_port/fast
-
-# Convenience name for target.
-ros_socket/CMakeFiles/ros_socket_gencpp.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/ros_socket_gencpp.dir/rule
-.PHONY : ros_socket/CMakeFiles/ros_socket_gencpp.dir/rule
-
-# Convenience name for target.
-ros_socket_gencpp: ros_socket/CMakeFiles/ros_socket_gencpp.dir/rule
-
-.PHONY : ros_socket_gencpp
-
-# fast build rule for target.
-ros_socket_gencpp/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/ros_socket_gencpp.dir/build.make ros_socket/CMakeFiles/ros_socket_gencpp.dir/build
-.PHONY : ros_socket_gencpp/fast
 
 # Convenience name for target.
 ros_socket/CMakeFiles/ros_socket_generate_messages_nodejs.dir/rule:
@@ -363,6 +288,66 @@ _ros_socket_generate_messages_check_deps_robot_joint/fast:
 .PHONY : _ros_socket_generate_messages_check_deps_robot_joint/fast
 
 # Convenience name for target.
+ros_socket/CMakeFiles/_ros_socket_generate_messages_check_deps_robot_head_pos.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/_ros_socket_generate_messages_check_deps_robot_head_pos.dir/rule
+.PHONY : ros_socket/CMakeFiles/_ros_socket_generate_messages_check_deps_robot_head_pos.dir/rule
+
+# Convenience name for target.
+_ros_socket_generate_messages_check_deps_robot_head_pos: ros_socket/CMakeFiles/_ros_socket_generate_messages_check_deps_robot_head_pos.dir/rule
+
+.PHONY : _ros_socket_generate_messages_check_deps_robot_head_pos
+
+# fast build rule for target.
+_ros_socket_generate_messages_check_deps_robot_head_pos/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/_ros_socket_generate_messages_check_deps_robot_head_pos.dir/build.make ros_socket/CMakeFiles/_ros_socket_generate_messages_check_deps_robot_head_pos.dir/build
+.PHONY : _ros_socket_generate_messages_check_deps_robot_head_pos/fast
+
+# Convenience name for target.
+ros_socket/CMakeFiles/client_node.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/client_node.dir/rule
+.PHONY : ros_socket/CMakeFiles/client_node.dir/rule
+
+# Convenience name for target.
+client_node: ros_socket/CMakeFiles/client_node.dir/rule
+
+.PHONY : client_node
+
+# fast build rule for target.
+client_node/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/client_node.dir/build.make ros_socket/CMakeFiles/client_node.dir/build
+.PHONY : client_node/fast
+
+# Convenience name for target.
+ros_socket/CMakeFiles/ros_socket_gencpp.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/ros_socket_gencpp.dir/rule
+.PHONY : ros_socket/CMakeFiles/ros_socket_gencpp.dir/rule
+
+# Convenience name for target.
+ros_socket_gencpp: ros_socket/CMakeFiles/ros_socket_gencpp.dir/rule
+
+.PHONY : ros_socket_gencpp
+
+# fast build rule for target.
+ros_socket_gencpp/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/ros_socket_gencpp.dir/build.make ros_socket/CMakeFiles/ros_socket_gencpp.dir/build
+.PHONY : ros_socket_gencpp/fast
+
+# Convenience name for target.
+ros_socket/CMakeFiles/serial_port.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/serial_port.dir/rule
+.PHONY : ros_socket/CMakeFiles/serial_port.dir/rule
+
+# Convenience name for target.
+serial_port: ros_socket/CMakeFiles/serial_port.dir/rule
+
+.PHONY : serial_port
+
+# fast build rule for target.
+serial_port/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/serial_port.dir/build.make ros_socket/CMakeFiles/serial_port.dir/build
+.PHONY : serial_port/fast
+
+# Convenience name for target.
 ros_socket/CMakeFiles/ros_socket_generate_messages.dir/rule:
 	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/ros_socket_generate_messages.dir/rule
 .PHONY : ros_socket/CMakeFiles/ros_socket_generate_messages.dir/rule
@@ -378,21 +363,6 @@ ros_socket_generate_messages/fast:
 .PHONY : ros_socket_generate_messages/fast
 
 # Convenience name for target.
-ros_socket/CMakeFiles/ros_socket_generate_messages_py.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/ros_socket_generate_messages_py.dir/rule
-.PHONY : ros_socket/CMakeFiles/ros_socket_generate_messages_py.dir/rule
-
-# Convenience name for target.
-ros_socket_generate_messages_py: ros_socket/CMakeFiles/ros_socket_generate_messages_py.dir/rule
-
-.PHONY : ros_socket_generate_messages_py
-
-# fast build rule for target.
-ros_socket_generate_messages_py/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/ros_socket_generate_messages_py.dir/build.make ros_socket/CMakeFiles/ros_socket_generate_messages_py.dir/build
-.PHONY : ros_socket_generate_messages_py/fast
-
-# Convenience name for target.
 ros_socket/CMakeFiles/robotModel_ros_socket.dir/rule:
 	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/robotModel_ros_socket.dir/rule
 .PHONY : ros_socket/CMakeFiles/robotModel_ros_socket.dir/rule
@@ -406,6 +376,21 @@ robotModel_ros_socket: ros_socket/CMakeFiles/robotModel_ros_socket.dir/rule
 robotModel_ros_socket/fast:
 	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/robotModel_ros_socket.dir/build.make ros_socket/CMakeFiles/robotModel_ros_socket.dir/build
 .PHONY : robotModel_ros_socket/fast
+
+# Convenience name for target.
+ros_socket/CMakeFiles/ros_socket_generate_messages_py.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/ros_socket_generate_messages_py.dir/rule
+.PHONY : ros_socket/CMakeFiles/ros_socket_generate_messages_py.dir/rule
+
+# Convenience name for target.
+ros_socket_generate_messages_py: ros_socket/CMakeFiles/ros_socket_generate_messages_py.dir/rule
+
+.PHONY : ros_socket_generate_messages_py
+
+# fast build rule for target.
+ros_socket_generate_messages_py/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/ros_socket_generate_messages_py.dir/build.make ros_socket/CMakeFiles/ros_socket_generate_messages_py.dir/build
+.PHONY : ros_socket_generate_messages_py/fast
 
 # Convenience name for target.
 ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/rule:
@@ -436,6 +421,36 @@ ByteArray_ros_socket: ros_socket/CMakeFiles/ByteArray_ros_socket.dir/rule
 ByteArray_ros_socket/fast:
 	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/ByteArray_ros_socket.dir/build.make ros_socket/CMakeFiles/ByteArray_ros_socket.dir/build
 .PHONY : ByteArray_ros_socket/fast
+
+# Convenience name for target.
+ros_socket/CMakeFiles/ros_socket_genpy.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/ros_socket_genpy.dir/rule
+.PHONY : ros_socket/CMakeFiles/ros_socket_genpy.dir/rule
+
+# Convenience name for target.
+ros_socket_genpy: ros_socket/CMakeFiles/ros_socket_genpy.dir/rule
+
+.PHONY : ros_socket_genpy
+
+# fast build rule for target.
+ros_socket_genpy/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/ros_socket_genpy.dir/build.make ros_socket/CMakeFiles/ros_socket_genpy.dir/build
+.PHONY : ros_socket_genpy/fast
+
+# Convenience name for target.
+ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/rule
+.PHONY : ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/rule
+
+# Convenience name for target.
+matlab_inv_data_ros_socket: ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/rule
+
+.PHONY : matlab_inv_data_ros_socket
+
+# fast build rule for target.
+matlab_inv_data_ros_socket/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/build
+.PHONY : matlab_inv_data_ros_socket/fast
 
 # Convenience name for target.
 ros_socket/CMakeFiles/ros_socket_geneus.dir/rule:
@@ -816,25 +831,27 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... install/strip"
-	@echo "... client_node"
-	@echo "... ros_socket_genpy"
-	@echo "... matlab_inv_data_ros_socket"
+	@echo "... install/local"
 	@echo "... ros_socket_generate_messages_lisp"
 	@echo "... ros_socket_generate_messages_eus"
 	@echo "... ros_socket_genlisp"
-	@echo "... serial_port"
-	@echo "... ros_socket_gencpp"
 	@echo "... ros_socket_generate_messages_nodejs"
 	@echo "... ros_socket_generate_messages_cpp"
 	@echo "... matlab_inv_ros_socket"
 	@echo "... ros_socket_gennodejs"
 	@echo "... _ros_socket_generate_messages_check_deps_robot_joint"
+	@echo "... _ros_socket_generate_messages_check_deps_robot_head_pos"
 	@echo "... install"
+	@echo "... client_node"
+	@echo "... ros_socket_gencpp"
+	@echo "... serial_port"
 	@echo "... ros_socket_generate_messages"
-	@echo "... ros_socket_generate_messages_py"
 	@echo "... robotModel_ros_socket"
+	@echo "... ros_socket_generate_messages_py"
 	@echo "... matlab_inv_initialize_ros_socket"
 	@echo "... ByteArray_ros_socket"
+	@echo "... ros_socket_genpy"
+	@echo "... matlab_inv_data_ros_socket"
 	@echo "... ros_socket_geneus"
 	@echo "... packetTransformer_ros_socket"
 	@echo "... server_node"
@@ -844,7 +861,6 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... matlab_inv_terminate_ros_socket"
 	@echo "... list_install_components"
-	@echo "... install/local"
 	@echo "... src/client_node.o"
 	@echo "... src/client_node.i"
 	@echo "... src/client_node.s"

@@ -56,6 +56,7 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 add_message_files(
   FILES
+  robot_head_pos.msg
   robot_joint.msg
 )
 

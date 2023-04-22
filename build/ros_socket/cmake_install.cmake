@@ -38,7 +38,10 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ros_socket/msg" TYPE FILE FILES "/home/wp/ikid_ws/src/ros_socket/msg/robot_joint.msg")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ros_socket/msg" TYPE FILE FILES
+    "/home/wp/ikid_ws/src/ros_socket/msg/robot_head_pos.msg"
+    "/home/wp/ikid_ws/src/ros_socket/msg/robot_joint.msg"
+    )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
