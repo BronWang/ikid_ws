@@ -2,6 +2,7 @@
 6dedccc23a7eb1e8b84e47748daa4915 /home/wp/ikid_ws/devel/include/ikid_key_ctrl/cmd_walk.h
 2d0c93c2d39eeb2c0e360cf36423a545 /home/wp/ikid_ws/devel/include/ikid_motion_control/cmd_walk.h
 43efff6475e49606412f15ad1c4b967c /home/wp/ikid_ws/devel/include/ikid_motion_control/robot_joint.h
+9551a7669818e51c3f763bb74dd7e58d /home/wp/ikid_ws/devel/include/ros_socket/robot_head_pos.h
 f1d8a658e7b72115cd6f5dbd913a0b46 /home/wp/ikid_ws/devel/include/ros_socket/robot_joint.h
 70024c02728cacb893e791b357e49ef2 /home/wp/ikid_ws/devel/lib/python3/dist-packages/ikid_key_ctrl/msg/__init__.py
 76528f7de51d766b94da93da2a3e4906 /home/wp/ikid_ws/devel/lib/python3/dist-packages/ikid_key_ctrl/msg/_cmd_walk.py
@@ -9,14 +10,17 @@ ed4ad15493059b61fb8b81e3c568cb8b /home/wp/ikid_ws/devel/lib/python3/dist-package
 378bceb060ca60b12309b00e784b86fb /home/wp/ikid_ws/devel/lib/python3/dist-packages/ikid_motion_control/msg/_cmd_walk.py
 a1d2e5a41fec6351b4858430b4e56987 /home/wp/ikid_ws/devel/lib/python3/dist-packages/ikid_motion_control/msg/_robot_joint.py
 54288ef3179dde02cabc64a793fbc5e3 /home/wp/ikid_ws/devel/lib/python3/dist-packages/ros_socket/msg/__init__.py
+bde45450d6b3157cbdcfd9bb5d4f3a17 /home/wp/ikid_ws/devel/lib/python3/dist-packages/ros_socket/msg/_robot_head_pos.py
 2e0541e68a3d11284b456bbfca39b1bf /home/wp/ikid_ws/devel/lib/python3/dist-packages/ros_socket/msg/_robot_joint.py
 fdf843067b98d595f4b0d7188b376762 /home/wp/ikid_ws/devel/share/common-lisp/ros/ikid_key_ctrl/msg/cmd_walk.lisp
 fcee8e87fda3023da6f9a013d66dceef /home/wp/ikid_ws/devel/share/common-lisp/ros/ikid_motion_control/msg/cmd_walk.lisp
 c37133e72391de79e3bd8c0c5c48648a /home/wp/ikid_ws/devel/share/common-lisp/ros/ikid_motion_control/msg/robot_joint.lisp
+83d3a6ef5848f9a7f78bd9ac47fe7950 /home/wp/ikid_ws/devel/share/common-lisp/ros/ros_socket/msg/robot_head_pos.lisp
 a7565fda9645474ada310d52b8011c4b /home/wp/ikid_ws/devel/share/common-lisp/ros/ros_socket/msg/robot_joint.lisp
 0ee951abfcfce0cdb758d48849e1d413 /home/wp/ikid_ws/devel/share/gennodejs/ros/ikid_key_ctrl/msg/cmd_walk.js
 48d5c45ed90e394e5b9caf899259abef /home/wp/ikid_ws/devel/share/gennodejs/ros/ikid_motion_control/msg/cmd_walk.js
 b360f25ddbd987640adc5badcc94f13c /home/wp/ikid_ws/devel/share/gennodejs/ros/ikid_motion_control/msg/robot_joint.js
+3207eeb41ad970ca8d22aa0afb9fd2e5 /home/wp/ikid_ws/devel/share/gennodejs/ros/ros_socket/msg/robot_head_pos.js
 6bb1acb88caa9a5a9a1d9a11384bfb22 /home/wp/ikid_ws/devel/share/gennodejs/ros/ros_socket/msg/robot_joint.js
 11eece64e1be48aa4a3ef33dbbe70c7f /home/wp/ikid_ws/devel/share/roseus/ros/ikid_key_ctrl/manifest.l
 a72275cb9e94c3aa79e5a634bf9a8ab2 /home/wp/ikid_ws/devel/share/roseus/ros/ikid_key_ctrl/msg/cmd_walk.l
@@ -24,6 +28,7 @@ fdc8752aa01da496e727b4ece8f1d291 /home/wp/ikid_ws/devel/share/roseus/ros/ikid_mo
 164bdb05c2c8543e36629470bdc80f33 /home/wp/ikid_ws/devel/share/roseus/ros/ikid_motion_control/msg/cmd_walk.l
 cb1979721584c19bea4dad8d0d773f7a /home/wp/ikid_ws/devel/share/roseus/ros/ikid_motion_control/msg/robot_joint.l
 954c9a3c57cd36258c2b127599fa6115 /home/wp/ikid_ws/devel/share/roseus/ros/ros_socket/manifest.l
+83a1d06b488efd081184f379e90f1b7c /home/wp/ikid_ws/devel/share/roseus/ros/ros_socket/msg/robot_head_pos.l
 ea01576c7c6bdab5840374f592694b34 /home/wp/ikid_ws/devel/share/roseus/ros/ros_socket/msg/robot_joint.l
 b1ad841e28bc26e1cf950352b708daac CMakeFiles/clean_test_results
 7230d2ccde871e9f73352c2bf6c4532d ikid_key_ctrl/CMakeFiles/_ikid_key_ctrl_generate_messages_check_deps_cmd_walk
@@ -43,6 +48,7 @@ d56e2df1a620490865a3a0fb9f52d3d3 ros_qt_ikid/include/ros_qt_ikid/moc_main_window
 b7d95c57b65ea40829e4843f7035f920 ros_qt_ikid/include/ros_qt_ikid/moc_qnode.cpp
 1205d8dd574792ce414e8d5bfc6189f2 ros_qt_ikid/qrc_images.cpp
 2a60fbca9a7f5b0eedb2e84060836d55 ros_qt_ikid/ui_main_window.h
+2ac3a1f12811a04a2de5495b1e03b1c9 ros_socket/CMakeFiles/_ros_socket_generate_messages_check_deps_robot_head_pos
 dbd7c20298e393a0629c410bd01d5196 ros_socket/CMakeFiles/_ros_socket_generate_messages_check_deps_robot_joint
 331af5e57deb8dcf344ad5299cd05266 ros_socket/CMakeFiles/ros_socket_generate_messages_cpp
 331af5e57deb8dcf344ad5299cd05266 ros_socket/CMakeFiles/ros_socket_generate_messages_eus

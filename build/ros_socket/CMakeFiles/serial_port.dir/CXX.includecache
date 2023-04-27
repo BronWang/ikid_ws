@@ -6,6 +6,22 @@
 
 #IncludeRegexTransform: 
 
+/home/wp/ikid_ws/devel/include/ros_socket/robot_head_pos.h
+string
+-
+vector
+-
+memory
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
+
 /home/wp/ikid_ws/devel/include/ros_socket/robot_joint.h
 string
 -
@@ -73,6 +89,8 @@ ros_socket/robotModel.h
 /home/wp/ikid_ws/src/ros_socket/src/ros_socket/robotModel.h
 ros_socket/robot_joint.h
 /home/wp/ikid_ws/src/ros_socket/src/ros_socket/robot_joint.h
+ros_socket/robot_head_pos.h
+/home/wp/ikid_ws/src/ros_socket/src/ros_socket/robot_head_pos.h
 ros_socket/packetTransformer.h
 /home/wp/ikid_ws/src/ros_socket/src/ros_socket/packetTransformer.h
 

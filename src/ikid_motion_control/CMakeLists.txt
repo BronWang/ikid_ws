@@ -218,7 +218,12 @@ matlab_inv_initialize
 ${catkin_LIBRARIES}
 )
 target_link_libraries(pid_amend_node
-  ${catkin_LIBRARIES}
+robotModel
+matlab_inv
+matlab_inv_data
+matlab_inv_terminate
+matlab_inv_initialize
+${catkin_LIBRARIES}
 )
 target_link_libraries(robot_walk_node
 robotModel
