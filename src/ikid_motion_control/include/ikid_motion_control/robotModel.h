@@ -95,7 +95,9 @@ void ikidRobotDynaPosControlBoardPub(); // 物理环境
 void readIkidRobotZeroPoint(int id);
 void robotModelInit(robotLink*); // 已测试
 void initRobotPos(); 
+void initRobotPosSpecialGait();
 void robotStart(ros::NodeHandle& n_); // 已测试
+void robotStartSpecialGait(ros::NodeHandle& n_);
 void MatrixSquare3x3(double a[3][3], double a_square[3][3]); // 已测试
 void MatrixMultiMatrix3x3(double a[3][3], double b[3][3], double result[3][3]); // 已测试
 void MatrixMultiVector3x1(double a[3][3], double b[3], double result[3]); // 已测试

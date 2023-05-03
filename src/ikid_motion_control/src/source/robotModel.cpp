@@ -296,7 +296,7 @@ void ikidRobotDynaPosPub(){
     pub_right_ankle_front_swing.publish(msg);
     msg.data = robotModel[RIGHT_ANKLE_SIDE_SWING].q + ikid_robot_zero_point[RIGHT_ANKLE_SIDE_SWING];
     pub_right_ankle_side_swing.publish(msg);
-	ros::Duration(0.02).sleep();
+	ros::Duration(0.022).sleep();
 }
 
 void ikidRobotDynaPosControlBoardPub(){
@@ -1154,6 +1154,39 @@ void initRobotPos(){
 #endif
 }
 
+void initRobotPosSpecialGait(){
+	robotModel[MAIN_BODY].p[0] = 0;
+	robotModel[MAIN_BODY].p[1] = 0;
+	robotModel[MAIN_BODY].p[2] = c_h;
+	forwardKinematics(MAIN_BODY);
+	double R[3][3];
+	double temp[3];
+	rpy2rot(0, 0, 0, R);
+	MatrixMultiVector3x1(R, robotModel[LEFT_FOOT].b, temp);
+	robotModel[LEFT_ANKLE_SIDE_SWING].p[0] = 0 - temp[0];
+	robotModel[LEFT_ANKLE_SIDE_SWING].p[1] = sy / 2 - temp[1];
+	robotModel[LEFT_ANKLE_SIDE_SWING].p[2] = 0 - temp[2];
+	inverseKinmatics_leftFoot(0, 0, 0);
+	MatrixMultiVector3x1(R, robotModel[RIGHT_FOOT].b, temp);
+	robotModel[RIGHT_ANKLE_SIDE_SWING].p[0] = 0 - temp[0];
+	robotModel[RIGHT_ANKLE_SIDE_SWING].p[1] = -sy / 2 - temp[1];
+	robotModel[RIGHT_ANKLE_SIDE_SWING].p[2] = 0 - temp[2];
+	inverseKinmatics_rightFoot(0, 0, 0);
+
+
+	forwardKinematics(MAIN_BODY);
+	Calc_com(Com);
+	PC_MAIN_BODY[0] = Com[0] - robotModel[MAIN_BODY].p[0];
+	PC_MAIN_BODY[1] = Com[1] - robotModel[MAIN_BODY].p[1];
+	PC_MAIN_BODY[2] = Com[2] - robotModel[MAIN_BODY].p[2];
+	state_space_Com[0][0] = Com[0];
+	state_space_Com[1][0] = Com[1];
+
+	for(int i = 0; i < 26; i++){
+		FallUpRobotPos_q[i] = robotModel[i].q;
+	}
+}
+
 void robotStart(ros::NodeHandle& n_)
 {
 	readIkidRobotZeroPoint(0);
@@ -1172,6 +1205,14 @@ void robotStart(ros::NodeHandle& n_)
 	ros::param::get("/pid_amend/imu_yaw_p",imu_yaw_p);
 	ros::param::get("/pid_amend/imu_yaw_i",imu_yaw_i);
 	ros::param::get("/pid_amend/imu_yaw_d",imu_yaw_d);
+}
+
+void robotStartSpecialGait(ros::NodeHandle& n_)
+{
+	readIkidRobotZeroPoint(0);
+	robotModelInit(robotModel);
+	ikidRobotDynaPosPubInit(n_);
+	initRobotPosSpecialGait();
 }
 
 void MatrixSquare3x3(double a[3][3], double a_square[3][3]) {
@@ -3620,6 +3661,9 @@ void imuGesturePidControl(double &delta_roll, double &delta_pitch, double &delta
 	fin.open("/home/wp/ikid_ws/imubuffer.txt", std::ios::in);
 	fin >> imu_data_roll >> imu_data_pitch >> imu_data_yaw;
 	fin.close();
+	printf("imu_data_roll: %f\n", imu_data_roll);
+	printf("imu_data_pitch: %f\n", imu_data_pitch);
+	printf("imu_data_yaw: %f\n", imu_data_yaw);
 	data_roll = imu_data_roll;
 	data_roll -= init_imu_roll;
 	msg.data = data_roll;

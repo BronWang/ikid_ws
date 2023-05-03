@@ -34,10 +34,10 @@ int main(int argc, char *argv[])
     ros::init(argc,argv,"special_gait_node");
     //创建 ros 节点句柄
     ros::NodeHandle n;
-
+    robotStartSpecialGait(n);
     puber_special_gait = n.advertise<ikid_motion_control::cmd_walk>("/cmd_walk",5);
     // special_gait话题数据
-    ros::Subscriber suber = n.subscribe<std_msgs::Int16>("/special_gait",10,doSpecialGaitMsg);
+    ros::Subscriber suber = n.subscribe<std_msgs::Int16>("/special_gait",1,doSpecialGaitMsg);
 	
     ros::param::set("stop_special_gait_flag", true);
     
