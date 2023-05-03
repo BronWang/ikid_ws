@@ -8,3 +8,13 @@ imu_pitch_d: 0.25  # 0.1
 imu_yaw_p: 1 # 未使用
 imu_yaw_i: 0 # 未使用
 imu_yaw_d: 5 # 未使用
+
+# 步长 步宽 m 步宽0.7*2
+walk_length: 0.08
+walk_width: 0.14
+
+# 向驱动版发送帧的间隔时间 s
+walk_frame_T: 0.02
+
+# pre-load centroid hight m
+c_h_para: 0.35

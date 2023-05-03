@@ -23,8 +23,8 @@ const int KEYCODE_ESC = 0x1B;
 const int KEYCODE_ENTER = 0x0A;
 const int KEYCODE_SPACE = 0x20;
 
-const double step_len = 0.1;
-const double step_wid = 0.0528 * 2;
+double step_len = 0.1;
+double step_wid = 0.0528 * 2;
  
 using namespace KEY_CTRL;
 int main(int argc, char **argv) {
@@ -37,6 +37,9 @@ int main(int argc, char **argv) {
   ros::Rate loop_rate(10);
  
   auto KBC = Keyboard_ctrl();
+
+  ros::param::get("/pid_amend/walk_length",step_len);
+  ros::param::get("/pid_amend/walk_width",step_wid);
   while (ros::ok()) {
     ROS_INFO("input keyboard value (W forward, A left, S(unused), D right, SPACE stop):\n");
     auto key = KBC.get_keyboard_press_key();

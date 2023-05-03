@@ -42,6 +42,8 @@ double hy = 0.1125*2;
 double hx = sx;
 // 行走时腰部的高度
 double	c_h = 0.35;
+// 预加载可修改参数
+double	c_h_para = 0.35;
 // 初始手部离地面高度
 double	hand_h = c_h-0.1;
 // 脚步抬高
@@ -112,6 +114,12 @@ double imu_yaw_err_partial = 0;
 double stable_roll = 0;
 double stable_pitch = 0;
 double stable_yaw = 0;
+
+// 向驱动版发送帧的间隔时间
+double walk_frame_T = 0.02;
+// 预加载步长步宽
+double walk_length = 0.08;
+double walk_width = 0.14;
 
 // 偏摆力矩PID
 double arm_p = 0;
@@ -331,7 +339,7 @@ void ikidRobotDynaPosControlBoardPub(){
 	};
 	#if CONTROLBOARDPUB
 	pub_control_board_joint_msg.publish(control_board_joint_msg);
-	//ros::Duration(0.02).sleep();
+	//ros::Duration(walk_frame_T).sleep();
 	#endif
 }
 
@@ -1035,7 +1043,7 @@ void robotModelInit(robotLink* robotModel)
 void initRobotPos(){
 	robotModel[MAIN_BODY].p[0] = 0;
 	robotModel[MAIN_BODY].p[1] = 0;
-	robotModel[MAIN_BODY].p[2] = c_h;
+	robotModel[MAIN_BODY].p[2] = c_h_para;
 	forwardKinematics(MAIN_BODY);
 	double R[3][3];
 	double temp[3];
@@ -1157,7 +1165,7 @@ void initRobotPos(){
 void initRobotPosSpecialGait(){
 	robotModel[MAIN_BODY].p[0] = 0;
 	robotModel[MAIN_BODY].p[1] = 0;
-	robotModel[MAIN_BODY].p[2] = c_h;
+	robotModel[MAIN_BODY].p[2] = c_h_para;
 	forwardKinematics(MAIN_BODY);
 	double R[3][3];
 	double temp[3];
@@ -1195,7 +1203,6 @@ void robotStart(ros::NodeHandle& n_)
 #if WRITETXT
 	clearTxt();
 #endif
-	initRobotPos();
 	ros::param::get("/pid_amend/imu_roll_p",imu_roll_p);
 	ros::param::get("/pid_amend/imu_roll_i",imu_roll_i);
 	ros::param::get("/pid_amend/imu_roll_d",imu_roll_d);
@@ -1205,6 +1212,15 @@ void robotStart(ros::NodeHandle& n_)
 	ros::param::get("/pid_amend/imu_yaw_p",imu_yaw_p);
 	ros::param::get("/pid_amend/imu_yaw_i",imu_yaw_i);
 	ros::param::get("/pid_amend/imu_yaw_d",imu_yaw_d);
+	ros::param::get("/pid_amend/walk_length",walk_length);
+	ros::param::get("/pid_amend/walk_width",walk_width);
+	ros::param::get("/pid_amend/walk_frame_T",walk_frame_T);
+	sx = walk_length;
+    sy = walk_width;
+	pn[0] = 0.0;
+	pn[1] = sy / 2;
+	pn[2] = 0.0;
+	initRobotPos();
 }
 
 void robotStartSpecialGait(ros::NodeHandle& n_)
@@ -1212,6 +1228,14 @@ void robotStartSpecialGait(ros::NodeHandle& n_)
 	readIkidRobotZeroPoint(0);
 	robotModelInit(robotModel);
 	ikidRobotDynaPosPubInit(n_);
+	ros::param::get("/pid_amend/walk_length",walk_length);
+	ros::param::get("/pid_amend/walk_width",walk_width);
+	ros::param::get("/pid_amend/walk_frame_T",walk_frame_T);
+	sx = walk_length;
+    sy = walk_width;
+	pn[0] = 0.0;
+	pn[1] = sy / 2;
+	pn[2] = 0.0;
 	initRobotPosSpecialGait();
 }
 
@@ -3661,9 +3685,9 @@ void imuGesturePidControl(double &delta_roll, double &delta_pitch, double &delta
 	fin.open("/home/wp/ikid_ws/imubuffer.txt", std::ios::in);
 	fin >> imu_data_roll >> imu_data_pitch >> imu_data_yaw;
 	fin.close();
-	printf("imu_data_roll: %f\n", imu_data_roll);
-	printf("imu_data_pitch: %f\n", imu_data_pitch);
-	printf("imu_data_yaw: %f\n", imu_data_yaw);
+	// printf("imu_data_roll: %f\n", imu_data_roll);
+	// printf("imu_data_pitch: %f\n", imu_data_pitch);
+	// printf("imu_data_yaw: %f\n", imu_data_yaw);
 	data_roll = imu_data_roll;
 	data_roll -= init_imu_roll;
 	msg.data = data_roll;
@@ -3885,10 +3909,6 @@ void specialGaitExec(int id){
                 	}
 
 				}
-				//在执行完特殊步态后，恢复初始q值
-				for(int i = 0; i < 26; i++){
-					robotModel[i].q = FallUpRobotPos_q[i];
-				}
 				fclose(fptr);
 				break;
 			}
@@ -4034,7 +4054,11 @@ void FallUpInitPos(){
 		pub_control_board_joint_msg.publish(control_board_joint_msg);
 		ros::Duration(0.02).sleep();
 	}
-
+	//在执行完特殊步态后，恢复初始q值
+	for(int i = 0; i < 26; i++){
+		robotModel[i].q = FallUpRobotPos_q[i];
+	}
+	ikidRobotDynaPosControlBoardPub();
 #endif
 
 

@@ -5,8 +5,8 @@
 #include "ikid_motion_control/robotModel.h"
 #include "ikid_motion_control/cmd_walk.h"
 
-const double step_len = 0.1;
-const double step_wid = 0.0528 * 2;
+double step_len = 0.1;
+double step_wid = 0.0528 * 2;
 ros::Publisher puber_special_gait;
 
 void doSpecialGaitMsg(const std_msgs::Int16::ConstPtr& id_msg){
@@ -34,6 +34,8 @@ int main(int argc, char *argv[])
     ros::init(argc,argv,"special_gait_node");
     //创建 ros 节点句柄
     ros::NodeHandle n;
+    ros::param::get("/pid_amend/walk_length",step_len);
+    ros::param::get("/pid_amend/walk_width",step_wid);
     robotStartSpecialGait(n);
     puber_special_gait = n.advertise<ikid_motion_control::cmd_walk>("/cmd_walk",5);
     // special_gait话题数据
