@@ -343,6 +343,41 @@ void ikidRobotDynaPosControlBoardPub(){
 	#endif
 }
 
+void ikidRobotDynaPosControlBoardPubSpecialGait(){
+	ikid_motion_control::robot_joint control_board_joint_msg;
+	control_board_joint_msg.joint = {
+		0,
+		0,
+		robotModel[FRONT_NECK_SWING].q + ikid_robot_zero_point[FRONT_NECK_SWING],
+		robotModel[NECK_ROTATION].q + ikid_robot_zero_point[NECK_ROTATION],
+		robotModel[RIGHT_ARM_FRONT_SWING].q + ikid_robot_zero_point[RIGHT_ARM_FRONT_SWING],
+		robotModel[RIGHT_ARM_SIDE_SWING].q + ikid_robot_zero_point[RIGHT_ARM_SIDE_SWING],
+		robotModel[RIGHT_ARM_ELBOW_FRONT_SWING].q + ikid_robot_zero_point[RIGHT_ARM_ELBOW_FRONT_SWING],
+		0,
+		robotModel[LEFT_ARM_FRONT_SWING].q + ikid_robot_zero_point[LEFT_ARM_FRONT_SWING],
+		robotModel[LEFT_ARM_SIDE_SWING].q + ikid_robot_zero_point[LEFT_ARM_SIDE_SWING],
+		robotModel[LEFT_ARM_ELBOW_FRONT_SWING].q + ikid_robot_zero_point[LEFT_ARM_ELBOW_FRONT_SWING],
+		0,
+		robotModel[RIGHT_HIP_FRONT_SWING].q + ikid_robot_zero_point[RIGHT_HIP_FRONT_SWING],
+		robotModel[RIGHT_HIP_SIDE_SWING].q + ikid_robot_zero_point[RIGHT_HIP_SIDE_SWING],
+		robotModel[RIGHT_HIP_ROTATION].q + ikid_robot_zero_point[RIGHT_HIP_ROTATION],
+		robotModel[RIGHT_KNEE_FRONT_SWING].q + ikid_robot_zero_point[RIGHT_KNEE_FRONT_SWING],
+		robotModel[RIGHT_ANKLE_FRONT_SWING].q + ikid_robot_zero_point[RIGHT_ANKLE_FRONT_SWING],
+		robotModel[RIGHT_ANKLE_SIDE_SWING].q + ikid_robot_zero_point[RIGHT_ANKLE_SIDE_SWING],
+		0,
+		robotModel[LEFT_HIP_FRONT_SWING].q + ikid_robot_zero_point[LEFT_HIP_FRONT_SWING],
+		robotModel[LEFT_HIP_SIDE_SWING].q + ikid_robot_zero_point[LEFT_HIP_SIDE_SWING],
+		robotModel[LEFT_HIP_ROTATION].q + ikid_robot_zero_point[LEFT_HIP_ROTATION],
+		robotModel[LEFT_KNEE_FRONT_SWING].q + ikid_robot_zero_point[LEFT_KNEE_FRONT_SWING],
+		robotModel[LEFT_ANKLE_FRONT_SWING].q + ikid_robot_zero_point[LEFT_ANKLE_FRONT_SWING],
+		robotModel[LEFT_ANKLE_SIDE_SWING].q + ikid_robot_zero_point[LEFT_ANKLE_SIDE_SWING],
+		0
+	};
+	#if CONTROLBOARDPUB
+	pub_control_board_joint_msg.publish(control_board_joint_msg);
+	#endif
+}
+
 void readIkidRobotZeroPoint(int id){
 	DIR *dp = NULL;
 	struct dirent *st;  // 文件夹中的子文件数据结构
@@ -3875,11 +3910,13 @@ void specialGaitExec(int id){
 								before_gait_frame_data[i] = gait_frame_data[i];
 							}
 						}
-						gait_frame_data[1] = (atof(token)+zero_point[1])/180*M_PI;
+						// gait_frame_data[1] = (atof(token)+zero_point[1])/180*M_PI;
+						gait_frame_data[1] = (atof(token))/180*M_PI;
 						for (int i = 2; i <= 25; i++)
 						{
 							token = strtok(NULL, ",");
-							gait_frame_data[i] = (atof(token)+zero_point[i])/180*M_PI;
+							// gait_frame_data[i] = (atof(token)+zero_point[i])/180*M_PI;
+							gait_frame_data[i] = (atof(token))/180*M_PI;
 						}
 						token = strtok(NULL, ","); // 获取当前帧到下一帧之间的插帧数
 						int temp_frame_rate = atoi(token);
@@ -3902,7 +3939,8 @@ void specialGaitExec(int id){
 							ikidRobotDynaPosPub();
 							#endif
 							#if CONTROLBOARDPUB
-							ikidRobotDynaPosControlBoardPub();
+							ikidRobotDynaPosControlBoardPubSpecialGait();
+							// ros::Duration(0.02).sleep();
 							#endif
 							count_frame++;
 						}

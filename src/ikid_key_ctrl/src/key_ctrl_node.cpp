@@ -2,6 +2,7 @@
 #include "ikid_key_ctrl/cmd_walk.h"
 #include "ikid_key_ctrl/key_common.h"
 #include "ros/ros.h"
+#include <std_msgs/Int16.h>
 const int KEYCODE_W = 0x77;
 const int KEYCODE_A = 0x61;
 const int KEYCODE_S = 0x73;
@@ -14,6 +15,7 @@ const int KEYCODE_S_CAP = 0x53;
 const int KEYCODE_W_CAP = 0x57;
  
 const int KEYCODE_0 = 0x30;
+const int KEYCODE_3 = 0x33;
 const int KEYCODE_9 = 0x39;
  
 // const int KEYCODE_SHIFT = 0x10;
@@ -31,8 +33,8 @@ int main(int argc, char **argv) {
   ros::init(argc, argv, "key_ctrl_node");
   ros::NodeHandle nh;
  
-  ros::Publisher pub_keyboard =
-      nh.advertise<ikid_key_ctrl::cmd_walk>("/cmd_walk", 5);
+  ros::Publisher pub_keyboard = nh.advertise<ikid_key_ctrl::cmd_walk>("/cmd_walk", 5);
+  ros::Publisher pub_keyboard2 = nh.advertise<std_msgs::Int16>("/special_gait", 1);
  
   ros::Rate loop_rate(10);
  
@@ -43,8 +45,9 @@ int main(int argc, char **argv) {
   while (ros::ok()) {
     ROS_INFO("input keyboard value (W forward, A left, S(unused), D right, SPACE stop):\n");
     auto key = KBC.get_keyboard_press_key();
-    //ROS_INFO("get keyboard press 0x%02X \n", key);
+    // ROS_INFO("get keyboard press 0x%02X \n", key);
     ikid_key_ctrl::cmd_walk walk_msg;
+    std_msgs::Int16 msg;
     switch (key)
     {
         case KEYCODE_W:
@@ -99,6 +102,10 @@ int main(int argc, char **argv) {
             walk_msg.var_theta = 0;
             walk_msg.walk_with_ball = true;
             pub_keyboard.publish(walk_msg);
+            break;
+        case KEYCODE_3:
+            msg.data = 3;
+            pub_keyboard2.publish(msg);
             break;
         default:
             break;

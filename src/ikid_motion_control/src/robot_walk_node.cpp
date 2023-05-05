@@ -17,6 +17,11 @@ extern double imu_data_pitch;
 
 void doWalkMsg(const ikid_motion_control::cmd_walk::ConstPtr& walkMsg){
     ROS_INFO("0000");
+    bool stop_special_gait_flag = true;
+    ros::param::get("stop_special_gait_flag",stop_special_gait_flag);
+    if(!stop_special_gait_flag){
+        return;
+    }
     sx = walkMsg->sx;
     sy = walkMsg->sy;
 	if(!(walkMsg->stop_walk)){
@@ -74,14 +79,14 @@ int main(int argc, char *argv[])
 	fin.close();
 
 
-    ros::Subscriber sub = n.subscribe<ikid_motion_control::cmd_walk>("/cmd_walk",5,doWalkMsg);
+    ros::Subscriber sub = n.subscribe<ikid_motion_control::cmd_walk>("/cmd_walk",1,doWalkMsg);
     ros::param::set("stop_walk_flag",true);  //设置停止行走标志位于参数服务器中
     ros::param::set("stop_turn_flag",true);  //设置停止转弯标志位于参数服务器中
     ros::param::set("walk_with_ball",false);  //设置动态踢球标志位于参数服务器中
 
     clearImuDataTxt();
     clearZmpDataTxt();
-
+    ros::Rate rate(80);
     while (ros::ok())
     {
         bool stop_walk_flag;
@@ -90,6 +95,7 @@ int main(int argc, char *argv[])
         if(!stop_walk_flag){
             trajPlan();
         }
+        rate.sleep();
         ros::spinOnce();
     }
     

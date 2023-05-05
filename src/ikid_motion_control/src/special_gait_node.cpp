@@ -24,8 +24,12 @@ void doSpecialGaitMsg(const std_msgs::Int16::ConstPtr& id_msg){
         ros::param::get("stop_walk_flag", stop_walk_flag);
     }
     specialGaitExec(id_msg->data);
-    walk_msg.stop_walk = false;
-    puber_special_gait.publish(walk_msg);
+    // walk_msg.stop_walk = false;
+    // puber_special_gait.publish(walk_msg);
+    // ros::param::get("stop_walk_flag", stop_walk_flag);
+    // while(stop_walk_flag){
+    //     ros::param::get("stop_walk_flag", stop_walk_flag);
+    // }
 }
 
 int main(int argc, char *argv[])

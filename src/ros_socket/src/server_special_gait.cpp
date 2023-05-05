@@ -29,6 +29,9 @@ int main(int argc, char** argv)
     //创建句柄（虽然后面没用到这个句柄，但如果不创建，运行时进程会出错）
     ros::NodeHandle n;
     robotStart(n);
+    string local_ip_addr;
+    ros::param::get("/pid_amend/local_ip_addr",local_ip_addr);
+    cout << local_ip_addr << endl;
     struct sockaddr_in servaddr, cliaddr;
     socklen_t cliaddr_len;
     int listenfd, connfd;
@@ -46,10 +49,10 @@ int main(int argc, char** argv)
         exit(1);
     }
     bzero(&servaddr, sizeof(servaddr));
-    //2.准备通讯地址（必须是服务器的）192.168.186.130是本机的IP
+    //2.准备通讯地址（必须是服务器的）是本机的IP
     servaddr.sin_family = AF_INET;
     servaddr.sin_port = htons(1110);//将一个无符号短整型的主机数值转换为网络字节顺序，即大尾顺序(big-endian)
-    servaddr.sin_addr.s_addr = inet_addr("192.168.186.130");//net_addr方法可以转化字符串，主要用来将一个十进制的数转化为二进制的数，用途多于ipv4的IP转化。
+    servaddr.sin_addr.s_addr = inet_addr(local_ip_addr.data());//net_addr方法可以转化字符串，主要用来将一个十进制的数转化为二进制的数，用途多于ipv4的IP转化。
 
     //3.bind()绑定
     //参数一：0的返回值（listenfd）

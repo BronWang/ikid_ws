@@ -92,6 +92,7 @@ enum {
 void ikidRobotDynaPosPubInit(ros::NodeHandle& n_);	    
 void ikidRobotDynaPosPub(); // 仿真环境
 void ikidRobotDynaPosControlBoardPub(); // 物理环境
+void ikidRobotDynaPosControlBoardPubSpecialGait();
 void readIkidRobotZeroPoint(int id);
 void robotModelInit(robotLink*); // 已测试
 void initRobotPos(); 
