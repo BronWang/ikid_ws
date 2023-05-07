@@ -29,7 +29,7 @@ void doControlBoardMsg(const ros_socket::robot_joint::ConstPtr& controlBoardMsg)
         joint_map[RIGHT_ARM_FRONT_SWING].second = 0;
     }else{
         uint16_t temp = (uint16_t)(abs(angle_right_arm_front_swing - joint_map[RIGHT_ARM_FRONT_SWING].first)*0.088/360/frame_T*60/117.07*1023);
-        temp = temp>1023?1023:temp;
+        temp = temp>1023?1023:temp+1;
         joint_map[RIGHT_ARM_FRONT_SWING].second = temp;
         joint_map[RIGHT_ARM_FRONT_SWING].first = angle_right_arm_front_swing;
     }
@@ -42,7 +42,7 @@ void doControlBoardMsg(const ros_socket::robot_joint::ConstPtr& controlBoardMsg)
         joint_map[RIGHT_ARM_SIDE_SWING].second = 0;
     }else{
         uint16_t temp =(uint16_t)(abs(angle_right_arm_side_swing - joint_map[RIGHT_ARM_SIDE_SWING].first)*0.088/360/frame_T*60/117.07*1023);
-        temp = temp>1023?1023:temp;
+        temp = temp>1023?1023:temp+1;
         joint_map[RIGHT_ARM_SIDE_SWING].second = temp;
         joint_map[RIGHT_ARM_SIDE_SWING].first = angle_right_arm_side_swing;
     }
@@ -55,7 +55,7 @@ void doControlBoardMsg(const ros_socket::robot_joint::ConstPtr& controlBoardMsg)
         joint_map[RIGHT_ARM_ELBOW_FRONT_SWING].second = 0;
     }else{
         uint16_t temp =(uint16_t)(abs(angle_right_elbow_front_swing - joint_map[RIGHT_ARM_ELBOW_FRONT_SWING].first)*0.088/360/frame_T*60/117.07*1023);
-        temp = temp>1023?1023:temp;
+        temp = temp>1023?1023:temp+1;
         joint_map[RIGHT_ARM_ELBOW_FRONT_SWING].second = temp;
         joint_map[RIGHT_ARM_ELBOW_FRONT_SWING].first = angle_right_elbow_front_swing;
     }
@@ -69,7 +69,7 @@ void doControlBoardMsg(const ros_socket::robot_joint::ConstPtr& controlBoardMsg)
         joint_map[LEFT_ARM_FRONT_SWING].second = 0;
     }else{
         uint16_t temp =(uint16_t)(abs(angle_left_arm_front_swing - joint_map[LEFT_ARM_FRONT_SWING].first)*0.088/360/frame_T*60/117.07*1023);
-        temp = temp>1023?1023:temp;
+        temp = temp>1023?1023:temp+1;
         joint_map[LEFT_ARM_FRONT_SWING].second =temp;
         joint_map[LEFT_ARM_FRONT_SWING].first = angle_left_arm_front_swing;
     }
@@ -82,7 +82,7 @@ void doControlBoardMsg(const ros_socket::robot_joint::ConstPtr& controlBoardMsg)
         joint_map[LEFT_ARM_SIDE_SWING].second = 0;
     }else{
         uint16_t temp = (uint16_t)(abs(angle_left_arm_side_swing - joint_map[LEFT_ARM_SIDE_SWING].first)*0.088/360/frame_T*60/117.07*1023);
-        temp = temp>1023?1023:temp;
+        temp = temp>1023?1023:temp+1;
         joint_map[LEFT_ARM_SIDE_SWING].second = temp;
         joint_map[LEFT_ARM_SIDE_SWING].first = angle_left_arm_side_swing;
     }
@@ -95,7 +95,7 @@ void doControlBoardMsg(const ros_socket::robot_joint::ConstPtr& controlBoardMsg)
         joint_map[LEFT_ARM_ELBOW_FRONT_SWING].second = 0;
     }else{
         uint16_t temp = (uint16_t)(abs(angle_left_elbow_front_swing - joint_map[LEFT_ARM_ELBOW_FRONT_SWING].first)*0.088/360/frame_T*60/117.07*1023);
-        temp = temp>1023?1023:temp;
+        temp = temp>1023?1023:temp+1;
         joint_map[LEFT_ARM_ELBOW_FRONT_SWING].second = temp;
         joint_map[LEFT_ARM_ELBOW_FRONT_SWING].first = angle_left_elbow_front_swing;
     }
@@ -109,7 +109,7 @@ void doControlBoardMsg(const ros_socket::robot_joint::ConstPtr& controlBoardMsg)
         joint_map[RIGHT_HIP_FRONT_SWING].second = 0;
     }else{
         uint16_t temp = (uint16_t)(abs(angle_right_hip_front_swing - joint_map[RIGHT_HIP_FRONT_SWING].first)*0.088/360/frame_T*60/117.07*1023);
-        temp = temp>1023?1023:temp;
+        temp = temp>1023?1023:temp+1;
         joint_map[RIGHT_HIP_FRONT_SWING].second = temp;
         joint_map[RIGHT_HIP_FRONT_SWING].first = angle_right_hip_front_swing;
     }
@@ -122,7 +122,7 @@ void doControlBoardMsg(const ros_socket::robot_joint::ConstPtr& controlBoardMsg)
         joint_map[RIGHT_HIP_SIDE_SWING].second = 0;
     }else{
         uint16_t temp = (uint16_t)(abs(angle_right_hip_side_swing - joint_map[RIGHT_HIP_SIDE_SWING].first)*0.088/360/frame_T*60/117.07*1023);
-        temp = temp>1023?1023:temp;
+        temp = temp>1023?1023:temp+1;
         joint_map[RIGHT_HIP_SIDE_SWING].second =temp;
         joint_map[RIGHT_HIP_SIDE_SWING].first = angle_right_hip_side_swing;
     }
@@ -135,7 +135,7 @@ void doControlBoardMsg(const ros_socket::robot_joint::ConstPtr& controlBoardMsg)
         joint_map[RIGHT_HIP_ROTATION].second = 0;
     }else{
         uint16_t temp = (uint16_t)(abs(angle_right_hip_rotation - joint_map[RIGHT_HIP_ROTATION].first)*0.088/360/frame_T*60/117.07*1023);
-        temp = temp>1023?1023:temp;
+        temp = temp>1023?1023:temp+1;
         joint_map[RIGHT_HIP_ROTATION].second = temp;
         joint_map[RIGHT_HIP_ROTATION].first = angle_right_hip_rotation;
     }
@@ -148,7 +148,7 @@ void doControlBoardMsg(const ros_socket::robot_joint::ConstPtr& controlBoardMsg)
         joint_map[RIGHT_KNEE_FRONT_SWING].second = 0;
     }else{
         uint16_t temp = (uint16_t)(abs(angle_right_knee_front_swing - joint_map[RIGHT_KNEE_FRONT_SWING].first)*0.088/360/frame_T*60/117.07*1023);
-        temp = temp>1023?1023:temp;
+        temp = temp>1023?1023:temp+1;
         joint_map[RIGHT_KNEE_FRONT_SWING].second = temp;
         joint_map[RIGHT_KNEE_FRONT_SWING].first = angle_right_knee_front_swing;
     }
@@ -161,7 +161,7 @@ void doControlBoardMsg(const ros_socket::robot_joint::ConstPtr& controlBoardMsg)
         joint_map[RIGHT_ANKLE_FRONT_SWING].second = 0;
     }else{
         uint16_t temp = (uint16_t)(abs(angle_right_ankle_front_swing - joint_map[RIGHT_ANKLE_FRONT_SWING].first)*0.088/360/frame_T*60/117.07*1023);
-        temp = temp>1023?1023:temp;
+        temp = temp>1023?1023:temp+1;
         joint_map[RIGHT_ANKLE_FRONT_SWING].second = temp;
         joint_map[RIGHT_ANKLE_FRONT_SWING].first = angle_right_ankle_front_swing;
     }
@@ -174,7 +174,7 @@ void doControlBoardMsg(const ros_socket::robot_joint::ConstPtr& controlBoardMsg)
         joint_map[RIGHT_ANKLE_SIDE_SWING].second = 0;
     }else{
         uint16_t temp = (uint16_t)(abs(angle_right_ankle_side_swing - joint_map[RIGHT_ANKLE_SIDE_SWING].first)*0.088/360/frame_T*60/117.07*1023);
-        temp = temp>1023?1023:temp;
+        temp = temp>1023?1023:temp+1;
         joint_map[RIGHT_ANKLE_SIDE_SWING].second = temp;
         joint_map[RIGHT_ANKLE_SIDE_SWING].first = angle_right_ankle_side_swing;
     }
@@ -188,7 +188,7 @@ void doControlBoardMsg(const ros_socket::robot_joint::ConstPtr& controlBoardMsg)
         joint_map[LEFT_HIP_FRONT_SWING].second = 0;
     }else{
         uint16_t temp = (uint16_t)(abs(angle_left_hip_front_swing - joint_map[LEFT_HIP_FRONT_SWING].first)*0.088/360/frame_T*60/117.07*1023);
-        temp = temp>1023?1023:temp;
+        temp = temp>1023?1023:temp+1;
         joint_map[LEFT_HIP_FRONT_SWING].second = temp;
         joint_map[LEFT_HIP_FRONT_SWING].first = angle_left_hip_front_swing;
     }
@@ -201,7 +201,7 @@ void doControlBoardMsg(const ros_socket::robot_joint::ConstPtr& controlBoardMsg)
         joint_map[LEFT_HIP_SIDE_SWING].second = 0;
     }else{
         uint16_t temp = (uint16_t)(abs(angle_left_hip_side_swing - joint_map[LEFT_HIP_SIDE_SWING].first)*0.088/360/frame_T*60/117.07*1023);
-        temp = temp>1023?1023:temp;
+        temp = temp>1023?1023:temp+1;
         joint_map[LEFT_HIP_SIDE_SWING].second = temp;
         joint_map[LEFT_HIP_SIDE_SWING].first = angle_left_hip_side_swing;
     }
@@ -214,7 +214,7 @@ void doControlBoardMsg(const ros_socket::robot_joint::ConstPtr& controlBoardMsg)
         joint_map[LEFT_HIP_ROTATION].second = 0;
     }else{
         uint16_t temp = (uint16_t)(abs(angle_left_hip_rotation - joint_map[LEFT_HIP_ROTATION].first)*0.088/360/frame_T*60/117.07*1023);
-        temp = temp>1023?1023:temp;
+        temp = temp>1023?1023:temp+1;
         joint_map[LEFT_HIP_ROTATION].second = temp;
         joint_map[LEFT_HIP_ROTATION].first = angle_left_hip_rotation;
     }
@@ -227,7 +227,7 @@ void doControlBoardMsg(const ros_socket::robot_joint::ConstPtr& controlBoardMsg)
         joint_map[LEFT_KNEE_FRONT_SWING].second = 0;
     }else{
         uint16_t temp = (uint16_t)(abs(angle_left_knee_front_swing - joint_map[LEFT_KNEE_FRONT_SWING].first)*0.088/360/frame_T*60/117.07*1023);
-        temp = temp>1023?1023:temp;
+        temp = temp>1023?1023:temp+1;
         joint_map[LEFT_KNEE_FRONT_SWING].second =temp;
         joint_map[LEFT_KNEE_FRONT_SWING].first = angle_left_knee_front_swing;
     }
@@ -240,7 +240,7 @@ void doControlBoardMsg(const ros_socket::robot_joint::ConstPtr& controlBoardMsg)
         joint_map[LEFT_ANKLE_FRONT_SWING].second = 0;
     }else{
         uint16_t temp = (uint16_t)(abs(angle_left_ankle_front_swing - joint_map[LEFT_ANKLE_FRONT_SWING].first)*0.088/360/frame_T*60/117.07*1023);
-        temp = temp>1023?1023:temp;
+        temp = temp>1023?1023:temp+1;
         joint_map[LEFT_ANKLE_FRONT_SWING].second = temp;
         joint_map[LEFT_ANKLE_FRONT_SWING].first = angle_left_ankle_front_swing;
     }
@@ -253,7 +253,7 @@ void doControlBoardMsg(const ros_socket::robot_joint::ConstPtr& controlBoardMsg)
         joint_map[LEFT_ANKLE_SIDE_SWING].second = 0;
     }else{
         uint16_t temp = (uint16_t)(abs(angle_left_ankle_side_swing - joint_map[LEFT_ANKLE_SIDE_SWING].first)*0.088/360/frame_T*60/117.07*1023);
-        temp = temp>1023?1023:temp;
+        temp = temp>1023?1023:temp+1;
         joint_map[LEFT_ANKLE_SIDE_SWING].second = temp;
         joint_map[LEFT_ANKLE_SIDE_SWING].first = angle_left_ankle_side_swing;
     }
@@ -532,8 +532,8 @@ int main(int argc, char** argv){
         return -1;
     }
 
-    ros::Subscriber sub = n.subscribe<ros_socket::robot_joint>("/ikid_robot/control_board_joint_msg",100,doControlBoardMsg);
-    ros::Subscriber subHead = n.subscribe<ros_socket::robot_head_pos>("/ikid_robot/robot_head_pos_msg",100,doHeadPosMsg);
+    ros::Subscriber sub = n.subscribe<ros_socket::robot_joint>("/ikid_robot/control_board_joint_msg",5,doControlBoardMsg);
+    ros::Subscriber subHead = n.subscribe<ros_socket::robot_head_pos>("/ikid_robot/robot_head_pos_msg",1,doHeadPosMsg);
     ros::Subscriber sub2 = n.subscribe<std_msgs::Byte>("/torque_on",10,doTorqueOnMsg);
     doTorqueOnMsg(nullptr); //保证扭力开启
     initHeadPos(); //保证机器人头部有力

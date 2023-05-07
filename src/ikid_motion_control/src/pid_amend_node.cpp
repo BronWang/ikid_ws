@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
     //创建 ros 节点句柄
     ros::NodeHandle n;
     // imu测试话题数据
-    ros::Subscriber suber = n.subscribe<sensor_msgs::Imu>("/imu",100,doImuMsg);
+    ros::Subscriber suber = n.subscribe<sensor_msgs::Imu>("/imu",10,doImuMsg);
     // ros::param::set("imu_data_roll",0.0);
     // ros::param::set("imu_data_pitch",0.0);
     // ros::param::set("imu_data_yaw",0.0);

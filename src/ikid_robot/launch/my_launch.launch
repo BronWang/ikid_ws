@@ -73,7 +73,8 @@
     </node>
 
     <!-- 启动特殊步态节点 -->
-    <node pkg="ikid_motion_control" type="special_gait_node" name="special_gait"/>
+    <!-- 不启动这个特殊步态节点，融合进robot_walk_node节点里了 -->
+    <!-- <node pkg="ikid_motion_control" type="special_gait_node" name="special_gait"/> -->
 
 
 </launch>

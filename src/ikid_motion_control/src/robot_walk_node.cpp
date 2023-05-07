@@ -4,6 +4,7 @@
 #include <fstream>
 #include "ikid_motion_control/robotModel.h"
 #include "ikid_motion_control/cmd_walk.h"
+#include <std_msgs/Int16.h>
 
 extern robotLink robotModel[26];
 extern double theta;
@@ -60,6 +61,26 @@ void doWalkMsg(const ikid_motion_control::cmd_walk::ConstPtr& walkMsg){
     }
 }
 
+void doSpecialGaitMsg(const std_msgs::Int16::ConstPtr& id_msg){
+
+    bool stop_walk_flag;
+    ros::param::get("stop_walk_flag",stop_walk_flag); //如果已经停止，不执行操作
+    if(!stop_walk_flag){
+        sx = 0;
+        trajPlan();
+        FallUpInitPos();  // 保证停稳
+        ros::param::set("stop_walk_flag",true);
+    }
+    specialGaitExec(id_msg->data);
+    trajPlan();
+    // walk_msg.stop_walk = false;
+    // puber_special_gait.publish(walk_msg);
+    // ros::param::get("stop_walk_flag", stop_walk_flag);
+    // while(stop_walk_flag){
+    //     ros::param::get("stop_walk_flag", stop_walk_flag);
+    // }
+}
+
 
 int main(int argc, char *argv[])
 {
@@ -83,6 +104,8 @@ int main(int argc, char *argv[])
     ros::param::set("stop_walk_flag",true);  //设置停止行走标志位于参数服务器中
     ros::param::set("stop_turn_flag",true);  //设置停止转弯标志位于参数服务器中
     ros::param::set("walk_with_ball",false);  //设置动态踢球标志位于参数服务器中
+    ros::Subscriber specialGaitSuber = n.subscribe<std_msgs::Int16>("/special_gait",1,doSpecialGaitMsg);
+    ros::param::set("stop_special_gait_flag", true);
 
     clearImuDataTxt();
     clearZmpDataTxt();

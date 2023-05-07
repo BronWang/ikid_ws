@@ -1250,6 +1250,8 @@ void robotStart(ros::NodeHandle& n_)
 	ros::param::get("/pid_amend/walk_length",walk_length);
 	ros::param::get("/pid_amend/walk_width",walk_width);
 	ros::param::get("/pid_amend/walk_frame_T",walk_frame_T);
+	ros::param::get("/pid_amend/c_h_para",c_h_para);
+	ros::param::get("/pid_amend/foot_hight",fh);
 	sx = walk_length;
     sy = walk_width;
 	pn[0] = 0.0;
@@ -1266,6 +1268,8 @@ void robotStartSpecialGait(ros::NodeHandle& n_)
 	ros::param::get("/pid_amend/walk_length",walk_length);
 	ros::param::get("/pid_amend/walk_width",walk_width);
 	ros::param::get("/pid_amend/walk_frame_T",walk_frame_T);
+	ros::param::get("/pid_amend/walk_frame_T",walk_frame_T);
+	ros::param::get("/pid_amend/c_h_para",c_h_para);
 	sx = walk_length;
     sy = walk_width;
 	pn[0] = 0.0;
