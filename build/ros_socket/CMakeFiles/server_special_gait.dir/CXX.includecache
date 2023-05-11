@@ -6,6 +6,22 @@
 
 #IncludeRegexTransform: 
 
+/home/wp/ikid_ws/devel/include/ros_socket/cmd_walk.h
+string
+-
+vector
+-
+memory
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
+
 /home/wp/ikid_ws/src/ros_socket/include/ros_socket/robotModel.h
 ros/ros.h
 -
@@ -35,6 +51,8 @@ std_msgs/Float64.h
 /home/wp/ikid_ws/src/ros_socket/src/std_msgs/Float64.h
 ros_socket/robotModel.h
 /home/wp/ikid_ws/src/ros_socket/src/ros_socket/robotModel.h
+ros_socket/cmd_walk.h
+/home/wp/ikid_ws/src/ros_socket/src/ros_socket/cmd_walk.h
 
 /opt/ros/noetic/include/ros/advertise_options.h
 ros/forwards.h

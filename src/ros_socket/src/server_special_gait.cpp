@@ -10,6 +10,7 @@
 #include <ros/ros.h>
 #include "std_msgs/Float64.h"
 #include "ros_socket/robotModel.h"
+#include "ros_socket/cmd_walk.h"
 
 #define MAXWORD 1024
 
@@ -22,6 +23,8 @@ struct s_info{
 };
 
 extern robotLink robotModel[26];
+double step_len = 0.1;
+double step_wid = 0.0528 * 2;
 
 int main(int argc, char** argv)
 {
@@ -85,8 +88,10 @@ int main(int argc, char** argv)
 		exit(0);
 	}
 	fclose(fp);
-	
-
+   ros::param::get("/pid_amend/walk_length",step_len);
+   ros::param::get("/pid_amend/walk_width",step_wid);
+   ros_socket::cmd_walk walk_msg;
+   ros::Publisher pub_walk = n.advertise<ros_socket::cmd_walk>("/cmd_walk", 5);
    while (ros::ok()) 
    {
         cout << "正在监听网络连接...\n" << endl;
@@ -120,10 +125,11 @@ int main(int argc, char** argv)
                         //cout << "[out] " << robot_q << endl;
                     }
                     #if ROSPUB
-                    ikidRobotDynaPosPub();
+                    ikidRobotDynaPosPubSpecialGait();
                     #endif
                     #if CONTROLBOARDPUB
-                    ikidRobotDynaPosControlBoardPub();
+                    ikidRobotDynaPosControlBoardPubSpecialGait();
+                    ros::Duration(0.02).sleep();
                     #endif
                     //保存关节数据
                     fp = fopen(filename, "a");
@@ -153,6 +159,8 @@ int main(int argc, char** argv)
                         exit(0);
                     }
                     fclose(fp);
+                    char message[] = "success start_write_gait_txt";
+                    write(connfd, message, sizeof(message));
                 }
                 if(token_str == "gait_txt_data"){
 
@@ -168,6 +176,55 @@ int main(int argc, char** argv)
                     }
                     fputs(txt_data.data(), fp);
 	                fclose(fp);
+                    char message[] = "success gait_txt_data";
+                    write(connfd, message, sizeof(message));
+                }
+                if(token_str == "cmd_walk_start_walk"){
+                    readIkidRobotZeroPoint(0);
+                    for (int i = 1; i <= 25; i++)
+                    {
+                        robotModel[i].q = 0;
+                    }
+                    initRobotPos();
+                }
+                if(token_str == "cmd_walk_forward"){
+                    walk_msg.stop_walk = false;
+                    walk_msg.sx = step_len;
+                    walk_msg.sy = step_wid;
+                    walk_msg.var_theta = 0;
+                    walk_msg.walk_with_ball = false;
+                    pub_walk.publish(walk_msg);
+                }
+                if(token_str == "cmd_walk_left"){
+                    walk_msg.stop_walk = false;
+                    walk_msg.sx = step_len;
+                    walk_msg.sy = step_wid;
+                    walk_msg.var_theta = 25/180.0*M_PI;
+                    walk_msg.walk_with_ball = false;
+                    pub_walk.publish(walk_msg);
+                }
+                if(token_str == "cmd_walk_right"){
+                    walk_msg.stop_walk = false;
+                    walk_msg.sx = step_len;
+                    walk_msg.sy = step_wid;
+                    walk_msg.var_theta = -25/180.0*M_PI;
+                    walk_msg.walk_with_ball = false;
+                    pub_walk.publish(walk_msg);
+                }
+                if(token_str == "cmd_walk_stop"){
+                    bool stop_walk_flag;
+                    bool has_value;
+                    has_value = ros::param::get("stop_walk_flag",stop_walk_flag);
+                    if(has_value){
+                        if(!stop_walk_flag){
+                            walk_msg.stop_walk = true;
+                            walk_msg.sx = step_len;
+                            walk_msg.sy = step_wid;
+                            walk_msg.var_theta = 0;
+                            walk_msg.walk_with_ball = false;
+                            pub_walk.publish(walk_msg);
+                        } 
+                    }
                 }
             }else{
                 printf("The client ip: %s, port: %d\n has beens closed!\n", 

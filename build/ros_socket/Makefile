@@ -92,6 +92,16 @@ install/fast: preinstall/fast
 	/usr/bin/cmake -P cmake_install.cmake
 .PHONY : install/fast
 
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
+
 # Special rule for the target test
 test:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
@@ -124,16 +134,6 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
-
-# Special rule for the target list_install_components
-list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
-.PHONY : list_install_components
-
-# Special rule for the target list_install_components
-list_install_components/fast: list_install_components
-
-.PHONY : list_install_components/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -256,6 +256,21 @@ matlab_inv_ros_socket: ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/rule
 matlab_inv_ros_socket/fast:
 	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/build
 .PHONY : matlab_inv_ros_socket/fast
+
+# Convenience name for target.
+ros_socket/CMakeFiles/_ros_socket_generate_messages_check_deps_cmd_walk.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/_ros_socket_generate_messages_check_deps_cmd_walk.dir/rule
+.PHONY : ros_socket/CMakeFiles/_ros_socket_generate_messages_check_deps_cmd_walk.dir/rule
+
+# Convenience name for target.
+_ros_socket_generate_messages_check_deps_cmd_walk: ros_socket/CMakeFiles/_ros_socket_generate_messages_check_deps_cmd_walk.dir/rule
+
+.PHONY : _ros_socket_generate_messages_check_deps_cmd_walk
+
+# fast build rule for target.
+_ros_socket_generate_messages_check_deps_cmd_walk/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/_ros_socket_generate_messages_check_deps_cmd_walk.dir/build.make ros_socket/CMakeFiles/_ros_socket_generate_messages_check_deps_cmd_walk.dir/build
+.PHONY : _ros_socket_generate_messages_check_deps_cmd_walk/fast
 
 # Convenience name for target.
 ros_socket/CMakeFiles/ros_socket_gennodejs.dir/rule:
@@ -453,6 +468,21 @@ matlab_inv_data_ros_socket/fast:
 .PHONY : matlab_inv_data_ros_socket/fast
 
 # Convenience name for target.
+ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/rule
+.PHONY : ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/rule
+
+# Convenience name for target.
+matlab_inv_terminate_ros_socket: ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/rule
+
+.PHONY : matlab_inv_terminate_ros_socket
+
+# fast build rule for target.
+matlab_inv_terminate_ros_socket/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/build
+.PHONY : matlab_inv_terminate_ros_socket/fast
+
+# Convenience name for target.
 ros_socket/CMakeFiles/ros_socket_geneus.dir/rule:
 	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/ros_socket_geneus.dir/rule
 .PHONY : ros_socket/CMakeFiles/ros_socket_geneus.dir/rule
@@ -513,19 +543,19 @@ server_special_gait/fast:
 .PHONY : server_special_gait/fast
 
 # Convenience name for target.
-ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/rule
-.PHONY : ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/rule
+ros_socket/CMakeFiles/robot_walk_node_specialgait.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/robot_walk_node_specialgait.dir/rule
+.PHONY : ros_socket/CMakeFiles/robot_walk_node_specialgait.dir/rule
 
 # Convenience name for target.
-matlab_inv_terminate_ros_socket: ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/rule
+robot_walk_node_specialgait: ros_socket/CMakeFiles/robot_walk_node_specialgait.dir/rule
 
-.PHONY : matlab_inv_terminate_ros_socket
+.PHONY : robot_walk_node_specialgait
 
 # fast build rule for target.
-matlab_inv_terminate_ros_socket/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/build
-.PHONY : matlab_inv_terminate_ros_socket/fast
+robot_walk_node_specialgait/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/robot_walk_node_specialgait.dir/build.make ros_socket/CMakeFiles/robot_walk_node_specialgait.dir/build
+.PHONY : robot_walk_node_specialgait/fast
 
 src/client_node.o: src/client_node.cpp.o
 
@@ -553,6 +583,33 @@ src/client_node.s: src/client_node.cpp.s
 src/client_node.cpp.s:
 	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/client_node.dir/build.make ros_socket/CMakeFiles/client_node.dir/src/client_node.cpp.s
 .PHONY : src/client_node.cpp.s
+
+src/robot_walk_node_specialgait.o: src/robot_walk_node_specialgait.cpp.o
+
+.PHONY : src/robot_walk_node_specialgait.o
+
+# target to build an object file
+src/robot_walk_node_specialgait.cpp.o:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/robot_walk_node_specialgait.dir/build.make ros_socket/CMakeFiles/robot_walk_node_specialgait.dir/src/robot_walk_node_specialgait.cpp.o
+.PHONY : src/robot_walk_node_specialgait.cpp.o
+
+src/robot_walk_node_specialgait.i: src/robot_walk_node_specialgait.cpp.i
+
+.PHONY : src/robot_walk_node_specialgait.i
+
+# target to preprocess a source file
+src/robot_walk_node_specialgait.cpp.i:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/robot_walk_node_specialgait.dir/build.make ros_socket/CMakeFiles/robot_walk_node_specialgait.dir/src/robot_walk_node_specialgait.cpp.i
+.PHONY : src/robot_walk_node_specialgait.cpp.i
+
+src/robot_walk_node_specialgait.s: src/robot_walk_node_specialgait.cpp.s
+
+.PHONY : src/robot_walk_node_specialgait.s
+
+# target to generate assembly for a file
+src/robot_walk_node_specialgait.cpp.s:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/robot_walk_node_specialgait.dir/build.make ros_socket/CMakeFiles/robot_walk_node_specialgait.dir/src/robot_walk_node_specialgait.cpp.s
+.PHONY : src/robot_walk_node_specialgait.cpp.s
 
 src/serial_port.o: src/serial_port.cpp.o
 
@@ -832,16 +889,17 @@ help:
 	@echo "... depend"
 	@echo "... install/strip"
 	@echo "... install/local"
+	@echo "... install"
 	@echo "... ros_socket_generate_messages_lisp"
 	@echo "... ros_socket_generate_messages_eus"
 	@echo "... ros_socket_genlisp"
 	@echo "... ros_socket_generate_messages_nodejs"
 	@echo "... ros_socket_generate_messages_cpp"
 	@echo "... matlab_inv_ros_socket"
+	@echo "... _ros_socket_generate_messages_check_deps_cmd_walk"
 	@echo "... ros_socket_gennodejs"
 	@echo "... _ros_socket_generate_messages_check_deps_robot_joint"
 	@echo "... _ros_socket_generate_messages_check_deps_robot_head_pos"
-	@echo "... install"
 	@echo "... client_node"
 	@echo "... ros_socket_gencpp"
 	@echo "... serial_port"
@@ -852,18 +910,22 @@ help:
 	@echo "... ByteArray_ros_socket"
 	@echo "... ros_socket_genpy"
 	@echo "... matlab_inv_data_ros_socket"
+	@echo "... list_install_components"
+	@echo "... matlab_inv_terminate_ros_socket"
 	@echo "... ros_socket_geneus"
 	@echo "... packetTransformer_ros_socket"
 	@echo "... server_node"
 	@echo "... server_special_gait"
+	@echo "... robot_walk_node_specialgait"
 	@echo "... test"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... matlab_inv_terminate_ros_socket"
-	@echo "... list_install_components"
 	@echo "... src/client_node.o"
 	@echo "... src/client_node.i"
 	@echo "... src/client_node.s"
+	@echo "... src/robot_walk_node_specialgait.o"
+	@echo "... src/robot_walk_node_specialgait.i"
+	@echo "... src/robot_walk_node_specialgait.s"
 	@echo "... src/serial_port.o"
 	@echo "... src/serial_port.i"
 	@echo "... src/serial_port.s"

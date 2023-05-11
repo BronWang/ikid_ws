@@ -7,9 +7,9 @@
 #define WRITEIMUDATA 1
 #define WRITEZMPDATA 1
 #define ROSPUB 1    // 是否向Gazebo中的关节控制器发送计算出的关节位置信息
-#define CONTROLBOARDPUB 1    // 是否向物理控制板发送计算出的关节位置信息
+#define CONTROLBOARDPUB 0    // 是否向物理控制板发送计算出的关节位置信息
 #define SWING_ARM 1
-#define PID_AMEND  0  // 是否对机器人的姿态进行PID修正
+#define PID_AMEND  1  // 是否对机器人的姿态进行PID修正
 #define PART_NUMBER 26
 #define NONE_JOINT  255
 #define PI  3.1415926
@@ -91,11 +91,15 @@ enum {
 // id 25 左脚端	
 void ikidRobotDynaPosPubInit(ros::NodeHandle& n_);	    
 void ikidRobotDynaPosPub(); // 仿真环境
+void ikidRobotDynaPosPubSpecialGait(); // 仿真环境
 void ikidRobotDynaPosControlBoardPub(); // 物理环境
+void ikidRobotDynaPosControlBoardPubSpecialGait();
 void readIkidRobotZeroPoint(int id);
 void robotModelInit(robotLink*); // 已测试
 void initRobotPos(); 
+void initRobotPosSpecialGait();
 void robotStart(ros::NodeHandle& n_); // 已测试
+void robotStartSpecialGait(ros::NodeHandle& n_);
 void MatrixSquare3x3(double a[3][3], double a_square[3][3]); // 已测试
 void MatrixMultiMatrix3x3(double a[3][3], double b[3][3], double result[3][3]); // 已测试
 void MatrixMultiVector3x1(double a[3][3], double b[3], double result[3]); // 已测试

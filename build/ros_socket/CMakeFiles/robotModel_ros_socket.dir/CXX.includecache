@@ -65,6 +65,8 @@ dirent.h
 -
 sys/stat.h
 -
+fstream
+-
 std_msgs/Float64.h
 /home/wp/ikid_ws/src/ros_socket/src/source/std_msgs/Float64.h
 std_msgs/Byte.h

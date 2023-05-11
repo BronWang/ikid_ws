@@ -307,6 +307,51 @@ void ikidRobotDynaPosPub(){
 	ros::Duration(0.022).sleep();
 }
 
+void ikidRobotDynaPosPubSpecialGait(){
+	std_msgs::Float64 msg;
+    msg.data = robotModel[FRONT_NECK_SWING].q;
+    pub_neck_front_swing.publish(msg);
+    msg.data = robotModel[NECK_ROTATION].q;
+    pub_neck_rotation.publish(msg);
+    msg.data = robotModel[LEFT_ARM_FRONT_SWING].q;
+    pub_left_arm_front_swing.publish(msg);
+    msg.data = robotModel[LEFT_ARM_SIDE_SWING].q;
+    pub_left_arm_side_swing.publish(msg);
+    msg.data = robotModel[LEFT_ARM_ELBOW_FRONT_SWING].q;
+    pub_left_arm_elbow_front_swing.publish(msg);
+    msg.data = robotModel[RIGHT_ARM_FRONT_SWING].q;
+    pub_right_arm_front_swing.publish(msg);
+    msg.data = robotModel[RIGHT_ARM_SIDE_SWING].q;
+    pub_right_arm_side_swing.publish(msg);
+    msg.data = robotModel[RIGHT_ARM_ELBOW_FRONT_SWING].q;
+    pub_right_arm_elbow_front_swing.publish(msg);
+    msg.data = robotModel[LEFT_HIP_FRONT_SWING].q;
+    pub_left_hip_front_swing.publish(msg);
+    msg.data = robotModel[LEFT_HIP_SIDE_SWING].q;
+    pub_left_hip_side_swing.publish(msg);
+    msg.data = robotModel[LEFT_HIP_ROTATION].q;
+    pub_left_hip_rotation.publish(msg);
+    msg.data = robotModel[RIGHT_HIP_FRONT_SWING].q;
+    pub_right_hip_front_swing.publish(msg);
+    msg.data = robotModel[RIGHT_HIP_SIDE_SWING].q;
+    pub_right_hip_side_swing.publish(msg);
+    msg.data = robotModel[RIGHT_HIP_ROTATION].q;
+    pub_right_hip_rotation.publish(msg);
+    msg.data = robotModel[LEFT_KNEE_FRONT_SWING].q;
+    pub_left_knee_front_swing.publish(msg);
+    msg.data = robotModel[RIGHT_KNEE_FRONT_SWING].q;
+    pub_right_knee_front_swing.publish(msg);
+    msg.data = robotModel[LEFT_ANKLE_FRONT_SWING].q;
+    pub_left_ankle_front_swing.publish(msg);
+    msg.data = robotModel[LEFT_ANKLE_SIDE_SWING].q;
+    pub_left_ankle_side_swing.publish(msg);
+    msg.data = robotModel[RIGHT_ANKLE_FRONT_SWING].q;
+    pub_right_ankle_front_swing.publish(msg);
+    msg.data = robotModel[RIGHT_ANKLE_SIDE_SWING].q;
+    pub_right_ankle_side_swing.publish(msg);
+	ros::Duration(0.022).sleep();
+}
+
 void ikidRobotDynaPosControlBoardPub(){
 	ikid_motion_control::robot_joint control_board_joint_msg;
 	control_board_joint_msg.joint = {
@@ -339,7 +384,7 @@ void ikidRobotDynaPosControlBoardPub(){
 	};
 	#if CONTROLBOARDPUB
 	pub_control_board_joint_msg.publish(control_board_joint_msg);
-	//ros::Duration(walk_frame_T).sleep();
+	ros::Duration(walk_frame_T).sleep();
 	#endif
 }
 
@@ -348,29 +393,29 @@ void ikidRobotDynaPosControlBoardPubSpecialGait(){
 	control_board_joint_msg.joint = {
 		0,
 		0,
-		robotModel[FRONT_NECK_SWING].q + ikid_robot_zero_point[FRONT_NECK_SWING],
-		robotModel[NECK_ROTATION].q + ikid_robot_zero_point[NECK_ROTATION],
-		robotModel[RIGHT_ARM_FRONT_SWING].q + ikid_robot_zero_point[RIGHT_ARM_FRONT_SWING],
-		robotModel[RIGHT_ARM_SIDE_SWING].q + ikid_robot_zero_point[RIGHT_ARM_SIDE_SWING],
-		robotModel[RIGHT_ARM_ELBOW_FRONT_SWING].q + ikid_robot_zero_point[RIGHT_ARM_ELBOW_FRONT_SWING],
+		robotModel[FRONT_NECK_SWING].q,
+		robotModel[NECK_ROTATION].q,
+		robotModel[RIGHT_ARM_FRONT_SWING].q,
+		robotModel[RIGHT_ARM_SIDE_SWING].q,
+		robotModel[RIGHT_ARM_ELBOW_FRONT_SWING].q,
 		0,
-		robotModel[LEFT_ARM_FRONT_SWING].q + ikid_robot_zero_point[LEFT_ARM_FRONT_SWING],
-		robotModel[LEFT_ARM_SIDE_SWING].q + ikid_robot_zero_point[LEFT_ARM_SIDE_SWING],
-		robotModel[LEFT_ARM_ELBOW_FRONT_SWING].q + ikid_robot_zero_point[LEFT_ARM_ELBOW_FRONT_SWING],
+		robotModel[LEFT_ARM_FRONT_SWING].q,
+		robotModel[LEFT_ARM_SIDE_SWING].q,
+		robotModel[LEFT_ARM_ELBOW_FRONT_SWING].q,
 		0,
-		robotModel[RIGHT_HIP_FRONT_SWING].q + ikid_robot_zero_point[RIGHT_HIP_FRONT_SWING],
-		robotModel[RIGHT_HIP_SIDE_SWING].q + ikid_robot_zero_point[RIGHT_HIP_SIDE_SWING],
-		robotModel[RIGHT_HIP_ROTATION].q + ikid_robot_zero_point[RIGHT_HIP_ROTATION],
-		robotModel[RIGHT_KNEE_FRONT_SWING].q + ikid_robot_zero_point[RIGHT_KNEE_FRONT_SWING],
-		robotModel[RIGHT_ANKLE_FRONT_SWING].q + ikid_robot_zero_point[RIGHT_ANKLE_FRONT_SWING],
-		robotModel[RIGHT_ANKLE_SIDE_SWING].q + ikid_robot_zero_point[RIGHT_ANKLE_SIDE_SWING],
+		robotModel[RIGHT_HIP_FRONT_SWING].q,
+		robotModel[RIGHT_HIP_SIDE_SWING].q,
+		robotModel[RIGHT_HIP_ROTATION].q,
+		robotModel[RIGHT_KNEE_FRONT_SWING].q,
+		robotModel[RIGHT_ANKLE_FRONT_SWING].q,
+		robotModel[RIGHT_ANKLE_SIDE_SWING].q,
 		0,
-		robotModel[LEFT_HIP_FRONT_SWING].q + ikid_robot_zero_point[LEFT_HIP_FRONT_SWING],
-		robotModel[LEFT_HIP_SIDE_SWING].q + ikid_robot_zero_point[LEFT_HIP_SIDE_SWING],
-		robotModel[LEFT_HIP_ROTATION].q + ikid_robot_zero_point[LEFT_HIP_ROTATION],
-		robotModel[LEFT_KNEE_FRONT_SWING].q + ikid_robot_zero_point[LEFT_KNEE_FRONT_SWING],
-		robotModel[LEFT_ANKLE_FRONT_SWING].q + ikid_robot_zero_point[LEFT_ANKLE_FRONT_SWING],
-		robotModel[LEFT_ANKLE_SIDE_SWING].q + ikid_robot_zero_point[LEFT_ANKLE_SIDE_SWING],
+		robotModel[LEFT_HIP_FRONT_SWING].q,
+		robotModel[LEFT_HIP_SIDE_SWING].q,
+		robotModel[LEFT_HIP_ROTATION].q,
+		robotModel[LEFT_KNEE_FRONT_SWING].q,
+		robotModel[LEFT_ANKLE_FRONT_SWING].q,
+		robotModel[LEFT_ANKLE_SIDE_SWING].q,
 		0
 	};
 	#if CONTROLBOARDPUB
@@ -3914,13 +3959,13 @@ void specialGaitExec(int id){
 								before_gait_frame_data[i] = gait_frame_data[i];
 							}
 						}
-						// gait_frame_data[1] = (atof(token)+zero_point[1])/180*M_PI;
-						gait_frame_data[1] = (atof(token))/180*M_PI;
+						gait_frame_data[1] = (atof(token)+zero_point[1])/180*M_PI;
+						// gait_frame_data[1] = (atof(token))/180*M_PI;
 						for (int i = 2; i <= 25; i++)
 						{
 							token = strtok(NULL, ",");
-							// gait_frame_data[i] = (atof(token)+zero_point[i])/180*M_PI;
-							gait_frame_data[i] = (atof(token))/180*M_PI;
+							gait_frame_data[i] = (atof(token)+zero_point[i])/180*M_PI;
+							// gait_frame_data[i] = (atof(token))/180*M_PI;
 						}
 						token = strtok(NULL, ","); // 获取当前帧到下一帧之间的插帧数
 						int temp_frame_rate = atoi(token);
@@ -3944,7 +3989,7 @@ void specialGaitExec(int id){
 							#endif
 							#if CONTROLBOARDPUB
 							ikidRobotDynaPosControlBoardPubSpecialGait();
-							// ros::Duration(0.02).sleep();
+							ros::Duration(0.02).sleep();
 							#endif
 							count_frame++;
 						}

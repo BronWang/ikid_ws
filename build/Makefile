@@ -1013,6 +1013,19 @@ matlab_inv_ros_socket/fast:
 .PHONY : matlab_inv_ros_socket/fast
 
 #=============================================================================
+# Target rules for targets named _ros_socket_generate_messages_check_deps_cmd_walk
+
+# Build rule for target.
+_ros_socket_generate_messages_check_deps_cmd_walk: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _ros_socket_generate_messages_check_deps_cmd_walk
+.PHONY : _ros_socket_generate_messages_check_deps_cmd_walk
+
+# fast build rule for target.
+_ros_socket_generate_messages_check_deps_cmd_walk/fast:
+	$(MAKE) -f ros_socket/CMakeFiles/_ros_socket_generate_messages_check_deps_cmd_walk.dir/build.make ros_socket/CMakeFiles/_ros_socket_generate_messages_check_deps_cmd_walk.dir/build
+.PHONY : _ros_socket_generate_messages_check_deps_cmd_walk/fast
+
+#=============================================================================
 # Target rules for targets named ros_socket_gennodejs
 
 # Build rule for target.
@@ -1182,6 +1195,19 @@ matlab_inv_data_ros_socket/fast:
 .PHONY : matlab_inv_data_ros_socket/fast
 
 #=============================================================================
+# Target rules for targets named matlab_inv_terminate_ros_socket
+
+# Build rule for target.
+matlab_inv_terminate_ros_socket: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 matlab_inv_terminate_ros_socket
+.PHONY : matlab_inv_terminate_ros_socket
+
+# fast build rule for target.
+matlab_inv_terminate_ros_socket/fast:
+	$(MAKE) -f ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/build
+.PHONY : matlab_inv_terminate_ros_socket/fast
+
+#=============================================================================
 # Target rules for targets named ros_socket_geneus
 
 # Build rule for target.
@@ -1234,17 +1260,17 @@ server_special_gait/fast:
 .PHONY : server_special_gait/fast
 
 #=============================================================================
-# Target rules for targets named matlab_inv_terminate_ros_socket
+# Target rules for targets named robot_walk_node_specialgait
 
 # Build rule for target.
-matlab_inv_terminate_ros_socket: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 matlab_inv_terminate_ros_socket
-.PHONY : matlab_inv_terminate_ros_socket
+robot_walk_node_specialgait: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 robot_walk_node_specialgait
+.PHONY : robot_walk_node_specialgait
 
 # fast build rule for target.
-matlab_inv_terminate_ros_socket/fast:
-	$(MAKE) -f ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/build
-.PHONY : matlab_inv_terminate_ros_socket/fast
+robot_walk_node_specialgait/fast:
+	$(MAKE) -f ros_socket/CMakeFiles/robot_walk_node_specialgait.dir/build.make ros_socket/CMakeFiles/robot_walk_node_specialgait.dir/build
+.PHONY : robot_walk_node_specialgait/fast
 
 #=============================================================================
 # Target rules for targets named _catkin_empty_exported_target
@@ -1350,6 +1376,7 @@ help:
 	@echo "... ros_socket_generate_messages_nodejs"
 	@echo "... ros_socket_generate_messages_cpp"
 	@echo "... matlab_inv_ros_socket"
+	@echo "... _ros_socket_generate_messages_check_deps_cmd_walk"
 	@echo "... ros_socket_gennodejs"
 	@echo "... _ros_socket_generate_messages_check_deps_robot_joint"
 	@echo "... _ros_socket_generate_messages_check_deps_robot_head_pos"
@@ -1363,11 +1390,12 @@ help:
 	@echo "... ByteArray_ros_socket"
 	@echo "... ros_socket_genpy"
 	@echo "... matlab_inv_data_ros_socket"
+	@echo "... matlab_inv_terminate_ros_socket"
 	@echo "... ros_socket_geneus"
 	@echo "... packetTransformer_ros_socket"
 	@echo "... server_node"
 	@echo "... server_special_gait"
-	@echo "... matlab_inv_terminate_ros_socket"
+	@echo "... robot_walk_node_specialgait"
 	@echo "... _catkin_empty_exported_target"
 	@echo "... ros_qt_ikid"
 .PHONY : help

@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <dirent.h>
 #include <sys/stat.h>
+#include <fstream>
 #include "std_msgs/Float64.h"
 #include "std_msgs/Byte.h"
 #include "ros_socket/robot_joint.h"
@@ -21,6 +22,13 @@ const int FALL_FORWARD_UP_ID = 2;
 // 机器人零点数据
 double ikid_robot_zero_point[26] = {0};
 
+// 机器人零点IMU数据
+double init_imu_roll = 0.0;
+double init_imu_pitch = 0.0;
+double imu_data_roll = 0.0;
+double imu_data_yaw = 0.0;
+double imu_data_pitch = 0.0;
+
 // 步行单元帧数
 const int step_basic_frame = 25;
 // 双脚支撑帧数
@@ -34,6 +42,8 @@ double hy = 0.1125*2;
 double hx = sx;
 // 行走时腰部的高度
 double	c_h = 0.35;
+// 预加载可修改参数
+double	c_h_para = 0.35;
 // 初始手部离地面高度
 double	hand_h = c_h-0.1;
 // 脚步抬高
@@ -104,6 +114,12 @@ double imu_yaw_err_partial = 0;
 double stable_roll = 0;
 double stable_pitch = 0;
 double stable_yaw = 0;
+
+// 向驱动版发送帧的间隔时间
+double walk_frame_T = 0.02;
+// 预加载步长步宽
+double walk_length = 0.08;
+double walk_width = 0.14;
 
 // 偏摆力矩PID
 double arm_p = 0;
@@ -288,7 +304,52 @@ void ikidRobotDynaPosPub(){
     pub_right_ankle_front_swing.publish(msg);
     msg.data = robotModel[RIGHT_ANKLE_SIDE_SWING].q + ikid_robot_zero_point[RIGHT_ANKLE_SIDE_SWING];
     pub_right_ankle_side_swing.publish(msg);
-	ros::Duration(0.02).sleep();
+	ros::Duration(0.022).sleep();
+}
+
+void ikidRobotDynaPosPubSpecialGait(){
+	std_msgs::Float64 msg;
+    msg.data = robotModel[FRONT_NECK_SWING].q;
+    pub_neck_front_swing.publish(msg);
+    msg.data = robotModel[NECK_ROTATION].q;
+    pub_neck_rotation.publish(msg);
+    msg.data = robotModel[LEFT_ARM_FRONT_SWING].q;
+    pub_left_arm_front_swing.publish(msg);
+    msg.data = robotModel[LEFT_ARM_SIDE_SWING].q;
+    pub_left_arm_side_swing.publish(msg);
+    msg.data = robotModel[LEFT_ARM_ELBOW_FRONT_SWING].q;
+    pub_left_arm_elbow_front_swing.publish(msg);
+    msg.data = robotModel[RIGHT_ARM_FRONT_SWING].q;
+    pub_right_arm_front_swing.publish(msg);
+    msg.data = robotModel[RIGHT_ARM_SIDE_SWING].q;
+    pub_right_arm_side_swing.publish(msg);
+    msg.data = robotModel[RIGHT_ARM_ELBOW_FRONT_SWING].q;
+    pub_right_arm_elbow_front_swing.publish(msg);
+    msg.data = robotModel[LEFT_HIP_FRONT_SWING].q;
+    pub_left_hip_front_swing.publish(msg);
+    msg.data = robotModel[LEFT_HIP_SIDE_SWING].q;
+    pub_left_hip_side_swing.publish(msg);
+    msg.data = robotModel[LEFT_HIP_ROTATION].q;
+    pub_left_hip_rotation.publish(msg);
+    msg.data = robotModel[RIGHT_HIP_FRONT_SWING].q;
+    pub_right_hip_front_swing.publish(msg);
+    msg.data = robotModel[RIGHT_HIP_SIDE_SWING].q;
+    pub_right_hip_side_swing.publish(msg);
+    msg.data = robotModel[RIGHT_HIP_ROTATION].q;
+    pub_right_hip_rotation.publish(msg);
+    msg.data = robotModel[LEFT_KNEE_FRONT_SWING].q;
+    pub_left_knee_front_swing.publish(msg);
+    msg.data = robotModel[RIGHT_KNEE_FRONT_SWING].q;
+    pub_right_knee_front_swing.publish(msg);
+    msg.data = robotModel[LEFT_ANKLE_FRONT_SWING].q;
+    pub_left_ankle_front_swing.publish(msg);
+    msg.data = robotModel[LEFT_ANKLE_SIDE_SWING].q;
+    pub_left_ankle_side_swing.publish(msg);
+    msg.data = robotModel[RIGHT_ANKLE_FRONT_SWING].q;
+    pub_right_ankle_front_swing.publish(msg);
+    msg.data = robotModel[RIGHT_ANKLE_SIDE_SWING].q;
+    pub_right_ankle_side_swing.publish(msg);
+	ros::Duration(0.022).sleep();
 }
 
 void ikidRobotDynaPosControlBoardPub(){
@@ -323,7 +384,42 @@ void ikidRobotDynaPosControlBoardPub(){
 	};
 	#if CONTROLBOARDPUB
 	pub_control_board_joint_msg.publish(control_board_joint_msg);
-	ros::Duration(0.02).sleep();
+	ros::Duration(walk_frame_T).sleep();
+	#endif
+}
+
+void ikidRobotDynaPosControlBoardPubSpecialGait(){
+	ros_socket::robot_joint control_board_joint_msg;
+	control_board_joint_msg.joint = {
+		0,
+		0,
+		robotModel[FRONT_NECK_SWING].q,
+		robotModel[NECK_ROTATION].q,
+		robotModel[RIGHT_ARM_FRONT_SWING].q,
+		robotModel[RIGHT_ARM_SIDE_SWING].q,
+		robotModel[RIGHT_ARM_ELBOW_FRONT_SWING].q,
+		0,
+		robotModel[LEFT_ARM_FRONT_SWING].q,
+		robotModel[LEFT_ARM_SIDE_SWING].q,
+		robotModel[LEFT_ARM_ELBOW_FRONT_SWING].q,
+		0,
+		robotModel[RIGHT_HIP_FRONT_SWING].q,
+		robotModel[RIGHT_HIP_SIDE_SWING].q,
+		robotModel[RIGHT_HIP_ROTATION].q,
+		robotModel[RIGHT_KNEE_FRONT_SWING].q,
+		robotModel[RIGHT_ANKLE_FRONT_SWING].q,
+		robotModel[RIGHT_ANKLE_SIDE_SWING].q,
+		0,
+		robotModel[LEFT_HIP_FRONT_SWING].q,
+		robotModel[LEFT_HIP_SIDE_SWING].q,
+		robotModel[LEFT_HIP_ROTATION].q,
+		robotModel[LEFT_KNEE_FRONT_SWING].q,
+		robotModel[LEFT_ANKLE_FRONT_SWING].q,
+		robotModel[LEFT_ANKLE_SIDE_SWING].q,
+		0
+	};
+	#if CONTROLBOARDPUB
+	pub_control_board_joint_msg.publish(control_board_joint_msg);
 	#endif
 }
 
@@ -1027,7 +1123,7 @@ void robotModelInit(robotLink* robotModel)
 void initRobotPos(){
 	robotModel[MAIN_BODY].p[0] = 0;
 	robotModel[MAIN_BODY].p[1] = 0;
-	robotModel[MAIN_BODY].p[2] = c_h;
+	robotModel[MAIN_BODY].p[2] = c_h_para;
 	forwardKinematics(MAIN_BODY);
 	double R[3][3];
 	double temp[3];
@@ -1142,22 +1238,51 @@ void initRobotPos(){
 		pub_control_board_joint_msg.publish(control_board_joint_msg);
 		ros::Duration(0.02).sleep();
 	}
-	for(int i = 0; i < PART_NUMBER; i++){
-		ikid_robot_zero_point[i] = 0;
-	}
 
 #endif
 }
 
+void initRobotPosSpecialGait(){
+	robotModel[MAIN_BODY].p[0] = 0;
+	robotModel[MAIN_BODY].p[1] = 0;
+	robotModel[MAIN_BODY].p[2] = c_h_para;
+	forwardKinematics(MAIN_BODY);
+	double R[3][3];
+	double temp[3];
+	rpy2rot(0, 0, 0, R);
+	MatrixMultiVector3x1(R, robotModel[LEFT_FOOT].b, temp);
+	robotModel[LEFT_ANKLE_SIDE_SWING].p[0] = 0 - temp[0];
+	robotModel[LEFT_ANKLE_SIDE_SWING].p[1] = sy / 2 - temp[1];
+	robotModel[LEFT_ANKLE_SIDE_SWING].p[2] = 0 - temp[2];
+	inverseKinmatics_leftFoot(0, 0, 0);
+	MatrixMultiVector3x1(R, robotModel[RIGHT_FOOT].b, temp);
+	robotModel[RIGHT_ANKLE_SIDE_SWING].p[0] = 0 - temp[0];
+	robotModel[RIGHT_ANKLE_SIDE_SWING].p[1] = -sy / 2 - temp[1];
+	robotModel[RIGHT_ANKLE_SIDE_SWING].p[2] = 0 - temp[2];
+	inverseKinmatics_rightFoot(0, 0, 0);
+
+
+	forwardKinematics(MAIN_BODY);
+	Calc_com(Com);
+	PC_MAIN_BODY[0] = Com[0] - robotModel[MAIN_BODY].p[0];
+	PC_MAIN_BODY[1] = Com[1] - robotModel[MAIN_BODY].p[1];
+	PC_MAIN_BODY[2] = Com[2] - robotModel[MAIN_BODY].p[2];
+	state_space_Com[0][0] = Com[0];
+	state_space_Com[1][0] = Com[1];
+
+	for(int i = 0; i < 26; i++){
+		FallUpRobotPos_q[i] = robotModel[i].q;
+	}
+}
+
 void robotStart(ros::NodeHandle& n_)
 {
-	readIkidRobotZeroPoint(1);
+	readIkidRobotZeroPoint(0);
 	robotModelInit(robotModel);
 	ikidRobotDynaPosPubInit(n_);
 #if WRITETXT
 	clearTxt();
 #endif
-	initRobotPos();
 	ros::param::get("/pid_amend/imu_roll_p",imu_roll_p);
 	ros::param::get("/pid_amend/imu_roll_i",imu_roll_i);
 	ros::param::get("/pid_amend/imu_roll_d",imu_roll_d);
@@ -1167,6 +1292,35 @@ void robotStart(ros::NodeHandle& n_)
 	ros::param::get("/pid_amend/imu_yaw_p",imu_yaw_p);
 	ros::param::get("/pid_amend/imu_yaw_i",imu_yaw_i);
 	ros::param::get("/pid_amend/imu_yaw_d",imu_yaw_d);
+	ros::param::get("/pid_amend/walk_length",walk_length);
+	ros::param::get("/pid_amend/walk_width",walk_width);
+	ros::param::get("/pid_amend/walk_frame_T",walk_frame_T);
+	ros::param::get("/pid_amend/c_h_para",c_h_para);
+	ros::param::get("/pid_amend/foot_hight",fh);
+	sx = walk_length;
+    sy = walk_width;
+	pn[0] = 0.0;
+	pn[1] = sy / 2;
+	pn[2] = 0.0;
+	initRobotPos();
+}
+
+void robotStartSpecialGait(ros::NodeHandle& n_)
+{
+	readIkidRobotZeroPoint(0);
+	robotModelInit(robotModel);
+	ikidRobotDynaPosPubInit(n_);
+	ros::param::get("/pid_amend/walk_length",walk_length);
+	ros::param::get("/pid_amend/walk_width",walk_width);
+	ros::param::get("/pid_amend/walk_frame_T",walk_frame_T);
+	ros::param::get("/pid_amend/walk_frame_T",walk_frame_T);
+	ros::param::get("/pid_amend/c_h_para",c_h_para);
+	sx = walk_length;
+    sy = walk_width;
+	pn[0] = 0.0;
+	pn[1] = sy / 2;
+	pn[2] = 0.0;
+	initRobotPosSpecialGait();
 }
 
 void MatrixSquare3x3(double a[3][3], double a_square[3][3]) {
@@ -3610,13 +3764,25 @@ void dFootSupportPhase(double theta_mainbody, double theta_left, double theta_ri
 void imuGesturePidControl(double &delta_roll, double &delta_pitch, double &delta_yaw){
 	std_msgs::Float64 msg;
 	double data_roll=0,data_pitch=0,data_yaw=0;
-	ros::param::get("imu_data_roll",data_roll);
+	//ros::param::get("imu_data_roll",data_roll);
+	std::fstream fin;
+	fin.open("/home/wp/ikid_ws/imubuffer.txt", std::ios::in);
+	fin >> imu_data_roll >> imu_data_pitch >> imu_data_yaw;
+	fin.close();
+	// printf("imu_data_roll: %f\n", imu_data_roll);
+	// printf("imu_data_pitch: %f\n", imu_data_pitch);
+	// printf("imu_data_yaw: %f\n", imu_data_yaw);
+	data_roll = imu_data_roll;
+	data_roll -= init_imu_roll;
 	msg.data = data_roll;
 	pub_imu_data_roll.publish(msg);
-	ros::param::get("imu_data_pitch",data_pitch);
+	//ros::param::get("imu_data_pitch",data_pitch);
+	data_pitch = imu_data_pitch;
+	data_pitch -= init_imu_pitch;
 	msg.data = data_pitch;
 	pub_imu_data_pitch.publish(msg);
-	ros::param::get("imu_data_yaw",data_yaw);
+	//ros::param::get("imu_data_yaw",data_yaw);
+	data_yaw = imu_data_yaw;
 	msg.data = data_yaw;
 	pub_imu_data_yaw.publish(msg);
 	//printf("%f, %f\n",data_roll, data_pitch);
@@ -3637,7 +3803,8 @@ void imuGesturePidControl(double &delta_roll, double &delta_pitch, double &delta
 	imu_pitch_err = temp_pitch_err;
 	imu_pitch_err_sum += imu_pitch_err*frame_T;
 
-	stable_yaw = theta;
+	//stable_yaw = theta; 目前不对偏航角用PID
+	stable_yaw = data_yaw;
 	temp_yaw_err = stable_yaw - data_yaw;
 	imu_yaw_err_partial = (temp_yaw_err - imu_yaw_err)/frame_T;
 	imu_yaw_err = temp_yaw_err;
@@ -3673,6 +3840,7 @@ void imuGesturePidControl(double &delta_roll, double &delta_pitch, double &delta
 }
 
 void specialGaitExec(int id){
+	
 	DIR *dp = NULL;
 	struct dirent *st;  // 文件夹中的子文件数据结构
 	struct stat sta;
@@ -3792,10 +3960,12 @@ void specialGaitExec(int id){
 							}
 						}
 						gait_frame_data[1] = (atof(token)+zero_point[1])/180*M_PI;
+						// gait_frame_data[1] = (atof(token))/180*M_PI;
 						for (int i = 2; i <= 25; i++)
 						{
 							token = strtok(NULL, ",");
 							gait_frame_data[i] = (atof(token)+zero_point[i])/180*M_PI;
+							// gait_frame_data[i] = (atof(token))/180*M_PI;
 						}
 						token = strtok(NULL, ","); // 获取当前帧到下一帧之间的插帧数
 						int temp_frame_rate = atoi(token);
@@ -3814,15 +3984,17 @@ void specialGaitExec(int id){
 									robotModel[j].q = before_gait_frame_data[j]+(gait_frame_data[j]-before_gait_frame_data[j])*i/temp_frame_rate;
 								}
 							}
+							#if ROSPUB
 							ikidRobotDynaPosPub();
+							#endif
+							#if CONTROLBOARDPUB
+							ikidRobotDynaPosControlBoardPubSpecialGait();
+							ros::Duration(0.02).sleep();
+							#endif
 							count_frame++;
 						}
                 	}
 
-				}
-				//在执行完特殊步态后，恢复初始q值
-				for(int i = 0; i < 26; i++){
-					robotModel[i].q = FallUpRobotPos_q[i];
 				}
 				fclose(fptr);
 				break;
@@ -3843,10 +4015,16 @@ void specialGaitExec(int id){
 
 void judgeFall(){
 	//判断机器人是否跌倒,并执行步态
-	double data_roll,data_pitch,data_yaw;
-	ros::param::get("imu_data_roll",data_roll);
-	ros::param::get("imu_data_pitch",data_pitch);
-	ros::param::get("imu_data_yaw",data_yaw);
+	double data_roll=0.0,data_pitch=0.0,data_yaw=0.0;
+	std::fstream fin;
+	fin.open("/home/wp/ikid_ws/imubuffer.txt", std::ios::in);
+	fin >> data_roll >> data_pitch >> data_yaw;
+	fin.close();
+	//ros::param::get("imu_data_roll",data_roll);
+	data_roll -= init_imu_roll;
+	//ros::param::get("imu_data_pitch",data_pitch);
+	data_pitch -= init_imu_pitch;
+	//ros::param::get("imu_data_yaw",data_yaw);
 	if(data_pitch < 110 && data_pitch > 70){
 		double temp_sx = sx;
 		sx = 0;   // 执行跌倒爬起时，一定要先把前进步长变为0走一步，要不然复位时之前保存的ZMP点可能已经不相对存在于脚底板下
@@ -3963,7 +4141,11 @@ void FallUpInitPos(){
 		pub_control_board_joint_msg.publish(control_board_joint_msg);
 		ros::Duration(0.02).sleep();
 	}
-
+	//在执行完特殊步态后，恢复初始q值
+	for(int i = 0; i < 26; i++){
+		robotModel[i].q = FallUpRobotPos_q[i];
+	}
+	ikidRobotDynaPosControlBoardPub();
 #endif
 
 
