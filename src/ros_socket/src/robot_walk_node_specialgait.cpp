@@ -116,8 +116,8 @@ int main(int argc, char *argv[])
     while (ros::ok())
     {
         bool stop_walk_flag;
-        ros::param::get("stop_walk_flag",stop_walk_flag);
         judgeFall();
+        ros::param::get("stop_walk_flag",stop_walk_flag);
         if(!stop_walk_flag){
             trajPlan();
         }

@@ -13,11 +13,13 @@ void doImuMsg(const sensor_msgs::Imu::ConstPtr& imuMsg_p){
 		imuMsg_p->orientation.z,
 		imuMsg_p->orientation.w
 	);
-	double roll,pitch,yaw;
+	double roll,pitch,yaw, x_accel, y_accel;
 	tf::Matrix3x3(quaternion).getRPY(roll,pitch,yaw);
     roll=roll*180/M_PI;
     pitch=pitch*180/M_PI;
     yaw=yaw*180/M_PI;
+    x_accel = imuMsg_p->linear_acceleration.x;
+    y_accel = imuMsg_p->linear_acceleration.y;
     // ros::param::set("imu_data_roll",roll);
     // ros::param::set("imu_data_pitch",pitch);
     // ros::param::set("imu_data_yaw",yaw);

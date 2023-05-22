@@ -25,9 +25,11 @@ void doWalkMsg(const ikid_motion_control::cmd_walk::ConstPtr& walkMsg){
     }
     sx = walkMsg->sx;
     sy = walkMsg->sy;
+    ROS_INFO("1111");
 	if(!(walkMsg->stop_walk)){
         bool stop_walk_flag;
         ros::param::get("stop_walk_flag",stop_walk_flag); //如果是停止开始，先执行启动步态
+        ROS_INFO("2222");
         if(stop_walk_flag){
             startTrajPlan();
         }
@@ -113,8 +115,8 @@ int main(int argc, char *argv[])
     while (ros::ok())
     {
         bool stop_walk_flag;
-        ros::param::get("stop_walk_flag",stop_walk_flag);
         judgeFall();
+        ros::param::get("stop_walk_flag",stop_walk_flag);
         if(!stop_walk_flag){
             trajPlan();
         }

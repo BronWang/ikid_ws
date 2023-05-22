@@ -110,6 +110,18 @@ double imu_yaw_d = 0;
 double imu_yaw_err = 0;
 double imu_yaw_err_sum = 0;
 double imu_yaw_err_partial = 0;
+double imu_com_x_p =  0;
+double imu_com_x_i =  0;
+double imu_com_x_d =  0;
+double imu_com_y_p =  0;
+double imu_com_y_i =  0;
+double imu_com_y_d =  0;
+// 质心位置补偿
+double com_x_compen = 0;
+double com_y_compen = 0;
+
+double com_const_x_compen = 0.001;
+double com_const_y_compen = 0.001;
 // 稳定姿态值
 double stable_roll = 0;
 double stable_pitch = 0;
@@ -1148,6 +1160,25 @@ void initRobotPos(){
 	state_space_Com[0][0] = Com[0];
 	state_space_Com[1][0] = Com[1];
 
+	robotModel[MAIN_BODY].p[0] = com_const_x_compen;
+	robotModel[MAIN_BODY].p[1] = com_const_y_compen;
+	robotModel[MAIN_BODY].p[2] = c_h_para;
+	forwardKinematics(MAIN_BODY);
+	rpy2rot(0, 0, 0, R);
+	MatrixMultiVector3x1(R, robotModel[LEFT_FOOT].b, temp);
+	robotModel[LEFT_ANKLE_SIDE_SWING].p[0] = 0 - temp[0];
+	robotModel[LEFT_ANKLE_SIDE_SWING].p[1] = sy / 2 - temp[1];
+	robotModel[LEFT_ANKLE_SIDE_SWING].p[2] = 0 - temp[2];
+	inverseKinmatics_leftFoot(0, 0, 0);
+	MatrixMultiVector3x1(R, robotModel[RIGHT_FOOT].b, temp);
+	robotModel[RIGHT_ANKLE_SIDE_SWING].p[0] = 0 - temp[0];
+	robotModel[RIGHT_ANKLE_SIDE_SWING].p[1] = -sy / 2 - temp[1];
+	robotModel[RIGHT_ANKLE_SIDE_SWING].p[2] = 0 - temp[2];
+	inverseKinmatics_rightFoot(0, 0, 0);
+	robotModel[MAIN_BODY].p[0] = 0;
+	robotModel[MAIN_BODY].p[1] = 0;
+	robotModel[MAIN_BODY].p[2] = c_h_para;
+
 	for(int i = 0; i < 26; i++){
 		FallUpRobotPos_q[i] = robotModel[i].q;
 	}
@@ -1292,6 +1323,14 @@ void robotStart(ros::NodeHandle& n_)
 	ros::param::get("/pid_amend/imu_yaw_p",imu_yaw_p);
 	ros::param::get("/pid_amend/imu_yaw_i",imu_yaw_i);
 	ros::param::get("/pid_amend/imu_yaw_d",imu_yaw_d);
+	ros::param::get("/pid_amend/imu_com_x_p",imu_com_x_p);
+	ros::param::get("/pid_amend/imu_com_x_i",imu_com_x_i);
+	ros::param::get("/pid_amend/imu_com_x_d",imu_com_x_d);
+	ros::param::get("/pid_amend/imu_com_y_p",imu_com_y_p);
+	ros::param::get("/pid_amend/imu_com_y_i",imu_com_y_i);
+	ros::param::get("/pid_amend/imu_com_y_d",imu_com_y_d);
+	ros::param::get("/pid_amend/com_const_x_compen",com_const_x_compen);
+	ros::param::get("/pid_amend/com_const_y_compen",com_const_y_compen);
 	ros::param::get("/pid_amend/walk_length",walk_length);
 	ros::param::get("/pid_amend/walk_width",walk_width);
 	ros::param::get("/pid_amend/walk_frame_T",walk_frame_T);
@@ -3706,8 +3745,8 @@ void CalcTrajectory_Com(int current_frame_count) {
 	state_space_Com[1][0] = state_space_A[0][0] * state_space_Com[1][0] + state_space_A[0][1] * state_space_Com[1][1] + state_space_A[0][2] * state_space_Com[1][2] + state_space_B[0] * u_y;
 	state_space_Com[1][1] = state_space_A[1][0] * state_space_Com[1][0] + state_space_A[1][1] * state_space_Com[1][1] + state_space_A[1][2] * state_space_Com[1][2] + state_space_B[1] * u_y;
 	state_space_Com[1][2] = state_space_A[2][0] * state_space_Com[1][0] + state_space_A[2][1] * state_space_Com[1][1] + state_space_A[2][2] * state_space_Com[1][2] + state_space_B[2] * u_y;
-	Com[0] = state_space_Com[0][0];
-	Com[1] = state_space_Com[1][0];
+	Com[0] = state_space_Com[0][0] + com_const_x_compen;
+	Com[1] = state_space_Com[1][0] + com_const_y_compen;
 }
 
 void dFootSupportPhase(double theta_mainbody, double theta_left, double theta_right)
@@ -3722,7 +3761,6 @@ void dFootSupportPhase(double theta_mainbody, double theta_left, double theta_ri
 	{
 		//准备PID修正
 		imuGesturePidControl(delta_roll, delta_pitch, delta_yaw);
-
 		waistPosition_com(delta_roll, delta_pitch, theta_mainbody, i);
 		double R[3][3];
 		double temp[3];
@@ -3775,6 +3813,7 @@ void imuGesturePidControl(double &delta_roll, double &delta_pitch, double &delta
 	data_roll = imu_data_roll;
 	data_roll -= init_imu_roll;
 	msg.data = data_roll;
+	ROS_INFO("3333");
 	pub_imu_data_roll.publish(msg);
 	//ros::param::get("imu_data_pitch",data_pitch);
 	data_pitch = imu_data_pitch;
@@ -3815,6 +3854,11 @@ void imuGesturePidControl(double &delta_roll, double &delta_pitch, double &delta
 	delta_pitch = imu_pitch_p*imu_pitch_err + imu_pitch_i*imu_pitch_err_sum + imu_pitch_d*imu_pitch_err_partial;
 	delta_yaw = imu_yaw_p*imu_yaw_err + imu_yaw_i*imu_yaw_err_sum + imu_yaw_d*imu_yaw_err_partial;
 
+	// 质心位置补偿
+	com_y_compen = -imu_com_y_p*imu_roll_err + -imu_com_y_i*imu_roll_err_sum + -imu_com_y_d*imu_roll_err_partial;
+	printf("com_y_compen: %f\n", com_y_compen);
+	com_x_compen = -imu_com_x_p*imu_pitch_err + -imu_com_x_i*imu_pitch_err_sum + -imu_com_x_d*imu_pitch_err_partial;
+	printf("com_x_compen: %f\n", com_x_compen);
 	// 分配到关节
 	if(abs(delta_roll) > 5){
 		if(delta_roll > 0) delta_roll = 5;
@@ -3827,6 +3871,14 @@ void imuGesturePidControl(double &delta_roll, double &delta_pitch, double &delta
 	if(abs(delta_yaw) > 5){
 		if(delta_yaw > 0) delta_yaw = 5;
 		else delta_yaw = -5;
+	}
+	if(abs(com_y_compen) > 0.02){
+		if(com_y_compen > 0) com_y_compen = 0.02;
+		else com_y_compen = -0.02;
+	}
+	if(abs(com_x_compen) > 0.02){
+		if(com_x_compen > 0) com_x_compen = 0.02;
+		else com_x_compen = -0.02;
 	}
 	
 	// 转换为弧度
@@ -4029,16 +4081,16 @@ void judgeFall(){
 		double temp_sx = sx;
 		sx = 0;   // 执行跌倒爬起时，一定要先把前进步长变为0走一步，要不然复位时之前保存的ZMP点可能已经不相对存在于脚底板下
 		trajPlan();
+		ros::param::set("stop_walk_flag",true);
 		specialGaitExec(FALL_FORWARD_UP_ID);
 		sx = temp_sx;
-		startTrajPlan();
 	}else if(data_pitch > -110 && data_pitch < -70){
 		double temp_sx = sx;
 		sx = 0;
 		trajPlan();
+		ros::param::set("stop_walk_flag",true);
 		specialGaitExec(FALL_BACK_UP_ID);
 		sx = temp_sx;
-		startTrajPlan();
 	}
 }
 
@@ -4049,6 +4101,8 @@ void FallUpInitPos(){
 	imu_pitch_err = 0;
 	imu_pitch_err_sum = 0;
 	imu_pitch_err_partial = 0;
+	com_x_compen = 0;
+	com_y_compen = 0;
 	pre_robot_P[0] = 0;pre_robot_P[1] = 0;pre_robot_P[2] = 0;
 	cur_robot_P[0] = 0;cur_robot_P[1] = 0;cur_robot_P[2] = 0;
 	pre_robot_L[0] = 0;pre_robot_L[1] = 0;pre_robot_L[2] = 0;

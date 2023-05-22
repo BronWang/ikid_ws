@@ -1,13 +1,26 @@
 # pid参数
-imu_roll_p: 0.05  # 2
-imu_roll_i: 0  # 0.1
-imu_roll_d: 0.01   # 0.1
-imu_pitch_p: 0.1  # 1
-imu_pitch_i: 0 # 0.1
-imu_pitch_d: 0.02  # 0.1
-imu_yaw_p: 1 # 未使用
+imu_roll_p: 0.05  
+imu_roll_i: 0  
+imu_roll_d: 0.01   
+imu_pitch_p: 0.1  
+imu_pitch_i: 0 
+imu_pitch_d: 0.02  
+imu_yaw_p: 0 # 未使用
 imu_yaw_i: 0 # 未使用
-imu_yaw_d: 5 # 未使用
+imu_yaw_d: 0 # 未使用
+
+# 质心位置补偿
+imu_com_x_p: 0.003
+imu_com_x_i: 0
+imu_com_x_d: 0.0001
+imu_com_y_p: 0.003
+imu_com_y_i: 0
+imu_com_y_d: 0.0001
+
+
+com_const_x_compen: 0.00
+com_const_y_compen: 0.00
+
 
 # 步长 步宽 m 步宽0.7*2
 walk_length: 0.05
