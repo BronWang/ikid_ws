@@ -106,6 +106,7 @@ void MatrixMultiVector3x1(double a[3][3], double b[3], double result[3]); // 已
 void VectorAddVector3x1(double a[3], double b[3], double result[3]); // 已测试
 void invMatrix3x3(double matrix[3][3], double result[3][3]);// 已测试
 void MatrixMultiVector6x1(double a[6][6], double b[6], double result[6]);
+void MatrixMultiVector8x1(double a[8][8], double b[8], double result[8]);
 void matrix_inverse_LU(double a[6][6] ,double a_inverse[6][6]);// 可用但不建议用，直接使用matlab_inv
 void LU_decomposition(double arr[6][6], double W_n[6][6]); // 可用但不建议用，直接使用matlab_inv
 bool sign(double value); 
@@ -151,6 +152,7 @@ void writeZmpData(double zmp_data[2][85],double z_d_x, double z_d_y, double z_p_
 void clearZmpDataTxt();
 void quinticPolyInterFour(double A[6][4], double B[6][4], double s);
 void quinticPolyInterTwo(double A[6][4], double B[6][4], double s);
+void threeSplineInter(double spline_A[8][2], double s);
 
 #endif // !ROBOTMODEL
 

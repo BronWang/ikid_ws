@@ -15,6 +15,7 @@ extern double init_imu_pitch;
 extern double imu_data_roll;
 extern double imu_data_yaw;
 extern double imu_data_pitch;
+extern bool isLeft;
 
 void doWalkMsg(const ros_socket::cmd_walk::ConstPtr& walkMsg){
     ROS_INFO("0000");
@@ -55,6 +56,9 @@ void doWalkMsg(const ros_socket::cmd_walk::ConstPtr& walkMsg){
         if(!stop_walk_flag){
             sx = 0;
             trajPlan();
+            if(isLeft){
+                trajPlan();
+            }
             FallUpInitPos();  // 保证停稳
             ros::param::set("stop_walk_flag",true);
         }

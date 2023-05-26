@@ -1401,6 +1401,17 @@ void MatrixMultiVector6x1(double a[6][6], double b[6], double result[6]) {
 	result[5] = a[5][0] * b[0] + a[5][1] * b[1] + a[5][2] * b[2] + a[5][3] * b[3] + a[5][4] * b[4] + a[5][5] * b[5];
 }
 
+void MatrixMultiVector8x1(double a[8][8], double b[8], double result[8]){
+	result[0] = a[0][0] * b[0] + a[0][1] * b[1] + a[0][2] * b[2] + a[0][3] * b[3] + a[0][4] * b[4] + a[0][5] * b[5] + a[0][6] * b[6] + a[0][7] * b[7];
+	result[1] = a[1][0] * b[0] + a[1][1] * b[1] + a[1][2] * b[2] + a[1][3] * b[3] + a[1][4] * b[4] + a[1][5] * b[5] + a[1][6] * b[6] + a[1][7] * b[7];
+	result[2] = a[2][0] * b[0] + a[2][1] * b[1] + a[2][2] * b[2] + a[2][3] * b[3] + a[2][4] * b[4] + a[2][5] * b[5] + a[2][6] * b[6] + a[2][7] * b[7];
+	result[3] = a[3][0] * b[0] + a[3][1] * b[1] + a[3][2] * b[2] + a[3][3] * b[3] + a[3][4] * b[4] + a[3][5] * b[5] + a[3][6] * b[6] + a[3][7] * b[7];
+	result[4] = a[4][0] * b[0] + a[4][1] * b[1] + a[4][2] * b[2] + a[4][3] * b[3] + a[4][4] * b[4] + a[4][5] * b[5] + a[4][6] * b[6] + a[4][7] * b[7];
+	result[5] = a[5][0] * b[0] + a[5][1] * b[1] + a[5][2] * b[2] + a[5][3] * b[3] + a[5][4] * b[4] + a[5][5] * b[5] + a[5][6] * b[6] + a[5][7] * b[7];
+	result[6] = a[6][0] * b[0] + a[6][1] * b[1] + a[6][2] * b[2] + a[6][3] * b[3] + a[6][4] * b[4] + a[6][5] * b[5] + a[6][6] * b[6] + a[6][7] * b[7];
+	result[7] = a[7][0] * b[0] + a[7][1] * b[1] + a[7][2] * b[2] + a[7][3] * b[3] + a[7][4] * b[4] + a[7][5] * b[5] + a[7][6] * b[6] + a[7][7] * b[7];
+}
+
 void VectorAddVector3x1(double a[3], double b[3], double result[3]) {
 	result[0] = a[0] + b[0];
 	result[1] = a[1] + b[1];
@@ -2698,12 +2709,16 @@ void trajPlan() {
         ros::param::get("walk_with_ball",walk_with_ball);
 		double quintic_A[6][4] = {};
 		double quintic_B[6][4] = {};
+		double three_spline_A[8][2] = {};
 		if(walk_with_ball){
 			// 求解四段五次多项式插值参数
 			quinticPolyInterFour(quintic_A, quintic_B, CP_norm*2);
 		}else{
 			// 求解两段五次多项式插值参数
-			quinticPolyInterTwo(quintic_A, quintic_B, CP_norm*2);
+			// quinticPolyInterTwo(quintic_A, quintic_B, CP_norm*2);
+
+			// 求解两段三次样条插值参数
+			threeSplineInter(three_spline_A,CP_norm*2);
 		}
 		
 
@@ -2752,14 +2767,23 @@ void trajPlan() {
 			}else{
 				//  x = CP_norm + -(i + 1) * 2 * CP_norm / step_basic_frame; // sin曲线
 				//  y = fh * cos(PI / (2 * CP_norm) * x);
+				// if(i < step_basic_frame/2){
+				// 	double temp_t = i*frame_T;
+				// 	x = quintic_A[0][0]+quintic_A[1][0]*temp_t+quintic_A[2][0]*pow(temp_t,2)+quintic_A[3][0]*pow(temp_t,3)+quintic_A[4][0]*pow(temp_t,4)+quintic_A[5][0]*pow(temp_t,5);
+				// 	y = quintic_B[0][0]+quintic_B[1][0]*temp_t+quintic_B[2][0]*pow(temp_t,2)+quintic_B[3][0]*pow(temp_t,3)+quintic_B[4][0]*pow(temp_t,4)+quintic_B[5][0]*pow(temp_t,5);
+				// }else{
+				// 	double temp_t = i*frame_T;
+				// 	x = quintic_A[0][1]+quintic_A[1][1]*temp_t+quintic_A[2][1]*pow(temp_t,2)+quintic_A[3][1]*pow(temp_t,3)+quintic_A[4][1]*pow(temp_t,4)+quintic_A[5][1]*pow(temp_t,5);
+				// 	y = quintic_B[0][1]+quintic_B[1][1]*temp_t+quintic_B[2][1]*pow(temp_t,2)+quintic_B[3][1]*pow(temp_t,3)+quintic_B[4][1]*pow(temp_t,4)+quintic_B[5][1]*pow(temp_t,5);
+				// }
 				if(i < step_basic_frame/2){
 					double temp_t = i*frame_T;
-					x = quintic_A[0][0]+quintic_A[1][0]*temp_t+quintic_A[2][0]*pow(temp_t,2)+quintic_A[3][0]*pow(temp_t,3)+quintic_A[4][0]*pow(temp_t,4)+quintic_A[5][0]*pow(temp_t,5);
-					y = quintic_B[0][0]+quintic_B[1][0]*temp_t+quintic_B[2][0]*pow(temp_t,2)+quintic_B[3][0]*pow(temp_t,3)+quintic_B[4][0]*pow(temp_t,4)+quintic_B[5][0]*pow(temp_t,5);
+					x = three_spline_A[0][0]+three_spline_A[1][0]*temp_t+three_spline_A[2][0]*pow(temp_t,2)+three_spline_A[3][0]*pow(temp_t,3);
+					y = three_spline_A[0][1]+three_spline_A[1][1]*temp_t+three_spline_A[2][1]*pow(temp_t,2)+three_spline_A[3][1]*pow(temp_t,3);
 				}else{
 					double temp_t = i*frame_T;
-					x = quintic_A[0][1]+quintic_A[1][1]*temp_t+quintic_A[2][1]*pow(temp_t,2)+quintic_A[3][1]*pow(temp_t,3)+quintic_A[4][1]*pow(temp_t,4)+quintic_A[5][1]*pow(temp_t,5);
-					y = quintic_B[0][1]+quintic_B[1][1]*temp_t+quintic_B[2][1]*pow(temp_t,2)+quintic_B[3][1]*pow(temp_t,3)+quintic_B[4][1]*pow(temp_t,4)+quintic_B[5][1]*pow(temp_t,5);
+					x = three_spline_A[4][0]+three_spline_A[5][0]*temp_t+three_spline_A[6][0]*pow(temp_t,2)+three_spline_A[7][0]*pow(temp_t,3);
+					y = three_spline_A[4][1]+three_spline_A[5][1]*temp_t+three_spline_A[6][1]*pow(temp_t,2)+three_spline_A[7][1]*pow(temp_t,3);
 				}
 			}
 			
@@ -2871,12 +2895,16 @@ void trajPlan() {
         ros::param::get("walk_with_ball",walk_with_ball);
 		double quintic_A[6][4] = {};
 		double quintic_B[6][4] = {};
+		double three_spline_A[8][2] = {};
 		if(walk_with_ball){
 			// 求解四段五次多项式插值参数
 			quinticPolyInterFour(quintic_A, quintic_B, CP_norm*2);
 		}else{
 			// 求解两段五次多项式插值参数
-			quinticPolyInterTwo(quintic_A, quintic_B, CP_norm*2);
+			// quinticPolyInterTwo(quintic_A, quintic_B, CP_norm*2);
+
+			// 求解两段三次样条插值参数
+			threeSplineInter(three_spline_A,CP_norm*2);
 		}
 
 #if SWING_ARM
@@ -2921,14 +2949,23 @@ void trajPlan() {
 			}else{
 				//  x = CP_norm + -(i + 1) * 2 * CP_norm / step_basic_frame; // sin曲线
 				//  y = fh * cos(PI / (2 * CP_norm) * x);
+				// if(i < step_basic_frame/2){
+				// 	double temp_t = i*frame_T;
+				// 	x = quintic_A[0][0]+quintic_A[1][0]*temp_t+quintic_A[2][0]*pow(temp_t,2)+quintic_A[3][0]*pow(temp_t,3)+quintic_A[4][0]*pow(temp_t,4)+quintic_A[5][0]*pow(temp_t,5);
+				// 	y = quintic_B[0][0]+quintic_B[1][0]*temp_t+quintic_B[2][0]*pow(temp_t,2)+quintic_B[3][0]*pow(temp_t,3)+quintic_B[4][0]*pow(temp_t,4)+quintic_B[5][0]*pow(temp_t,5);
+				// }else{
+				// 	double temp_t = i*frame_T;
+				// 	x = quintic_A[0][1]+quintic_A[1][1]*temp_t+quintic_A[2][1]*pow(temp_t,2)+quintic_A[3][1]*pow(temp_t,3)+quintic_A[4][1]*pow(temp_t,4)+quintic_A[5][1]*pow(temp_t,5);
+				// 	y = quintic_B[0][1]+quintic_B[1][1]*temp_t+quintic_B[2][1]*pow(temp_t,2)+quintic_B[3][1]*pow(temp_t,3)+quintic_B[4][1]*pow(temp_t,4)+quintic_B[5][1]*pow(temp_t,5);
+				// }
 				if(i < step_basic_frame/2){
 					double temp_t = i*frame_T;
-					x = quintic_A[0][0]+quintic_A[1][0]*temp_t+quintic_A[2][0]*pow(temp_t,2)+quintic_A[3][0]*pow(temp_t,3)+quintic_A[4][0]*pow(temp_t,4)+quintic_A[5][0]*pow(temp_t,5);
-					y = quintic_B[0][0]+quintic_B[1][0]*temp_t+quintic_B[2][0]*pow(temp_t,2)+quintic_B[3][0]*pow(temp_t,3)+quintic_B[4][0]*pow(temp_t,4)+quintic_B[5][0]*pow(temp_t,5);
+					x = three_spline_A[0][0]+three_spline_A[1][0]*temp_t+three_spline_A[2][0]*pow(temp_t,2)+three_spline_A[3][0]*pow(temp_t,3);
+					y = three_spline_A[0][1]+three_spline_A[1][1]*temp_t+three_spline_A[2][1]*pow(temp_t,2)+three_spline_A[3][1]*pow(temp_t,3);
 				}else{
 					double temp_t = i*frame_T;
-					x = quintic_A[0][1]+quintic_A[1][1]*temp_t+quintic_A[2][1]*pow(temp_t,2)+quintic_A[3][1]*pow(temp_t,3)+quintic_A[4][1]*pow(temp_t,4)+quintic_A[5][1]*pow(temp_t,5);
-					y = quintic_B[0][1]+quintic_B[1][1]*temp_t+quintic_B[2][1]*pow(temp_t,2)+quintic_B[3][1]*pow(temp_t,3)+quintic_B[4][1]*pow(temp_t,4)+quintic_B[5][1]*pow(temp_t,5);
+					x = three_spline_A[4][0]+three_spline_A[5][0]*temp_t+three_spline_A[6][0]*pow(temp_t,2)+three_spline_A[7][0]*pow(temp_t,3);
+					y = three_spline_A[4][1]+three_spline_A[5][1]*temp_t+three_spline_A[6][1]*pow(temp_t,2)+three_spline_A[7][1]*pow(temp_t,3);
 				}
 			}
 			
@@ -3050,8 +3087,11 @@ void anglePlan(double delta) {
 
 		double quintic_A[6][4] = {};
 		double quintic_B[6][4] = {};
+		double three_spline_A[8][2] = {};
 		// 求解两段五次多项式插值参数
-		quinticPolyInterTwo(quintic_A, quintic_B, CP_norm*2);
+		// quinticPolyInterTwo(quintic_A, quintic_B, CP_norm*2);
+		// 求解两段三次样条插值参数
+		threeSplineInter(three_spline_A,CP_norm*2);
 #if SWING_ARM
 		// 右臂
 		double current_arm_angle_right = robotModel[RIGHT_ARM_FRONT_SWING].q;
@@ -3075,14 +3115,23 @@ void anglePlan(double delta) {
 			double y;
 			//  x = CP_norm + -(i + 1) * 2 * CP_norm / step_basic_frame; // sin曲线
 			//  y = fh * cos(PI / (2 * CP_norm) * x);
+			// if(i < step_basic_frame/2){
+			// 	double temp_t = i*frame_T;
+			// 	x = quintic_A[0][0]+quintic_A[1][0]*temp_t+quintic_A[2][0]*pow(temp_t,2)+quintic_A[3][0]*pow(temp_t,3)+quintic_A[4][0]*pow(temp_t,4)+quintic_A[5][0]*pow(temp_t,5);
+			// 	y = quintic_B[0][0]+quintic_B[1][0]*temp_t+quintic_B[2][0]*pow(temp_t,2)+quintic_B[3][0]*pow(temp_t,3)+quintic_B[4][0]*pow(temp_t,4)+quintic_B[5][0]*pow(temp_t,5);
+			// }else{
+			// 	double temp_t = i*frame_T;
+			// 	x = quintic_A[0][1]+quintic_A[1][1]*temp_t+quintic_A[2][1]*pow(temp_t,2)+quintic_A[3][1]*pow(temp_t,3)+quintic_A[4][1]*pow(temp_t,4)+quintic_A[5][1]*pow(temp_t,5);
+			// 	y = quintic_B[0][1]+quintic_B[1][1]*temp_t+quintic_B[2][1]*pow(temp_t,2)+quintic_B[3][1]*pow(temp_t,3)+quintic_B[4][1]*pow(temp_t,4)+quintic_B[5][1]*pow(temp_t,5);
+			// }
 			if(i < step_basic_frame/2){
 				double temp_t = i*frame_T;
-				x = quintic_A[0][0]+quintic_A[1][0]*temp_t+quintic_A[2][0]*pow(temp_t,2)+quintic_A[3][0]*pow(temp_t,3)+quintic_A[4][0]*pow(temp_t,4)+quintic_A[5][0]*pow(temp_t,5);
-				y = quintic_B[0][0]+quintic_B[1][0]*temp_t+quintic_B[2][0]*pow(temp_t,2)+quintic_B[3][0]*pow(temp_t,3)+quintic_B[4][0]*pow(temp_t,4)+quintic_B[5][0]*pow(temp_t,5);
+				x = three_spline_A[0][0]+three_spline_A[1][0]*temp_t+three_spline_A[2][0]*pow(temp_t,2)+three_spline_A[3][0]*pow(temp_t,3);
+				y = three_spline_A[0][1]+three_spline_A[1][1]*temp_t+three_spline_A[2][1]*pow(temp_t,2)+three_spline_A[3][1]*pow(temp_t,3);
 			}else{
 				double temp_t = i*frame_T;
-				x = quintic_A[0][1]+quintic_A[1][1]*temp_t+quintic_A[2][1]*pow(temp_t,2)+quintic_A[3][1]*pow(temp_t,3)+quintic_A[4][1]*pow(temp_t,4)+quintic_A[5][1]*pow(temp_t,5);
-				y = quintic_B[0][1]+quintic_B[1][1]*temp_t+quintic_B[2][1]*pow(temp_t,2)+quintic_B[3][1]*pow(temp_t,3)+quintic_B[4][1]*pow(temp_t,4)+quintic_B[5][1]*pow(temp_t,5);
+				x = three_spline_A[4][0]+three_spline_A[5][0]*temp_t+three_spline_A[6][0]*pow(temp_t,2)+three_spline_A[7][0]*pow(temp_t,3);
+				y = three_spline_A[4][1]+three_spline_A[5][1]*temp_t+three_spline_A[6][1]*pow(temp_t,2)+three_spline_A[7][1]*pow(temp_t,3);
 			}
 			local_p[0] = x;
 			local_p[1] = y;
@@ -3196,8 +3245,11 @@ void anglePlan(double delta) {
 
 		double quintic_A[6][4] = {};
 		double quintic_B[6][4] = {};
+		double three_spline_A[8][2] = {};
 		// 求解两段五次多项式插值参数
-		quinticPolyInterTwo(quintic_A, quintic_B, CP_norm*2);
+		// quinticPolyInterTwo(quintic_A, quintic_B, CP_norm*2);
+		// 求解两段三次样条插值参数
+		threeSplineInter(three_spline_A,CP_norm*2);
 #if SWING_ARM
 		// 左臂
 		double current_arm_angle_left = robotModel[LEFT_ARM_FRONT_SWING].q;
@@ -3219,14 +3271,23 @@ void anglePlan(double delta) {
 			double y;
 			//  x = CP_norm + -(i + 1) * 2 * CP_norm / step_basic_frame; // sin曲线
 			//  y = fh * cos(PI / (2 * CP_norm) * x);
+			// if(i < step_basic_frame/2){
+			// 	double temp_t = i*frame_T;
+			// 	x = quintic_A[0][0]+quintic_A[1][0]*temp_t+quintic_A[2][0]*pow(temp_t,2)+quintic_A[3][0]*pow(temp_t,3)+quintic_A[4][0]*pow(temp_t,4)+quintic_A[5][0]*pow(temp_t,5);
+			// 	y = quintic_B[0][0]+quintic_B[1][0]*temp_t+quintic_B[2][0]*pow(temp_t,2)+quintic_B[3][0]*pow(temp_t,3)+quintic_B[4][0]*pow(temp_t,4)+quintic_B[5][0]*pow(temp_t,5);
+			// }else{
+			// 	double temp_t = i*frame_T;
+			// 	x = quintic_A[0][1]+quintic_A[1][1]*temp_t+quintic_A[2][1]*pow(temp_t,2)+quintic_A[3][1]*pow(temp_t,3)+quintic_A[4][1]*pow(temp_t,4)+quintic_A[5][1]*pow(temp_t,5);
+			// 	y = quintic_B[0][1]+quintic_B[1][1]*temp_t+quintic_B[2][1]*pow(temp_t,2)+quintic_B[3][1]*pow(temp_t,3)+quintic_B[4][1]*pow(temp_t,4)+quintic_B[5][1]*pow(temp_t,5);
+			// }
 			if(i < step_basic_frame/2){
 				double temp_t = i*frame_T;
-				x = quintic_A[0][0]+quintic_A[1][0]*temp_t+quintic_A[2][0]*pow(temp_t,2)+quintic_A[3][0]*pow(temp_t,3)+quintic_A[4][0]*pow(temp_t,4)+quintic_A[5][0]*pow(temp_t,5);
-				y = quintic_B[0][0]+quintic_B[1][0]*temp_t+quintic_B[2][0]*pow(temp_t,2)+quintic_B[3][0]*pow(temp_t,3)+quintic_B[4][0]*pow(temp_t,4)+quintic_B[5][0]*pow(temp_t,5);
+				x = three_spline_A[0][0]+three_spline_A[1][0]*temp_t+three_spline_A[2][0]*pow(temp_t,2)+three_spline_A[3][0]*pow(temp_t,3);
+				y = three_spline_A[0][1]+three_spline_A[1][1]*temp_t+three_spline_A[2][1]*pow(temp_t,2)+three_spline_A[3][1]*pow(temp_t,3);
 			}else{
 				double temp_t = i*frame_T;
-				x = quintic_A[0][1]+quintic_A[1][1]*temp_t+quintic_A[2][1]*pow(temp_t,2)+quintic_A[3][1]*pow(temp_t,3)+quintic_A[4][1]*pow(temp_t,4)+quintic_A[5][1]*pow(temp_t,5);
-				y = quintic_B[0][1]+quintic_B[1][1]*temp_t+quintic_B[2][1]*pow(temp_t,2)+quintic_B[3][1]*pow(temp_t,3)+quintic_B[4][1]*pow(temp_t,4)+quintic_B[5][1]*pow(temp_t,5);
+				x = three_spline_A[4][0]+three_spline_A[5][0]*temp_t+three_spline_A[6][0]*pow(temp_t,2)+three_spline_A[7][0]*pow(temp_t,3);
+				y = three_spline_A[4][1]+three_spline_A[5][1]*temp_t+three_spline_A[6][1]*pow(temp_t,2)+three_spline_A[7][1]*pow(temp_t,3);
 			}
 			local_p[0] = x;
 			local_p[1] = y;
@@ -3355,8 +3416,11 @@ void anglePlan(double delta) {
 
 		double quintic_A[6][4] = {};
 		double quintic_B[6][4] = {};
+		double three_spline_A[8][2] = {};
 		// 求解两段五次多项式插值参数
-		quinticPolyInterTwo(quintic_A, quintic_B, CP_norm*2);
+		// quinticPolyInterTwo(quintic_A, quintic_B, CP_norm*2);
+		// 求解两段三次样条插值参数
+		threeSplineInter(three_spline_A,CP_norm*2);
 
 #if SWING_ARM
 		// 右臂
@@ -3381,14 +3445,23 @@ void anglePlan(double delta) {
 			double y;
 			//  x = CP_norm + -(i + 1) * 2 * CP_norm / step_basic_frame; // sin曲线
 			//  y = fh * cos(PI / (2 * CP_norm) * x);
+			// if(i < step_basic_frame/2){
+			// 	double temp_t = i*frame_T;
+			// 	x = quintic_A[0][0]+quintic_A[1][0]*temp_t+quintic_A[2][0]*pow(temp_t,2)+quintic_A[3][0]*pow(temp_t,3)+quintic_A[4][0]*pow(temp_t,4)+quintic_A[5][0]*pow(temp_t,5);
+			// 	y = quintic_B[0][0]+quintic_B[1][0]*temp_t+quintic_B[2][0]*pow(temp_t,2)+quintic_B[3][0]*pow(temp_t,3)+quintic_B[4][0]*pow(temp_t,4)+quintic_B[5][0]*pow(temp_t,5);
+			// }else{
+			// 	double temp_t = i*frame_T;
+			// 	x = quintic_A[0][1]+quintic_A[1][1]*temp_t+quintic_A[2][1]*pow(temp_t,2)+quintic_A[3][1]*pow(temp_t,3)+quintic_A[4][1]*pow(temp_t,4)+quintic_A[5][1]*pow(temp_t,5);
+			// 	y = quintic_B[0][1]+quintic_B[1][1]*temp_t+quintic_B[2][1]*pow(temp_t,2)+quintic_B[3][1]*pow(temp_t,3)+quintic_B[4][1]*pow(temp_t,4)+quintic_B[5][1]*pow(temp_t,5);
+			// }
 			if(i < step_basic_frame/2){
 				double temp_t = i*frame_T;
-				x = quintic_A[0][0]+quintic_A[1][0]*temp_t+quintic_A[2][0]*pow(temp_t,2)+quintic_A[3][0]*pow(temp_t,3)+quintic_A[4][0]*pow(temp_t,4)+quintic_A[5][0]*pow(temp_t,5);
-				y = quintic_B[0][0]+quintic_B[1][0]*temp_t+quintic_B[2][0]*pow(temp_t,2)+quintic_B[3][0]*pow(temp_t,3)+quintic_B[4][0]*pow(temp_t,4)+quintic_B[5][0]*pow(temp_t,5);
+				x = three_spline_A[0][0]+three_spline_A[1][0]*temp_t+three_spline_A[2][0]*pow(temp_t,2)+three_spline_A[3][0]*pow(temp_t,3);
+				y = three_spline_A[0][1]+three_spline_A[1][1]*temp_t+three_spline_A[2][1]*pow(temp_t,2)+three_spline_A[3][1]*pow(temp_t,3);
 			}else{
 				double temp_t = i*frame_T;
-				x = quintic_A[0][1]+quintic_A[1][1]*temp_t+quintic_A[2][1]*pow(temp_t,2)+quintic_A[3][1]*pow(temp_t,3)+quintic_A[4][1]*pow(temp_t,4)+quintic_A[5][1]*pow(temp_t,5);
-				y = quintic_B[0][1]+quintic_B[1][1]*temp_t+quintic_B[2][1]*pow(temp_t,2)+quintic_B[3][1]*pow(temp_t,3)+quintic_B[4][1]*pow(temp_t,4)+quintic_B[5][1]*pow(temp_t,5);
+				x = three_spline_A[4][0]+three_spline_A[5][0]*temp_t+three_spline_A[6][0]*pow(temp_t,2)+three_spline_A[7][0]*pow(temp_t,3);
+				y = three_spline_A[4][1]+three_spline_A[5][1]*temp_t+three_spline_A[6][1]*pow(temp_t,2)+three_spline_A[7][1]*pow(temp_t,3);
 			}
 			local_p[0] = x;
 			local_p[1] = y;
@@ -3502,8 +3575,11 @@ void anglePlan(double delta) {
 
 		double quintic_A[6][4] = {};
 		double quintic_B[6][4] = {};
+		double three_spline_A[8][2] = {};
 		// 求解两段五次多项式插值参数
-		quinticPolyInterTwo(quintic_A, quintic_B, CP_norm*2);
+		// quinticPolyInterTwo(quintic_A, quintic_B, CP_norm*2);
+		// 求解两段三次样条插值参数
+		threeSplineInter(three_spline_A,CP_norm*2);
 #if SWING_ARM
 		// 左臂
 		double current_arm_angle_left = robotModel[LEFT_ARM_FRONT_SWING].q;
@@ -3525,14 +3601,23 @@ void anglePlan(double delta) {
 			double y;
 			//  x = CP_norm + -(i + 1) * 2 * CP_norm / step_basic_frame; // sin曲线
 			//  y = fh * cos(PI / (2 * CP_norm) * x);
+			// if(i < step_basic_frame/2){
+			// 	double temp_t = i*frame_T;
+			// 	x = quintic_A[0][0]+quintic_A[1][0]*temp_t+quintic_A[2][0]*pow(temp_t,2)+quintic_A[3][0]*pow(temp_t,3)+quintic_A[4][0]*pow(temp_t,4)+quintic_A[5][0]*pow(temp_t,5);
+			// 	y = quintic_B[0][0]+quintic_B[1][0]*temp_t+quintic_B[2][0]*pow(temp_t,2)+quintic_B[3][0]*pow(temp_t,3)+quintic_B[4][0]*pow(temp_t,4)+quintic_B[5][0]*pow(temp_t,5);
+			// }else{
+			// 	double temp_t = i*frame_T;
+			// 	x = quintic_A[0][1]+quintic_A[1][1]*temp_t+quintic_A[2][1]*pow(temp_t,2)+quintic_A[3][1]*pow(temp_t,3)+quintic_A[4][1]*pow(temp_t,4)+quintic_A[5][1]*pow(temp_t,5);
+			// 	y = quintic_B[0][1]+quintic_B[1][1]*temp_t+quintic_B[2][1]*pow(temp_t,2)+quintic_B[3][1]*pow(temp_t,3)+quintic_B[4][1]*pow(temp_t,4)+quintic_B[5][1]*pow(temp_t,5);
+			// }
 			if(i < step_basic_frame/2){
 				double temp_t = i*frame_T;
-				x = quintic_A[0][0]+quintic_A[1][0]*temp_t+quintic_A[2][0]*pow(temp_t,2)+quintic_A[3][0]*pow(temp_t,3)+quintic_A[4][0]*pow(temp_t,4)+quintic_A[5][0]*pow(temp_t,5);
-				y = quintic_B[0][0]+quintic_B[1][0]*temp_t+quintic_B[2][0]*pow(temp_t,2)+quintic_B[3][0]*pow(temp_t,3)+quintic_B[4][0]*pow(temp_t,4)+quintic_B[5][0]*pow(temp_t,5);
+				x = three_spline_A[0][0]+three_spline_A[1][0]*temp_t+three_spline_A[2][0]*pow(temp_t,2)+three_spline_A[3][0]*pow(temp_t,3);
+				y = three_spline_A[0][1]+three_spline_A[1][1]*temp_t+three_spline_A[2][1]*pow(temp_t,2)+three_spline_A[3][1]*pow(temp_t,3);
 			}else{
 				double temp_t = i*frame_T;
-				x = quintic_A[0][1]+quintic_A[1][1]*temp_t+quintic_A[2][1]*pow(temp_t,2)+quintic_A[3][1]*pow(temp_t,3)+quintic_A[4][1]*pow(temp_t,4)+quintic_A[5][1]*pow(temp_t,5);
-				y = quintic_B[0][1]+quintic_B[1][1]*temp_t+quintic_B[2][1]*pow(temp_t,2)+quintic_B[3][1]*pow(temp_t,3)+quintic_B[4][1]*pow(temp_t,4)+quintic_B[5][1]*pow(temp_t,5);
+				x = three_spline_A[4][0]+three_spline_A[5][0]*temp_t+three_spline_A[6][0]*pow(temp_t,2)+three_spline_A[7][0]*pow(temp_t,3);
+				y = three_spline_A[4][1]+three_spline_A[5][1]*temp_t+three_spline_A[6][1]*pow(temp_t,2)+three_spline_A[7][1]*pow(temp_t,3);
 			}
 			local_p[0] = x;
 			local_p[1] = y;
@@ -3813,7 +3898,7 @@ void imuGesturePidControl(double &delta_roll, double &delta_pitch, double &delta
 	data_roll = imu_data_roll;
 	data_roll -= init_imu_roll;
 	msg.data = data_roll;
-	ROS_INFO("3333");
+	
 	pub_imu_data_roll.publish(msg);
 	//ros::param::get("imu_data_pitch",data_pitch);
 	data_pitch = imu_data_pitch;
@@ -3825,6 +3910,7 @@ void imuGesturePidControl(double &delta_roll, double &delta_pitch, double &delta
 	msg.data = data_yaw;
 	pub_imu_data_yaw.publish(msg);
 	//printf("%f, %f\n",data_roll, data_pitch);
+	
 	writeImuData();
 	
 	//单位是度
@@ -3856,10 +3942,11 @@ void imuGesturePidControl(double &delta_roll, double &delta_pitch, double &delta
 
 	// 质心位置补偿
 	com_y_compen = -imu_com_y_p*imu_roll_err + -imu_com_y_i*imu_roll_err_sum + -imu_com_y_d*imu_roll_err_partial;
-	printf("com_y_compen: %f\n", com_y_compen);
+	//printf("com_y_compen: %f\n", com_y_compen);
 	com_x_compen = -imu_com_x_p*imu_pitch_err + -imu_com_x_i*imu_pitch_err_sum + -imu_com_x_d*imu_pitch_err_partial;
-	printf("com_x_compen: %f\n", com_x_compen);
+	//printf("com_x_compen: %f\n", com_x_compen);
 	// 分配到关节
+	ROS_INFO("3333");
 	if(abs(delta_roll) > 5){
 		if(delta_roll > 0) delta_roll = 5;
 		else delta_roll = -5;
@@ -3889,6 +3976,7 @@ void imuGesturePidControl(double &delta_roll, double &delta_pitch, double &delta
 	delta_pitch /= 2;
 	delta_yaw /= 2;
 	#endif
+	
 }
 
 void specialGaitExec(int id){
@@ -4367,6 +4455,43 @@ void quinticPolyInterTwo(double A[6][4], double B[6][4], double s){
 		}
 		//printf("\n");
 	}
+}
+
+void threeSplineInter(double spline_A[8][2], double s){
+	// 边界条件为固定边界
+
+	double t[3] = {0, step_basic_frame/2*frame_T, step_basic_frame*frame_T};
+	double x[3] = {s/2, 0, -s/2}; // x方向的位置
+	double z[3] = {0, fh, 0}; // z方向的位置
+
+	double A[8][8] = {{1,      t[0],   pow(t[0],2), pow(t[0],3)   ,0,     0    ,   0           , 0             },  
+					  {1,      t[1],   pow(t[1],2), pow(t[1],3)   ,0,     0    ,   0           , 0             }, 
+		              {0,      0   ,   0          , 0             ,1,     t[1] ,   pow(t[1],2) , pow(t[1],3)   },
+		              {0,      0   ,   0          , 0             ,1,     t[2] ,   pow(t[2],2) , pow(t[2],3)   },
+		              {0,      1   ,   2*t[1]     , 3*pow(t[1],2) ,0,     -1   ,   -2*t[1]     , -3*pow(t[1],2)},
+		              {0,      0   ,   2          , 6*t[1]        ,0,     0    ,   -2          , -6*t[1]       },    
+		              {0,      1   ,   2*t[0]     , 3*pow(t[0],2) ,0,     0    ,   0           , 0             },
+		              {0,      0   ,   0          , 0             ,0,     1    ,   2*t[2]      , 3*pow(t[2],2) }};
+	double temp_x[8] = {x[0], x[1], x[1], x[2], 0, 0 ,0 ,0};
+	double temp_z[8] = {z[0], z[1], z[1], z[2], 0, 0 ,0 ,0};
+	double A_inv[8][8];
+	double matlab_result[64];
+	matlab_inv_8((double*)A,matlab_result);
+	for (int j = 0; j < 8; j++)
+		{
+			for (int k = 0; k < 8; k++) {
+				A_inv[j][k] = matlab_result[j * 8 + k];
+			}
+		}
+	double result_x[8];
+	double result_z[8];
+	MatrixMultiVector8x1(A_inv, temp_x, result_x);
+	MatrixMultiVector8x1(A_inv, temp_z, result_z);
+	for(int j = 0; j < 8; j++){
+		spline_A[j][0] = result_x[j];
+		spline_A[j][1] = result_z[j];
+	}
+	
 }
 
 
