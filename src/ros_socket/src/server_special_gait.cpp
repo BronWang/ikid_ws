@@ -46,6 +46,10 @@ int main(int argc, char** argv)
 
     //1.创建一个socket
     listenfd = socket(AF_INET, SOCK_STREAM, 0);
+    int option;
+    int optlen = sizeof(option);
+    option = true;
+    setsockopt(listenfd,SOL_SOCKET,SO_REUSEADDR,(void*)&option,optlen);
     if (listenfd == -1)
     {
         cout << "socket 创建失败： "<< endl;
