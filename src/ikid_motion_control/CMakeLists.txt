@@ -56,6 +56,7 @@ find_package(catkin REQUIRED COMPONENTS
 add_message_files(
   FILES
   cmd_walk.msg
+  robot_joint.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -180,6 +181,15 @@ target_link_libraries(robotModel ${catkin_LIBRARIES} )
 add_executable(test_traj_node 
 src/test_traj_node.cpp
 )
+add_executable(pid_amend_node 
+src/pid_amend_node.cpp
+)
+add_executable(robot_walk_node 
+src/robot_walk_node.cpp
+)
+add_executable(special_gait_node 
+src/special_gait_node.cpp
+)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -191,6 +201,9 @@ src/test_traj_node.cpp
 ## same as for the library above
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(test_traj_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(pid_amend_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(robot_walk_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(special_gait_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 # target_link_libraries(${PROJECT_NAME}_node
@@ -204,8 +217,30 @@ matlab_inv_terminate
 matlab_inv_initialize
 ${catkin_LIBRARIES}
 )
-
-
+target_link_libraries(pid_amend_node
+robotModel
+matlab_inv
+matlab_inv_data
+matlab_inv_terminate
+matlab_inv_initialize
+${catkin_LIBRARIES}
+)
+target_link_libraries(robot_walk_node
+robotModel
+matlab_inv
+matlab_inv_data
+matlab_inv_terminate
+matlab_inv_initialize
+${catkin_LIBRARIES}
+)
+target_link_libraries(special_gait_node
+robotModel
+matlab_inv
+matlab_inv_data
+matlab_inv_terminate
+matlab_inv_initialize
+${catkin_LIBRARIES}
+)
 #############
 ## Install ##
 #############

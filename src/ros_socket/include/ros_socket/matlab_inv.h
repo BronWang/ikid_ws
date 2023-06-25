@@ -22,6 +22,7 @@ extern "C" {
 
 /* Function Declarations */
 extern void matlab_inv(const double a[36], double result[36]);
+extern void matlab_inv_8(const double a[64], double b[64]);
 
 #ifdef __cplusplus
 }

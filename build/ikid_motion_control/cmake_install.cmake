@@ -38,7 +38,10 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ikid_motion_control/msg" TYPE FILE FILES "/home/wp/ikid_ws/src/ikid_motion_control/msg/cmd_walk.msg")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ikid_motion_control/msg" TYPE FILE FILES
+    "/home/wp/ikid_ws/src/ikid_motion_control/msg/cmd_walk.msg"
+    "/home/wp/ikid_ws/src/ikid_motion_control/msg/robot_joint.msg"
+    )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)

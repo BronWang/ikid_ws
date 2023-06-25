@@ -54,6 +54,7 @@ CMAKE_BINARY_DIR = /home/wp/ikid_ws/build
 include ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_nodejs.dir/progress.make
 
 ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_nodejs: /home/wp/ikid_ws/devel/share/gennodejs/ros/ikid_motion_control/msg/cmd_walk.js
+ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_nodejs: /home/wp/ikid_ws/devel/share/gennodejs/ros/ikid_motion_control/msg/robot_joint.js
 
 
 /home/wp/ikid_ws/devel/share/gennodejs/ros/ikid_motion_control/msg/cmd_walk.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
@@ -61,8 +62,14 @@ ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_nodejs: /ho
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/wp/ikid_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Javascript code from ikid_motion_control/cmd_walk.msg"
 	cd /home/wp/ikid_ws/build/ikid_motion_control && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/wp/ikid_ws/src/ikid_motion_control/msg/cmd_walk.msg -Iikid_motion_control:/home/wp/ikid_ws/src/ikid_motion_control/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p ikid_motion_control -o /home/wp/ikid_ws/devel/share/gennodejs/ros/ikid_motion_control/msg
 
+/home/wp/ikid_ws/devel/share/gennodejs/ros/ikid_motion_control/msg/robot_joint.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
+/home/wp/ikid_ws/devel/share/gennodejs/ros/ikid_motion_control/msg/robot_joint.js: /home/wp/ikid_ws/src/ikid_motion_control/msg/robot_joint.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/wp/ikid_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Javascript code from ikid_motion_control/robot_joint.msg"
+	cd /home/wp/ikid_ws/build/ikid_motion_control && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/wp/ikid_ws/src/ikid_motion_control/msg/robot_joint.msg -Iikid_motion_control:/home/wp/ikid_ws/src/ikid_motion_control/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p ikid_motion_control -o /home/wp/ikid_ws/devel/share/gennodejs/ros/ikid_motion_control/msg
+
 ikid_motion_control_generate_messages_nodejs: ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_nodejs
 ikid_motion_control_generate_messages_nodejs: /home/wp/ikid_ws/devel/share/gennodejs/ros/ikid_motion_control/msg/cmd_walk.js
+ikid_motion_control_generate_messages_nodejs: /home/wp/ikid_ws/devel/share/gennodejs/ros/ikid_motion_control/msg/robot_joint.js
 ikid_motion_control_generate_messages_nodejs: ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_nodejs.dir/build.make
 
 .PHONY : ikid_motion_control_generate_messages_nodejs

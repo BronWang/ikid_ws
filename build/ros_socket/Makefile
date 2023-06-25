@@ -92,6 +92,16 @@ install/fast: preinstall/fast
 	/usr/bin/cmake -P cmake_install.cmake
 .PHONY : install/fast
 
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
+
 # Special rule for the target test
 test:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
@@ -124,16 +134,6 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
-
-# Special rule for the target list_install_components
-list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
-.PHONY : list_install_components
-
-# Special rule for the target list_install_components
-list_install_components/fast: list_install_components
-
-.PHONY : list_install_components/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -168,6 +168,291 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+ros_socket/CMakeFiles/ros_socket_generate_messages_lisp.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/ros_socket_generate_messages_lisp.dir/rule
+.PHONY : ros_socket/CMakeFiles/ros_socket_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+ros_socket_generate_messages_lisp: ros_socket/CMakeFiles/ros_socket_generate_messages_lisp.dir/rule
+
+.PHONY : ros_socket_generate_messages_lisp
+
+# fast build rule for target.
+ros_socket_generate_messages_lisp/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/ros_socket_generate_messages_lisp.dir/build.make ros_socket/CMakeFiles/ros_socket_generate_messages_lisp.dir/build
+.PHONY : ros_socket_generate_messages_lisp/fast
+
+# Convenience name for target.
+ros_socket/CMakeFiles/ros_socket_generate_messages_eus.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/ros_socket_generate_messages_eus.dir/rule
+.PHONY : ros_socket/CMakeFiles/ros_socket_generate_messages_eus.dir/rule
+
+# Convenience name for target.
+ros_socket_generate_messages_eus: ros_socket/CMakeFiles/ros_socket_generate_messages_eus.dir/rule
+
+.PHONY : ros_socket_generate_messages_eus
+
+# fast build rule for target.
+ros_socket_generate_messages_eus/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/ros_socket_generate_messages_eus.dir/build.make ros_socket/CMakeFiles/ros_socket_generate_messages_eus.dir/build
+.PHONY : ros_socket_generate_messages_eus/fast
+
+# Convenience name for target.
+ros_socket/CMakeFiles/ros_socket_genlisp.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/ros_socket_genlisp.dir/rule
+.PHONY : ros_socket/CMakeFiles/ros_socket_genlisp.dir/rule
+
+# Convenience name for target.
+ros_socket_genlisp: ros_socket/CMakeFiles/ros_socket_genlisp.dir/rule
+
+.PHONY : ros_socket_genlisp
+
+# fast build rule for target.
+ros_socket_genlisp/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/ros_socket_genlisp.dir/build.make ros_socket/CMakeFiles/ros_socket_genlisp.dir/build
+.PHONY : ros_socket_genlisp/fast
+
+# Convenience name for target.
+ros_socket/CMakeFiles/ros_socket_generate_messages_nodejs.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/ros_socket_generate_messages_nodejs.dir/rule
+.PHONY : ros_socket/CMakeFiles/ros_socket_generate_messages_nodejs.dir/rule
+
+# Convenience name for target.
+ros_socket_generate_messages_nodejs: ros_socket/CMakeFiles/ros_socket_generate_messages_nodejs.dir/rule
+
+.PHONY : ros_socket_generate_messages_nodejs
+
+# fast build rule for target.
+ros_socket_generate_messages_nodejs/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/ros_socket_generate_messages_nodejs.dir/build.make ros_socket/CMakeFiles/ros_socket_generate_messages_nodejs.dir/build
+.PHONY : ros_socket_generate_messages_nodejs/fast
+
+# Convenience name for target.
+ros_socket/CMakeFiles/ros_socket_generate_messages_cpp.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/ros_socket_generate_messages_cpp.dir/rule
+.PHONY : ros_socket/CMakeFiles/ros_socket_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+ros_socket_generate_messages_cpp: ros_socket/CMakeFiles/ros_socket_generate_messages_cpp.dir/rule
+
+.PHONY : ros_socket_generate_messages_cpp
+
+# fast build rule for target.
+ros_socket_generate_messages_cpp/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/ros_socket_generate_messages_cpp.dir/build.make ros_socket/CMakeFiles/ros_socket_generate_messages_cpp.dir/build
+.PHONY : ros_socket_generate_messages_cpp/fast
+
+# Convenience name for target.
+ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/rule
+.PHONY : ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/rule
+
+# Convenience name for target.
+matlab_inv_ros_socket: ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/rule
+
+.PHONY : matlab_inv_ros_socket
+
+# fast build rule for target.
+matlab_inv_ros_socket/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/build
+.PHONY : matlab_inv_ros_socket/fast
+
+# Convenience name for target.
+ros_socket/CMakeFiles/_ros_socket_generate_messages_check_deps_cmd_walk.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/_ros_socket_generate_messages_check_deps_cmd_walk.dir/rule
+.PHONY : ros_socket/CMakeFiles/_ros_socket_generate_messages_check_deps_cmd_walk.dir/rule
+
+# Convenience name for target.
+_ros_socket_generate_messages_check_deps_cmd_walk: ros_socket/CMakeFiles/_ros_socket_generate_messages_check_deps_cmd_walk.dir/rule
+
+.PHONY : _ros_socket_generate_messages_check_deps_cmd_walk
+
+# fast build rule for target.
+_ros_socket_generate_messages_check_deps_cmd_walk/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/_ros_socket_generate_messages_check_deps_cmd_walk.dir/build.make ros_socket/CMakeFiles/_ros_socket_generate_messages_check_deps_cmd_walk.dir/build
+.PHONY : _ros_socket_generate_messages_check_deps_cmd_walk/fast
+
+# Convenience name for target.
+ros_socket/CMakeFiles/ros_socket_gennodejs.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/ros_socket_gennodejs.dir/rule
+.PHONY : ros_socket/CMakeFiles/ros_socket_gennodejs.dir/rule
+
+# Convenience name for target.
+ros_socket_gennodejs: ros_socket/CMakeFiles/ros_socket_gennodejs.dir/rule
+
+.PHONY : ros_socket_gennodejs
+
+# fast build rule for target.
+ros_socket_gennodejs/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/ros_socket_gennodejs.dir/build.make ros_socket/CMakeFiles/ros_socket_gennodejs.dir/build
+.PHONY : ros_socket_gennodejs/fast
+
+# Convenience name for target.
+ros_socket/CMakeFiles/_ros_socket_generate_messages_check_deps_robot_joint.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/_ros_socket_generate_messages_check_deps_robot_joint.dir/rule
+.PHONY : ros_socket/CMakeFiles/_ros_socket_generate_messages_check_deps_robot_joint.dir/rule
+
+# Convenience name for target.
+_ros_socket_generate_messages_check_deps_robot_joint: ros_socket/CMakeFiles/_ros_socket_generate_messages_check_deps_robot_joint.dir/rule
+
+.PHONY : _ros_socket_generate_messages_check_deps_robot_joint
+
+# fast build rule for target.
+_ros_socket_generate_messages_check_deps_robot_joint/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/_ros_socket_generate_messages_check_deps_robot_joint.dir/build.make ros_socket/CMakeFiles/_ros_socket_generate_messages_check_deps_robot_joint.dir/build
+.PHONY : _ros_socket_generate_messages_check_deps_robot_joint/fast
+
+# Convenience name for target.
+ros_socket/CMakeFiles/_ros_socket_generate_messages_check_deps_robot_head_pos.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/_ros_socket_generate_messages_check_deps_robot_head_pos.dir/rule
+.PHONY : ros_socket/CMakeFiles/_ros_socket_generate_messages_check_deps_robot_head_pos.dir/rule
+
+# Convenience name for target.
+_ros_socket_generate_messages_check_deps_robot_head_pos: ros_socket/CMakeFiles/_ros_socket_generate_messages_check_deps_robot_head_pos.dir/rule
+
+.PHONY : _ros_socket_generate_messages_check_deps_robot_head_pos
+
+# fast build rule for target.
+_ros_socket_generate_messages_check_deps_robot_head_pos/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/_ros_socket_generate_messages_check_deps_robot_head_pos.dir/build.make ros_socket/CMakeFiles/_ros_socket_generate_messages_check_deps_robot_head_pos.dir/build
+.PHONY : _ros_socket_generate_messages_check_deps_robot_head_pos/fast
+
+# Convenience name for target.
+ros_socket/CMakeFiles/client_node.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/client_node.dir/rule
+.PHONY : ros_socket/CMakeFiles/client_node.dir/rule
+
+# Convenience name for target.
+client_node: ros_socket/CMakeFiles/client_node.dir/rule
+
+.PHONY : client_node
+
+# fast build rule for target.
+client_node/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/client_node.dir/build.make ros_socket/CMakeFiles/client_node.dir/build
+.PHONY : client_node/fast
+
+# Convenience name for target.
+ros_socket/CMakeFiles/ros_socket_gencpp.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/ros_socket_gencpp.dir/rule
+.PHONY : ros_socket/CMakeFiles/ros_socket_gencpp.dir/rule
+
+# Convenience name for target.
+ros_socket_gencpp: ros_socket/CMakeFiles/ros_socket_gencpp.dir/rule
+
+.PHONY : ros_socket_gencpp
+
+# fast build rule for target.
+ros_socket_gencpp/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/ros_socket_gencpp.dir/build.make ros_socket/CMakeFiles/ros_socket_gencpp.dir/build
+.PHONY : ros_socket_gencpp/fast
+
+# Convenience name for target.
+ros_socket/CMakeFiles/serial_port.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/serial_port.dir/rule
+.PHONY : ros_socket/CMakeFiles/serial_port.dir/rule
+
+# Convenience name for target.
+serial_port: ros_socket/CMakeFiles/serial_port.dir/rule
+
+.PHONY : serial_port
+
+# fast build rule for target.
+serial_port/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/serial_port.dir/build.make ros_socket/CMakeFiles/serial_port.dir/build
+.PHONY : serial_port/fast
+
+# Convenience name for target.
+ros_socket/CMakeFiles/ros_socket_generate_messages.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/ros_socket_generate_messages.dir/rule
+.PHONY : ros_socket/CMakeFiles/ros_socket_generate_messages.dir/rule
+
+# Convenience name for target.
+ros_socket_generate_messages: ros_socket/CMakeFiles/ros_socket_generate_messages.dir/rule
+
+.PHONY : ros_socket_generate_messages
+
+# fast build rule for target.
+ros_socket_generate_messages/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/ros_socket_generate_messages.dir/build.make ros_socket/CMakeFiles/ros_socket_generate_messages.dir/build
+.PHONY : ros_socket_generate_messages/fast
+
+# Convenience name for target.
+ros_socket/CMakeFiles/robotModel_ros_socket.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/robotModel_ros_socket.dir/rule
+.PHONY : ros_socket/CMakeFiles/robotModel_ros_socket.dir/rule
+
+# Convenience name for target.
+robotModel_ros_socket: ros_socket/CMakeFiles/robotModel_ros_socket.dir/rule
+
+.PHONY : robotModel_ros_socket
+
+# fast build rule for target.
+robotModel_ros_socket/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/robotModel_ros_socket.dir/build.make ros_socket/CMakeFiles/robotModel_ros_socket.dir/build
+.PHONY : robotModel_ros_socket/fast
+
+# Convenience name for target.
+ros_socket/CMakeFiles/ros_socket_generate_messages_py.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/ros_socket_generate_messages_py.dir/rule
+.PHONY : ros_socket/CMakeFiles/ros_socket_generate_messages_py.dir/rule
+
+# Convenience name for target.
+ros_socket_generate_messages_py: ros_socket/CMakeFiles/ros_socket_generate_messages_py.dir/rule
+
+.PHONY : ros_socket_generate_messages_py
+
+# fast build rule for target.
+ros_socket_generate_messages_py/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/ros_socket_generate_messages_py.dir/build.make ros_socket/CMakeFiles/ros_socket_generate_messages_py.dir/build
+.PHONY : ros_socket_generate_messages_py/fast
+
+# Convenience name for target.
+ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/rule
+.PHONY : ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/rule
+
+# Convenience name for target.
+matlab_inv_initialize_ros_socket: ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/rule
+
+.PHONY : matlab_inv_initialize_ros_socket
+
+# fast build rule for target.
+matlab_inv_initialize_ros_socket/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/build
+.PHONY : matlab_inv_initialize_ros_socket/fast
+
+# Convenience name for target.
+ros_socket/CMakeFiles/ByteArray_ros_socket.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/ByteArray_ros_socket.dir/rule
+.PHONY : ros_socket/CMakeFiles/ByteArray_ros_socket.dir/rule
+
+# Convenience name for target.
+ByteArray_ros_socket: ros_socket/CMakeFiles/ByteArray_ros_socket.dir/rule
+
+.PHONY : ByteArray_ros_socket
+
+# fast build rule for target.
+ByteArray_ros_socket/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/ByteArray_ros_socket.dir/build.make ros_socket/CMakeFiles/ByteArray_ros_socket.dir/build
+.PHONY : ByteArray_ros_socket/fast
+
+# Convenience name for target.
+ros_socket/CMakeFiles/ros_socket_genpy.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/ros_socket_genpy.dir/rule
+.PHONY : ros_socket/CMakeFiles/ros_socket_genpy.dir/rule
+
+# Convenience name for target.
+ros_socket_genpy: ros_socket/CMakeFiles/ros_socket_genpy.dir/rule
+
+.PHONY : ros_socket_genpy
+
+# fast build rule for target.
+ros_socket_genpy/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/ros_socket_genpy.dir/build.make ros_socket/CMakeFiles/ros_socket_genpy.dir/build
+.PHONY : ros_socket_genpy/fast
+
+# Convenience name for target.
 ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/rule:
 	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/rule
 .PHONY : ros_socket/CMakeFiles/matlab_inv_data_ros_socket.dir/rule
@@ -198,64 +483,34 @@ matlab_inv_terminate_ros_socket/fast:
 .PHONY : matlab_inv_terminate_ros_socket/fast
 
 # Convenience name for target.
-ros_socket/CMakeFiles/server_special_gait.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/server_special_gait.dir/rule
-.PHONY : ros_socket/CMakeFiles/server_special_gait.dir/rule
+ros_socket/CMakeFiles/ros_socket_geneus.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/ros_socket_geneus.dir/rule
+.PHONY : ros_socket/CMakeFiles/ros_socket_geneus.dir/rule
 
 # Convenience name for target.
-server_special_gait: ros_socket/CMakeFiles/server_special_gait.dir/rule
+ros_socket_geneus: ros_socket/CMakeFiles/ros_socket_geneus.dir/rule
 
-.PHONY : server_special_gait
+.PHONY : ros_socket_geneus
 
 # fast build rule for target.
-server_special_gait/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/server_special_gait.dir/build.make ros_socket/CMakeFiles/server_special_gait.dir/build
-.PHONY : server_special_gait/fast
+ros_socket_geneus/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/ros_socket_geneus.dir/build.make ros_socket/CMakeFiles/ros_socket_geneus.dir/build
+.PHONY : ros_socket_geneus/fast
 
 # Convenience name for target.
-ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/rule
-.PHONY : ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/rule
+ros_socket/CMakeFiles/packetTransformer_ros_socket.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/packetTransformer_ros_socket.dir/rule
+.PHONY : ros_socket/CMakeFiles/packetTransformer_ros_socket.dir/rule
 
 # Convenience name for target.
-matlab_inv_initialize_ros_socket: ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/rule
+packetTransformer_ros_socket: ros_socket/CMakeFiles/packetTransformer_ros_socket.dir/rule
 
-.PHONY : matlab_inv_initialize_ros_socket
+.PHONY : packetTransformer_ros_socket
 
 # fast build rule for target.
-matlab_inv_initialize_ros_socket/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_initialize_ros_socket.dir/build
-.PHONY : matlab_inv_initialize_ros_socket/fast
-
-# Convenience name for target.
-ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/rule
-.PHONY : ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/rule
-
-# Convenience name for target.
-matlab_inv_ros_socket: ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/rule
-
-.PHONY : matlab_inv_ros_socket
-
-# fast build rule for target.
-matlab_inv_ros_socket/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_ros_socket.dir/build
-.PHONY : matlab_inv_ros_socket/fast
-
-# Convenience name for target.
-ros_socket/CMakeFiles/robotModel_ros_socket.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/robotModel_ros_socket.dir/rule
-.PHONY : ros_socket/CMakeFiles/robotModel_ros_socket.dir/rule
-
-# Convenience name for target.
-robotModel_ros_socket: ros_socket/CMakeFiles/robotModel_ros_socket.dir/rule
-
-.PHONY : robotModel_ros_socket
-
-# fast build rule for target.
-robotModel_ros_socket/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/robotModel_ros_socket.dir/build.make ros_socket/CMakeFiles/robotModel_ros_socket.dir/build
-.PHONY : robotModel_ros_socket/fast
+packetTransformer_ros_socket/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/packetTransformer_ros_socket.dir/build.make ros_socket/CMakeFiles/packetTransformer_ros_socket.dir/build
+.PHONY : packetTransformer_ros_socket/fast
 
 # Convenience name for target.
 ros_socket/CMakeFiles/server_node.dir/rule:
@@ -273,34 +528,34 @@ server_node/fast:
 .PHONY : server_node/fast
 
 # Convenience name for target.
-ros_socket/CMakeFiles/serial_port.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/serial_port.dir/rule
-.PHONY : ros_socket/CMakeFiles/serial_port.dir/rule
+ros_socket/CMakeFiles/server_special_gait.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/server_special_gait.dir/rule
+.PHONY : ros_socket/CMakeFiles/server_special_gait.dir/rule
 
 # Convenience name for target.
-serial_port: ros_socket/CMakeFiles/serial_port.dir/rule
+server_special_gait: ros_socket/CMakeFiles/server_special_gait.dir/rule
 
-.PHONY : serial_port
+.PHONY : server_special_gait
 
 # fast build rule for target.
-serial_port/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/serial_port.dir/build.make ros_socket/CMakeFiles/serial_port.dir/build
-.PHONY : serial_port/fast
+server_special_gait/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/server_special_gait.dir/build.make ros_socket/CMakeFiles/server_special_gait.dir/build
+.PHONY : server_special_gait/fast
 
 # Convenience name for target.
-ros_socket/CMakeFiles/client_node.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/client_node.dir/rule
-.PHONY : ros_socket/CMakeFiles/client_node.dir/rule
+ros_socket/CMakeFiles/robot_walk_node_specialgait.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/robot_walk_node_specialgait.dir/rule
+.PHONY : ros_socket/CMakeFiles/robot_walk_node_specialgait.dir/rule
 
 # Convenience name for target.
-client_node: ros_socket/CMakeFiles/client_node.dir/rule
+robot_walk_node_specialgait: ros_socket/CMakeFiles/robot_walk_node_specialgait.dir/rule
 
-.PHONY : client_node
+.PHONY : robot_walk_node_specialgait
 
 # fast build rule for target.
-client_node/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/client_node.dir/build.make ros_socket/CMakeFiles/client_node.dir/build
-.PHONY : client_node/fast
+robot_walk_node_specialgait/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/robot_walk_node_specialgait.dir/build.make ros_socket/CMakeFiles/robot_walk_node_specialgait.dir/build
+.PHONY : robot_walk_node_specialgait/fast
 
 src/client_node.o: src/client_node.cpp.o
 
@@ -328,6 +583,33 @@ src/client_node.s: src/client_node.cpp.s
 src/client_node.cpp.s:
 	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/client_node.dir/build.make ros_socket/CMakeFiles/client_node.dir/src/client_node.cpp.s
 .PHONY : src/client_node.cpp.s
+
+src/robot_walk_node_specialgait.o: src/robot_walk_node_specialgait.cpp.o
+
+.PHONY : src/robot_walk_node_specialgait.o
+
+# target to build an object file
+src/robot_walk_node_specialgait.cpp.o:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/robot_walk_node_specialgait.dir/build.make ros_socket/CMakeFiles/robot_walk_node_specialgait.dir/src/robot_walk_node_specialgait.cpp.o
+.PHONY : src/robot_walk_node_specialgait.cpp.o
+
+src/robot_walk_node_specialgait.i: src/robot_walk_node_specialgait.cpp.i
+
+.PHONY : src/robot_walk_node_specialgait.i
+
+# target to preprocess a source file
+src/robot_walk_node_specialgait.cpp.i:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/robot_walk_node_specialgait.dir/build.make ros_socket/CMakeFiles/robot_walk_node_specialgait.dir/src/robot_walk_node_specialgait.cpp.i
+.PHONY : src/robot_walk_node_specialgait.cpp.i
+
+src/robot_walk_node_specialgait.s: src/robot_walk_node_specialgait.cpp.s
+
+.PHONY : src/robot_walk_node_specialgait.s
+
+# target to generate assembly for a file
+src/robot_walk_node_specialgait.cpp.s:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/robot_walk_node_specialgait.dir/build.make ros_socket/CMakeFiles/robot_walk_node_specialgait.dir/src/robot_walk_node_specialgait.cpp.s
+.PHONY : src/robot_walk_node_specialgait.cpp.s
 
 src/serial_port.o: src/serial_port.cpp.o
 
@@ -409,6 +691,33 @@ src/server_special_gait.s: src/server_special_gait.cpp.s
 src/server_special_gait.cpp.s:
 	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/server_special_gait.dir/build.make ros_socket/CMakeFiles/server_special_gait.dir/src/server_special_gait.cpp.s
 .PHONY : src/server_special_gait.cpp.s
+
+src/source/ByteArray.o: src/source/ByteArray.cpp.o
+
+.PHONY : src/source/ByteArray.o
+
+# target to build an object file
+src/source/ByteArray.cpp.o:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/ByteArray_ros_socket.dir/build.make ros_socket/CMakeFiles/ByteArray_ros_socket.dir/src/source/ByteArray.cpp.o
+.PHONY : src/source/ByteArray.cpp.o
+
+src/source/ByteArray.i: src/source/ByteArray.cpp.i
+
+.PHONY : src/source/ByteArray.i
+
+# target to preprocess a source file
+src/source/ByteArray.cpp.i:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/ByteArray_ros_socket.dir/build.make ros_socket/CMakeFiles/ByteArray_ros_socket.dir/src/source/ByteArray.cpp.i
+.PHONY : src/source/ByteArray.cpp.i
+
+src/source/ByteArray.s: src/source/ByteArray.cpp.s
+
+.PHONY : src/source/ByteArray.s
+
+# target to generate assembly for a file
+src/source/ByteArray.cpp.s:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/ByteArray_ros_socket.dir/build.make ros_socket/CMakeFiles/ByteArray_ros_socket.dir/src/source/ByteArray.cpp.s
+.PHONY : src/source/ByteArray.cpp.s
 
 src/source/matlab_inv.o: src/source/matlab_inv.c.o
 
@@ -518,6 +827,33 @@ src/source/matlab_inv_terminate.c.s:
 	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/build.make ros_socket/CMakeFiles/matlab_inv_terminate_ros_socket.dir/src/source/matlab_inv_terminate.c.s
 .PHONY : src/source/matlab_inv_terminate.c.s
 
+src/source/packetTransformer.o: src/source/packetTransformer.cpp.o
+
+.PHONY : src/source/packetTransformer.o
+
+# target to build an object file
+src/source/packetTransformer.cpp.o:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/packetTransformer_ros_socket.dir/build.make ros_socket/CMakeFiles/packetTransformer_ros_socket.dir/src/source/packetTransformer.cpp.o
+.PHONY : src/source/packetTransformer.cpp.o
+
+src/source/packetTransformer.i: src/source/packetTransformer.cpp.i
+
+.PHONY : src/source/packetTransformer.i
+
+# target to preprocess a source file
+src/source/packetTransformer.cpp.i:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/packetTransformer_ros_socket.dir/build.make ros_socket/CMakeFiles/packetTransformer_ros_socket.dir/src/source/packetTransformer.cpp.i
+.PHONY : src/source/packetTransformer.cpp.i
+
+src/source/packetTransformer.s: src/source/packetTransformer.cpp.s
+
+.PHONY : src/source/packetTransformer.s
+
+# target to generate assembly for a file
+src/source/packetTransformer.cpp.s:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/packetTransformer_ros_socket.dir/build.make ros_socket/CMakeFiles/packetTransformer_ros_socket.dir/src/source/packetTransformer.cpp.s
+.PHONY : src/source/packetTransformer.cpp.s
+
 src/source/robotModel.o: src/source/robotModel.cpp.o
 
 .PHONY : src/source/robotModel.o
@@ -554,22 +890,42 @@ help:
 	@echo "... install/strip"
 	@echo "... install/local"
 	@echo "... install"
-	@echo "... matlab_inv_data_ros_socket"
-	@echo "... matlab_inv_terminate_ros_socket"
-	@echo "... server_special_gait"
-	@echo "... matlab_inv_initialize_ros_socket"
+	@echo "... ros_socket_generate_messages_lisp"
+	@echo "... ros_socket_generate_messages_eus"
+	@echo "... ros_socket_genlisp"
+	@echo "... ros_socket_generate_messages_nodejs"
+	@echo "... ros_socket_generate_messages_cpp"
 	@echo "... matlab_inv_ros_socket"
-	@echo "... robotModel_ros_socket"
-	@echo "... server_node"
-	@echo "... serial_port"
+	@echo "... _ros_socket_generate_messages_check_deps_cmd_walk"
+	@echo "... ros_socket_gennodejs"
+	@echo "... _ros_socket_generate_messages_check_deps_robot_joint"
+	@echo "... _ros_socket_generate_messages_check_deps_robot_head_pos"
 	@echo "... client_node"
+	@echo "... ros_socket_gencpp"
+	@echo "... serial_port"
+	@echo "... ros_socket_generate_messages"
+	@echo "... robotModel_ros_socket"
+	@echo "... ros_socket_generate_messages_py"
+	@echo "... matlab_inv_initialize_ros_socket"
+	@echo "... ByteArray_ros_socket"
+	@echo "... ros_socket_genpy"
+	@echo "... matlab_inv_data_ros_socket"
+	@echo "... list_install_components"
+	@echo "... matlab_inv_terminate_ros_socket"
+	@echo "... ros_socket_geneus"
+	@echo "... packetTransformer_ros_socket"
+	@echo "... server_node"
+	@echo "... server_special_gait"
+	@echo "... robot_walk_node_specialgait"
 	@echo "... test"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... list_install_components"
 	@echo "... src/client_node.o"
 	@echo "... src/client_node.i"
 	@echo "... src/client_node.s"
+	@echo "... src/robot_walk_node_specialgait.o"
+	@echo "... src/robot_walk_node_specialgait.i"
+	@echo "... src/robot_walk_node_specialgait.s"
 	@echo "... src/serial_port.o"
 	@echo "... src/serial_port.i"
 	@echo "... src/serial_port.s"
@@ -579,6 +935,9 @@ help:
 	@echo "... src/server_special_gait.o"
 	@echo "... src/server_special_gait.i"
 	@echo "... src/server_special_gait.s"
+	@echo "... src/source/ByteArray.o"
+	@echo "... src/source/ByteArray.i"
+	@echo "... src/source/ByteArray.s"
 	@echo "... src/source/matlab_inv.o"
 	@echo "... src/source/matlab_inv.i"
 	@echo "... src/source/matlab_inv.s"
@@ -591,6 +950,9 @@ help:
 	@echo "... src/source/matlab_inv_terminate.o"
 	@echo "... src/source/matlab_inv_terminate.i"
 	@echo "... src/source/matlab_inv_terminate.s"
+	@echo "... src/source/packetTransformer.o"
+	@echo "... src/source/packetTransformer.i"
+	@echo "... src/source/packetTransformer.s"
 	@echo "... src/source/robotModel.o"
 	@echo "... src/source/robotModel.i"
 	@echo "... src/source/robotModel.s"

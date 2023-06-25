@@ -56,40 +56,17 @@ CMAKE_BINARY_DIR = /home/wp/ikid_ws/build
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target install
-install: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/bin/cmake -P cmake_install.cmake
-.PHONY : install
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
 
-# Special rule for the target install
-install/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/bin/cmake -P cmake_install.cmake
-.PHONY : install/fast
-
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
-
-# Special rule for the target install/local
-install/local/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local/fast
-
-# Special rule for the target test
-test:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
-	/usr/bin/ctest --force-new-ctest-process $(ARGS)
-.PHONY : test
-
-# Special rule for the target test
-test/fast: test
-
-.PHONY : test/fast
+# Special rule for the target install/strip
+install/strip/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip/fast
 
 # Special rule for the target rebuild_cache
 rebuild_cache:
@@ -113,18 +90,6 @@ edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
 
-# Special rule for the target install/strip
-install/strip: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip
-
-# Special rule for the target install/strip
-install/strip/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip/fast
-
 # Special rule for the target list_install_components
 list_install_components:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
@@ -134,6 +99,41 @@ list_install_components:
 list_install_components/fast: list_install_components
 
 .PHONY : list_install_components/fast
+
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
+	/usr/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+
+.PHONY : test/fast
+
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
+
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -168,19 +168,19 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-ikid_motion_control/CMakeFiles/test_traj_node.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/test_traj_node.dir/rule
-.PHONY : ikid_motion_control/CMakeFiles/test_traj_node.dir/rule
+ikid_motion_control/CMakeFiles/special_gait_node.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/special_gait_node.dir/rule
+.PHONY : ikid_motion_control/CMakeFiles/special_gait_node.dir/rule
 
 # Convenience name for target.
-test_traj_node: ikid_motion_control/CMakeFiles/test_traj_node.dir/rule
+special_gait_node: ikid_motion_control/CMakeFiles/special_gait_node.dir/rule
 
-.PHONY : test_traj_node
+.PHONY : special_gait_node
 
 # fast build rule for target.
-test_traj_node/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/test_traj_node.dir/build.make ikid_motion_control/CMakeFiles/test_traj_node.dir/build
-.PHONY : test_traj_node/fast
+special_gait_node/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/special_gait_node.dir/build.make ikid_motion_control/CMakeFiles/special_gait_node.dir/build
+.PHONY : special_gait_node/fast
 
 # Convenience name for target.
 ikid_motion_control/CMakeFiles/robotModel.dir/rule:
@@ -196,6 +196,171 @@ robotModel: ikid_motion_control/CMakeFiles/robotModel.dir/rule
 robotModel/fast:
 	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/robotModel.dir/build.make ikid_motion_control/CMakeFiles/robotModel.dir/build
 .PHONY : robotModel/fast
+
+# Convenience name for target.
+ikid_motion_control/CMakeFiles/matlab_inv_initialize.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/matlab_inv_initialize.dir/rule
+.PHONY : ikid_motion_control/CMakeFiles/matlab_inv_initialize.dir/rule
+
+# Convenience name for target.
+matlab_inv_initialize: ikid_motion_control/CMakeFiles/matlab_inv_initialize.dir/rule
+
+.PHONY : matlab_inv_initialize
+
+# fast build rule for target.
+matlab_inv_initialize/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/matlab_inv_initialize.dir/build.make ikid_motion_control/CMakeFiles/matlab_inv_initialize.dir/build
+.PHONY : matlab_inv_initialize/fast
+
+# Convenience name for target.
+ikid_motion_control/CMakeFiles/matlab_inv_data.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/matlab_inv_data.dir/rule
+.PHONY : ikid_motion_control/CMakeFiles/matlab_inv_data.dir/rule
+
+# Convenience name for target.
+matlab_inv_data: ikid_motion_control/CMakeFiles/matlab_inv_data.dir/rule
+
+.PHONY : matlab_inv_data
+
+# fast build rule for target.
+matlab_inv_data/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/matlab_inv_data.dir/build.make ikid_motion_control/CMakeFiles/matlab_inv_data.dir/build
+.PHONY : matlab_inv_data/fast
+
+# Convenience name for target.
+ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages.dir/rule
+.PHONY : ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages.dir/rule
+
+# Convenience name for target.
+ikid_motion_control_generate_messages: ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages.dir/rule
+
+.PHONY : ikid_motion_control_generate_messages
+
+# fast build rule for target.
+ikid_motion_control_generate_messages/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages.dir/build
+.PHONY : ikid_motion_control_generate_messages/fast
+
+# Convenience name for target.
+ikid_motion_control/CMakeFiles/test_traj_node.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/test_traj_node.dir/rule
+.PHONY : ikid_motion_control/CMakeFiles/test_traj_node.dir/rule
+
+# Convenience name for target.
+test_traj_node: ikid_motion_control/CMakeFiles/test_traj_node.dir/rule
+
+.PHONY : test_traj_node
+
+# fast build rule for target.
+test_traj_node/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/test_traj_node.dir/build.make ikid_motion_control/CMakeFiles/test_traj_node.dir/build
+.PHONY : test_traj_node/fast
+
+# Convenience name for target.
+ikid_motion_control/CMakeFiles/_ikid_motion_control_generate_messages_check_deps_cmd_walk.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/_ikid_motion_control_generate_messages_check_deps_cmd_walk.dir/rule
+.PHONY : ikid_motion_control/CMakeFiles/_ikid_motion_control_generate_messages_check_deps_cmd_walk.dir/rule
+
+# Convenience name for target.
+_ikid_motion_control_generate_messages_check_deps_cmd_walk: ikid_motion_control/CMakeFiles/_ikid_motion_control_generate_messages_check_deps_cmd_walk.dir/rule
+
+.PHONY : _ikid_motion_control_generate_messages_check_deps_cmd_walk
+
+# fast build rule for target.
+_ikid_motion_control_generate_messages_check_deps_cmd_walk/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/_ikid_motion_control_generate_messages_check_deps_cmd_walk.dir/build.make ikid_motion_control/CMakeFiles/_ikid_motion_control_generate_messages_check_deps_cmd_walk.dir/build
+.PHONY : _ikid_motion_control_generate_messages_check_deps_cmd_walk/fast
+
+# Convenience name for target.
+ikid_motion_control/CMakeFiles/_ikid_motion_control_generate_messages_check_deps_robot_joint.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/_ikid_motion_control_generate_messages_check_deps_robot_joint.dir/rule
+.PHONY : ikid_motion_control/CMakeFiles/_ikid_motion_control_generate_messages_check_deps_robot_joint.dir/rule
+
+# Convenience name for target.
+_ikid_motion_control_generate_messages_check_deps_robot_joint: ikid_motion_control/CMakeFiles/_ikid_motion_control_generate_messages_check_deps_robot_joint.dir/rule
+
+.PHONY : _ikid_motion_control_generate_messages_check_deps_robot_joint
+
+# fast build rule for target.
+_ikid_motion_control_generate_messages_check_deps_robot_joint/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/_ikid_motion_control_generate_messages_check_deps_robot_joint.dir/build.make ikid_motion_control/CMakeFiles/_ikid_motion_control_generate_messages_check_deps_robot_joint.dir/build
+.PHONY : _ikid_motion_control_generate_messages_check_deps_robot_joint/fast
+
+# Convenience name for target.
+ikid_motion_control/CMakeFiles/ikid_motion_control_gencpp.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/ikid_motion_control_gencpp.dir/rule
+.PHONY : ikid_motion_control/CMakeFiles/ikid_motion_control_gencpp.dir/rule
+
+# Convenience name for target.
+ikid_motion_control_gencpp: ikid_motion_control/CMakeFiles/ikid_motion_control_gencpp.dir/rule
+
+.PHONY : ikid_motion_control_gencpp
+
+# fast build rule for target.
+ikid_motion_control_gencpp/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_gencpp.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_gencpp.dir/build
+.PHONY : ikid_motion_control_gencpp/fast
+
+# Convenience name for target.
+ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_py.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_py.dir/rule
+.PHONY : ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_py.dir/rule
+
+# Convenience name for target.
+ikid_motion_control_generate_messages_py: ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_py.dir/rule
+
+.PHONY : ikid_motion_control_generate_messages_py
+
+# fast build rule for target.
+ikid_motion_control_generate_messages_py/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_py.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_py.dir/build
+.PHONY : ikid_motion_control_generate_messages_py/fast
+
+# Convenience name for target.
+ikid_motion_control/CMakeFiles/robot_walk_node.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/robot_walk_node.dir/rule
+.PHONY : ikid_motion_control/CMakeFiles/robot_walk_node.dir/rule
+
+# Convenience name for target.
+robot_walk_node: ikid_motion_control/CMakeFiles/robot_walk_node.dir/rule
+
+.PHONY : robot_walk_node
+
+# fast build rule for target.
+robot_walk_node/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/robot_walk_node.dir/build.make ikid_motion_control/CMakeFiles/robot_walk_node.dir/build
+.PHONY : robot_walk_node/fast
+
+# Convenience name for target.
+ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_cpp.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_cpp.dir/rule
+.PHONY : ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+ikid_motion_control_generate_messages_cpp: ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_cpp.dir/rule
+
+.PHONY : ikid_motion_control_generate_messages_cpp
+
+# fast build rule for target.
+ikid_motion_control_generate_messages_cpp/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_cpp.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_cpp.dir/build
+.PHONY : ikid_motion_control_generate_messages_cpp/fast
+
+# Convenience name for target.
+ikid_motion_control/CMakeFiles/ikid_motion_control_genpy.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/ikid_motion_control_genpy.dir/rule
+.PHONY : ikid_motion_control/CMakeFiles/ikid_motion_control_genpy.dir/rule
+
+# Convenience name for target.
+ikid_motion_control_genpy: ikid_motion_control/CMakeFiles/ikid_motion_control_genpy.dir/rule
+
+.PHONY : ikid_motion_control_genpy
+
+# fast build rule for target.
+ikid_motion_control_genpy/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_genpy.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_genpy.dir/build
+.PHONY : ikid_motion_control_genpy/fast
 
 # Convenience name for target.
 ikid_motion_control/CMakeFiles/matlab_inv.dir/rule:
@@ -228,109 +393,49 @@ matlab_inv_terminate/fast:
 .PHONY : matlab_inv_terminate/fast
 
 # Convenience name for target.
-ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule
-.PHONY : ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule
+ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_eus.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_eus.dir/rule
+.PHONY : ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_eus.dir/rule
 
 # Convenience name for target.
-rosgraph_msgs_generate_messages_py: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule
+ikid_motion_control_generate_messages_eus: ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_eus.dir/rule
 
-.PHONY : rosgraph_msgs_generate_messages_py
+.PHONY : ikid_motion_control_generate_messages_eus
 
 # fast build rule for target.
-rosgraph_msgs_generate_messages_py/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/build.make ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/build
-.PHONY : rosgraph_msgs_generate_messages_py/fast
+ikid_motion_control_generate_messages_eus/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_eus.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_eus.dir/build
+.PHONY : ikid_motion_control_generate_messages_eus/fast
 
 # Convenience name for target.
-ikid_motion_control/CMakeFiles/roscpp_generate_messages_lisp.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/roscpp_generate_messages_lisp.dir/rule
-.PHONY : ikid_motion_control/CMakeFiles/roscpp_generate_messages_lisp.dir/rule
+ikid_motion_control/CMakeFiles/pid_amend_node.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/pid_amend_node.dir/rule
+.PHONY : ikid_motion_control/CMakeFiles/pid_amend_node.dir/rule
 
 # Convenience name for target.
-roscpp_generate_messages_lisp: ikid_motion_control/CMakeFiles/roscpp_generate_messages_lisp.dir/rule
+pid_amend_node: ikid_motion_control/CMakeFiles/pid_amend_node.dir/rule
 
-.PHONY : roscpp_generate_messages_lisp
+.PHONY : pid_amend_node
 
 # fast build rule for target.
-roscpp_generate_messages_lisp/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/roscpp_generate_messages_lisp.dir/build.make ikid_motion_control/CMakeFiles/roscpp_generate_messages_lisp.dir/build
-.PHONY : roscpp_generate_messages_lisp/fast
+pid_amend_node/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/pid_amend_node.dir/build.make ikid_motion_control/CMakeFiles/pid_amend_node.dir/build
+.PHONY : pid_amend_node/fast
 
 # Convenience name for target.
-ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/rule
-.PHONY : ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/rule
+ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_lisp.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_lisp.dir/rule
+.PHONY : ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_lisp.dir/rule
 
 # Convenience name for target.
-rosgraph_msgs_generate_messages_lisp: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/rule
+ikid_motion_control_generate_messages_lisp: ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_lisp.dir/rule
 
-.PHONY : rosgraph_msgs_generate_messages_lisp
+.PHONY : ikid_motion_control_generate_messages_lisp
 
 # fast build rule for target.
-rosgraph_msgs_generate_messages_lisp/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/build.make ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/build
-.PHONY : rosgraph_msgs_generate_messages_lisp/fast
-
-# Convenience name for target.
-ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/rule
-.PHONY : ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/rule
-
-# Convenience name for target.
-rosgraph_msgs_generate_messages_eus: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/rule
-
-.PHONY : rosgraph_msgs_generate_messages_eus
-
-# fast build rule for target.
-rosgraph_msgs_generate_messages_eus/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/build.make ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/build
-.PHONY : rosgraph_msgs_generate_messages_eus/fast
-
-# Convenience name for target.
-ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
-.PHONY : ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
-
-# Convenience name for target.
-rosgraph_msgs_generate_messages_cpp: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
-
-.PHONY : rosgraph_msgs_generate_messages_cpp
-
-# fast build rule for target.
-rosgraph_msgs_generate_messages_cpp/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build.make ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build
-.PHONY : rosgraph_msgs_generate_messages_cpp/fast
-
-# Convenience name for target.
-ikid_motion_control/CMakeFiles/roscpp_generate_messages_nodejs.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/roscpp_generate_messages_nodejs.dir/rule
-.PHONY : ikid_motion_control/CMakeFiles/roscpp_generate_messages_nodejs.dir/rule
-
-# Convenience name for target.
-roscpp_generate_messages_nodejs: ikid_motion_control/CMakeFiles/roscpp_generate_messages_nodejs.dir/rule
-
-.PHONY : roscpp_generate_messages_nodejs
-
-# fast build rule for target.
-roscpp_generate_messages_nodejs/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/roscpp_generate_messages_nodejs.dir/build.make ikid_motion_control/CMakeFiles/roscpp_generate_messages_nodejs.dir/build
-.PHONY : roscpp_generate_messages_nodejs/fast
-
-# Convenience name for target.
-ikid_motion_control/CMakeFiles/std_msgs_generate_messages_eus.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
-.PHONY : ikid_motion_control/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
-
-# Convenience name for target.
-std_msgs_generate_messages_eus: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
-
-.PHONY : std_msgs_generate_messages_eus
-
-# fast build rule for target.
-std_msgs_generate_messages_eus/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/std_msgs_generate_messages_eus.dir/build.make ikid_motion_control/CMakeFiles/std_msgs_generate_messages_eus.dir/build
-.PHONY : std_msgs_generate_messages_eus/fast
+ikid_motion_control_generate_messages_lisp/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_lisp.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_lisp.dir/build
+.PHONY : ikid_motion_control_generate_messages_lisp/fast
 
 # Convenience name for target.
 ikid_motion_control/CMakeFiles/ikid_motion_control_geneus.dir/rule:
@@ -363,94 +468,19 @@ ikid_motion_control_genlisp/fast:
 .PHONY : ikid_motion_control_genlisp/fast
 
 # Convenience name for target.
-ikid_motion_control/CMakeFiles/roscpp_generate_messages_py.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/roscpp_generate_messages_py.dir/rule
-.PHONY : ikid_motion_control/CMakeFiles/roscpp_generate_messages_py.dir/rule
+ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_nodejs.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_nodejs.dir/rule
+.PHONY : ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_nodejs.dir/rule
 
 # Convenience name for target.
-roscpp_generate_messages_py: ikid_motion_control/CMakeFiles/roscpp_generate_messages_py.dir/rule
+ikid_motion_control_generate_messages_nodejs: ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_nodejs.dir/rule
 
-.PHONY : roscpp_generate_messages_py
+.PHONY : ikid_motion_control_generate_messages_nodejs
 
 # fast build rule for target.
-roscpp_generate_messages_py/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/roscpp_generate_messages_py.dir/build.make ikid_motion_control/CMakeFiles/roscpp_generate_messages_py.dir/build
-.PHONY : roscpp_generate_messages_py/fast
-
-# Convenience name for target.
-ikid_motion_control/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule
-.PHONY : ikid_motion_control/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule
-
-# Convenience name for target.
-std_msgs_generate_messages_lisp: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule
-
-.PHONY : std_msgs_generate_messages_lisp
-
-# fast build rule for target.
-std_msgs_generate_messages_lisp/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/std_msgs_generate_messages_lisp.dir/build.make ikid_motion_control/CMakeFiles/std_msgs_generate_messages_lisp.dir/build
-.PHONY : std_msgs_generate_messages_lisp/fast
-
-# Convenience name for target.
-ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/rule
-.PHONY : ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/rule
-
-# Convenience name for target.
-rosgraph_msgs_generate_messages_nodejs: ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/rule
-
-.PHONY : rosgraph_msgs_generate_messages_nodejs
-
-# fast build rule for target.
-rosgraph_msgs_generate_messages_nodejs/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/build.make ikid_motion_control/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/build
-.PHONY : rosgraph_msgs_generate_messages_nodejs/fast
-
-# Convenience name for target.
-ikid_motion_control/CMakeFiles/roscpp_generate_messages_eus.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/roscpp_generate_messages_eus.dir/rule
-.PHONY : ikid_motion_control/CMakeFiles/roscpp_generate_messages_eus.dir/rule
-
-# Convenience name for target.
-roscpp_generate_messages_eus: ikid_motion_control/CMakeFiles/roscpp_generate_messages_eus.dir/rule
-
-.PHONY : roscpp_generate_messages_eus
-
-# fast build rule for target.
-roscpp_generate_messages_eus/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/roscpp_generate_messages_eus.dir/build.make ikid_motion_control/CMakeFiles/roscpp_generate_messages_eus.dir/build
-.PHONY : roscpp_generate_messages_eus/fast
-
-# Convenience name for target.
-ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_py.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_py.dir/rule
-.PHONY : ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_py.dir/rule
-
-# Convenience name for target.
-ikid_motion_control_generate_messages_py: ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_py.dir/rule
-
-.PHONY : ikid_motion_control_generate_messages_py
-
-# fast build rule for target.
-ikid_motion_control_generate_messages_py/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_py.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_py.dir/build
-.PHONY : ikid_motion_control_generate_messages_py/fast
-
-# Convenience name for target.
-ikid_motion_control/CMakeFiles/roscpp_generate_messages_cpp.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/roscpp_generate_messages_cpp.dir/rule
-.PHONY : ikid_motion_control/CMakeFiles/roscpp_generate_messages_cpp.dir/rule
-
-# Convenience name for target.
-roscpp_generate_messages_cpp: ikid_motion_control/CMakeFiles/roscpp_generate_messages_cpp.dir/rule
-
-.PHONY : roscpp_generate_messages_cpp
-
-# fast build rule for target.
-roscpp_generate_messages_cpp/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/roscpp_generate_messages_cpp.dir/build.make ikid_motion_control/CMakeFiles/roscpp_generate_messages_cpp.dir/build
-.PHONY : roscpp_generate_messages_cpp/fast
+ikid_motion_control_generate_messages_nodejs/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_nodejs.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_nodejs.dir/build
+.PHONY : ikid_motion_control_generate_messages_nodejs/fast
 
 # Convenience name for target.
 ikid_motion_control/CMakeFiles/ikid_motion_control_gennodejs.dir/rule:
@@ -467,200 +497,59 @@ ikid_motion_control_gennodejs/fast:
 	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_gennodejs.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_gennodejs.dir/build
 .PHONY : ikid_motion_control_gennodejs/fast
 
-# Convenience name for target.
-ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_cpp.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_cpp.dir/rule
-.PHONY : ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_cpp.dir/rule
+src/pid_amend_node.o: src/pid_amend_node.cpp.o
 
-# Convenience name for target.
-ikid_motion_control_generate_messages_cpp: ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_cpp.dir/rule
+.PHONY : src/pid_amend_node.o
 
-.PHONY : ikid_motion_control_generate_messages_cpp
+# target to build an object file
+src/pid_amend_node.cpp.o:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/pid_amend_node.dir/build.make ikid_motion_control/CMakeFiles/pid_amend_node.dir/src/pid_amend_node.cpp.o
+.PHONY : src/pid_amend_node.cpp.o
 
-# fast build rule for target.
-ikid_motion_control_generate_messages_cpp/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_cpp.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_cpp.dir/build
-.PHONY : ikid_motion_control_generate_messages_cpp/fast
+src/pid_amend_node.i: src/pid_amend_node.cpp.i
 
-# Convenience name for target.
-ikid_motion_control/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule
-.PHONY : ikid_motion_control/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule
+.PHONY : src/pid_amend_node.i
 
-# Convenience name for target.
-std_msgs_generate_messages_nodejs: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule
+# target to preprocess a source file
+src/pid_amend_node.cpp.i:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/pid_amend_node.dir/build.make ikid_motion_control/CMakeFiles/pid_amend_node.dir/src/pid_amend_node.cpp.i
+.PHONY : src/pid_amend_node.cpp.i
 
-.PHONY : std_msgs_generate_messages_nodejs
+src/pid_amend_node.s: src/pid_amend_node.cpp.s
 
-# fast build rule for target.
-std_msgs_generate_messages_nodejs/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build.make ikid_motion_control/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build
-.PHONY : std_msgs_generate_messages_nodejs/fast
+.PHONY : src/pid_amend_node.s
 
-# Convenience name for target.
-ikid_motion_control/CMakeFiles/std_msgs_generate_messages_py.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/std_msgs_generate_messages_py.dir/rule
-.PHONY : ikid_motion_control/CMakeFiles/std_msgs_generate_messages_py.dir/rule
+# target to generate assembly for a file
+src/pid_amend_node.cpp.s:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/pid_amend_node.dir/build.make ikid_motion_control/CMakeFiles/pid_amend_node.dir/src/pid_amend_node.cpp.s
+.PHONY : src/pid_amend_node.cpp.s
 
-# Convenience name for target.
-std_msgs_generate_messages_py: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_py.dir/rule
+src/robot_walk_node.o: src/robot_walk_node.cpp.o
 
-.PHONY : std_msgs_generate_messages_py
+.PHONY : src/robot_walk_node.o
 
-# fast build rule for target.
-std_msgs_generate_messages_py/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/std_msgs_generate_messages_py.dir/build.make ikid_motion_control/CMakeFiles/std_msgs_generate_messages_py.dir/build
-.PHONY : std_msgs_generate_messages_py/fast
+# target to build an object file
+src/robot_walk_node.cpp.o:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/robot_walk_node.dir/build.make ikid_motion_control/CMakeFiles/robot_walk_node.dir/src/robot_walk_node.cpp.o
+.PHONY : src/robot_walk_node.cpp.o
 
-# Convenience name for target.
-ikid_motion_control/CMakeFiles/_ikid_motion_control_generate_messages_check_deps_cmd_walk.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/_ikid_motion_control_generate_messages_check_deps_cmd_walk.dir/rule
-.PHONY : ikid_motion_control/CMakeFiles/_ikid_motion_control_generate_messages_check_deps_cmd_walk.dir/rule
+src/robot_walk_node.i: src/robot_walk_node.cpp.i
 
-# Convenience name for target.
-_ikid_motion_control_generate_messages_check_deps_cmd_walk: ikid_motion_control/CMakeFiles/_ikid_motion_control_generate_messages_check_deps_cmd_walk.dir/rule
+.PHONY : src/robot_walk_node.i
 
-.PHONY : _ikid_motion_control_generate_messages_check_deps_cmd_walk
+# target to preprocess a source file
+src/robot_walk_node.cpp.i:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/robot_walk_node.dir/build.make ikid_motion_control/CMakeFiles/robot_walk_node.dir/src/robot_walk_node.cpp.i
+.PHONY : src/robot_walk_node.cpp.i
 
-# fast build rule for target.
-_ikid_motion_control_generate_messages_check_deps_cmd_walk/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/_ikid_motion_control_generate_messages_check_deps_cmd_walk.dir/build.make ikid_motion_control/CMakeFiles/_ikid_motion_control_generate_messages_check_deps_cmd_walk.dir/build
-.PHONY : _ikid_motion_control_generate_messages_check_deps_cmd_walk/fast
+src/robot_walk_node.s: src/robot_walk_node.cpp.s
 
-# Convenience name for target.
-ikid_motion_control/CMakeFiles/ikid_motion_control_gencpp.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/ikid_motion_control_gencpp.dir/rule
-.PHONY : ikid_motion_control/CMakeFiles/ikid_motion_control_gencpp.dir/rule
+.PHONY : src/robot_walk_node.s
 
-# Convenience name for target.
-ikid_motion_control_gencpp: ikid_motion_control/CMakeFiles/ikid_motion_control_gencpp.dir/rule
-
-.PHONY : ikid_motion_control_gencpp
-
-# fast build rule for target.
-ikid_motion_control_gencpp/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_gencpp.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_gencpp.dir/build
-.PHONY : ikid_motion_control_gencpp/fast
-
-# Convenience name for target.
-ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_eus.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_eus.dir/rule
-.PHONY : ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_eus.dir/rule
-
-# Convenience name for target.
-ikid_motion_control_generate_messages_eus: ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_eus.dir/rule
-
-.PHONY : ikid_motion_control_generate_messages_eus
-
-# fast build rule for target.
-ikid_motion_control_generate_messages_eus/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_eus.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_eus.dir/build
-.PHONY : ikid_motion_control_generate_messages_eus/fast
-
-# Convenience name for target.
-ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_lisp.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_lisp.dir/rule
-.PHONY : ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_lisp.dir/rule
-
-# Convenience name for target.
-ikid_motion_control_generate_messages_lisp: ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_lisp.dir/rule
-
-.PHONY : ikid_motion_control_generate_messages_lisp
-
-# fast build rule for target.
-ikid_motion_control_generate_messages_lisp/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_lisp.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_lisp.dir/build
-.PHONY : ikid_motion_control_generate_messages_lisp/fast
-
-# Convenience name for target.
-ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages.dir/rule
-.PHONY : ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages.dir/rule
-
-# Convenience name for target.
-ikid_motion_control_generate_messages: ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages.dir/rule
-
-.PHONY : ikid_motion_control_generate_messages
-
-# fast build rule for target.
-ikid_motion_control_generate_messages/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages.dir/build
-.PHONY : ikid_motion_control_generate_messages/fast
-
-# Convenience name for target.
-ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_nodejs.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_nodejs.dir/rule
-.PHONY : ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_nodejs.dir/rule
-
-# Convenience name for target.
-ikid_motion_control_generate_messages_nodejs: ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_nodejs.dir/rule
-
-.PHONY : ikid_motion_control_generate_messages_nodejs
-
-# fast build rule for target.
-ikid_motion_control_generate_messages_nodejs/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_nodejs.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_generate_messages_nodejs.dir/build
-.PHONY : ikid_motion_control_generate_messages_nodejs/fast
-
-# Convenience name for target.
-ikid_motion_control/CMakeFiles/ikid_motion_control_genpy.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/ikid_motion_control_genpy.dir/rule
-.PHONY : ikid_motion_control/CMakeFiles/ikid_motion_control_genpy.dir/rule
-
-# Convenience name for target.
-ikid_motion_control_genpy: ikid_motion_control/CMakeFiles/ikid_motion_control_genpy.dir/rule
-
-.PHONY : ikid_motion_control_genpy
-
-# fast build rule for target.
-ikid_motion_control_genpy/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/ikid_motion_control_genpy.dir/build.make ikid_motion_control/CMakeFiles/ikid_motion_control_genpy.dir/build
-.PHONY : ikid_motion_control_genpy/fast
-
-# Convenience name for target.
-ikid_motion_control/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
-.PHONY : ikid_motion_control/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
-
-# Convenience name for target.
-std_msgs_generate_messages_cpp: ikid_motion_control/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
-
-.PHONY : std_msgs_generate_messages_cpp
-
-# fast build rule for target.
-std_msgs_generate_messages_cpp/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/std_msgs_generate_messages_cpp.dir/build.make ikid_motion_control/CMakeFiles/std_msgs_generate_messages_cpp.dir/build
-.PHONY : std_msgs_generate_messages_cpp/fast
-
-# Convenience name for target.
-ikid_motion_control/CMakeFiles/matlab_inv_data.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/matlab_inv_data.dir/rule
-.PHONY : ikid_motion_control/CMakeFiles/matlab_inv_data.dir/rule
-
-# Convenience name for target.
-matlab_inv_data: ikid_motion_control/CMakeFiles/matlab_inv_data.dir/rule
-
-.PHONY : matlab_inv_data
-
-# fast build rule for target.
-matlab_inv_data/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/matlab_inv_data.dir/build.make ikid_motion_control/CMakeFiles/matlab_inv_data.dir/build
-.PHONY : matlab_inv_data/fast
-
-# Convenience name for target.
-ikid_motion_control/CMakeFiles/matlab_inv_initialize.dir/rule:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ikid_motion_control/CMakeFiles/matlab_inv_initialize.dir/rule
-.PHONY : ikid_motion_control/CMakeFiles/matlab_inv_initialize.dir/rule
-
-# Convenience name for target.
-matlab_inv_initialize: ikid_motion_control/CMakeFiles/matlab_inv_initialize.dir/rule
-
-.PHONY : matlab_inv_initialize
-
-# fast build rule for target.
-matlab_inv_initialize/fast:
-	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/matlab_inv_initialize.dir/build.make ikid_motion_control/CMakeFiles/matlab_inv_initialize.dir/build
-.PHONY : matlab_inv_initialize/fast
+# target to generate assembly for a file
+src/robot_walk_node.cpp.s:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/robot_walk_node.dir/build.make ikid_motion_control/CMakeFiles/robot_walk_node.dir/src/robot_walk_node.cpp.s
+.PHONY : src/robot_walk_node.cpp.s
 
 src/source/matlab_inv.o: src/source/matlab_inv.c.o
 
@@ -797,6 +686,33 @@ src/source/robotModel.cpp.s:
 	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/robotModel.dir/build.make ikid_motion_control/CMakeFiles/robotModel.dir/src/source/robotModel.cpp.s
 .PHONY : src/source/robotModel.cpp.s
 
+src/special_gait_node.o: src/special_gait_node.cpp.o
+
+.PHONY : src/special_gait_node.o
+
+# target to build an object file
+src/special_gait_node.cpp.o:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/special_gait_node.dir/build.make ikid_motion_control/CMakeFiles/special_gait_node.dir/src/special_gait_node.cpp.o
+.PHONY : src/special_gait_node.cpp.o
+
+src/special_gait_node.i: src/special_gait_node.cpp.i
+
+.PHONY : src/special_gait_node.i
+
+# target to preprocess a source file
+src/special_gait_node.cpp.i:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/special_gait_node.dir/build.make ikid_motion_control/CMakeFiles/special_gait_node.dir/src/special_gait_node.cpp.i
+.PHONY : src/special_gait_node.cpp.i
+
+src/special_gait_node.s: src/special_gait_node.cpp.s
+
+.PHONY : src/special_gait_node.s
+
+# target to generate assembly for a file
+src/special_gait_node.cpp.s:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ikid_motion_control/CMakeFiles/special_gait_node.dir/build.make ikid_motion_control/CMakeFiles/special_gait_node.dir/src/special_gait_node.cpp.s
+.PHONY : src/special_gait_node.cpp.s
+
 src/test_traj_node.o: src/test_traj_node.cpp.o
 
 .PHONY : src/test_traj_node.o
@@ -830,46 +746,41 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... install"
-	@echo "... test_traj_node"
+	@echo "... install/strip"
+	@echo "... rebuild_cache"
+	@echo "... edit_cache"
+	@echo "... special_gait_node"
 	@echo "... robotModel"
+	@echo "... matlab_inv_initialize"
+	@echo "... matlab_inv_data"
+	@echo "... list_install_components"
+	@echo "... ikid_motion_control_generate_messages"
+	@echo "... test_traj_node"
+	@echo "... _ikid_motion_control_generate_messages_check_deps_cmd_walk"
+	@echo "... _ikid_motion_control_generate_messages_check_deps_robot_joint"
+	@echo "... test"
+	@echo "... ikid_motion_control_gencpp"
+	@echo "... ikid_motion_control_generate_messages_py"
+	@echo "... robot_walk_node"
+	@echo "... ikid_motion_control_generate_messages_cpp"
+	@echo "... ikid_motion_control_genpy"
 	@echo "... matlab_inv"
 	@echo "... matlab_inv_terminate"
-	@echo "... rosgraph_msgs_generate_messages_py"
-	@echo "... roscpp_generate_messages_lisp"
-	@echo "... rosgraph_msgs_generate_messages_lisp"
+	@echo "... ikid_motion_control_generate_messages_eus"
 	@echo "... install/local"
-	@echo "... rosgraph_msgs_generate_messages_eus"
-	@echo "... test"
-	@echo "... rosgraph_msgs_generate_messages_cpp"
-	@echo "... roscpp_generate_messages_nodejs"
-	@echo "... std_msgs_generate_messages_eus"
+	@echo "... pid_amend_node"
+	@echo "... ikid_motion_control_generate_messages_lisp"
+	@echo "... install"
 	@echo "... ikid_motion_control_geneus"
 	@echo "... ikid_motion_control_genlisp"
-	@echo "... roscpp_generate_messages_py"
-	@echo "... std_msgs_generate_messages_lisp"
-	@echo "... rosgraph_msgs_generate_messages_nodejs"
-	@echo "... rebuild_cache"
-	@echo "... roscpp_generate_messages_eus"
-	@echo "... ikid_motion_control_generate_messages_py"
-	@echo "... roscpp_generate_messages_cpp"
-	@echo "... ikid_motion_control_gennodejs"
-	@echo "... ikid_motion_control_generate_messages_cpp"
-	@echo "... std_msgs_generate_messages_nodejs"
-	@echo "... std_msgs_generate_messages_py"
-	@echo "... _ikid_motion_control_generate_messages_check_deps_cmd_walk"
-	@echo "... edit_cache"
-	@echo "... ikid_motion_control_gencpp"
-	@echo "... install/strip"
-	@echo "... ikid_motion_control_generate_messages_eus"
-	@echo "... list_install_components"
-	@echo "... ikid_motion_control_generate_messages_lisp"
-	@echo "... ikid_motion_control_generate_messages"
 	@echo "... ikid_motion_control_generate_messages_nodejs"
-	@echo "... ikid_motion_control_genpy"
-	@echo "... std_msgs_generate_messages_cpp"
-	@echo "... matlab_inv_data"
-	@echo "... matlab_inv_initialize"
+	@echo "... ikid_motion_control_gennodejs"
+	@echo "... src/pid_amend_node.o"
+	@echo "... src/pid_amend_node.i"
+	@echo "... src/pid_amend_node.s"
+	@echo "... src/robot_walk_node.o"
+	@echo "... src/robot_walk_node.i"
+	@echo "... src/robot_walk_node.s"
 	@echo "... src/source/matlab_inv.o"
 	@echo "... src/source/matlab_inv.i"
 	@echo "... src/source/matlab_inv.s"
@@ -885,6 +796,9 @@ help:
 	@echo "... src/source/robotModel.o"
 	@echo "... src/source/robotModel.i"
 	@echo "... src/source/robotModel.s"
+	@echo "... src/special_gait_node.o"
+	@echo "... src/special_gait_node.i"
+	@echo "... src/special_gait_node.s"
 	@echo "... src/test_traj_node.o"
 	@echo "... src/test_traj_node.i"
 	@echo "... src/test_traj_node.s"

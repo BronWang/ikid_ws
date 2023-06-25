@@ -79,6 +79,8 @@ serial_port_EXTERNAL_OBJECTS =
 
 /home/wp/ikid_ws/devel/lib/ros_socket/serial_port: ros_socket/CMakeFiles/serial_port.dir/src/serial_port.cpp.o
 /home/wp/ikid_ws/devel/lib/ros_socket/serial_port: ros_socket/CMakeFiles/serial_port.dir/build.make
+/home/wp/ikid_ws/devel/lib/ros_socket/serial_port: /home/wp/ikid_ws/devel/lib/libpacketTransformer_ros_socket.so
+/home/wp/ikid_ws/devel/lib/ros_socket/serial_port: /home/wp/ikid_ws/devel/lib/libByteArray_ros_socket.so
 /home/wp/ikid_ws/devel/lib/ros_socket/serial_port: /opt/ros/noetic/lib/libroscpp.so
 /home/wp/ikid_ws/devel/lib/ros_socket/serial_port: /usr/lib/x86_64-linux-gnu/libpthread.so
 /home/wp/ikid_ws/devel/lib/ros_socket/serial_port: /usr/lib/x86_64-linux-gnu/libboost_chrono.so.1.71.0

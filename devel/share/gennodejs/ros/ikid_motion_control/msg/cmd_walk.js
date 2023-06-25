@@ -22,6 +22,7 @@ class cmd_walk {
       this.sy = null;
       this.var_theta = null;
       this.walk_with_ball = null;
+      this.stop_walk = null;
     }
     else {
       if (initObj.hasOwnProperty('sx')) {
@@ -48,6 +49,12 @@ class cmd_walk {
       else {
         this.walk_with_ball = false;
       }
+      if (initObj.hasOwnProperty('stop_walk')) {
+        this.stop_walk = initObj.stop_walk
+      }
+      else {
+        this.stop_walk = false;
+      }
     }
   }
 
@@ -61,6 +68,8 @@ class cmd_walk {
     bufferOffset = _serializer.float64(obj.var_theta, buffer, bufferOffset);
     // Serialize message field [walk_with_ball]
     bufferOffset = _serializer.bool(obj.walk_with_ball, buffer, bufferOffset);
+    // Serialize message field [stop_walk]
+    bufferOffset = _serializer.bool(obj.stop_walk, buffer, bufferOffset);
     return bufferOffset;
   }
 
@@ -76,11 +85,13 @@ class cmd_walk {
     data.var_theta = _deserializer.float64(buffer, bufferOffset);
     // Deserialize message field [walk_with_ball]
     data.walk_with_ball = _deserializer.bool(buffer, bufferOffset);
+    // Deserialize message field [stop_walk]
+    data.stop_walk = _deserializer.bool(buffer, bufferOffset);
     return data;
   }
 
   static getMessageSize(object) {
-    return 25;
+    return 26;
   }
 
   static datatype() {
@@ -90,16 +101,17 @@ class cmd_walk {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return '9ad235b8f570d179119733addd31d488';
+    return '768710e1aa78c3a3025d8ab3e396f5e8';
   }
 
   static messageDefinition() {
     // Returns full string definition for message
     return `
-    float64 sx
-    float64 sy
-    float64 var_theta
-    bool walk_with_ball
+    float64 sx  # 步长
+    float64 sy   # 步宽
+    float64 var_theta  # 转角增量
+    bool walk_with_ball  # 是否带球行走/动态踢球
+    bool stop_walk   # 停止行走标志位
     `;
   }
 
@@ -135,6 +147,13 @@ class cmd_walk {
     }
     else {
       resolved.walk_with_ball = false
+    }
+
+    if (msg.stop_walk !== undefined) {
+      resolved.stop_walk = msg.stop_walk;
+    }
+    else {
+      resolved.stop_walk = false
     }
 
     return resolved;

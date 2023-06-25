@@ -8,15 +8,16 @@ import struct
 
 
 class cmd_walk(genpy.Message):
-  _md5sum = "9ad235b8f570d179119733addd31d488"
+  _md5sum = "768710e1aa78c3a3025d8ab3e396f5e8"
   _type = "ikid_motion_control/cmd_walk"
   _has_header = False  # flag to mark the presence of a Header object
-  _full_text = """float64 sx
-float64 sy
-float64 var_theta
-bool walk_with_ball"""
-  __slots__ = ['sx','sy','var_theta','walk_with_ball']
-  _slot_types = ['float64','float64','float64','bool']
+  _full_text = """float64 sx  # 步长
+float64 sy   # 步宽
+float64 var_theta  # 转角增量
+bool walk_with_ball  # 是否带球行走/动态踢球
+bool stop_walk   # 停止行走标志位"""
+  __slots__ = ['sx','sy','var_theta','walk_with_ball','stop_walk']
+  _slot_types = ['float64','float64','float64','bool','bool']
 
   def __init__(self, *args, **kwds):
     """
@@ -26,7 +27,7 @@ bool walk_with_ball"""
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       sx,sy,var_theta,walk_with_ball
+       sx,sy,var_theta,walk_with_ball,stop_walk
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -43,11 +44,14 @@ bool walk_with_ball"""
         self.var_theta = 0.
       if self.walk_with_ball is None:
         self.walk_with_ball = False
+      if self.stop_walk is None:
+        self.stop_walk = False
     else:
       self.sx = 0.
       self.sy = 0.
       self.var_theta = 0.
       self.walk_with_ball = False
+      self.stop_walk = False
 
   def _get_types(self):
     """
@@ -62,7 +66,7 @@ bool walk_with_ball"""
     """
     try:
       _x = self
-      buff.write(_get_struct_3dB().pack(_x.sx, _x.sy, _x.var_theta, _x.walk_with_ball))
+      buff.write(_get_struct_3d2B().pack(_x.sx, _x.sy, _x.var_theta, _x.walk_with_ball, _x.stop_walk))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -77,9 +81,10 @@ bool walk_with_ball"""
       end = 0
       _x = self
       start = end
-      end += 25
-      (_x.sx, _x.sy, _x.var_theta, _x.walk_with_ball,) = _get_struct_3dB().unpack(str[start:end])
+      end += 26
+      (_x.sx, _x.sy, _x.var_theta, _x.walk_with_ball, _x.stop_walk,) = _get_struct_3d2B().unpack(str[start:end])
       self.walk_with_ball = bool(self.walk_with_ball)
+      self.stop_walk = bool(self.stop_walk)
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
@@ -93,7 +98,7 @@ bool walk_with_ball"""
     """
     try:
       _x = self
-      buff.write(_get_struct_3dB().pack(_x.sx, _x.sy, _x.var_theta, _x.walk_with_ball))
+      buff.write(_get_struct_3d2B().pack(_x.sx, _x.sy, _x.var_theta, _x.walk_with_ball, _x.stop_walk))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -109,9 +114,10 @@ bool walk_with_ball"""
       end = 0
       _x = self
       start = end
-      end += 25
-      (_x.sx, _x.sy, _x.var_theta, _x.walk_with_ball,) = _get_struct_3dB().unpack(str[start:end])
+      end += 26
+      (_x.sx, _x.sy, _x.var_theta, _x.walk_with_ball, _x.stop_walk,) = _get_struct_3d2B().unpack(str[start:end])
       self.walk_with_ball = bool(self.walk_with_ball)
+      self.stop_walk = bool(self.stop_walk)
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
@@ -120,9 +126,9 @@ _struct_I = genpy.struct_I
 def _get_struct_I():
     global _struct_I
     return _struct_I
-_struct_3dB = None
-def _get_struct_3dB():
-    global _struct_3dB
-    if _struct_3dB is None:
-        _struct_3dB = struct.Struct("<3dB")
-    return _struct_3dB
+_struct_3d2B = None
+def _get_struct_3d2B():
+    global _struct_3d2B
+    if _struct_3d2B is None:
+        _struct_3d2B = struct.Struct("<3d2B")
+    return _struct_3d2B

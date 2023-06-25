@@ -6,6 +6,22 @@
 
 #IncludeRegexTransform: 
 
+/home/wp/ikid_ws/devel/include/ros_socket/robot_joint.h
+string
+-
+vector
+-
+memory
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
+
 /home/wp/ikid_ws/src/ros_socket/include/ros_socket/matlab_inv.h
 ros_socket/rtwtypes.h
 /home/wp/ikid_ws/src/ros_socket/include/ros_socket/ros_socket/rtwtypes.h
@@ -45,8 +61,18 @@ string.h
 -
 stdio.h
 -
+dirent.h
+-
+sys/stat.h
+-
+fstream
+-
 std_msgs/Float64.h
 /home/wp/ikid_ws/src/ros_socket/src/source/std_msgs/Float64.h
+std_msgs/Byte.h
+/home/wp/ikid_ws/src/ros_socket/src/source/std_msgs/Byte.h
+ros_socket/robot_joint.h
+/home/wp/ikid_ws/src/ros_socket/src/source/ros_socket/robot_joint.h
 
 /opt/ros/noetic/include/ros/advertise_options.h
 ros/forwards.h
@@ -695,6 +721,22 @@ ros/forwards.h
 /opt/ros/noetic/include/ros/ros/forwards.h
 
 /opt/ros/noetic/include/rosconsole/macros_generated.h
+
+/opt/ros/noetic/include/std_msgs/Byte.h
+string
+-
+vector
+-
+memory
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
 
 /opt/ros/noetic/include/std_msgs/Float64.h
 string

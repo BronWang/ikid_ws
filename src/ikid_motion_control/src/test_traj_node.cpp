@@ -19,12 +19,20 @@ int main(int argc, char *argv[])
 	ros::Duration(3).sleep();
 	double com[3];
 	Calc_com(com);
+	clearImuDataTxt();
+    clearZmpDataTxt();
 	printf("重心 :%f %f %f", com[0], com[1], com[2]);
-	trajPlan();
-	trajPlan();
-	trajPlan();
-	trajPlan();
-	trajPlan();
-	trajPlan();
+	startTrajPlan();
+	for(int i = 0; i < 5; i++){
+		trajPlan();
+	}
+	anglePlan(-10/180.0*M_PI);
+	for(int i = 0; i < 2; i++){
+		trajPlan();
+	}
+	anglePlan(10/180.0*M_PI);
+	for(int i = 0; i < 5; i++){
+		trajPlan();
+	}
   return 0;
 }
