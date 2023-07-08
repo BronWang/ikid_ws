@@ -120,38 +120,38 @@ int main(int argc, char** argv)
                 const char spl_chara[2] = "\n";
                 token = strtok(buf,spl_chara);
                 string token_str = token;
-                if(token_str == "special_gait_data"){
-                    for (int i = 1; i <= 25; i++)
-                    {
-                        token = strtok(NULL, ",");
-                        double robot_q = atof(token);
-                        robotModel[i].q = robot_q;
-                        //cout << "[out] " << robot_q << endl;
-                    }
-                    #if ROSPUB
-                    ikidRobotDynaPosPubSpecialGait();
-                    #endif
-                    #if CONTROLBOARDPUB
-                    ikidRobotDynaPosControlBoardPubSpecialGait();
-                    ros::Duration(0.02).sleep();
-                    #endif
-                    //保存关节数据
-                    fp = fopen(filename, "a");
-                    if(fp == NULL)
-                    {
-                        exit(0);
-                    }
-                    sprintf(ch, "%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf\n",
-                    robotModel[0].q, robotModel[1].q,robotModel[2].q,robotModel[3].q,
-                    robotModel[4].q, robotModel[5].q,robotModel[6].q,robotModel[7].q,
-                    robotModel[8].q, robotModel[9].q,robotModel[10].q,robotModel[11].q,
-                    robotModel[12].q, robotModel[13].q,robotModel[14].q,robotModel[15].q,
-                    robotModel[16].q, robotModel[17].q,robotModel[18].q,robotModel[19].q,
-                    robotModel[20].q, robotModel[21].q,robotModel[22].q,robotModel[23].q,
-                    robotModel[24].q, robotModel[25].q);
-                    fputs(ch, fp);
-                    fclose(fp);
-                }
+                // if(token_str == "special_gait_data"){
+                //     for (int i = 1; i <= 25; i++)
+                //     {
+                //         token = strtok(NULL, ",");
+                //         double robot_q = atof(token);
+                //         robotModel[i].q = robot_q;
+                //         //cout << "[out] " << robot_q << endl;
+                //     }
+                //     #if ROSPUB
+                //     ikidRobotDynaPosPubSpecialGait();
+                //     #endif
+                //     #if CONTROLBOARDPUB
+                //     ikidRobotDynaPosControlBoardPubSpecialGait();
+                //     ros::Duration(0.02).sleep();
+                //     #endif
+                //     //保存关节数据
+                //     fp = fopen(filename, "a");
+                //     if(fp == NULL)
+                //     {
+                //         exit(0);
+                //     }
+                //     sprintf(ch, "%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf\n",
+                //     robotModel[0].q, robotModel[1].q,robotModel[2].q,robotModel[3].q,
+                //     robotModel[4].q, robotModel[5].q,robotModel[6].q,robotModel[7].q,
+                //     robotModel[8].q, robotModel[9].q,robotModel[10].q,robotModel[11].q,
+                //     robotModel[12].q, robotModel[13].q,robotModel[14].q,robotModel[15].q,
+                //     robotModel[16].q, robotModel[17].q,robotModel[18].q,robotModel[19].q,
+                //     robotModel[20].q, robotModel[21].q,robotModel[22].q,robotModel[23].q,
+                //     robotModel[24].q, robotModel[25].q);
+                //     fputs(ch, fp);
+                //     fclose(fp);
+                // }
                 if(token_str == "start_write_gait_txt"){
                     txt_src = "/home/wp/ikid_ws/specialGaitFile/";
                     token = strtok(NULL, spl_chara);

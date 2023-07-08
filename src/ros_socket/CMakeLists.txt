@@ -176,6 +176,7 @@ target_link_libraries(ByteArray_ros_socket ${catkin_LIBRARIES} )
  add_executable(serial_port src/serial_port.cpp)
  add_executable(server_special_gait src/server_special_gait.cpp)
  add_executable(robot_walk_node_specialgait src/robot_walk_node_specialgait.cpp)
+ add_executable(udp_special_gait src/udp_special_gait.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -190,6 +191,7 @@ add_dependencies(client_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORT
 add_dependencies(serial_port ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(server_special_gait ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(robot_walk_node_specialgait ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(udp_special_gait ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(server_node
@@ -212,6 +214,14 @@ matlab_inv_initialize_ros_socket
 ${catkin_LIBRARIES}
 )
 target_link_libraries(robot_walk_node_specialgait
+robotModel_ros_socket
+matlab_inv_ros_socket
+matlab_inv_data_ros_socket
+matlab_inv_terminate_ros_socket
+matlab_inv_initialize_ros_socket
+${catkin_LIBRARIES}
+)
+target_link_libraries(udp_special_gait
 robotModel_ros_socket
 matlab_inv_ros_socket
 matlab_inv_data_ros_socket

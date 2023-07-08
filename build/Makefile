@@ -1273,6 +1273,19 @@ robot_walk_node_specialgait/fast:
 .PHONY : robot_walk_node_specialgait/fast
 
 #=============================================================================
+# Target rules for targets named udp_special_gait
+
+# Build rule for target.
+udp_special_gait: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 udp_special_gait
+.PHONY : udp_special_gait
+
+# fast build rule for target.
+udp_special_gait/fast:
+	$(MAKE) -f ros_socket/CMakeFiles/udp_special_gait.dir/build.make ros_socket/CMakeFiles/udp_special_gait.dir/build
+.PHONY : udp_special_gait/fast
+
+#=============================================================================
 # Target rules for targets named _catkin_empty_exported_target
 
 # Build rule for target.
@@ -1396,6 +1409,7 @@ help:
 	@echo "... server_node"
 	@echo "... server_special_gait"
 	@echo "... robot_walk_node_specialgait"
+	@echo "... udp_special_gait"
 	@echo "... _catkin_empty_exported_target"
 	@echo "... ros_qt_ikid"
 .PHONY : help

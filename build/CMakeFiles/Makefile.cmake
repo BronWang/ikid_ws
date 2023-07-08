@@ -378,6 +378,7 @@ set(CMAKE_DEPEND_INFO_FILES
   "ros_socket/CMakeFiles/server_node.dir/DependInfo.cmake"
   "ros_socket/CMakeFiles/server_special_gait.dir/DependInfo.cmake"
   "ros_socket/CMakeFiles/robot_walk_node_specialgait.dir/DependInfo.cmake"
+  "ros_socket/CMakeFiles/udp_special_gait.dir/DependInfo.cmake"
   "ikid_robot/CMakeFiles/_catkin_empty_exported_target.dir/DependInfo.cmake"
   "ros_qt_ikid/CMakeFiles/ros_qt_ikid.dir/DependInfo.cmake"
   )

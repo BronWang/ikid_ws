@@ -102,6 +102,7 @@
 /home/wp/ikid_ws/build/ros_socket/CMakeFiles/install/strip.dir
 /home/wp/ikid_ws/build/ros_socket/CMakeFiles/install/local.dir
 /home/wp/ikid_ws/build/ros_socket/CMakeFiles/install.dir
+/home/wp/ikid_ws/build/ros_socket/CMakeFiles/rebuild_cache.dir
 /home/wp/ikid_ws/build/ros_socket/CMakeFiles/ros_socket_generate_messages_lisp.dir
 /home/wp/ikid_ws/build/ros_socket/CMakeFiles/ros_socket_generate_messages_eus.dir
 /home/wp/ikid_ws/build/ros_socket/CMakeFiles/ros_socket_genlisp.dir
@@ -129,9 +130,9 @@
 /home/wp/ikid_ws/build/ros_socket/CMakeFiles/server_node.dir
 /home/wp/ikid_ws/build/ros_socket/CMakeFiles/server_special_gait.dir
 /home/wp/ikid_ws/build/ros_socket/CMakeFiles/robot_walk_node_specialgait.dir
-/home/wp/ikid_ws/build/ros_socket/CMakeFiles/test.dir
+/home/wp/ikid_ws/build/ros_socket/CMakeFiles/udp_special_gait.dir
 /home/wp/ikid_ws/build/ros_socket/CMakeFiles/edit_cache.dir
-/home/wp/ikid_ws/build/ros_socket/CMakeFiles/rebuild_cache.dir
+/home/wp/ikid_ws/build/ros_socket/CMakeFiles/test.dir
 /home/wp/ikid_ws/build/ikid_robot/CMakeFiles/install/strip.dir
 /home/wp/ikid_ws/build/ikid_robot/CMakeFiles/install/local.dir
 /home/wp/ikid_ws/build/ikid_robot/CMakeFiles/install.dir
