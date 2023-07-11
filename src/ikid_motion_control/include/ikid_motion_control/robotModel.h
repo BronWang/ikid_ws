@@ -8,8 +8,8 @@
 #define WRITEZMPDATA 1
 #define ROSPUB 1    // 是否向Gazebo中的关节控制器发送计算出的关节位置信息
 #define CONTROLBOARDPUB 0    // 是否向物理控制板发送计算出的关节位置信息
-#define SWING_ARM 1
-#define PID_AMEND  1  // 是否对机器人的姿态进行PID修正
+#define SWING_ARM 0
+#define PID_AMEND  0  // 是否对机器人的姿态进行PID修正
 #define PART_NUMBER 26
 #define NONE_JOINT  255
 #define PI  3.1415926

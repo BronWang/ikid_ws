@@ -92,6 +92,17 @@ install/fast: preinstall/fast
 	/usr/bin/cmake -P cmake_install.cmake
 .PHONY : install/fast
 
+# Special rule for the target rebuild_cache
+rebuild_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
+	/usr/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : rebuild_cache
+
+# Special rule for the target rebuild_cache
+rebuild_cache/fast: rebuild_cache
+
+.PHONY : rebuild_cache/fast
+
 # Special rule for the target list_install_components
 list_install_components:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
@@ -101,17 +112,6 @@ list_install_components:
 list_install_components/fast: list_install_components
 
 .PHONY : list_install_components/fast
-
-# Special rule for the target test
-test:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
-	/usr/bin/ctest --force-new-ctest-process $(ARGS)
-.PHONY : test
-
-# Special rule for the target test
-test/fast: test
-
-.PHONY : test/fast
 
 # Special rule for the target edit_cache
 edit_cache:
@@ -124,16 +124,16 @@ edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
 
-# Special rule for the target rebuild_cache
-rebuild_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/usr/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : rebuild_cache
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
+	/usr/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
 
-# Special rule for the target rebuild_cache
-rebuild_cache/fast: rebuild_cache
+# Special rule for the target test
+test/fast: test
 
-.PHONY : rebuild_cache/fast
+.PHONY : test/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -557,6 +557,21 @@ robot_walk_node_specialgait/fast:
 	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/robot_walk_node_specialgait.dir/build.make ros_socket/CMakeFiles/robot_walk_node_specialgait.dir/build
 .PHONY : robot_walk_node_specialgait/fast
 
+# Convenience name for target.
+ros_socket/CMakeFiles/udp_special_gait.dir/rule:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ros_socket/CMakeFiles/udp_special_gait.dir/rule
+.PHONY : ros_socket/CMakeFiles/udp_special_gait.dir/rule
+
+# Convenience name for target.
+udp_special_gait: ros_socket/CMakeFiles/udp_special_gait.dir/rule
+
+.PHONY : udp_special_gait
+
+# fast build rule for target.
+udp_special_gait/fast:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/udp_special_gait.dir/build.make ros_socket/CMakeFiles/udp_special_gait.dir/build
+.PHONY : udp_special_gait/fast
+
 src/client_node.o: src/client_node.cpp.o
 
 .PHONY : src/client_node.o
@@ -881,6 +896,33 @@ src/source/robotModel.cpp.s:
 	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/robotModel_ros_socket.dir/build.make ros_socket/CMakeFiles/robotModel_ros_socket.dir/src/source/robotModel.cpp.s
 .PHONY : src/source/robotModel.cpp.s
 
+src/udp_special_gait.o: src/udp_special_gait.cpp.o
+
+.PHONY : src/udp_special_gait.o
+
+# target to build an object file
+src/udp_special_gait.cpp.o:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/udp_special_gait.dir/build.make ros_socket/CMakeFiles/udp_special_gait.dir/src/udp_special_gait.cpp.o
+.PHONY : src/udp_special_gait.cpp.o
+
+src/udp_special_gait.i: src/udp_special_gait.cpp.i
+
+.PHONY : src/udp_special_gait.i
+
+# target to preprocess a source file
+src/udp_special_gait.cpp.i:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/udp_special_gait.dir/build.make ros_socket/CMakeFiles/udp_special_gait.dir/src/udp_special_gait.cpp.i
+.PHONY : src/udp_special_gait.cpp.i
+
+src/udp_special_gait.s: src/udp_special_gait.cpp.s
+
+.PHONY : src/udp_special_gait.s
+
+# target to generate assembly for a file
+src/udp_special_gait.cpp.s:
+	cd /home/wp/ikid_ws/build && $(MAKE) -f ros_socket/CMakeFiles/udp_special_gait.dir/build.make ros_socket/CMakeFiles/udp_special_gait.dir/src/udp_special_gait.cpp.s
+.PHONY : src/udp_special_gait.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -890,6 +932,7 @@ help:
 	@echo "... install/strip"
 	@echo "... install/local"
 	@echo "... install"
+	@echo "... rebuild_cache"
 	@echo "... ros_socket_generate_messages_lisp"
 	@echo "... ros_socket_generate_messages_eus"
 	@echo "... ros_socket_genlisp"
@@ -917,9 +960,9 @@ help:
 	@echo "... server_node"
 	@echo "... server_special_gait"
 	@echo "... robot_walk_node_specialgait"
-	@echo "... test"
+	@echo "... udp_special_gait"
 	@echo "... edit_cache"
-	@echo "... rebuild_cache"
+	@echo "... test"
 	@echo "... src/client_node.o"
 	@echo "... src/client_node.i"
 	@echo "... src/client_node.s"
@@ -956,6 +999,9 @@ help:
 	@echo "... src/source/robotModel.o"
 	@echo "... src/source/robotModel.i"
 	@echo "... src/source/robotModel.s"
+	@echo "... src/udp_special_gait.o"
+	@echo "... src/udp_special_gait.i"
+	@echo "... src/udp_special_gait.s"
 .PHONY : help
 
 

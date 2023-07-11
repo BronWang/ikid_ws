@@ -25,3 +25,9 @@ source /home/wp/ikid_ws/devel/setup.bash; \
 rosrun ros_socket serial_port; \
 exec bash"
 
+gnome-terminal --tab -- bash -c "\
+sleep 13s; \
+source /home/wp/ikid_ws/devel/setup.bash; \
+rosrun ros_socket udp_special_gait; \
+exec bash"
+
