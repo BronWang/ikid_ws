@@ -23,7 +23,7 @@ com_const_y_compen: 0.00
 
 
 # 步长 步宽 m 步宽0.7*2
-walk_length: 0.05
+walk_length: 0.08
 walk_width: 0.12
 
 # 脚步抬高 m

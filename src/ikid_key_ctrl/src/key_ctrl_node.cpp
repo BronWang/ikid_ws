@@ -16,6 +16,8 @@ const int KEYCODE_W_CAP = 0x57;
  
 const int KEYCODE_0 = 0x30;
 const int KEYCODE_3 = 0x33;
+const int KEYCODE_4 = 0x34;
+const int KEYCODE_5 = 0x35;
 const int KEYCODE_9 = 0x39;
  
 // const int KEYCODE_SHIFT = 0x10;
@@ -35,6 +37,7 @@ int main(int argc, char **argv) {
  
   ros::Publisher pub_keyboard = nh.advertise<ikid_key_ctrl::cmd_walk>("/cmd_walk", 5);
   ros::Publisher pub_keyboard2 = nh.advertise<std_msgs::Int16>("/special_gait", 1);
+  ros::Publisher pub_keyboard3 = nh.advertise<std_msgs::Int16>("/parallelMove", 1);
  
   ros::Rate loop_rate(10);
  
@@ -106,6 +109,14 @@ int main(int argc, char **argv) {
         case KEYCODE_3:
             msg.data = 3;
             pub_keyboard2.publish(msg);
+            break;
+        case KEYCODE_4:
+            msg.data = 0;
+            pub_keyboard3.publish(msg);
+            break;
+        case KEYCODE_5:
+            msg.data = 1;
+            pub_keyboard3.publish(msg);
             break;
         default:
             break;

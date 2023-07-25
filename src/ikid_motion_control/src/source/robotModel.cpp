@@ -54,6 +54,18 @@ double T_cell = step_basic_frame * frame_T;
 
 // 转弯角
 double theta = 0;
+// 左右行走
+int leftMovement = 0;
+int rightMovement = 1;
+
+// 双臂摆动角度值数组,由三次样条插值计算得出
+double armLeftSwingAngle[step_basic_frame+ds_frame] = {0};
+double armLeftSwingElbowAngle[step_basic_frame+ds_frame] = {0};
+double armRightSwingAngle[step_basic_frame+ds_frame] = {0};
+double armRightSwingElbowAngle[step_basic_frame+ds_frame] = {0};
+int armSwingIndex = 0;
+
+
 // 脚步初始位置
 double pn[3] = { 0,-sy / 2,0 };
 // 初始摆动位置
@@ -205,7 +217,7 @@ double zmp_weight_f[N_preview] = {
 // };
 
 // 定义机器人舵机信息发布句柄
-#if ROSPUB
+//#if ROSPUB
 ros::Publisher pub_left_ankle_front_swing;  
 ros::Publisher pub_left_ankle_side_swing;  
 ros::Publisher pub_left_arm_elbow_front_swing;  
@@ -229,7 +241,7 @@ ros::Publisher pub_right_knee_front_swing;
 ros::Publisher pub_imu_data_roll;
 ros::Publisher pub_imu_data_pitch;
 ros::Publisher pub_imu_data_yaw;
-#endif
+//#endif
 
 #if CONTROLBOARDPUB
 ros::Publisher pub_control_board_joint_msg;
@@ -2661,6 +2673,24 @@ void startTrajPlan(){
 		pn[0] = robotModel[LEFT_FOOT].p[0];
 		pn[1] = robotModel[LEFT_FOOT].p[1];
 	}
+	double arm_length = 0;
+	arm_length = 0.2491;
+	double angle = asin(sx/2 / arm_length)*2;
+	for(int i = 0; i < step_basic_frame+ds_frame; i++){
+		if(isLeft){
+			armRightSwingAngle[i] = -angle*(i+1)/(step_basic_frame+ds_frame);
+			armRightSwingElbowAngle[i] = -angle/2*(i+1)/(step_basic_frame+ds_frame);
+			armLeftSwingAngle[i] = angle*(i+1)/(step_basic_frame+ds_frame);
+			armLeftSwingElbowAngle[i] = 0;
+		}else{
+			armRightSwingAngle[i] = angle*(i+1)/(step_basic_frame+ds_frame);
+			armRightSwingElbowAngle[i] = 0;
+			armLeftSwingAngle[i] = -angle*(i+1)/(step_basic_frame+ds_frame);
+			armLeftSwingElbowAngle[i] = -angle/2*(i+1)/(step_basic_frame+ds_frame);
+		}
+		
+	}
+
 	dFootSupportPhase(theta,theta,theta);
 	support_ZMP[0] = pn[0];
 	support_ZMP[1] = pn[1];
@@ -2725,15 +2755,15 @@ void trajPlan() {
 
 #if SWING_ARM
 		// 右臂
-		double current_arm_angle_right = robotModel[RIGHT_ARM_FRONT_SWING].q;
-		double current_arm_angle_left = robotModel[LEFT_ARM_FRONT_SWING].q;
-		double arm_abc[3] = {0};
-		double arm_length = 0;
-		arm_abc[0] = robotModel[RIGHT_ARM_FRONT_SWING].p[0] - robotModel[RIGHT_HAND].p[0];
-		arm_abc[1] = robotModel[RIGHT_ARM_FRONT_SWING].p[1] - robotModel[RIGHT_HAND].p[1];
-		arm_abc[2] = robotModel[RIGHT_ARM_FRONT_SWING].p[2] - robotModel[RIGHT_HAND].p[2];
-		arm_length = norm(arm_abc, 1, 3);
-		arm_swing_angle = asin(sx/2 / arm_length);
+		// double current_arm_angle_right = robotModel[RIGHT_ARM_FRONT_SWING].q;
+		// double current_arm_angle_left = robotModel[LEFT_ARM_FRONT_SWING].q;
+		// double arm_abc[3] = {0};
+		// double arm_length = 0;
+		// arm_abc[0] = robotModel[RIGHT_ARM_FRONT_SWING].p[0] - robotModel[RIGHT_HAND].p[0];
+		// arm_abc[1] = robotModel[RIGHT_ARM_FRONT_SWING].p[1] - robotModel[RIGHT_HAND].p[1];
+		// arm_abc[2] = robotModel[RIGHT_ARM_FRONT_SWING].p[2] - robotModel[RIGHT_HAND].p[2];
+		// arm_length = norm(arm_abc, 1, 3);
+		// arm_swing_angle = asin(sx/2 / arm_length);
 
 #endif
 		
@@ -2811,8 +2841,14 @@ void trajPlan() {
 			MatrixMultiVector3x1(R, robotModel[LEFT_FOOT].b, temp);
 #if SWING_ARM
 			// 右臂
-			robotModel[RIGHT_ARM_FRONT_SWING].q = current_arm_angle_right + i * (-arm_swing_angle - current_arm_angle_right) / step_basic_frame;
-			robotModel[LEFT_ARM_FRONT_SWING].q = current_arm_angle_left + i * (arm_swing_angle - current_arm_angle_left) / step_basic_frame;
+			// robotModel[RIGHT_ARM_FRONT_SWING].q = current_arm_angle_right + i * (-arm_swing_angle - current_arm_angle_right) / step_basic_frame;
+			// robotModel[LEFT_ARM_FRONT_SWING].q = current_arm_angle_left + i * (arm_swing_angle - current_arm_angle_left) / step_basic_frame;
+			robotModel[RIGHT_ARM_FRONT_SWING].q = armRightSwingAngle[armSwingIndex];
+			robotModel[RIGHT_ARM_ELBOW_FRONT_SWING].q = armRightSwingElbowAngle[armSwingIndex];
+			robotModel[LEFT_ARM_FRONT_SWING].q = armLeftSwingAngle[armSwingIndex];
+			robotModel[LEFT_ARM_ELBOW_FRONT_SWING].q = armLeftSwingElbowAngle[armSwingIndex];
+			armSwingIndex++;
+			if(armSwingIndex == step_basic_frame + ds_frame) armSwingIndex = 0;
 #endif
 			// 确定腰部位置，四边形顶点坐标求对角线交点坐标,两手一条直线，两脚一条直线
 			double x1, y1, x2, y2, x3, y3, x4, y4;
@@ -2909,15 +2945,15 @@ void trajPlan() {
 
 #if SWING_ARM
 		// 左臂
-		double current_arm_angle_left = robotModel[LEFT_ARM_FRONT_SWING].q;
-		double current_arm_angle_right = robotModel[RIGHT_ARM_FRONT_SWING].q;
-		double arm_abc[3] = { 0 };
-		double arm_length = 0;
-		arm_abc[0] = robotModel[LEFT_ARM_FRONT_SWING].p[0] - robotModel[LEFT_HAND].p[0];
-		arm_abc[1] = robotModel[LEFT_ARM_FRONT_SWING].p[1] - robotModel[LEFT_HAND].p[1];
-		arm_abc[2] = robotModel[LEFT_ARM_FRONT_SWING].p[2] - robotModel[LEFT_HAND].p[2];
-		arm_length = norm(arm_abc, 1, 3);
-		arm_swing_angle = asin(sx/2 / arm_length);
+		// double current_arm_angle_left = robotModel[LEFT_ARM_FRONT_SWING].q;
+		// double current_arm_angle_right = robotModel[RIGHT_ARM_FRONT_SWING].q;
+		// double arm_abc[3] = { 0 };
+		// double arm_length = 0;
+		// arm_abc[0] = robotModel[LEFT_ARM_FRONT_SWING].p[0] - robotModel[LEFT_HAND].p[0];
+		// arm_abc[1] = robotModel[LEFT_ARM_FRONT_SWING].p[1] - robotModel[LEFT_HAND].p[1];
+		// arm_abc[2] = robotModel[LEFT_ARM_FRONT_SWING].p[2] - robotModel[LEFT_HAND].p[2];
+		// arm_length = norm(arm_abc, 1, 3);
+		// arm_swing_angle = asin(sx/2 / arm_length);
 #endif
 		for (int i = 0; i < step_basic_frame; i++)
 		{
@@ -2994,8 +3030,14 @@ void trajPlan() {
 			
 #if SWING_ARM
 			// 左臂
-			robotModel[LEFT_ARM_FRONT_SWING].q = current_arm_angle_left + i * (-arm_swing_angle - current_arm_angle_left) / step_basic_frame;
-			robotModel[RIGHT_ARM_FRONT_SWING].q = current_arm_angle_right + i * (arm_swing_angle - current_arm_angle_right) / step_basic_frame;
+			// robotModel[LEFT_ARM_FRONT_SWING].q = current_arm_angle_left + i * (-arm_swing_angle - current_arm_angle_left) / step_basic_frame;
+			// robotModel[RIGHT_ARM_FRONT_SWING].q = current_arm_angle_right + i * (arm_swing_angle - current_arm_angle_right) / step_basic_frame;
+			robotModel[RIGHT_ARM_FRONT_SWING].q = armRightSwingAngle[armSwingIndex];
+			robotModel[RIGHT_ARM_ELBOW_FRONT_SWING].q = armRightSwingElbowAngle[armSwingIndex];
+			robotModel[LEFT_ARM_FRONT_SWING].q = armLeftSwingAngle[armSwingIndex];
+			robotModel[LEFT_ARM_ELBOW_FRONT_SWING].q = armLeftSwingElbowAngle[armSwingIndex];
+			armSwingIndex++;
+			if(armSwingIndex == step_basic_frame + ds_frame) armSwingIndex = 0;
 #endif
 			
 			// 确定腰部位置，四边形顶点坐标求对角线交点坐标
@@ -3042,6 +3084,7 @@ void trajPlan() {
 #endif
 		}
 	}
+	armSwingTrajPlan();
 	dFootSupportPhase(theta,theta,theta);
 	changeFoot();
 
@@ -3094,15 +3137,15 @@ void anglePlan(double delta) {
 		threeSplineInter(three_spline_A,CP_norm*2);
 #if SWING_ARM
 		// 右臂
-		double current_arm_angle_right = robotModel[RIGHT_ARM_FRONT_SWING].q;
-		double current_arm_angle_left = robotModel[LEFT_ARM_FRONT_SWING].q;
-		double arm_abc[3] = { 0 };
-		double arm_length = 0;
-		arm_abc[0] = robotModel[RIGHT_ARM_FRONT_SWING].p[0] - robotModel[RIGHT_HAND].p[0];
-		arm_abc[1] = robotModel[RIGHT_ARM_FRONT_SWING].p[1] - robotModel[RIGHT_HAND].p[1];
-		arm_abc[2] = robotModel[RIGHT_ARM_FRONT_SWING].p[2] - robotModel[RIGHT_HAND].p[2];
-		arm_length = norm(arm_abc, 1, 3);
-		arm_swing_angle = asin(sx/2 / arm_length);
+		// double current_arm_angle_right = robotModel[RIGHT_ARM_FRONT_SWING].q;
+		// double current_arm_angle_left = robotModel[LEFT_ARM_FRONT_SWING].q;
+		// double arm_abc[3] = { 0 };
+		// double arm_length = 0;
+		// arm_abc[0] = robotModel[RIGHT_ARM_FRONT_SWING].p[0] - robotModel[RIGHT_HAND].p[0];
+		// arm_abc[1] = robotModel[RIGHT_ARM_FRONT_SWING].p[1] - robotModel[RIGHT_HAND].p[1];
+		// arm_abc[2] = robotModel[RIGHT_ARM_FRONT_SWING].p[2] - robotModel[RIGHT_HAND].p[2];
+		// arm_length = norm(arm_abc, 1, 3);
+		// arm_swing_angle = asin(sx/2 / arm_length);
 
 #endif
 
@@ -3160,9 +3203,14 @@ void anglePlan(double delta) {
 
 #if SWING_ARM
 			// 右臂
-			robotModel[RIGHT_ARM_FRONT_SWING].q = current_arm_angle_right + i * (-arm_swing_angle - current_arm_angle_right) / step_basic_frame;
-			robotModel[LEFT_ARM_FRONT_SWING].q = current_arm_angle_left + i * (arm_swing_angle - current_arm_angle_left) / step_basic_frame;
-
+			// robotModel[RIGHT_ARM_FRONT_SWING].q = current_arm_angle_right + i * (-arm_swing_angle - current_arm_angle_right) / step_basic_frame;
+			// robotModel[LEFT_ARM_FRONT_SWING].q = current_arm_angle_left + i * (arm_swing_angle - current_arm_angle_left) / step_basic_frame;
+			robotModel[RIGHT_ARM_FRONT_SWING].q = armRightSwingAngle[armSwingIndex];
+			robotModel[RIGHT_ARM_ELBOW_FRONT_SWING].q = armRightSwingElbowAngle[armSwingIndex];
+			robotModel[LEFT_ARM_FRONT_SWING].q = armLeftSwingAngle[armSwingIndex];
+			robotModel[LEFT_ARM_ELBOW_FRONT_SWING].q = armLeftSwingElbowAngle[armSwingIndex];
+			armSwingIndex++;
+			if(armSwingIndex == step_basic_frame + ds_frame) armSwingIndex = 0;
 #endif
 
 
@@ -3252,15 +3300,15 @@ void anglePlan(double delta) {
 		threeSplineInter(three_spline_A,CP_norm*2);
 #if SWING_ARM
 		// 左臂
-		double current_arm_angle_left = robotModel[LEFT_ARM_FRONT_SWING].q;
-		double current_arm_angle_right = robotModel[RIGHT_ARM_FRONT_SWING].q;
-		double arm_abc[3] = { 0 };
-		double arm_length = 0;
-		arm_abc[0] = robotModel[LEFT_ARM_FRONT_SWING].p[0] - robotModel[LEFT_HAND].p[0];
-		arm_abc[1] = robotModel[LEFT_ARM_FRONT_SWING].p[1] - robotModel[LEFT_HAND].p[1];
-		arm_abc[2] = robotModel[LEFT_ARM_FRONT_SWING].p[2] - robotModel[LEFT_HAND].p[2];
-		arm_length = norm(arm_abc, 1, 3);
-		arm_swing_angle = asin(sx/2 / arm_length);
+		// double current_arm_angle_left = robotModel[LEFT_ARM_FRONT_SWING].q;
+		// double current_arm_angle_right = robotModel[RIGHT_ARM_FRONT_SWING].q;
+		// double arm_abc[3] = { 0 };
+		// double arm_length = 0;
+		// arm_abc[0] = robotModel[LEFT_ARM_FRONT_SWING].p[0] - robotModel[LEFT_HAND].p[0];
+		// arm_abc[1] = robotModel[LEFT_ARM_FRONT_SWING].p[1] - robotModel[LEFT_HAND].p[1];
+		// arm_abc[2] = robotModel[LEFT_ARM_FRONT_SWING].p[2] - robotModel[LEFT_HAND].p[2];
+		// arm_length = norm(arm_abc, 1, 3);
+		// arm_swing_angle = asin(sx/2 / arm_length);
 #endif
 
 		for (int i = 0; i < step_basic_frame; i++)
@@ -3317,9 +3365,14 @@ void anglePlan(double delta) {
 
 #if SWING_ARM
 			// 左臂
-			robotModel[LEFT_ARM_FRONT_SWING].q = current_arm_angle_left + i * (-arm_swing_angle - current_arm_angle_left) / step_basic_frame;
-			robotModel[RIGHT_ARM_FRONT_SWING].q = current_arm_angle_right + i * (arm_swing_angle - current_arm_angle_right) / step_basic_frame;
-
+			// robotModel[LEFT_ARM_FRONT_SWING].q = current_arm_angle_left + i * (-arm_swing_angle - current_arm_angle_left) / step_basic_frame;
+			// robotModel[RIGHT_ARM_FRONT_SWING].q = current_arm_angle_right + i * (arm_swing_angle - current_arm_angle_right) / step_basic_frame;
+			robotModel[RIGHT_ARM_FRONT_SWING].q = armRightSwingAngle[armSwingIndex];
+			robotModel[RIGHT_ARM_ELBOW_FRONT_SWING].q = armRightSwingElbowAngle[armSwingIndex];
+			robotModel[LEFT_ARM_FRONT_SWING].q = armLeftSwingAngle[armSwingIndex];
+			robotModel[LEFT_ARM_ELBOW_FRONT_SWING].q = armLeftSwingElbowAngle[armSwingIndex];
+			armSwingIndex++;
+			if(armSwingIndex == step_basic_frame + ds_frame) armSwingIndex = 0;
 #endif
 
 			// 确定腰部位置，四边形顶点坐标求对角线交点坐标
@@ -3368,10 +3421,12 @@ void anglePlan(double delta) {
 		}
 	}
 	if (isLeft) {
+		armSwingTrajPlan();
 		dFootSupportPhase(theta + delta / 2, theta + delta, theta);
 	}
 	else
 	{
+		armSwingTrajPlan();
 		dFootSupportPhase(theta + delta/2, theta, theta + delta);
 	}
 	changeFoot();
@@ -3424,15 +3479,15 @@ void anglePlan(double delta) {
 
 #if SWING_ARM
 		// 右臂
-		double current_arm_angle_right = robotModel[RIGHT_ARM_FRONT_SWING].q;
-		double current_arm_angle_left = robotModel[LEFT_ARM_FRONT_SWING].q;
-		double arm_abc[3] = { 0 };
-		double arm_length = 0;
-		arm_abc[0] = robotModel[RIGHT_ARM_FRONT_SWING].p[0] - robotModel[RIGHT_HAND].p[0];
-		arm_abc[1] = robotModel[RIGHT_ARM_FRONT_SWING].p[1] - robotModel[RIGHT_HAND].p[1];
-		arm_abc[2] = robotModel[RIGHT_ARM_FRONT_SWING].p[2] - robotModel[RIGHT_HAND].p[2];
-		arm_length = norm(arm_abc, 1, 3);
-		arm_swing_angle = asin(sx/2 / arm_length);
+		// double current_arm_angle_right = robotModel[RIGHT_ARM_FRONT_SWING].q;
+		// double current_arm_angle_left = robotModel[LEFT_ARM_FRONT_SWING].q;
+		// double arm_abc[3] = { 0 };
+		// double arm_length = 0;
+		// arm_abc[0] = robotModel[RIGHT_ARM_FRONT_SWING].p[0] - robotModel[RIGHT_HAND].p[0];
+		// arm_abc[1] = robotModel[RIGHT_ARM_FRONT_SWING].p[1] - robotModel[RIGHT_HAND].p[1];
+		// arm_abc[2] = robotModel[RIGHT_ARM_FRONT_SWING].p[2] - robotModel[RIGHT_HAND].p[2];
+		// arm_length = norm(arm_abc, 1, 3);
+		// arm_swing_angle = asin(sx/2 / arm_length);
 
 #endif
 
@@ -3490,9 +3545,14 @@ void anglePlan(double delta) {
 
 #if SWING_ARM
 			// 右臂
-			robotModel[RIGHT_ARM_FRONT_SWING].q = current_arm_angle_right + i * (-arm_swing_angle - current_arm_angle_right) / step_basic_frame;
-			robotModel[LEFT_ARM_FRONT_SWING].q = current_arm_angle_left + i * (arm_swing_angle - current_arm_angle_left) / step_basic_frame;
-
+			// robotModel[RIGHT_ARM_FRONT_SWING].q = current_arm_angle_right + i * (-arm_swing_angle - current_arm_angle_right) / step_basic_frame;
+			// robotModel[LEFT_ARM_FRONT_SWING].q = current_arm_angle_left + i * (arm_swing_angle - current_arm_angle_left) / step_basic_frame;
+			robotModel[RIGHT_ARM_FRONT_SWING].q = armRightSwingAngle[armSwingIndex];
+			robotModel[RIGHT_ARM_ELBOW_FRONT_SWING].q = armRightSwingElbowAngle[armSwingIndex];
+			robotModel[LEFT_ARM_FRONT_SWING].q = armLeftSwingAngle[armSwingIndex];
+			robotModel[LEFT_ARM_ELBOW_FRONT_SWING].q = armLeftSwingElbowAngle[armSwingIndex];
+			armSwingIndex++;
+			if(armSwingIndex == step_basic_frame + ds_frame) armSwingIndex = 0;
 #endif
 
 
@@ -3582,15 +3642,15 @@ void anglePlan(double delta) {
 		threeSplineInter(three_spline_A,CP_norm*2);
 #if SWING_ARM
 		// 左臂
-		double current_arm_angle_left = robotModel[LEFT_ARM_FRONT_SWING].q;
-		double current_arm_angle_right = robotModel[RIGHT_ARM_FRONT_SWING].q;
-		double arm_abc[3] = { 0 };
-		double arm_length = 0;
-		arm_abc[0] = robotModel[LEFT_ARM_FRONT_SWING].p[0] - robotModel[LEFT_HAND].p[0];
-		arm_abc[1] = robotModel[LEFT_ARM_FRONT_SWING].p[1] - robotModel[LEFT_HAND].p[1];
-		arm_abc[2] = robotModel[LEFT_ARM_FRONT_SWING].p[2] - robotModel[LEFT_HAND].p[2];
-		arm_length = norm(arm_abc, 1, 3);
-		arm_swing_angle = asin(sx/2 / arm_length);
+		// double current_arm_angle_left = robotModel[LEFT_ARM_FRONT_SWING].q;
+		// double current_arm_angle_right = robotModel[RIGHT_ARM_FRONT_SWING].q;
+		// double arm_abc[3] = { 0 };
+		// double arm_length = 0;
+		// arm_abc[0] = robotModel[LEFT_ARM_FRONT_SWING].p[0] - robotModel[LEFT_HAND].p[0];
+		// arm_abc[1] = robotModel[LEFT_ARM_FRONT_SWING].p[1] - robotModel[LEFT_HAND].p[1];
+		// arm_abc[2] = robotModel[LEFT_ARM_FRONT_SWING].p[2] - robotModel[LEFT_HAND].p[2];
+		// arm_length = norm(arm_abc, 1, 3);
+		// arm_swing_angle = asin(sx/2 / arm_length);
 #endif
 
 		for (int i = 0; i < step_basic_frame; i++)
@@ -3646,9 +3706,14 @@ void anglePlan(double delta) {
 
 #if SWING_ARM
 			// 左臂
-			robotModel[LEFT_ARM_FRONT_SWING].q = current_arm_angle_left + i * (-arm_swing_angle - current_arm_angle_left) / step_basic_frame;
-			robotModel[RIGHT_ARM_FRONT_SWING].q = current_arm_angle_right + i * (arm_swing_angle - current_arm_angle_right) / step_basic_frame;
-
+			// robotModel[LEFT_ARM_FRONT_SWING].q = current_arm_angle_left + i * (-arm_swing_angle - current_arm_angle_left) / step_basic_frame;
+			// robotModel[RIGHT_ARM_FRONT_SWING].q = current_arm_angle_right + i * (arm_swing_angle - current_arm_angle_right) / step_basic_frame;
+			robotModel[RIGHT_ARM_FRONT_SWING].q = armRightSwingAngle[armSwingIndex];
+			robotModel[RIGHT_ARM_ELBOW_FRONT_SWING].q = armRightSwingElbowAngle[armSwingIndex];
+			robotModel[LEFT_ARM_FRONT_SWING].q = armLeftSwingAngle[armSwingIndex];
+			robotModel[LEFT_ARM_ELBOW_FRONT_SWING].q = armLeftSwingElbowAngle[armSwingIndex];
+			armSwingIndex++;
+			if(armSwingIndex == step_basic_frame + ds_frame) armSwingIndex = 0;
 #endif
 
 
@@ -3697,10 +3762,149 @@ void anglePlan(double delta) {
 		}
 	}
 	theta = theta + delta;
+	armSwingTrajPlan();
 	dFootSupportPhase(theta, theta, theta);
 	changeFoot();
 	
 }
+
+void leftTrajPlan(){
+
+	// 原地踏2步后，判断当前摆动脚为左脚
+	double src_sy = sy;
+	sx = 0;
+	armSwingTrajPlan();
+	trajPlan();
+	while(!isLeft){
+		trajPlan();
+	}
+	// 扩大步宽
+	sy += src_sy*0.3;
+	// 执行trajPlan
+	trajPlan();
+	// 改回原来的步宽
+	sy = src_sy;
+	// 执行trajPlan
+	trajPlan();
+	ros::param::set("stop_walk_flag",true);
+}
+
+void rightTrajPlan(){
+	// 原地踏2步，判断当前摆动脚为右脚
+	double src_sy = sy;
+	sx = 0;
+	armSwingTrajPlan();
+	trajPlan();
+	while(isLeft){
+		trajPlan();
+	}
+	// 扩大步宽
+	sy += src_sy*0.3;
+	// 执行trajPlan
+	trajPlan();
+	// 改回原来的步宽
+	sy = src_sy;
+	// 执行trajPlan
+	trajPlan();
+	ros::param::set("stop_walk_flag",true);
+}
+
+void armSwingTrajPlan(){
+	// 边界条件为固定边界
+	double unit_t = frame_T*(step_basic_frame+ds_frame);
+	double t[3] = {0, 6*unit_t/(step_basic_frame+ds_frame), unit_t};
+	double arm_abc[3] = {0};
+	double arm_length = 0;
+	arm_length = 0.2491;
+	double angle = asin(sx/2 / arm_length)*2;
+	double a = 1.63608619213834e-05;
+	double b = 0.693701752327085;
+	double ratio = a*pow(sx,-3) + b;
+	double arm_swing[3] = {-angle, -angle+(2*angle)*ratio, angle}; 
+	double elbow_swing[3] = {-angle/2, -angle/2+(angle/2)*0.1, 0}; 
+	armSwingIndex = 0;
+	if(sx == 0){
+		for(int i = 0; i < step_basic_frame+ds_frame; i++){
+			armRightSwingAngle[i] = 0;
+			armRightSwingElbowAngle[i] = 0;
+			armLeftSwingAngle[i] = 0;
+			armLeftSwingElbowAngle[i] = 0;
+		}
+		return;
+	}
+
+	double A[8][8] = {{1,      t[0],   pow(t[0],2), pow(t[0],3)   ,0,     0    ,   0           , 0             },  
+					  {1,      t[1],   pow(t[1],2), pow(t[1],3)   ,0,     0    ,   0           , 0             }, 
+		              {0,      0   ,   0          , 0             ,1,     t[1] ,   pow(t[1],2) , pow(t[1],3)   },
+		              {0,      0   ,   0          , 0             ,1,     t[2] ,   pow(t[2],2) , pow(t[2],3)   },
+		              {0,      1   ,   2*t[1]     , 3*pow(t[1],2) ,0,     -1   ,   -2*t[1]     , -3*pow(t[1],2)},
+		              {0,      0   ,   2          , 6*t[1]        ,0,     0    ,   -2          , -6*t[1]       },    
+		              {0,      1   ,   2*t[0]     , 3*pow(t[0],2) ,0,     0    ,   0           , 0             },
+		              {0,      0   ,   0          , 0             ,0,     1    ,   2*t[2]      , 3*pow(t[2],2) }};
+	double temp_arm_swing[8] = {arm_swing[0], arm_swing[1], arm_swing[1], arm_swing[2], 0, 0 ,0 ,0};
+	double temp_elbow_swing[8] = {elbow_swing[0], elbow_swing[1], elbow_swing[1], elbow_swing[2], 0, 0 ,0 ,0};
+	double A_inv[8][8];
+	double matlab_result[64];
+	matlab_inv_8((double*)A,matlab_result);
+	for (int j = 0; j < 8; j++)
+		{
+			for (int k = 0; k < 8; k++) {
+				A_inv[j][k] = matlab_result[j * 8 + k];
+			}
+		}
+	double result_arm_swing[8];
+	double result_elbow_swing[8];
+	MatrixMultiVector8x1(A_inv, temp_arm_swing, result_arm_swing);
+	MatrixMultiVector8x1(A_inv, temp_elbow_swing, result_elbow_swing);
+	for(int j = 0; j < (step_basic_frame+ds_frame)/5; j++){
+		armRightSwingAngle[j] = result_arm_swing[0]+result_arm_swing[1]*(j*frame_T)+result_arm_swing[2]*pow(j*frame_T,2)+result_arm_swing[3]*pow(j*frame_T,3);
+		armRightSwingElbowAngle[j] = result_elbow_swing[0]+result_elbow_swing[1]*(j*frame_T)+result_elbow_swing[2]*pow(j*frame_T,2)+result_elbow_swing[3]*pow(j*frame_T,3);
+	}
+	for(int j = (step_basic_frame+ds_frame)/5; j < step_basic_frame+ds_frame; j++){
+		armRightSwingAngle[j] = result_arm_swing[4]+result_arm_swing[5]*(j*frame_T)+result_arm_swing[6]*pow(j*frame_T,2)+result_arm_swing[7]*pow(j*frame_T,3);
+		armRightSwingElbowAngle[j] = result_elbow_swing[4]+result_elbow_swing[5]*(j*frame_T)+result_elbow_swing[6]*pow(j*frame_T,2)+result_elbow_swing[7]*pow(j*frame_T,3);
+	}
+	// for(int j = 0; j < step_basic_frame+ds_frame; j++){
+	// 	if(j == 0){
+	// 		armRightSwingAngle[j] = armRightSwingAngle[j];
+	// 		armRightSwingElbowAngle[j] = armRightSwingElbowAngle[j];
+	// 	}else{
+	// 		if(armRightSwingAngle[j] > arm_swing[2]){
+	// 			armRightSwingAngle[j] = arm_swing[2];
+	// 			armRightSwingElbowAngle[j] = armRightSwingElbowAngle[j];
+	// 		}else{
+	// 			armRightSwingAngle[j] = armRightSwingAngle[j];
+	// 			armRightSwingElbowAngle[j] = armRightSwingElbowAngle[j];
+	// 		}
+	// 	}
+		
+	// }
+	for(int j = 0; j < step_basic_frame+ds_frame; j++){
+		armLeftSwingAngle[j] = armRightSwingAngle[0]+armRightSwingAngle[step_basic_frame+ds_frame-1]-armRightSwingAngle[j];
+		armLeftSwingElbowAngle[j] = armRightSwingElbowAngle[0]+armRightSwingElbowAngle[step_basic_frame+ds_frame-1]-armRightSwingElbowAngle[j];
+	}
+	if(isLeft){
+		for(int j = 0; j < step_basic_frame+ds_frame; j++){
+			double temp = armRightSwingAngle[j];
+			armRightSwingAngle[j] = armRightSwingAngle[j];
+			armRightSwingElbowAngle[j] = armRightSwingElbowAngle[j];
+			temp = armLeftSwingAngle[j];
+			armLeftSwingAngle[j] = armLeftSwingAngle[j];
+			armLeftSwingElbowAngle[j] = armLeftSwingElbowAngle[j];
+		}
+	}else{
+		for(int j = 0; j < step_basic_frame+ds_frame; j++){
+			double temp = armRightSwingAngle[j];
+			armRightSwingAngle[j] = armLeftSwingAngle[j];
+			armLeftSwingAngle[j] = temp;
+			temp = armRightSwingElbowAngle[j];
+			armRightSwingElbowAngle[j] = armLeftSwingElbowAngle[j];
+			armLeftSwingElbowAngle[j] = temp;
+		}
+	}
+
+}
+
 
 void CalcTrajectory_Com(int current_frame_count) {
 	double zmp_preview[2][N_preview] = {0};
@@ -3844,6 +4048,14 @@ void dFootSupportPhase(double theta_mainbody, double theta_left, double theta_ri
 	double delta_yaw = 0;
 	for (int i = 0; i < ds_frame; i++)
 	{
+		#if SWING_ARM
+		if(armSwingIndex >= step_basic_frame + ds_frame) armSwingIndex = 0;
+		robotModel[RIGHT_ARM_FRONT_SWING].q = armRightSwingAngle[armSwingIndex];
+		robotModel[RIGHT_ARM_ELBOW_FRONT_SWING].q = armRightSwingElbowAngle[armSwingIndex];
+		robotModel[LEFT_ARM_FRONT_SWING].q = armLeftSwingAngle[armSwingIndex];
+		robotModel[LEFT_ARM_ELBOW_FRONT_SWING].q = armLeftSwingElbowAngle[armSwingIndex];
+		armSwingIndex++;
+		#endif
 		//准备PID修正
 		imuGesturePidControl(delta_roll, delta_pitch, delta_yaw);
 		waistPosition_com(delta_roll, delta_pitch, theta_mainbody, i);

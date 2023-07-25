@@ -8,7 +8,7 @@
 #define WRITEZMPDATA 1
 #define ROSPUB 1    // 是否向Gazebo中的关节控制器发送计算出的关节位置信息
 #define CONTROLBOARDPUB 0    // 是否向物理控制板发送计算出的关节位置信息
-#define SWING_ARM 0
+#define SWING_ARM 1
 #define PID_AMEND  0  // 是否对机器人的姿态进行PID修正
 #define PART_NUMBER 26
 #define NONE_JOINT  255
@@ -140,6 +140,9 @@ void writeTxt(); // 只是方便自己输出数据在matlab可视化用
 void startTrajPlan(); // 为了让起步更稳定
 void trajPlan(); // 已测试
 void anglePlan(double delta); // 已测试
+void leftTrajPlan();
+void rightTrajPlan();
+void armSwingTrajPlan();
 void CalcTrajectory_Com(int current_frame_count);
 void dFootSupportPhase(double theta_mainbody, double theta_left, double theta_right);
 void imuGesturePidControl(double &delta_roll, double &delta_pitch, double &delta_yaw);

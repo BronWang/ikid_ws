@@ -43,7 +43,7 @@ int main(int argc, char** argv)
     int option;
     int optlen = sizeof(option);
     option = true;
-    setsockopt(serv_socket,SOL_SOCKET,SO_REUSEADDR,(void*)&option,optlen);
+    //setsockopt(serv_socket,SOL_SOCKET,SO_REUSEADDR,(void*)&option,optlen);
     bzero(&servaddr, sizeof(servaddr));
     //2.准备通讯地址（必须是服务器的）是本机的IP
     servaddr.sin_family = AF_INET;

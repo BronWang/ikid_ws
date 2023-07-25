@@ -16,6 +16,8 @@ extern double imu_data_roll;
 extern double imu_data_yaw;
 extern double imu_data_pitch;
 extern bool isLeft;
+extern int leftMovement;
+extern int rightMovement;
 
 void doWalkMsg(const ikid_motion_control::cmd_walk::ConstPtr& walkMsg){
     ROS_INFO("0000");
@@ -56,6 +58,7 @@ void doWalkMsg(const ikid_motion_control::cmd_walk::ConstPtr& walkMsg){
         ros::param::get("stop_walk_flag",stop_walk_flag); //如果已经停止，不执行操作
         if(!stop_walk_flag){
             sx = 0;
+            armSwingTrajPlan();
             trajPlan();
             if(isLeft){
                 trajPlan();
@@ -73,6 +76,7 @@ void doSpecialGaitMsg(const std_msgs::Int16::ConstPtr& id_msg){
     ros::param::get("stop_walk_flag",stop_walk_flag); //如果已经停止，不执行操作
     if(!stop_walk_flag){
         sx = 0;
+        armSwingTrajPlan();
         trajPlan();
         FallUpInitPos();  // 保证停稳
         ros::param::set("stop_walk_flag",true);
@@ -85,6 +89,14 @@ void doSpecialGaitMsg(const std_msgs::Int16::ConstPtr& id_msg){
     // while(stop_walk_flag){
     //     ros::param::get("stop_walk_flag", stop_walk_flag);
     // }
+}
+
+void doParallelMove(const std_msgs::Int16::ConstPtr& msg){
+    if (msg->data == leftMovement){
+        leftTrajPlan();
+    }else if(msg->data == rightMovement){
+        rightTrajPlan();
+    }
 }
 
 
@@ -112,6 +124,7 @@ int main(int argc, char *argv[])
     ros::param::set("walk_with_ball",false);  //设置动态踢球标志位于参数服务器中
     ros::Subscriber specialGaitSuber = n.subscribe<std_msgs::Int16>("/special_gait",1,doSpecialGaitMsg);
     ros::param::set("stop_special_gait_flag", true);
+    ros::Subscriber parallelMove = n.subscribe<std_msgs::Int16>("/parallelMove",1,doParallelMove);
 
     clearImuDataTxt();
     clearZmpDataTxt();

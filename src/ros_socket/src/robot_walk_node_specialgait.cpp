@@ -16,10 +16,11 @@ extern double imu_data_roll;
 extern double imu_data_yaw;
 extern double imu_data_pitch;
 extern bool isLeft;
+extern int leftMovement;
+extern int rightMovement;
 
 void doWalkMsg(const ros_socket::cmd_walk::ConstPtr& walkMsg){
     ROS_INFO("0000");
-    readIkidRobotZeroPoint(0);
     bool stop_special_gait_flag = true;
     ros::param::get("stop_special_gait_flag",stop_special_gait_flag);
     if(!stop_special_gait_flag){
@@ -27,9 +28,11 @@ void doWalkMsg(const ros_socket::cmd_walk::ConstPtr& walkMsg){
     }
     sx = walkMsg->sx;
     sy = walkMsg->sy;
+    ROS_INFO("1111");
 	if(!(walkMsg->stop_walk)){
         bool stop_walk_flag;
         ros::param::get("stop_walk_flag",stop_walk_flag); //如果是停止开始，先执行启动步态
+        ROS_INFO("2222");
         if(stop_walk_flag){
             startTrajPlan();
         }
@@ -55,6 +58,7 @@ void doWalkMsg(const ros_socket::cmd_walk::ConstPtr& walkMsg){
         ros::param::get("stop_walk_flag",stop_walk_flag); //如果已经停止，不执行操作
         if(!stop_walk_flag){
             sx = 0;
+            armSwingTrajPlan();
             trajPlan();
             if(isLeft){
                 trajPlan();
@@ -72,14 +76,13 @@ void doSpecialGaitMsg(const std_msgs::Int16::ConstPtr& id_msg){
     ros::param::get("stop_walk_flag",stop_walk_flag); //如果已经停止，不执行操作
     if(!stop_walk_flag){
         sx = 0;
+        armSwingTrajPlan();
         trajPlan();
         FallUpInitPos();  // 保证停稳
         ros::param::set("stop_walk_flag",true);
     }
     specialGaitExec(id_msg->data);
-    // trajPlan();
-    // trajPlan();
-    ros::Duration(1).sleep();
+    trajPlan();
     // walk_msg.stop_walk = false;
     // puber_special_gait.publish(walk_msg);
     // ros::param::get("stop_walk_flag", stop_walk_flag);
@@ -88,11 +91,19 @@ void doSpecialGaitMsg(const std_msgs::Int16::ConstPtr& id_msg){
     // }
 }
 
+void doParallelMove(const std_msgs::Int16::ConstPtr& msg){
+    if (msg->data == leftMovement){
+        leftTrajPlan();
+    }else if(msg->data == rightMovement){
+        rightTrajPlan();
+    }
+}
+
 
 int main(int argc, char *argv[])
 {
     //执行 ros 节点初始化
-    ros::init(argc,argv,"robot_walk_node_specialgait");
+    ros::init(argc,argv,"robot_walk_node");
     //创建 ros 节点句柄
     ros::NodeHandle n;
 
@@ -113,6 +124,7 @@ int main(int argc, char *argv[])
     ros::param::set("walk_with_ball",false);  //设置动态踢球标志位于参数服务器中
     ros::Subscriber specialGaitSuber = n.subscribe<std_msgs::Int16>("/special_gait",1,doSpecialGaitMsg);
     ros::param::set("stop_special_gait_flag", true);
+    ros::Subscriber parallelMove = n.subscribe<std_msgs::Int16>("/parallelMove",1,doParallelMove);
 
     clearImuDataTxt();
     clearZmpDataTxt();
@@ -120,7 +132,7 @@ int main(int argc, char *argv[])
     while (ros::ok())
     {
         bool stop_walk_flag;
-        judgeFall();
+        //judgeFall();
         ros::param::get("stop_walk_flag",stop_walk_flag);
         if(!stop_walk_flag){
             trajPlan();
