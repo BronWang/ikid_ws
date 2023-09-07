@@ -27,7 +27,7 @@ int main(int argc, char** argv)
 {
     ros::init(argc, argv, "udp_special_gait_node");
     ros::NodeHandle n;
-    robotStart(n);
+    robotStartSpecialGait(n);
     string local_ip_addr;
     ros::param::get("/pid_amend/local_ip_addr",local_ip_addr);
     cout << local_ip_addr << endl;

@@ -21,6 +21,7 @@ extern int rightMovement;
 
 void doWalkMsg(const ros_socket::cmd_walk::ConstPtr& walkMsg){
     ROS_INFO("0000");
+    readIkidRobotZeroPoint(0);
     bool stop_special_gait_flag = true;
     ros::param::get("stop_special_gait_flag",stop_special_gait_flag);
     if(!stop_special_gait_flag){
@@ -71,7 +72,7 @@ void doWalkMsg(const ros_socket::cmd_walk::ConstPtr& walkMsg){
 }
 
 void doSpecialGaitMsg(const std_msgs::Int16::ConstPtr& id_msg){
-
+    readIkidRobotZeroPoint(0);
     bool stop_walk_flag;
     ros::param::get("stop_walk_flag",stop_walk_flag); //如果已经停止，不执行操作
     if(!stop_walk_flag){
@@ -92,6 +93,7 @@ void doSpecialGaitMsg(const std_msgs::Int16::ConstPtr& id_msg){
 }
 
 void doParallelMove(const std_msgs::Int16::ConstPtr& msg){
+    readIkidRobotZeroPoint(0);
     if (msg->data == leftMovement){
         leftTrajPlan();
     }else if(msg->data == rightMovement){

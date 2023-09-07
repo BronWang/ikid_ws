@@ -145,6 +145,7 @@ void rightTrajPlan();
 void armSwingTrajPlan();
 void CalcTrajectory_Com(int current_frame_count);
 void dFootSupportPhase(double theta_mainbody, double theta_left, double theta_right);
+void dFootSupportPhaseStartTrajPlan(double theta_mainbody, double theta_left, double theta_right);
 void imuGesturePidControl(double &delta_roll, double &delta_pitch, double &delta_yaw);
 void specialGaitExec(int id);
 void judgeFall();

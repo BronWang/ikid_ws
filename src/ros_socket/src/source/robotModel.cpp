@@ -3769,8 +3769,12 @@ void anglePlan(double delta) {
 }
 
 void leftTrajPlan(){
-
 	// 原地踏2步后，判断当前摆动脚为左脚
+	bool stop_walk_flag;
+	ros::param::get("stop_walk_flag",stop_walk_flag); //如果是停止开始，先执行启动步态
+	if(stop_walk_flag){
+		startTrajPlan();
+	}
 	double src_sy = sy;
 	sx = 0;
 	armSwingTrajPlan();
@@ -3786,11 +3790,17 @@ void leftTrajPlan(){
 	sy = src_sy;
 	// 执行trajPlan
 	trajPlan();
+	FallUpInitPos();
 	ros::param::set("stop_walk_flag",true);
 }
 
 void rightTrajPlan(){
 	// 原地踏2步，判断当前摆动脚为右脚
+	bool stop_walk_flag;
+	ros::param::get("stop_walk_flag",stop_walk_flag); //如果是停止开始，先执行启动步态
+	if(stop_walk_flag){
+		startTrajPlan();
+	}
 	double src_sy = sy;
 	sx = 0;
 	armSwingTrajPlan();
@@ -3806,6 +3816,7 @@ void rightTrajPlan(){
 	sy = src_sy;
 	// 执行trajPlan
 	trajPlan();
+	FallUpInitPos();
 	ros::param::set("stop_walk_flag",true);
 }
 
@@ -4094,6 +4105,65 @@ void dFootSupportPhase(double theta_mainbody, double theta_left, double theta_ri
 
 #endif
 	}
+}
+
+void dFootSupportPhaseStartTrajPlan(double theta_mainbody, double theta_left, double theta_right)
+{
+	isDsPhase = true;
+	double solid_left_foot[3] = { robotModel[LEFT_FOOT].p[0],robotModel[LEFT_FOOT].p[1],robotModel[LEFT_FOOT].p[2] };
+	double solid_right_foot[3] = { robotModel[RIGHT_FOOT].p[0],robotModel[RIGHT_FOOT].p[1],robotModel[RIGHT_FOOT].p[2] };
+	double delta_roll = 0;
+	double delta_pitch = 0;
+	double delta_yaw = 0;
+	for (int i = 0; i < ds_frame; i++)
+	{
+		#if SWING_ARM
+		if(armSwingIndex >= step_basic_frame + ds_frame) armSwingIndex = 0;
+		robotModel[RIGHT_ARM_FRONT_SWING].q = armRightSwingAngle[armSwingIndex];
+		robotModel[RIGHT_ARM_ELBOW_FRONT_SWING].q = armRightSwingElbowAngle[armSwingIndex];
+		robotModel[LEFT_ARM_FRONT_SWING].q = armLeftSwingAngle[armSwingIndex];
+		robotModel[LEFT_ARM_ELBOW_FRONT_SWING].q = armLeftSwingElbowAngle[armSwingIndex];
+		armSwingIndex++;
+		#endif
+		//准备PID修正
+		imuGesturePidControl(delta_roll, delta_pitch, delta_yaw);
+		waistPosition_com(delta_roll, delta_pitch, theta_mainbody, i);
+		double R[3][3];
+		double temp[3];
+		rpy2rot(0, 0, theta_right, R);
+		MatrixMultiVector3x1(R, robotModel[RIGHT_FOOT].b, temp);
+		robotModel[RIGHT_ANKLE_SIDE_SWING].p[0] = solid_right_foot[0] - temp[0];
+		robotModel[RIGHT_ANKLE_SIDE_SWING].p[1] = solid_right_foot[1] - temp[1];
+		robotModel[RIGHT_ANKLE_SIDE_SWING].p[2] = solid_right_foot[2] - temp[2];
+		inverseKinmatics_rightFoot(0, 0, theta_right);
+		rpy2rot(0, 0, theta_left, R);
+		MatrixMultiVector3x1(R, robotModel[LEFT_FOOT].b, temp);
+		robotModel[LEFT_ANKLE_SIDE_SWING].p[0] = solid_left_foot[0] - temp[0];
+		robotModel[LEFT_ANKLE_SIDE_SWING].p[1] = solid_left_foot[1] - temp[1];
+		robotModel[LEFT_ANKLE_SIDE_SWING].p[2] = solid_left_foot[2] - temp[2];
+		inverseKinmatics_leftFoot(0, 0, theta_left);
+
+		Calc_ZMP(Compute_fact_zmp,&robot_taoz);
+
+		#if PID_AMEND
+		robotModel[RIGHT_ANKLE_SIDE_SWING].q -= delta_roll;
+		robotModel[LEFT_ANKLE_SIDE_SWING].q -= delta_roll;
+		robotModel[RIGHT_ANKLE_FRONT_SWING].q -= delta_pitch;
+		robotModel[LEFT_ANKLE_FRONT_SWING].q -= delta_pitch;
+		forwardKinematics(MAIN_BODY);
+		#endif
+#if WRITETXT
+	writeTxt();
+#endif
+#if ROSPUB
+	ikidRobotDynaPosPub();
+#endif
+#if CONTROLBOARDPUB
+	ikidRobotDynaPosControlBoardPub();
+
+#endif
+	}
+	armSwingIndex = 0;
 }
 
 void imuGesturePidControl(double &delta_roll, double &delta_pitch, double &delta_yaw){

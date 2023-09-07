@@ -31,7 +31,7 @@ int main(int argc, char** argv)
     ros::init(argc, argv, "server_port");
     //创建句柄（虽然后面没用到这个句柄，但如果不创建，运行时进程会出错）
     ros::NodeHandle n;
-    robotStart(n);
+    robotStartSpecialGait(n);
     string local_ip_addr;
     ros::param::get("/pid_amend/local_ip_addr",local_ip_addr);
     cout << local_ip_addr << endl;
@@ -229,6 +229,13 @@ int main(int argc, char** argv)
                             pub_walk.publish(walk_msg);
                         } 
                     }
+                }
+                if(token_str == "cmd_execute_gait_number"){
+                    token = strtok(NULL, spl_chara);
+                    int number = atoi(token);
+                    specialGaitExec(number);
+                    char temp[] = "success cmd_execute_gait_number";
+                    write(connfd, temp, sizeof(temp));
                 }
             }else{
                 printf("The client ip: %s, port: %d\n has beens closed!\n", 
