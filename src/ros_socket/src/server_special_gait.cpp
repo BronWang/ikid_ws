@@ -8,6 +8,7 @@
 #include <pthread.h>
 #include<iostream>
 #include <ros/ros.h>
+#include <std_msgs/Int16.h>
 #include "std_msgs/Float64.h"
 #include "ros_socket/robotModel.h"
 #include "ros_socket/cmd_walk.h"
@@ -96,6 +97,7 @@ int main(int argc, char** argv)
    ros::param::get("/pid_amend/walk_width",step_wid);
    ros_socket::cmd_walk walk_msg;
    ros::Publisher pub_walk = n.advertise<ros_socket::cmd_walk>("/cmd_walk", 5);
+   ros::Publisher updateImu = n.advertise<std_msgs::Int16>("/updateImu", 5);
    while (ros::ok()) 
    {
         cout << "正在监听网络连接...\n" << endl;
@@ -190,6 +192,10 @@ int main(int argc, char** argv)
                         robotModel[i].q = 0;
                     }
                     initRobotPos();
+                    ros::Duration(1).sleep();
+                    std_msgs::Int16 msg;
+                    msg.data = 1;
+                    updateImu.publish(msg);
                 }
                 if(token_str == "cmd_walk_forward"){
                     walk_msg.stop_walk = false;

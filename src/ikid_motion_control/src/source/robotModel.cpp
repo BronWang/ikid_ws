@@ -3783,14 +3783,16 @@ void leftTrajPlan(){
 	while(!isLeft){
 		trajPlan();
 	}
-	// 扩大步宽
-	sy += src_sy*0.3;
-	// 执行trajPlan
-	trajPlan();
-	// 改回原来的步宽
-	sy = src_sy;
-	// 执行trajPlan
-	trajPlan();
+	for(int i = 0; i < 3; i++){
+		// 扩大步宽
+		sy += src_sy*0.3;
+		// 执行trajPlan
+		trajPlan();
+		// 改回原来的步宽
+		sy = src_sy;
+		// 执行trajPlan
+		trajPlan();
+	}
 	FallUpInitPos();
 	ros::param::set("stop_walk_flag",true);
 }
@@ -3809,14 +3811,16 @@ void rightTrajPlan(){
 	while(isLeft){
 		trajPlan();
 	}
-	// 扩大步宽
-	sy += src_sy*0.3;
-	// 执行trajPlan
-	trajPlan();
-	// 改回原来的步宽
-	sy = src_sy;
-	// 执行trajPlan
-	trajPlan();
+	for(int i = 0; i < 3; i++){
+		// 扩大步宽
+		sy += src_sy*0.3;
+		// 执行trajPlan
+		trajPlan();
+		// 改回原来的步宽
+		sy = src_sy;
+		// 执行trajPlan
+		trajPlan();
+	}
 	FallUpInitPos();
 	ros::param::set("stop_walk_flag",true);
 }
@@ -4402,7 +4406,7 @@ void specialGaitExec(int id){
 							for (int j = 1; j <= 25; j++)
 							{
 								if(count_frame == 1){
-									robotModel[j].q = robotModel[j].q+(gait_frame_data[j]-robotModel[j].q)*i/temp_frame_rate;
+									robotModel[j].q = zero_point[j]/180*M_PI+ FallUpRobotPos_q[j] +(gait_frame_data[j]-(zero_point[j]/180*M_PI+ FallUpRobotPos_q[j]))*i/temp_frame_rate;
 								}else{
 									robotModel[j].q = before_gait_frame_data[j]+(gait_frame_data[j]-before_gait_frame_data[j])*i/temp_frame_rate;
 								}
@@ -4414,10 +4418,13 @@ void specialGaitExec(int id){
 							ikidRobotDynaPosControlBoardPubSpecialGait();
 							ros::Duration(0.02).sleep();
 							#endif
-							count_frame++;
 						}
+						count_frame++;
                 	}
 
+				}
+				for(int i = 0; i < 26; i++){
+					robotModel[i].q -= zero_point[i]/180*M_PI;
 				}
 				fclose(fptr);
 				break;

@@ -61,6 +61,7 @@ ros_socket/CMakeFiles/server_special_gait.dir/src/server_special_gait.cpp.o: /op
 ros_socket/CMakeFiles/server_special_gait.dir/src/server_special_gait.cpp.o: /opt/ros/noetic/include/ros/wall_timer_options.h
 ros_socket/CMakeFiles/server_special_gait.dir/src/server_special_gait.cpp.o: /opt/ros/noetic/include/rosconsole/macros_generated.h
 ros_socket/CMakeFiles/server_special_gait.dir/src/server_special_gait.cpp.o: /opt/ros/noetic/include/std_msgs/Float64.h
+ros_socket/CMakeFiles/server_special_gait.dir/src/server_special_gait.cpp.o: /opt/ros/noetic/include/std_msgs/Int16.h
 ros_socket/CMakeFiles/server_special_gait.dir/src/server_special_gait.cpp.o: /opt/ros/noetic/include/xmlrpcpp/XmlRpcDecl.h
 ros_socket/CMakeFiles/server_special_gait.dir/src/server_special_gait.cpp.o: /opt/ros/noetic/include/xmlrpcpp/XmlRpcValue.h
 

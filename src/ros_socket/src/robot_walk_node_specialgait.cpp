@@ -101,6 +101,13 @@ void doParallelMove(const std_msgs::Int16::ConstPtr& msg){
     }
 }
 
+void doUpdateImu(const std_msgs::Int16::ConstPtr& msg){
+    std::fstream fin;
+	fin.open("/home/wp/ikid_ws/imubuffer.txt", std::ios::in);
+	fin >> init_imu_roll >> init_imu_pitch;
+	fin.close();
+}
+
 
 int main(int argc, char *argv[])
 {
@@ -127,6 +134,7 @@ int main(int argc, char *argv[])
     ros::Subscriber specialGaitSuber = n.subscribe<std_msgs::Int16>("/special_gait",1,doSpecialGaitMsg);
     ros::param::set("stop_special_gait_flag", true);
     ros::Subscriber parallelMove = n.subscribe<std_msgs::Int16>("/parallelMove",1,doParallelMove);
+    ros::Subscriber updateImu = n.subscribe<std_msgs::Int16>("/updateImu",1,doUpdateImu);
 
     clearImuDataTxt();
     clearZmpDataTxt();
