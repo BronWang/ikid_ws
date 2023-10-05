@@ -190,6 +190,9 @@ src/robot_walk_node.cpp
 add_executable(special_gait_node 
 src/special_gait_node.cpp
 )
+add_executable(technical_challenges_node 
+src/technical_challenges.cpp
+)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -204,6 +207,7 @@ add_dependencies(test_traj_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXP
 add_dependencies(pid_amend_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(robot_walk_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(special_gait_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(technical_challenges_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 # target_link_libraries(${PROJECT_NAME}_node
@@ -234,6 +238,14 @@ matlab_inv_initialize
 ${catkin_LIBRARIES}
 )
 target_link_libraries(special_gait_node
+robotModel
+matlab_inv
+matlab_inv_data
+matlab_inv_terminate
+matlab_inv_initialize
+${catkin_LIBRARIES}
+)
+target_link_libraries(technical_challenges_node
 robotModel
 matlab_inv
 matlab_inv_data
