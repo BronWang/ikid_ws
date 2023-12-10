@@ -24,14 +24,13 @@ void doImuMsg(const sensor_msgs::Imu::ConstPtr& imuMsg_p){
     // ros::param::set("imu_data_pitch",pitch);
     // ros::param::set("imu_data_yaw",yaw);
 
-    fout.open("/home/wp/ikid_ws/imubuffer.txt", std::ios::out);
     if(fout.fail()){
         fout.open("/home/wp/ikid_ws/imubuffer.txt", std::ios::app);
         fout.close();
         fout.open("/home/wp/ikid_ws/imubuffer.txt", std::ios::out);
     }
+    fout.seekp(0);
     fout << roll << ' ' << pitch << ' ' << yaw;
-    fout.close();
 }
 
 
@@ -43,10 +42,12 @@ int main(int argc, char *argv[])
     ros::NodeHandle n;
     // imu测试话题数据
     ros::Subscriber suber = n.subscribe<sensor_msgs::Imu>("/imu",10,doImuMsg);
+    fout.open("/home/wp/ikid_ws/imubuffer.txt", std::ios::out);
     // ros::param::set("imu_data_roll",0.0);
     // ros::param::set("imu_data_pitch",0.0);
     // ros::param::set("imu_data_yaw",0.0);
     
     ros::spin();
+    fout.close();
     return 0;
 }

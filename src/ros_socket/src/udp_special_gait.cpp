@@ -59,6 +59,12 @@ int main(int argc, char** argv)
 
     socklen_t len = sizeof(cliaddr);
     ros::Rate loop_rate(100);
+
+    robotLink ori_robotModel[26];
+
+    for(int i = 0; i <= 26; i++){
+        ori_robotModel[i].q = robotModel[i].q;
+    }
     
    while (ros::ok()) 
    {
@@ -109,6 +115,21 @@ int main(int argc, char** argv)
                     // robotModel[24].q, robotModel[25].q);
                     // fputs(ch, fp);
                     // fclose(fp);
+                }else if(token_str == "zero_data"){
+                    for (int i = 1; i <= 25; i++)
+                    {
+                        token = strtok(NULL, ",");
+                        double robot_q = atof(token);
+                        robotModel[i].q = ori_robotModel[i].q + robot_q;
+                        cout << "[out] " << robot_q << endl;
+                    }
+                    #if ROSPUB
+                    ikidRobotDynaPosPubSpecialGait();
+                    #endif
+                    #if CONTROLBOARDPUB
+                    ikidRobotDynaPosControlBoardPubSpecialGait();
+                    ros::Duration(0.02).sleep();
+                    #endif
                 }
                 
             }
